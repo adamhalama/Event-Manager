@@ -1,4 +1,4 @@
-package Event;
+package Shared.Event;
 
 import java.util.ArrayList;
 
