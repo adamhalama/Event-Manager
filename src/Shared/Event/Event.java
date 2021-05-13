@@ -10,12 +10,14 @@ public class Event {
     private final String time_create; //when creating this event
     private String time_start; //when the event starts
     private String time_end; //when the event ends
+    //maybe change for the GUI
     private int dayS;
     private int monthS;
     private int yearS;
     private int dayE;
     private int monthE;
     private int yearE;
+
     private Calendar calendarS;
     private Calendar calendarE;
     private String title; //the title of the event
