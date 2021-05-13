@@ -1,5 +1,6 @@
-package Shared.Event;
+package Tests.Event;
 
+import Shared.Event.EventList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
