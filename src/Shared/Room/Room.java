@@ -1,4 +1,4 @@
-package server.model;
+package Shared.Room;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

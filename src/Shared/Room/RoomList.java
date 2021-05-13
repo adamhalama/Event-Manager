@@ -1,4 +1,4 @@
-package server.model;
+package Shared.Room;
 
 import java.util.ArrayList;
 
