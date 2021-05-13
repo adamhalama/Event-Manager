@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="681.0" prefWidth="657.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="681.0" prefWidth="657.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@darkTheme.css">
    <children>
       <Label alignment="CENTER" prefHeight="70.0" prefWidth="658.0" text="Create an event">
          <font>

@@ -6,7 +6,7 @@ TO IMPORT - add  ' stylesheets="@darkTheme.css" ' to the root
 */
 
 .root {
-    -fx-base: #3f474f;
+    -fx-base: #080809;
     -fx-accent: #e7eff7 ;
     -fx-default-button: #7f878f ;
     -fx-focus-color: #efefef;
@@ -20,6 +20,10 @@ TO IMPORT - add  ' stylesheets="@darkTheme.css" ' to the root
     );
     -fx-focused-mark-color : -fx-focused-text-base-color ;
 
+}
+
+.button {
+    -fx-base: #76767f;
 }
 
 .text-input:focused {
