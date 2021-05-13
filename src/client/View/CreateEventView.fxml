@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="681.0" prefWidth="657.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.View.CreateEventViewController">
+<VBox prefHeight="681.0" prefWidth="657.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@darkTheme.css">
    <children>
       <Label alignment="CENTER" prefHeight="70.0" prefWidth="658.0" text="Create an event">
          <font>
@@ -124,13 +124,13 @@
                   <Font size="16.0" />
                </font></Label>
             <Label prefHeight="15.0" prefWidth="29.0" text=" " />
-            <Button fx:id="onlineButton" mnemonicParsing="false" onAction="#onlineButtonPresss" prefHeight="42.0" prefWidth="142.0" text="Online">
+            <Button fx:id="onlineButton" mnemonicParsing="false" prefHeight="42.0" prefWidth="142.0" text="Online">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
             <Label prefHeight="15.0" prefWidth="50.0" text=" " />
-            <Button fx:id="physicalButton" mnemonicParsing="false" onAction="#physicalButtonPress" prefHeight="42.0" prefWidth="142.0" text="Physical">
+            <Button fx:id="physicalButton" mnemonicParsing="false" prefHeight="42.0" prefWidth="142.0" text="Physical">
                <font>
                   <Font size="18.0" />
                </font>
@@ -187,13 +187,13 @@
       <HBox prefHeight="12.0" prefWidth="657.0" />
       <HBox alignment="CENTER_RIGHT" prefHeight="51.0" prefWidth="631.0">
          <children>
-            <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonPress" prefHeight="42.0" prefWidth="102.0" text="Cancel">
+            <Button mnemonicParsing="false" prefHeight="42.0" prefWidth="102.0" text="Cancel">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
             <Label prefHeight="15.0" prefWidth="35.0" text=" " />
-            <Button fx:id="createButton" mnemonicParsing="false" onAction="#createButtonPress" prefHeight="42.0" prefWidth="102.0" text="Create">
+            <Button fx:id="createButton" mnemonicParsing="false" prefHeight="42.0" prefWidth="102.0" text="Create">
                <font>
                   <Font size="20.0" />
                </font>
