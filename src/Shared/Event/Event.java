@@ -30,7 +30,7 @@ public class Event {
 
     //TODO add another constructor for physical room
     public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
-                 int yearE, int monthE, int dayE, int hourE, int minuteE, String platform, String link) {
+                 int yearE, int monthE, int dayE, int hourE, boolean isOnline, int minuteE, String platform, String link) {
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
@@ -81,7 +81,7 @@ public class Event {
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
         this.description = description;
-        this.isOnline = true;
+        this.isOnline = isOnline;
 
         this.room = "room";
 
@@ -97,7 +97,7 @@ public class Event {
     }
 
     public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
-                 int yearE, int monthE, int dayE, int hourE, int minuteE, String room) {
+                 int yearE, int monthE, int dayE, int hourE, int minuteE, boolean isOnline, String room) {
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
@@ -148,7 +148,7 @@ public class Event {
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
         this.description = description;
-        this.isOnline = false;
+        this.isOnline = isOnline;
 
         this.room = room;
         //TODO add room
