@@ -9,7 +9,6 @@ public class EventList {
         this.events = new ArrayList<>();
     }
 
-    //TODO add limitation when adding event
     public void add(Event event){
         events.add(event);
     }
