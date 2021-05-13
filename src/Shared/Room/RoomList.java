@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class RoomList
 {
     private ArrayList<Room> rooms;
-    private static int numberOfRooms;
+    private static int roomsCreated;
 
     public RoomList()
     {
@@ -14,8 +14,8 @@ public class RoomList
 
     public void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor)
     {
-        numberOfRooms++;
-        String id = "R" + numberOfRooms;
+        roomsCreated++;
+        String id = "R" + roomsCreated;
         rooms.add(new Room(id, roomCode, buildingAddress, numberOfSeats, floor));
     }
 
@@ -53,5 +53,8 @@ public class RoomList
         room.modifyRoom(roomCode, buildingAddress, numberOfSeats, floor);
     }
 
-
+    public static int getRoomsCreated()
+    {
+        return roomsCreated;
+    }
 }
