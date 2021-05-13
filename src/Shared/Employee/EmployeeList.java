@@ -20,7 +20,8 @@ public class EmployeeList
 
     public void removeEmployee(int employeeID)
     {
-        for (int i = 0; i < employees.size(); i++) {
+        for (int i = 0; i < employees.size(); i++)
+        {
             if (employees.get(i).getId() == employeeID)
             {
                 employees.remove(i);
@@ -31,7 +32,8 @@ public class EmployeeList
 
     public void modifyEmployee(int employeeID, String name, String surname, String role, ArrayList<String> permissions)
     {
-        for (int i = 0; i < employees.size(); i++) {
+        for (int i = 0; i < employees.size(); i++)
+        {
             if (employees.get(i).getId() == employeeID)
             {
                 employees.get(i).setName(name);
@@ -43,7 +45,8 @@ public class EmployeeList
         }
     }
 
-    public ArrayList<Employee> getEmployees() {
+    public ArrayList<Employee> getEmployees()
+    {
         return employees;
     }
 
@@ -51,7 +54,8 @@ public class EmployeeList
     {
         ArrayList<Employee> e = new ArrayList<>();
 
-        for (int i = 0; i < employees.size(); i++) {
+        for (int i = 0; i < employees.size(); i++)
+        {
             if (employees.get(i).getMessageRooms().contains(messageRoom))
                 e.add(employees.get(i));
         }
@@ -63,7 +67,8 @@ public class EmployeeList
     {
         ArrayList<Employee> e = new ArrayList<>();
 
-        for (int i = 0; i < employees.size(); i++) {
+        for (int i = 0; i < employees.size(); i++)
+        {
             if (employees.get(i).getEvents().contains(event))
                 e.add(employees.get(i));
         }
@@ -75,7 +80,8 @@ public class EmployeeList
     {
         ArrayList<Employee> e = new ArrayList<>();
 
-        for (int i = 0; i < employees.size(); i++) {
+        for (int i = 0; i < employees.size(); i++)
+        {
             if (employees.get(i).getRole().equals(role))
                 e.add(employees.get(i));
         }
@@ -87,7 +93,8 @@ public class EmployeeList
     {
         ArrayList<Employee> e = new ArrayList<>();
 
-        for (int i = 0; i < employees.size(); i++) {
+        for (int i = 0; i < employees.size(); i++)
+        {
             if (employees.get(i).getName().equals(name))
                 e.add(employees.get(i));
         }
@@ -99,7 +106,8 @@ public class EmployeeList
     {
         ArrayList<Employee> e = new ArrayList<>();
 
-        for (int i = 0; i < employees.size(); i++) {
+        for (int i = 0; i < employees.size(); i++)
+        {
             if (employees.get(i).getSurname().equals(surname))
                 e.add(employees.get(i));
         }

@@ -3,7 +3,8 @@ package client.ViewModel;
 import javafx.beans.property.*;
 import javafx.scene.control.DatePicker;
 
-public class CreateEventViewModel {
+public class CreateEventViewModel
+{
     //private Model model;
     private StringProperty titleProperty;
     private StringProperty descriptionProperty;
@@ -19,7 +20,8 @@ public class CreateEventViewModel {
     private StringProperty linkProperty;
     private StringProperty errorProperty;
 
-    public CreateEventViewModel(Model model){
+    public CreateEventViewModel(Model model)
+    {
         //this.model = model;
         this.titleProperty = new SimpleStringProperty();
         this.descriptionProperty = new SimpleStringProperty();

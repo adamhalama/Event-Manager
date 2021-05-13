@@ -23,7 +23,7 @@ public class RoomList
     {
         for (int i = 0; i < rooms.size(); i++)
         {
-            if(roomID.equals(rooms.get(i).getRoomID()))
+            if (roomID.equals(rooms.get(i).getRoomID()))
             {
                 rooms.remove(i);
                 break;
@@ -40,7 +40,7 @@ public class RoomList
     {
         for (int i = 0; i < rooms.size(); i++)
         {
-            if(roomID.equals(rooms.get(i).getRoomID()))
+            if (roomID.equals(rooms.get(i).getRoomID()))
             {
                 rooms.get(i).modifyRoom(roomCode, buildingAddress, numberOfSeats, floor);
                 break;

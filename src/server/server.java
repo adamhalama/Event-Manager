@@ -7,25 +7,24 @@ import java.rmi.registry.Registry;
 
 class Server
 {
-  public static void main(String[] args)
-      throws RemoteException, MalformedURLException
-  {
-    startRegistry();
-    RmiCaseServer server = new RmiCaseServer();
-    server.start();
-    System.out.println("Server started...");
-  }
+    public static void main(String[] args)
+            throws RemoteException, MalformedURLException
+    {
+        startRegistry();
+        RmiCaseServer server = new RmiCaseServer();
+        server.start();
+        System.out.println("Server started...");
+    }
 
-  public static void startRegistry() throws RemoteException
-  {
-    try
+    public static void startRegistry() throws RemoteException
     {
-      Registry reg = LocateRegistry.createRegistry(1099);
-      System.out.println("Registry started...");
+        try
+        {
+            Registry reg = LocateRegistry.createRegistry(1099);
+            System.out.println("Registry started...");
+        } catch (java.rmi.server.ExportException e)
+        {
+            System.out.println("Registry already started? " + e.getMessage());
+        }
     }
-    catch (java.rmi.server.ExportException e)
-    {
-      System.out.println("Registry already started? " + e.getMessage());
-    }
-  }
 }
