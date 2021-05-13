@@ -59,5 +59,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="javafx-swt-SEP2" level="application" />
   </component>
 </module>

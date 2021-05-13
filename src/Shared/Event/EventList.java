@@ -17,10 +17,6 @@ public class EventList {
         return events;
     }
 
-    //TODO the selection should be more detailed
-    //by specific date, month, year, hour
-    //and also the platform and room later
-
     public ArrayList<Event> getEventByCreateTime(String date){
         ArrayList<Event> eventsC = new ArrayList<>();
         for (int i = 0; i < events.size(); i ++){
@@ -74,6 +70,56 @@ public class EventList {
                 events.remove(e);
             }
         }
+    }
+
+    public ArrayList<Event> getEventsOnline(){
+        ArrayList<Event> eventsOnline = new ArrayList<>();
+        for (int i = 0; i < events.size(); i++){
+            if (events.get(i).isOnline()){
+                eventsOnline.add(events.get(i));
+            }
+        }
+        return eventsOnline;
+    }
+
+    public ArrayList<Event> getEventsPhysical(){
+        ArrayList<Event> eventsOffline = new ArrayList<>();
+        for (int i = 0; i < events.size(); i++){
+            if (!events.get(i).isOnline()){
+                eventsOffline.add(events.get(i));
+            }
+        }
+        return eventsOffline;
+    }
+
+    public ArrayList<Event> getEventsDiscord(){
+        ArrayList<Event> eventsDiscord = new ArrayList<>();
+        for (int i = 0; i < events.size(); i++){
+            if (events.get(i).getPlatform().equals("Discord")){
+                eventsDiscord.add(events.get(i));
+            }
+        }
+        return eventsDiscord;
+    }
+
+    public ArrayList<Event> getEventsZoom(){
+        ArrayList<Event> eventsZoom = new ArrayList<>();
+        for (int i = 0; i < events.size(); i++){
+            if (events.get(i).getPlatform().equals("Zoom")){
+                eventsZoom.add(events.get(i));
+            }
+        }
+        return eventsZoom;
+    }
+
+    public ArrayList<Event> getEventTeams(){
+        ArrayList<Event> eventsTeams = new ArrayList<>();
+        for (int i = 0; i < events.size(); i++){
+            if (events.get(i).getPlatform().equals("Teams")){
+                eventsTeams.add(events.get(i));
+            }
+        }
+        return eventsTeams;
     }
 
     @Override

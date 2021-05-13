@@ -1,4 +1,4 @@
-package Shared.Epmloyee;
+package Shared.Employee;
 
 public class EmployeeList
 {

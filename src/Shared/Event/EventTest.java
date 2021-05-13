@@ -4,27 +4,25 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-
 class EventTest {
     private EventList list = new EventList();
 
     @BeforeEach
     void setList() {
         Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
-                true, "Discord", "link");
+                 "Discord", "link");
         Event e2 = new Event("B", "None", 2021, 5, 14, 15, 50, 2021, 5, 14, 16, 30,
-                true, "Zoom", "link");
+                 "Zoom", "link");
         Event e3 = new Event("C", "None", 2021, 5, 14, 10, 50, 2021, 5, 14, 14, 30,
-                true, "Teams", "link");
+                 "Teams", "link");
         Event e4 = new Event("D", "None", 2021, 5, 14, 12, 50, 2021, 5, 14, 14, 30,
-                true, "Discord", "link");
+                 "Discord", "link");
         Event e5 = new Event("E", "None", 2021, 5, 3, 9, 50, 2021, 5, 3, 14, 30,
-                false, "Discord", "link");
+                 "Room1");
         Event e6 = new Event("F", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
-                false, "Discord", "link");
+                "Room1");
         Event e7 = new Event("G", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
-                false, "Discord", "link");
+                "Room1");
         list.add(e1);
         list.add(e2);
         list.add(e3);
