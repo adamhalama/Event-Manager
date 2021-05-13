@@ -15,8 +15,7 @@ public class RoomList
     public void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor)
     {
         roomsCreated++;
-        String id = "R" + roomsCreated;
-        rooms.add(new Room(id, roomCode, buildingAddress, numberOfSeats, floor));
+        rooms.add(new Room(roomsCreated, roomCode, buildingAddress, numberOfSeats, floor));
     }
 
     public void removeRoom(String roomID)

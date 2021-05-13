@@ -20,7 +20,7 @@ public class CreateEventViewModel
     private StringProperty linkProperty;
     private StringProperty errorProperty;
 
-    public CreateEventViewModel(Model model)
+    public CreateEventViewModel(/*Model model*/)
     {
         //this.model = model;
         this.titleProperty = new SimpleStringProperty();
