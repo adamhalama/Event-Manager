@@ -79,8 +79,11 @@ public class EventList {
 
     @Override
     public String toString() {
-        return "EventList{" +
-                "events=" + events +
-                '}';
+        String eventInfo = "";
+        for (int i = 0; i < events.size(); i++){
+            eventInfo += events.get(i).toString();
+            eventInfo += '\n';
+        }
+        return eventInfo;
     }
 }
