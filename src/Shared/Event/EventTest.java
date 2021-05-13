@@ -9,7 +9,7 @@ class EventTest {
 
     @BeforeEach
     void setList() {
-        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
+        /*Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
                  "Discord", "link");
         Event e2 = new Event("B", "None", 2021, 5, 14, 15, 50, 2021, 5, 14, 16, 30,
                  "Zoom", "link");
@@ -29,7 +29,7 @@ class EventTest {
         list.add(e4);
         list.add(e5);
         list.add(e6);
-        list.add(e7);
+        list.add(e7);*/
     }
 
     @Test void printWholeList(){

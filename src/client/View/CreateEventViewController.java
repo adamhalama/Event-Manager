@@ -35,20 +35,20 @@ public class CreateEventViewController
     private TextField linkTextField;
     @FXML
     private Label errorLabel;
-    private ViewHandler viewHandler;
-    private ViewModel viewModel;
+    /*private ViewHandler viewHandler;
+    private ViewModel viewModel;*/
     private Region root;
 
     public CreateEventViewController()
     {
     }
 
-    public void init(ViewHandler viewHandler, ViewModel viewModel, Region root)
+    /*public void init(ViewHandler viewHandler, ViewModel viewModel, Region root)
     {
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         this.root = root;
 
 
-    }
+    }*/
 }

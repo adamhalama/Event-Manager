@@ -61,5 +61,6 @@
     </orderEntry>
     <orderEntry type="library" name="javafx-swt-SEP2" level="application" />
     <orderEntry type="library" name="JavaFX_11" level="application" />
+    <orderEntry type="library" name="postgresql-42.2.20" level="project" />
   </component>
 </module>

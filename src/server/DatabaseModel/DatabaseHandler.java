@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 
 public class DatabaseHandler
 {
-    private String url = "postgres://avrstlzujnmrbd:fe4b3eed1db09683f9494477814865cffd6c116cd686a2533bc1021605ebdea8@ec2-54-73-58-75.eu-west-1.compute.amazonaws.com:5432/ddjtq5l8q18roq";
+    private String url = "jdbc:postgresql://avrstlzujnmrbd:fe4b3eed1db09683f9494477814865cffd6c116cd686a2533bc1021605ebdea8@ec2-54-73-58-75.eu-west-1.compute.amazonaws.com:5432/ddjtq5l8q18roq";
     private String user = "avrstlzujnmrbd";
     private String password = "fe4b3eed1db09683f9494477814865cffd6c116cd686a2533bc1021605ebdea8";
     private int port = 5432;
