@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Room
 {
-    private final String roomID;
+    private final int roomID;
     private String roomCode;
     private int floor;
     private String buildingAddress;
@@ -16,7 +16,7 @@ public class Room
     private final Timestamp creationDate;
     private Timestamp lastModifiedDate;
 
-    public Room(String roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor)
+    public Room(int roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor)
     {
         this.roomID = roomID;
         this.roomCode = roomCode;
@@ -80,7 +80,7 @@ public class Room
         lastModifiedDate = new Timestamp(System.currentTimeMillis());
     }
 
-    public String getRoomID()
+    public int getRoomID()
     {
         return roomID;
     }
