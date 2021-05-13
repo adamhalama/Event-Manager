@@ -1,5 +1,7 @@
 package Shared.Event;
 
+import Shared.Event.Platform.PlatformFactory;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,11 +15,13 @@ public class Event {
     private String title; //the title of the event
     private String description;
     private boolean isOnline;
-    private String platform; //if online, choose a platform
+    private String platformString; //if online, choose a platform
+    private String onlineLink; //for share the link to fellows
+    private PlatformFactory platformFactory;
     private String room; //if physical, choose a room (it could be another type, let's see in the future)
 
     public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
-                 int yearE, int monthE, int dayE, int hourE, int minuteE, boolean isOnline) {
+                 int yearE, int monthE, int dayE, int hourE, int minuteE, boolean isOnline, String platform, String link) {
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
@@ -25,7 +29,6 @@ public class Event {
         this.time_create = sdf.format(date);
         this.title = title;
 
-        //add a limit for meeting time here
         // i set a limit for time here, the meeting should only be held from 9 - 17 on workdays
         String timeFormat = "";
         timeFormat += String.valueOf(yearS);
@@ -66,8 +69,15 @@ public class Event {
 
         this.description = description;
         this.isOnline = isOnline;
+
         this.room = "room";
-        this.platform = "platform";
+        if (isOnline) {
+            this.platformString = platformFactory.getPlatform(platform).type(); // here i would use factory design pattern
+            this.onlineLink = platformFactory.getPlatform(platform).meetingLink(link);
+        } else {
+            this.platformString = "";
+            this.onlineLink = "";
+        }
         //TODO add platform and room
     }
 
@@ -132,7 +142,13 @@ public class Event {
     public void setPlatform(String platform) {
         if (!isOnline) {
             throw new IllegalArgumentException("You cannot choose an online platform if you have physical meeting!");
-        } else this.platform = platform;
+        } else this.platformString = platformFactory.getPlatform(platform).type();
+    }
+
+    public void setOnlineLink(String link, String platform){
+        if (!isOnline) {
+            throw new IllegalArgumentException("You cannot choose an online platform if you have physical meeting!");
+        } else this.onlineLink = platformFactory.getPlatform(platform).meetingLink(link);
     }
 
     public String getTitle() {
@@ -144,7 +160,11 @@ public class Event {
     }
 
     public String getPlatform() {
-        return platform;
+        return platformString;
+    }
+
+    public String getOnlineLink() {
+        return onlineLink;
     }
 
     public String getTime_create() {
