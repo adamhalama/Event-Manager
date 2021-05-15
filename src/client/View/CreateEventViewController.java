@@ -43,12 +43,14 @@ public class CreateEventViewController
     {
     }
 
-    /*public void init(ViewHandler viewHandler, ViewModel viewModel, Region root)
+    public void init(ViewHandler viewHandler, ViewModel viewModel, Region root)
     {
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         this.root = root;
 
+        this.titleTextField.textProperty().bindBidirectional(
 
-    }*/
+        );
+    }
 }
