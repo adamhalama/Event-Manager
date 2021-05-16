@@ -1,5 +1,6 @@
 package client.ViewModel;
 
+import client.Model.Model;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,7 +17,7 @@ public class CreateRoomViewModel
     private StringProperty equipmentToAdd;
     private ObservableList<String> equipmentList;
 
-    public CreateRoomViewModel(/*Model model*/)
+    public CreateRoomViewModel(Model model)
     {
         roomCode = new SimpleStringProperty();
         floor = new SimpleIntegerProperty();

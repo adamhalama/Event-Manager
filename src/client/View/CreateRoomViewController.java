@@ -1,6 +1,7 @@
 package client.View;
 
 
+import client.ViewModel.CreateRoomViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -22,15 +23,15 @@ public class CreateRoomViewController
     @FXML
     private ListView<String> equipmentList;
 
-    /*private ViewHandler viewHandler;
-    private CreateRoomViewModel viewModel;*/
+    private ViewHandler viewHandler;
+    private CreateRoomViewModel viewModel;
     private Region root;
 
     public CreateRoomViewController()
     {
     }
 
-    /*public void init(ViewHandler viewHandler, CreateRoomViewModel viewModel, Region root)
+    public void init(ViewHandler viewHandler, CreateRoomViewModel viewModel, Region root)
     {
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
@@ -38,7 +39,7 @@ public class CreateRoomViewController
 
         equipmentList.setItems(null);
 
-    }*/
+    }
 
     @FXML
     private void addButton()
