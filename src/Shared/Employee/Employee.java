@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Employee
 {
     private int id;
+    private String username;
     private String name;
     private String surname;
     private ArrayList<Integer> events;
@@ -12,11 +13,12 @@ public class Employee
     private String role;
     private ArrayList<String> permissions;
 
-    public Employee(int id, String name, String surname, ArrayList<Integer> events,
+    public Employee(int id, String username, String name, String surname, ArrayList<Integer> events,
                     ArrayList<Integer> messageRooms, String role, ArrayList<String> permissions)
     {
         this.id = id;
         this.name = name;
+        this.username = username;
         this.surname = surname;
         this.events = events;
         this.messageRooms = messageRooms;
@@ -24,15 +26,16 @@ public class Employee
         this.permissions = permissions;
     }
 
-    public Employee(int id, String name, String surname, String role, ArrayList<String> permissions)
+    public Employee(int id, String username, String name, String surname, String role)
     {
         this.id = id;
+        this.username = username;
         this.name = name;
         this.surname = surname;
         this.events = new ArrayList<>();
         this.messageRooms = new ArrayList<>();
         this.role = role;
-        this.permissions = permissions;
+        this.permissions = new ArrayList<>();
     }
 
     public void addEvent(int event)
