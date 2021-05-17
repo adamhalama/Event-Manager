@@ -12,14 +12,14 @@ public class DatabaseHandler
 
     public DatabaseHandler()
     {
-        try
-        {
-            Class.forName("org.postgresql.Driver");
-            this.connection = DriverManager.getConnection("jdbc:postgresql://"+DatabaseCredentials.HOST+":"+DatabaseCredentials.PORT+"/"+DatabaseCredentials.NAME, DatabaseCredentials.USER, DatabaseCredentials.PASSWORD);
-        } catch (SQLException | ClassNotFoundException throwables)
-        {
-            throwables.printStackTrace();
-        }
+//        try
+//        {
+//            Class.forName("org.postgresql.Driver");
+//            this.connection = DriverManager.getConnection("jdbc:postgresql://"+DatabaseCredentials.HOST+":"+DatabaseCredentials.PORT+"/"+DatabaseCredentials.NAME, DatabaseCredentials.USER, DatabaseCredentials.PASSWORD);
+//        } catch (SQLException | ClassNotFoundException throwables)
+//        {
+//            throwables.printStackTrace();
+//        }
     }
 
     public void test()

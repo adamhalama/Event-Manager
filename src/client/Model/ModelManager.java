@@ -9,9 +9,9 @@ public class ModelManager implements Model{
     private Event event;
     private EventList eventList;
 
-    public ModelManager(Event event, EventList eventList){
-        this.event = event;
-        this.eventList = eventList;
+    public ModelManager(){
+        this.event = new Event();
+        this.eventList = new EventList();
     }
 
     @Override

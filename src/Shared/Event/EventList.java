@@ -14,6 +14,7 @@ public class EventList
     public void add(Event event)
     {
         events.add(event);
+        event.setEvent_id(events.size() - 1);
     }
 
     public ArrayList<Event> getEvents()
