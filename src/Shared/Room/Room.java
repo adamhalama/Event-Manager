@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Room
 {
     private final int roomID;
-    private String roomCode;
+    private String roomNumber;
     private int floor;
     private String buildingAddress;
 
@@ -16,10 +16,10 @@ public class Room
     private final Timestamp creationDate;
     private Timestamp lastModifiedDate;
 
-    public Room(int roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor)
+    public Room(int roomID, String roomNumber, String buildingAddress, int numberOfSeats, int floor)
     {
         this.roomID = roomID;
-        this.roomCode = roomCode;
+        this.roomNumber = roomNumber;
         this.floor = floor;
         this.buildingAddress = buildingAddress;
 
@@ -30,9 +30,9 @@ public class Room
         lastModifiedDate = creationDate;
     }
 
-    public void modifyRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor)
+    public void modifyRoom(String roomNumber, String buildingAddress, int numberOfSeats, int floor)
     {
-        this.roomCode = roomCode;
+        this.roomNumber = roomNumber;
         this.floor = floor;
         this.buildingAddress = buildingAddress;
         this.numberOfSeats = numberOfSeats;
@@ -74,9 +74,9 @@ public class Room
         lastModifiedDate = new Timestamp(System.currentTimeMillis());
     }
 
-    public void setRoomCode(String roomCode)
+    public void setRoomNumber(String roomNumber)
     {
-        this.roomCode = roomCode;
+        this.roomNumber = roomNumber;
         lastModifiedDate = new Timestamp(System.currentTimeMillis());
     }
 
@@ -105,9 +105,9 @@ public class Room
         return buildingAddress;
     }
 
-    public String getRoomCode()
+    public String getRoomNumber()
     {
-        return roomCode;
+        return roomNumber;
     }
 
     public Timestamp getCreationDate()
