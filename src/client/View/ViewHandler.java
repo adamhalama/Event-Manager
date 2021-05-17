@@ -14,6 +14,7 @@ public class ViewHandler
     private Stage primaryStage;
     private Scene currentStage;
     private ViewModelFactory viewModelFactory;
+    private CreateEventViewController createEventViewController;
     private Model model;
 
     public ViewHandler(ViewModelFactory viewModelFactory, Model model)
@@ -26,7 +27,7 @@ public class ViewHandler
     public void start(Stage primaryStage)
     {
         this.primaryStage = primaryStage;
-        openView("Set");
+        openView("CreateEvent");
     }
 
     public void openView(String id)
@@ -35,7 +36,7 @@ public class ViewHandler
         switch (id)
         {
             case "CreateEvent":
-//                root = loadCreateEventView("CreateEventView.fxml");
+                root = loadCreateEventView("CreateEventView.fxml");
                 break;
         }
         currentStage.setRoot(root);
@@ -54,41 +55,59 @@ public class ViewHandler
 
 
 // Commented out code is copied from the assignment 3's viewHandler
-    /*private Region loadMainView(String fxmlFile)
-    {
-        if (chatViewController == null)
-        {
-            try
-            {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource(fxmlFile));
-                Region root = loader.load();
-                chatViewController = loader.getController();
-                chatViewController.init(this, viewModelFactory.getChatViewModel(), root);
-            } catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-        return chatViewController.getRoot();
-    }
+//    private Region loadMainView(String fxmlFile)
+//    {
+//        if (chatViewController == null)
+//        {
+//            try
+//            {
+//                FXMLLoader loader = new FXMLLoader();
+//                loader.setLocation(getClass().getResource(fxmlFile));
+//                Region root = loader.load();
+//                chatViewController = loader.getController();
+//                chatViewController.init(this, viewModelFactory.getChatViewModel(), root);
+//            } catch (Exception e)
+//            {
+//                e.printStackTrace();
+//            }
+//        }
+//        return chatViewController.getRoot();
+//    }
 
-    private Region loadSetView(String fxmlFile)
-    {
-        if (setUserNameViewController == null)
+//    private Region loadSetView(String fxmlFile)
+//    {
+//        if (setUserNameViewController == null)
+//        {
+//            try
+//            {
+//                FXMLLoader loader = new FXMLLoader();
+//                loader.setLocation(getClass().getResource(fxmlFile));
+//                Region root = loader.load();
+//                setUserNameViewController = loader.getController();
+//                setUserNameViewController.init(this, viewModelFactory.getSetUserNameViewModel(), root);
+//            } catch (Exception e)
+//            {
+//                e.printStackTrace();
+//            }
+//        }
+//        return setUserNameViewController.getRoot();
+//    }
+
+    private Region loadCreateEventView(String fxmlFile){
+        if (createEventViewController == null)
         {
             try
             {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
-                setUserNameViewController = loader.getController();
-                setUserNameViewController.init(this, viewModelFactory.getSetUserNameViewModel(), root);
+                createEventViewController = loader.getController();
+                createEventViewController.init(this, viewModelFactory.getCreateEventViewModel(), root);
             } catch (Exception e)
             {
                 e.printStackTrace();
             }
         }
-        return setUserNameViewController.getRoot();
-    }*/
+        return createEventViewController.getRoot();
+    }
 }

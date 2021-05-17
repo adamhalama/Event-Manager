@@ -6,8 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Event
-{
+public class Event {
+    private int event_id;
     private final String time_create; //when creating this event
     private String time_start; //when the event starts
     private String time_end; //when the event ends
@@ -31,8 +31,8 @@ public class Event
 
     //TODO add another constructor for physical room
     public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
-                 int yearE, int monthE, int dayE, int hourE, boolean isOnline, int minuteE, String platform, String link)
-    {
+                 int yearE, int monthE, int dayE, int hourE, int minuteE, boolean isOnline, String platform, String link) {
+        this.event_id = 0;
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
@@ -54,8 +54,7 @@ public class Event
         this.calendarS = Calendar.getInstance();
         calendarS.set(yearS, monthS - 1, dayS, hourS, minuteS);
         if ((hourS >= 9 && hourS < 17) &&
-                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6))
-        {
+                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6)) {
             this.time_start = timeFormat;
             this.dayS = dayS;
             this.monthS = monthS;
@@ -74,10 +73,8 @@ public class Event
         timeFormat1 += String.valueOf(minuteE);
         this.calendarE = Calendar.getInstance();
         calendarE.set(yearE, monthE - 1, dayE, hourE, minuteE);
-        if ((hourE >= 9 && hourE < 17) && (calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6))
-        {
-            if (!calendarE.before(calendarS) && (yearS == yearE && monthS == monthE && dayS == dayE))
-            {
+        if ((hourE >= 9 && hourE < 17) && (calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6)) {
+            if (!calendarE.before(calendarS) && (yearS == yearE && monthS == monthE && dayS == dayE)) {
                 this.time_end = timeFormat1;
                 this.dayE = dayE;
                 this.monthE = monthE;
@@ -91,12 +88,10 @@ public class Event
         this.room = "room";
 
         this.platformFactory = new PlatformFactory();
-        if (isOnline)
-        {
+        if (isOnline) {
             this.platformString = platformFactory.getPlatform(platform).type(); // here i would use factory design pattern
             this.onlineLink = platformFactory.getPlatform(platform).meetingLink(link);
-        } else
-        {
+        } else {
             this.platformString = "";
             this.onlineLink = "";
         }
@@ -104,8 +99,8 @@ public class Event
     }
 
     public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
-                 int yearE, int monthE, int dayE, int hourE, int minuteE, boolean isOnline, String room)
-    {
+                 int yearE, int monthE, int dayE, int hourE, int minuteE, boolean isOnline, String room) {
+        this.event_id = 0;
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
@@ -127,8 +122,7 @@ public class Event
         this.calendarS = Calendar.getInstance();
         calendarS.set(yearS, monthS - 1, dayS, hourS, minuteS);
         if ((hourS >= 9 && hourS < 17) &&
-                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6))
-        {
+                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6)) {
             this.time_start = timeFormat;
             this.dayS = dayS;
             this.monthS = monthS;
@@ -147,10 +141,8 @@ public class Event
         timeFormat1 += String.valueOf(minuteE);
         this.calendarE = Calendar.getInstance();
         calendarE.set(yearE, monthE - 1, dayE, hourE, minuteE);
-        if ((hourE >= 9 && hourE < 17) && (calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6))
-        {
-            if (!calendarE.before(calendarS) && (yearS == yearE && monthS == monthE && dayS == dayE))
-            {
+        if ((hourE >= 9 && hourE < 17) && (calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6)) {
+            if (!calendarE.before(calendarS) && (yearS == yearE && monthS == monthE && dayS == dayE)) {
                 this.time_end = timeFormat1;
                 this.dayE = dayE;
                 this.monthE = monthE;
@@ -165,16 +157,35 @@ public class Event
         //TODO add room
     }
 
-    public void setTitle(String title)
-    {
-        if (title != null)
-        {
+    public Event(){
+        this.event_id = 0;
+        this.title = null;
+        this.description = null;
+        this.yearS = 0;
+        this.monthS = 0;
+        this.dayS = 0;
+        this.yearE = 0;
+        this.monthE = 0;
+        this.dayE = 0;
+        this.time_start = null;
+        this.time_end = null;
+        this.time_create = null;
+        this.isOnline = false;
+        this.platformFactory = null;
+        this.room = null;
+    }
+
+    public void setEvent_id(int event_id) {
+        this.event_id = event_id;
+    }
+
+    public void setTitle(String title) {
+        if (title != null) {
             this.title = title;
         } else throw new IllegalArgumentException("The title cannot be empty!");
     }
 
-    public void setTimeS(int year, int month, int day, int hour, int minute)
-    {
+    public void setTimeS(int year, int month, int day, int hour, int minute) {
         // i set a limit for time here, the meeting should only be held from 9 - 17 on workdays
         String timeFormat = "";
         timeFormat += String.valueOf(year);
@@ -187,10 +198,8 @@ public class Event
         timeFormat += ":";
         timeFormat += String.valueOf(minute);
         calendarS.set(year, month - 1, day, hour, minute);
-        if ((hour >= 9 && hour < 17) && (calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6))
-        {
-            if (!calendarE.before(calendarS) && (year == yearE && month == monthE && day == dayE))
-            {
+        if ((hour >= 9 && hour < 17) && (calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6)) {
+            if (!calendarE.before(calendarS) && (year == yearE && month == monthE && day == dayE)) {
                 this.time_start = timeFormat;
                 this.dayS = day;
                 this.monthS = month;
@@ -199,8 +208,7 @@ public class Event
         } else throw new IllegalArgumentException("You should set time at work hours!");
     }
 
-    public void setTimeE(int year, int month, int day, int hour, int minute)
-    {
+    public void setTimeE(int year, int month, int day, int hour, int minute) {
         // i set a limit for time here, the meeting should only be held from 9 - 17 on workdays
         String timeFormat = "";
         timeFormat += String.valueOf(year);
@@ -213,10 +221,8 @@ public class Event
         timeFormat += ":";
         timeFormat += String.valueOf(minute);
         calendarE.set(year, month - 1, day, hour, minute);
-        if ((hour >= 9 && hour < 17) && (calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6))
-        {
-            if (!calendarE.before(calendarS) && (yearS == year && monthS == month && dayS == day))
-            {
+        if ((hour >= 9 && hour < 17) && (calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6)) {
+            if (!calendarE.before(calendarS) && (yearS == year && monthS == month && dayS == day)) {
                 this.time_end = timeFormat;
                 this.dayE = day;
                 this.monthE = month;
@@ -225,98 +231,82 @@ public class Event
         } else throw new IllegalArgumentException("You should set time at work hours!");
     }
 
-    public void setDescription(String des)
-    {
+    public void setDescription(String des) {
         this.description = des;
     }
 
-    public void setOnline(boolean isOnline)
-    {
+    public void setOnline(boolean isOnline) {
         this.isOnline = isOnline;
     }
 
-    public void setRoom(String room)
-    {
-        if (isOnline)
-        {
+    public void setRoom(String room) {
+        if (isOnline) {
             throw new IllegalArgumentException("You cannot choose a physical room if you have online meeting!");
         } else this.room = room;
     }
 
-    public void setPlatform(String platform)
-    {
-        if (!isOnline)
-        {
+    public void setPlatform(String platform) {
+        if (!isOnline) {
             throw new IllegalArgumentException("You cannot choose an online platform if you have physical meeting!");
         } else this.platformString = platformFactory.getPlatform(platform).type();
     }
 
-    public void setOnlineLink(String link, String platform)
-    {
-        if (!isOnline)
-        {
+    public void setOnlineLink(String link, String platform) {
+        if (!isOnline) {
             throw new IllegalArgumentException("You cannot choose an online platform if you have physical meeting!");
         } else this.onlineLink = platformFactory.getPlatform(platform).meetingLink(link);
     }
 
-    public String getTitle()
-    {
+    public String getTitle() {
         return title;
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return description;
     }
 
-    public String getPlatform()
-    {
+    public String getPlatform() {
         return platformString;
     }
 
-    public String getOnlineLink()
-    {
+    public String getOnlineLink() {
         return onlineLink;
     }
 
-    public String getTime_create()
-    {
+    public String getTime_create() {
         return time_create;
     }
 
-    public String getTime_start()
-    {
+    public String getTime_start() {
         return time_start;
     }
 
-    public String getTime_end()
-    {
+    public String getTime_end() {
         return time_end;
     }
 
-    public String getRoom()
-    {
+    public String getRoom() {
         return room;
     }
 
-    public boolean isOnline()
-    {
+    public int getEvent_id() {
+        return event_id;
+    }
+
+    public boolean isOnline() {
         return isOnline;
     }
 
-    public Calendar getCalendarS()
-    {
+    public Calendar getCalendarS() {
         return calendarS;
     }
 
-    public Calendar getCalendarE()
-    {
+    public Calendar getCalendarE() {
         return calendarE;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Title: " + getTitle() + ", Time create: " + getTime_create() + ", Start: " + getTime_start() + ", End: " + getTime_end()
                 + ", Description: " + getDescription() + ", isOnline: " + isOnline() + ", (if online)Platform: " + getPlatform() +
                 ", (if online)Link: " + getOnlineLink();
