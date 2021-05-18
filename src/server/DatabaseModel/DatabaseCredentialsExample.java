@@ -8,4 +8,5 @@ public class DatabaseCredentialsExample
   public static String PASSWORD = "123QWEasd";
   public static int PORT = 5432;
   public static String NAME = "postgres";
+  public static String SCHEMA_NAME = "sep2database";
 }

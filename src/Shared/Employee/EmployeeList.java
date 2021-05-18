@@ -12,34 +12,15 @@ public class EmployeeList
         this.employees = new ArrayList<>();
     }
 
-    public void addEmployee(String name, String surname, String role, ArrayList<String> permissions)
-    {
+    public void addEmployee(Employee employee) {
         employeesCreated++;
-        employees.add(new Employee(employeesCreated, name, surname, role, permissions));
+        employees.add(employee);
     }
 
-    public void removeEmployee(int employeeID)
-    {
-        for (int i = 0; i < employees.size(); i++)
-        {
-            if (employees.get(i).getId() == employeeID)
-            {
+    public void removeEmployee(int employeeID) {
+        for (int i = 0; i < employees.size(); i++) {
+            if (employees.get(i).getId() == employeeID) {
                 employees.remove(i);
-                break;
-            }
-        }
-    }
-
-    public void modifyEmployee(int employeeID, String name, String surname, String role, ArrayList<String> permissions)
-    {
-        for (int i = 0; i < employees.size(); i++)
-        {
-            if (employees.get(i).getId() == employeeID)
-            {
-                employees.get(i).setName(name);
-                employees.get(i).setSurname(surname);
-                employees.get(i).setRole(role);
-                employees.get(i).setPermissions(permissions);
                 break;
             }
         }
@@ -50,69 +31,44 @@ public class EmployeeList
         return employees;
     }
 
-    public ArrayList<Employee> getEmployeesByMessageRoom(int messageRoom)
-    {
-        ArrayList<Employee> e = new ArrayList<>();
+    public ArrayList<Employee> getEmployeesByMessageRoom(int messageRoom) {
+        ArrayList<Employee> employees = new ArrayList<>();
 
-        for (int i = 0; i < employees.size(); i++)
-        {
-            if (employees.get(i).getMessageRooms().contains(messageRoom))
-                e.add(employees.get(i));
+        for (int i = 0; i < employees.size(); i++) {
+            if (employees.get(i).getMessageRooms().contains(messageRoom)) employees.add(employees.get(i));
         }
 
-        return e;
+        return employees;
     }
 
-    public ArrayList<Employee> getEmployeesByEvent(int event)
-    {
-        ArrayList<Employee> e = new ArrayList<>();
+    public ArrayList<Employee> getEmployeesByEvent(int eventID) {
+        ArrayList<Employee> employees = new ArrayList<>();
 
-        for (int i = 0; i < employees.size(); i++)
-        {
-            if (employees.get(i).getEvents().contains(event))
-                e.add(employees.get(i));
+        for (int i = 0; i < employees.size(); i++) {
+            if (employees.get(i).getEvents().contains(eventID)) employees.add(employees.get(i));
         }
 
-        return e;
+        return employees;
     }
 
-    public ArrayList<Employee> getEmployeesByRole(String role)
-    {
-        ArrayList<Employee> e = new ArrayList<>();
+    public ArrayList<Employee> getEmployeesByRole(String role) {
+        ArrayList<Employee> employees = new ArrayList<>();
 
-        for (int i = 0; i < employees.size(); i++)
-        {
-            if (employees.get(i).getRole().equals(role))
-                e.add(employees.get(i));
+        for (int i = 0; i < employees.size(); i++) {
+            if (employees.get(i).getRole().equals(role)) employees.add(employees.get(i));
         }
 
-        return e;
+        return employees;
     }
 
-    public ArrayList<Employee> getEmployeesByName(String name)
-    {
-        ArrayList<Employee> e = new ArrayList<>();
+    public ArrayList<Employee> getEmployeesByText(String text) {
+        ArrayList<Employee> employees = new ArrayList<>();
 
-        for (int i = 0; i < employees.size(); i++)
-        {
-            if (employees.get(i).getName().equals(name))
-                e.add(employees.get(i));
+        for (int i = 0; i < employees.size(); i++) {
+            String employeeName = employees.get(i).getName() + " " + employees.get(i).getSurname();
+            if (employeeName.contains(text)) employees.add(employees.get(i));
         }
 
-        return e;
+        return employees;
     }
-
-    public ArrayList<Employee> getEmployeesBySurname(String surname)
-    {
-        ArrayList<Employee> e = new ArrayList<>();
-
-        for (int i = 0; i < employees.size(); i++)
-        {
-            if (employees.get(i).getSurname().equals(surname))
-                e.add(employees.get(i));
-        }
-
-        return e;
-    }
-
 }
