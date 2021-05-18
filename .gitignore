@@ -1,5 +1,6 @@
 .idea/.gitignore
 .idea/workspace.xml
+.idea/dataSources.xml
 
 ./src/server/DatabaseModel/DatabaseCredentials.java
 
