@@ -24,12 +24,13 @@ public class EmployeeModel
     {
         try
         {
-            String sql = "INSERT INTO " + this.getRoute() + " (username, password, name, surname, role) VALUES (?, ?, ?, ?, ?);";
+            String sql = "set schema sep2database INSERT INTO " + this.getRoute() + " (username, surname, name, password, role) VALUES (?, ?, ?, ?, ?);";
+
             PreparedStatement statement = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, username);
-            statement.setString(2, password);
+            statement.setString(2, surname);
             statement.setString(3, name);
-            statement.setString(4, surname);
+            statement.setString(4, password);
             statement.setString(5, role);
             statement.executeUpdate();
             ResultSet generatedKeys = statement.getGeneratedKeys();
