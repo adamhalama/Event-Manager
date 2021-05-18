@@ -138,80 +138,78 @@ public class ModelManager implements Model
     }
 
     @Override
-    public void setPlatform(String platform)
-    {
+    public void setPlatform(String platform) {
         event.setPlatform(platform);
     }
 
     @Override
-    public void setOnlineLink(String link, String platform)
-    {
+    public void setOnlineLink(String link, String platform) {
         event.setOnlineLink(link, platform);
     }
 
     @Override
-    public String getTitle()
-    {
+    public int getEvent_id() {
+        return event.getEvent_id();
+    }
+
+    @Override
+    public String getTitle() {
         return event.getTitle();
     }
 
     @Override
-    public String getDescription()
-    {
+    public String getDescription() {
         return event.getDescription();
     }
 
     @Override
-    public String getPlatform()
-    {
+    public String getPlatform() {
         return event.getPlatform();
     }
 
     @Override
-    public String getOnlineLink()
-    {
+    public String getOnlineLink() {
         return event.getOnlineLink();
     }
 
     @Override
-    public String getTime_create()
-    {
+    public String getTime_create() {
         return event.getTime_create();
     }
 
     @Override
-    public String getTime_start()
-    {
+    public String getTime_start() {
         return event.getTime_start();
     }
 
     @Override
-    public String getTime_end()
-    {
+    public String getTime_end() {
         return event.getTime_end();
     }
 
     @Override
-    public int getRoomID()
-    {
+    public int getRoomID() {
         return event.getRoomID();
     }
 
     @Override
-    public boolean isOnline()
-    {
+    public boolean isOnline() {
         return event.isOnline();
     }
 
     @Override
-    public void add(Event event) throws IllegalArgumentException
-    {
+    public void add(Event event) throws IllegalArgumentException {
         eventList.add(event);
     }
 
     @Override
-    public ArrayList<Event> getEvents()
-    {
+    public Event addEvent(Event e) {
+        eventList.addEvent(e);
+        return e;
+    }
+
+    @Override
+    public ArrayList<Event> getEvents() {
         return eventList.getEvents();
     }
 
@@ -231,6 +229,11 @@ public class ModelManager implements Model
     public ArrayList<Event> getEventByTitle(String title)
     {
         return eventList.getEventByTitle(title);
+    }
+
+    @Override
+    public ArrayList<Event> getEventByAnything(String s) {
+        return eventList.getEventByAnything(s);
     }
 
     @Override
@@ -255,6 +258,11 @@ public class ModelManager implements Model
     public void removeByEvent(Event e)
     {
         eventList.removeByEvent(e);
+    }
+
+    @Override
+    public void removeByEventID(int id) {
+        eventList.removeByEventID(id);
     }
 
     @Override
@@ -285,5 +293,10 @@ public class ModelManager implements Model
     public ArrayList<Event> getEventTeams()
     {
         return eventList.getEventTeams();
+    }
+
+    @Override
+    public int getSize() {
+        return eventList.getSize();
     }
 }

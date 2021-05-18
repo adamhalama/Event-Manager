@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="637.0" prefWidth="880.0" stylesheets="@darkTheme.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.View.EventListViewController">
+   <children>
+      <GridPane alignment="CENTER" prefHeight="175.0" prefWidth="794.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="850.0" minWidth="10.0" prefWidth="722.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="392.0" minWidth="10.0" prefWidth="105.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="270.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="270.0" minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <VBox prefHeight="110.0" prefWidth="658.0" GridPane.rowIndex="1">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="65.0" prefWidth="658.0">
+                     <children>
+                        <Label prefHeight="54.0" prefWidth="92.0" text=" Search :">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="searchTextField" prefHeight="33.0" prefWidth="382.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="72.0" prefWidth="658.0">
+                     <children>
+                        <Label text=" Search by date :">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="searchDate" prefHeight="30.0" prefWidth="302.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="54.0" prefWidth="727.0">
+               <children>
+                  <Label text="Event list">
+                     <font>
+                        <Font size="41.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="50.0" prefWidth="317.0" GridPane.columnIndex="1">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#refreshPress" prefHeight="37.0" prefWidth="94.0" text="Refresh">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="110.0" prefWidth="244.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#searchPress" prefHeight="37.0" prefWidth="94.0" text="Search">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </GridPane>
+      <VBox alignment="TOP_RIGHT" prefHeight="342.0" prefWidth="794.0">
+         <children>
+            <ScrollPane prefHeight="343.0" prefWidth="887.0">
+               <content>
+                  <TableView fx:id="eventList" prefHeight="340.0" prefWidth="867.0">
+                    <columns>
+                        <TableColumn fx:id="idColumn" prefWidth="53.0" text="ID" />
+                      <TableColumn fx:id="titleColumn" prefWidth="90.0" text="Title" />
+                      <TableColumn fx:id="descriptionColumn" prefWidth="128.0" text="Description" />
+                        <TableColumn fx:id="creatTColumn" prefWidth="158.0" text="Create time" />
+                        <TableColumn fx:id="dateColumn" prefWidth="158.0" text="Date" />
+                        <TableColumn fx:id="endTColumn" text="End time" />
+                        <TableColumn fx:id="isOnlineColumn" prefWidth="55.0" text="Online ?" />
+                        <TableColumn fx:id="platformColumn" prefWidth="88.0" text="Platform" />
+                        <TableColumn fx:id="roomColumn" prefWidth="52.0" text="Room" />
+                    </columns>
+                  </TableView>
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+      <VBox prefHeight="48.0" prefWidth="794.0">
+         <children>
+            <Label fx:id="errorLabel" prefHeight="42.0" prefWidth="749.0" text="errorLabel" textFill="RED" />
+         </children>
+      </VBox>
+      <GridPane alignment="CENTER" prefHeight="71.0" prefWidth="794.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#addPress" prefHeight="48.0" prefWidth="126.0" text="Add">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#editPress" prefHeight="48.0" prefWidth="126.0" text="Edit">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#removePress" prefHeight="48.0" prefWidth="126.0" text="Remove">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </GridPane>
+   </children>
+</VBox>

@@ -12,6 +12,7 @@ import java.util.Date;
 
 public class CreateEventViewModel {
     private Model model;
+    private IntegerProperty idProperty;
     private StringProperty titleProperty;
     private StringProperty descriptionProperty;
     private DatePicker startDate;
@@ -21,13 +22,14 @@ public class CreateEventViewModel {
     private IntegerProperty endHour;
     private IntegerProperty endMin;
     private BooleanProperty isOnline;
-    private StringProperty roomProperty;
+    private IntegerProperty roomProperty;
     private StringProperty platformProperty;
     private StringProperty linkProperty;
     private StringProperty errorProperty;
 
     public CreateEventViewModel(Model model) {
         this.model = model;
+        this.idProperty = new SimpleIntegerProperty();
         this.titleProperty = new SimpleStringProperty();
         this.descriptionProperty = new SimpleStringProperty();
         this.startDate = new DatePicker(LocalDate.now());
@@ -37,7 +39,7 @@ public class CreateEventViewModel {
         this.endHour = new SimpleIntegerProperty();
         this.endMin = new SimpleIntegerProperty();
         this.isOnline = new SimpleBooleanProperty();
-        this.roomProperty = new SimpleStringProperty();
+        this.roomProperty = new SimpleIntegerProperty();
         this.platformProperty = new SimpleStringProperty();
         this.linkProperty = new SimpleStringProperty();
         this.errorProperty = new SimpleStringProperty();
@@ -55,7 +57,7 @@ public class CreateEventViewModel {
         endHour.setValue(null);
         endMin.setValue(null);
         isOnline.setValue(null);
-        roomProperty.set(null);
+        roomProperty.setValue(null);
         platformProperty.set(null);
         linkProperty.set(null);
         errorProperty.set(null);
@@ -75,6 +77,10 @@ public class CreateEventViewModel {
 
     public IntegerProperty getStartHour() {
         return startHour;
+    }
+
+    public IntegerProperty getIdProperty(){
+        return idProperty;
     }
 
     public IntegerProperty getStartMin() {
@@ -101,7 +107,7 @@ public class CreateEventViewModel {
         return platformProperty;
     }
 
-    public StringProperty getRoomProperty() {
+    public IntegerProperty getRoomProperty() {
         return roomProperty;
     }
 
@@ -119,6 +125,14 @@ public class CreateEventViewModel {
 
     public void setErrorProperty(String errorProperty) {
         this.errorProperty.set(errorProperty);
+    }
+
+    public void setIdProperty(int idProperty) {
+        this.idProperty.set(idProperty);
+    }
+
+    public int getID(){
+        return model.getEvent_id();
     }
 
     public String getWholeMessage() {

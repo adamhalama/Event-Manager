@@ -17,7 +17,8 @@ public class EmployeeModel
 
     private String getRoute()
     {
-        return DatabaseCredentials.SCHEMA_NAME + ".employee";
+        return null;
+        //return DatabaseCredentials.SCHEMA_NAME + ".employee";
     }
 
     public int create(String username, String password, String name, String surname, String role) throws SQLException

@@ -97,7 +97,6 @@ public class Event {
             this.platformString = "";
             this.onlineLink = "";
         }
-        //TODO add room
     }
 
     public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
@@ -114,12 +113,6 @@ public class Event {
 
         // i set a limit for time here, the meeting should only be held from 9 - 17 on workdays
         String timeFormat = "";
-        timeFormat += String.valueOf(yearS);
-        timeFormat += "-";
-        timeFormat += String.valueOf(monthS);
-        timeFormat += "-";
-        timeFormat += String.valueOf(dayS);
-        timeFormat += "  ";
         timeFormat += String.valueOf(hourS);
         timeFormat += ":";
         timeFormat += String.valueOf(minuteS);
@@ -157,11 +150,12 @@ public class Event {
         this.description = description;
         this.isOnline = isOnline;
 
-        this.roomID = roomID;
-        //TODO add room
+        if (!isOnline) {
+            this.roomID = roomID;
+        }
     }
 
-    public Event(){
+    public Event() {
         this.event_id = 0;
         this.title = null;
         this.description = null;
@@ -311,7 +305,7 @@ public class Event {
 
     @Override
     public String toString() {
-        return "Title: " + getTitle() + ", Time create: " + getTime_create() + ", Start: " + getTime_start() + ", End: " + getTime_end()
+        return "ID: " + getEvent_id() + " Title: " + getTitle() + ", Time create: " + getTime_create() + ", Start: " + getTime_start() + ", End: " + getTime_end()
                 + ", Description: " + getDescription() + ", isOnline: " + isOnline() + ", (if online)Platform: " + getPlatform() +
                 ", (if online)Link: " + getOnlineLink();
         //should print the room or platform also

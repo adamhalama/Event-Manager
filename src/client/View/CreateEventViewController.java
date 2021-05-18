@@ -57,7 +57,7 @@ public class CreateEventViewController {
 
         this.titleTextField.textProperty().bindBidirectional(viewModel.getTitleProperty());
         this.descriptionArea.textProperty().bindBidirectional(viewModel.getDescriptionProperty());
-        this.errorLabel.setText(null);
+        this.errorLabel.setText("Welcome!");
         this.chooseStatus = -1;
 
         this.hourMenuS.setItems(FXCollections.observableArrayList(9, 10, 11, 12, 13, 14, 15, 16));
@@ -297,6 +297,7 @@ public class CreateEventViewController {
                     Event e = new Event(title, des, yearS, monthS, dayS, hourS, minuteS, yearE, monthE, dayE, hourE, minuteE,
                             true, platform, link);
                     viewModel.addEvent(e);
+                    viewModel.setIdProperty(e.getEvent_id());
                     reset();
                     Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                     a.setTitle("Event added." + " Type: online room.");
@@ -313,6 +314,7 @@ public class CreateEventViewController {
                     Event e = new Event(title, des, yearS, monthS, dayS, hourS, minuteS, yearE, monthE, dayE, hourE, minuteE,
                             false, room);
                     viewModel.addEvent(e);
+                    viewModel.setIdProperty(e.getEvent_id());
                     reset();
                     Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                     a.setTitle("Event added." + " Type: physical room.");
