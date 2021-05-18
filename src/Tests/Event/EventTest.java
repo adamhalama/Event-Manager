@@ -1,5 +1,6 @@
 package Tests.Event;
 
+import Shared.Event.Event;
 import Shared.Event.EventList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,27 +11,27 @@ class EventTest {
 
     @BeforeEach
     void setList() {
-        /*Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
-                 "Discord", "link");
+        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
+                 true, "Discord","link");
         Event e2 = new Event("B", "None", 2021, 5, 14, 15, 50, 2021, 5, 14, 16, 30,
-                 "Zoom", "link");
+                true, "Teams","link");
         Event e3 = new Event("C", "None", 2021, 5, 14, 10, 50, 2021, 5, 14, 14, 30,
-                 "Teams", "link");
+                true, "Zoom","link");
         Event e4 = new Event("D", "None", 2021, 5, 14, 12, 50, 2021, 5, 14, 14, 30,
-                 "Discord", "link");
+                true, "Discord","link");
         Event e5 = new Event("E", "None", 2021, 5, 3, 9, 50, 2021, 5, 3, 14, 30,
-                 "Room1");
+                 false,1);
         Event e6 = new Event("F", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
-                "Room1");
+                false, 2);
         Event e7 = new Event("G", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
-                "Room1");
+                false, 1);
         list.add(e1);
         list.add(e2);
         list.add(e3);
         list.add(e4);
         list.add(e5);
         list.add(e6);
-        list.add(e7);*/
+        list.add(e7);
     }
 
     @Test void printWholeList(){

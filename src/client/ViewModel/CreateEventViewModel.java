@@ -1,5 +1,6 @@
 package client.ViewModel;
 
+import Shared.Event.Event;
 import client.Model.Model;
 import javafx.beans.property.*;
 import javafx.scene.control.DatePicker;
@@ -9,8 +10,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-public class CreateEventViewModel
-{
+public class CreateEventViewModel {
     private Model model;
     private StringProperty titleProperty;
     private StringProperty descriptionProperty;
@@ -26,8 +26,7 @@ public class CreateEventViewModel
     private StringProperty linkProperty;
     private StringProperty errorProperty;
 
-    public CreateEventViewModel(Model model)
-    {
+    public CreateEventViewModel(Model model) {
         this.model = model;
         this.titleProperty = new SimpleStringProperty();
         this.descriptionProperty = new SimpleStringProperty();
@@ -44,7 +43,7 @@ public class CreateEventViewModel
         this.errorProperty = new SimpleStringProperty();
     }
 
-    public void clear(){
+    public void clear() {
         titleProperty.set(null);
         descriptionProperty.set(null);
 
@@ -62,59 +61,67 @@ public class CreateEventViewModel
         errorProperty.set(null);
     }
 
-
-    // convert the date in datepicker to string
-
-    public void addEvent(){
-        String title = titleProperty.get();
-        String des = descriptionProperty.get();
+    public void addEvent(Event e) {
+        model.add(e);
     }
 
-    public StringProperty getTitleProperty(){
+    public StringProperty getTitleProperty() {
         return titleProperty;
     }
 
-    public StringProperty getDescriptionProperty(){
+    public StringProperty getDescriptionProperty() {
         return descriptionProperty;
     }
 
-    public IntegerProperty getStartHour(){
+    public IntegerProperty getStartHour() {
         return startHour;
     }
 
-    public IntegerProperty getStartMin(){
+    public IntegerProperty getStartMin() {
         return startMin;
     }
 
-    public IntegerProperty getEndHour(){
+    public IntegerProperty getEndHour() {
         return endHour;
     }
 
-    public IntegerProperty getEndMin(){
+    public IntegerProperty getEndMin() {
         return endMin;
     }
 
-    public BooleanProperty getIsOnline(){
+    public BooleanProperty getIsOnline() {
         return isOnline;
     }
 
-    public StringProperty getPlatformProperty(){
+    public boolean isOnline() {
+        return model.isOnline();
+    }
+
+    public StringProperty getPlatformProperty() {
         return platformProperty;
     }
 
-    public StringProperty getRoomProperty(){
+    public StringProperty getRoomProperty() {
         return roomProperty;
     }
 
-    public StringProperty getLinkProperty(){
+    public StringProperty getLinkProperty() {
         return linkProperty;
     }
 
-    public StringProperty getErrorProperty(){
+    public StringProperty getErrorProperty() {
         return errorProperty;
     }
 
-    public void setIsOnline(boolean isOnline){
+    public void setIsOnline(boolean isOnline) {
         model.setOnline(isOnline);
+    }
+
+    public void setErrorProperty(String errorProperty) {
+        this.errorProperty.set(errorProperty);
+    }
+
+    public String getWholeMessage() {
+        return model.getEventByIndex(0).toString();
     }
 }

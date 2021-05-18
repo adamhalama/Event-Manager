@@ -27,7 +27,7 @@ public interface Model {
     int getRoomID();
     boolean isOnline();
     //part2 class eventList
-    void add(Event event);
+    void add(Event event) throws IllegalArgumentException;
     ArrayList<Event> getEvents();
     ArrayList<Event> getEventByCreateTime(String date);
     ArrayList<Event> getEventByStartTime(String date);
