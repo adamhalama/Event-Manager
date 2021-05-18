@@ -10,16 +10,20 @@ import javafx.collections.ObservableList;
 
 public class CreateRoomViewModel
 {
-    private StringProperty roomCode;
+    private StringProperty roomNumber;
     private IntegerProperty floor;
     private StringProperty address;
     private IntegerProperty seats;
     private StringProperty equipmentToAdd;
-    private ObservableList<String> equipmentList;
+    private ObservableList<EquipmentViewModel> equipmentList;
+
+    private Model model;
 
     public CreateRoomViewModel(Model model)
     {
-        roomCode = new SimpleStringProperty();
+        this.model = model;
+
+        roomNumber = new SimpleStringProperty();
         floor = new SimpleIntegerProperty();
         address = new SimpleStringProperty();
         seats = new SimpleIntegerProperty();
@@ -27,4 +31,48 @@ public class CreateRoomViewModel
 
         equipmentList = FXCollections.observableArrayList();
     }
+
+    public void addEquipment(boolean editing)
+    {
+        equipmentList.add(new EquipmentViewModel(equipmentToAdd.get()));
+
+        equipmentToAdd.setValue(null);
+    }
+
+    public void removeEquipment(int selectedIndex, boolean editing)
+    {
+        equipmentList.remove(selectedIndex);
+    }
+
+    public ObservableList<EquipmentViewModel> getEquipmentList()
+    {
+        return equipmentList;
+    }
+
+    public StringProperty getRoomNumberProperty()
+    {
+        return roomNumber;
+    }
+
+    public IntegerProperty getFloorProperty()
+    {
+        return floor;
+    }
+
+    public StringProperty getAddressProperty()
+    {
+        return address;
+    }
+
+    public IntegerProperty getSeatsProperty()
+    {
+        return seats;
+    }
+
+    public StringProperty getEquipmentToAddProperty()
+    {
+        return equipmentToAdd;
+    }
+
+
 }

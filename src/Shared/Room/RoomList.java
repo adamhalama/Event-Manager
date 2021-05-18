@@ -10,19 +10,20 @@ public class RoomList
     public RoomList()
     {
         rooms = new ArrayList<>();
+        roomsCreated = 1;
     }
 
     public void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor)
     {
-        roomsCreated++;
         rooms.add(new Room(roomsCreated, roomCode, buildingAddress, numberOfSeats, floor));
+        roomsCreated++;
     }
 
-    public void removeRoom(String roomID)
+    public void removeRoom(int roomID)
     {
         for (int i = 0; i < rooms.size(); i++)
         {
-            if (roomID.equals(rooms.get(i).getRoomID()))
+            if (roomID == rooms.get(i).getRoomID())
             {
                 rooms.remove(i);
                 break;

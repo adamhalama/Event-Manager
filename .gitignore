@@ -3,6 +3,9 @@
 
 ./src/server/DatabaseModel/DatabaseCredentials.java
 
+#out folder doesnt have to be on git
+./out
+
 # Compiled class file
 *.class
 
