@@ -5,11 +5,11 @@ import Shared.Event.EventList;
 
 import java.util.ArrayList;
 
-public class ModelManager implements Model{
+public class ModelManager implements Model {
     private Event event;
     private EventList eventList;
 
-    public ModelManager(){
+    public ModelManager() {
         this.event = new Event();
         this.eventList = new EventList();
     }
@@ -100,7 +100,7 @@ public class ModelManager implements Model{
     }
 
     @Override
-    public void add(Event event) {
+    public void add(Event event) throws IllegalArgumentException {
         eventList.add(event);
     }
 

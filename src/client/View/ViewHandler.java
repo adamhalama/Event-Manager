@@ -9,32 +9,27 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 
-public class ViewHandler
-{
+public class ViewHandler {
     private Stage primaryStage;
     private Scene currentStage;
     private ViewModelFactory viewModelFactory;
     private CreateEventViewController createEventViewController;
     private Model model;
 
-    public ViewHandler(ViewModelFactory viewModelFactory, Model model)
-    {
+    public ViewHandler(ViewModelFactory viewModelFactory, Model model) {
         this.viewModelFactory = viewModelFactory;
         this.model = model;
         currentStage = new Scene(new Region());
     }
 
-    public void start(Stage primaryStage)
-    {
+    public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         openView("CreateEvent");
     }
 
-    public void openView(String id)
-    {
+    public void openView(String id) {
         Region root = null;
-        switch (id)
-        {
+        switch (id) {
             case "CreateEvent":
                 root = loadCreateEventView("CreateEventView.fxml");
                 break;
@@ -42,8 +37,7 @@ public class ViewHandler
         currentStage.setRoot(root);
 
         String title = "Chat";
-        if (root.getUserData() != null)
-        {
+        if (root.getUserData() != null) {
             title += root.getUserData();
         }
         primaryStage.setTitle(title);
@@ -51,6 +45,10 @@ public class ViewHandler
         primaryStage.setWidth(root.getPrefWidth());
         primaryStage.setHeight(root.getPrefHeight());
         primaryStage.show();
+    }
+
+    public void closeView() {
+        primaryStage.close();
     }
 
 
@@ -93,18 +91,15 @@ public class ViewHandler
 //        return setUserNameViewController.getRoot();
 //    }
 
-    private Region loadCreateEventView(String fxmlFile){
-        if (createEventViewController == null)
-        {
-            try
-            {
+    private Region loadCreateEventView(String fxmlFile) {
+        if (createEventViewController == null) {
+            try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 createEventViewController = loader.getController();
                 createEventViewController.init(this, viewModelFactory.getCreateEventViewModel(), root);
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

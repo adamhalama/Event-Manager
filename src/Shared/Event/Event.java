@@ -38,7 +38,9 @@ public class Event {
         Date date = new Date();
 
         this.time_create = sdf.format(date);
-        this.title = title;
+        if (title != null) {
+            this.title = title;
+        } else throw new IllegalArgumentException("The title of the event cannot be null!");
 
         // i set a limit for time here, the meeting should only be held from 9 - 17 on workdays
         String timeFormat = "";
@@ -106,7 +108,9 @@ public class Event {
         Date date = new Date();
 
         this.time_create = sdf.format(date);
-        this.title = title;
+        if (title != null) {
+            this.title = title;
+        } else throw new IllegalArgumentException("The title of the event cannot be null!");
 
         // i set a limit for time here, the meeting should only be held from 9 - 17 on workdays
         String timeFormat = "";
