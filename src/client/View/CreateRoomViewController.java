@@ -104,6 +104,8 @@ public class CreateRoomViewController
     private void confirmButton()
     {
         //todo save the changes, push them, and call parent view
+
+        viewModel.confirm(editing);
     }
 
     public Region getRoot()

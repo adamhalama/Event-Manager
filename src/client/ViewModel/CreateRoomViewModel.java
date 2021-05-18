@@ -34,14 +34,27 @@ public class CreateRoomViewModel
 
     public void addEquipment(boolean editing)
     {
-        equipmentList.add(new EquipmentViewModel(equipmentToAdd.get()));
+        if (equipmentToAdd.getValue() != null && !equipmentToAdd.get().equals(""))
+        {
+                equipmentList.add(new EquipmentViewModel(equipmentToAdd.get()));
+                equipmentToAdd.setValue(null);
+        }
 
-        equipmentToAdd.setValue(null);
     }
 
     public void removeEquipment(int selectedIndex, boolean editing)
     {
-        equipmentList.remove(selectedIndex);
+        if (equipmentList.size() != 0 && equipmentList.size() -1 >= selectedIndex && selectedIndex >= 0)
+            equipmentList.remove(selectedIndex);
+    }
+
+    public void confirm(boolean editing)
+    {
+        if (!editing)
+            model.addRoom(roomNumber.get(), address.get(), seats.get(), floor.get());
+        else
+            return;
+        // something like room.modify();
     }
 
     public ObservableList<EquipmentViewModel> getEquipmentList()
