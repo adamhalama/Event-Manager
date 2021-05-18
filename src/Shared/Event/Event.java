@@ -27,7 +27,7 @@ public class Event {
     private String platformString; //if online, choose a platform
     private String onlineLink; //for share the link to fellows
     private PlatformFactory platformFactory;
-    private String room; //if physical, choose a room (it could be another type, let's see in the future)
+    private int roomID; //if physical, choose a room (it could be another type, let's see in the future)
 
     //TODO add another constructor for physical room
     public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
@@ -85,7 +85,7 @@ public class Event {
         this.description = description;
         this.isOnline = isOnline;
 
-        this.room = "room";
+        this.roomID = 0;
 
         this.platformFactory = new PlatformFactory();
         if (isOnline) {
@@ -99,7 +99,7 @@ public class Event {
     }
 
     public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
-                 int yearE, int monthE, int dayE, int hourE, int minuteE, boolean isOnline, String room) {
+                 int yearE, int monthE, int dayE, int hourE, int minuteE, boolean isOnline, int roomID) {
         this.event_id = 0;
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
@@ -153,7 +153,7 @@ public class Event {
         this.description = description;
         this.isOnline = isOnline;
 
-        this.room = room;
+        this.roomID = roomID;
         //TODO add room
     }
 
@@ -172,7 +172,7 @@ public class Event {
         this.time_create = null;
         this.isOnline = false;
         this.platformFactory = null;
-        this.room = null;
+        this.roomID = 0;
     }
 
     public void setEvent_id(int event_id) {
@@ -239,10 +239,10 @@ public class Event {
         this.isOnline = isOnline;
     }
 
-    public void setRoom(String room) {
+    public void setRoom(int room) {
         if (isOnline) {
             throw new IllegalArgumentException("You cannot choose a physical room if you have online meeting!");
-        } else this.room = room;
+        } else this.roomID = room;
     }
 
     public void setPlatform(String platform) {
@@ -285,8 +285,8 @@ public class Event {
         return time_end;
     }
 
-    public String getRoom() {
-        return room;
+    public int getRoomID() {
+        return roomID;
     }
 
     public int getEvent_id() {

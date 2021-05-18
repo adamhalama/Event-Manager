@@ -14,7 +14,7 @@ public interface Model {
     void setTimeE(int year, int month, int day, int hour, int minute);
     void setDescription(String des);
     void setOnline(boolean isOnline);
-    void setRoom(String room);
+    void setRoom(int room);
     void setPlatform(String platform);
     void setOnlineLink(String link, String platform);
     String getTitle();
@@ -24,7 +24,7 @@ public interface Model {
     String getTime_create();
     String getTime_start();
     String getTime_end();
-    String getRoom();
+    int getRoomID();
     boolean isOnline();
     //part2 class eventList
     void add(Event event);

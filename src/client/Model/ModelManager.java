@@ -40,7 +40,7 @@ public class ModelManager implements Model{
     }
 
     @Override
-    public void setRoom(String room) {
+    public void setRoom(int room) {
         event.setRoom(room);
     }
 
@@ -90,8 +90,8 @@ public class ModelManager implements Model{
     }
 
     @Override
-    public String getRoom() {
-        return event.getRoom();
+    public int getRoomID() {
+        return event.getRoomID();
     }
 
     @Override

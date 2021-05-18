@@ -94,7 +94,7 @@ class EventTest {
 
     @Test void setRoomForOnline(){
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class, ()-> {
-            list.getEventByIndex(0).setRoom("room");
+            list.getEventByIndex(0).setRoom(0);
         });
         assertEquals("You cannot choose a physical room if you have online meeting!", e.getMessage());
     }
