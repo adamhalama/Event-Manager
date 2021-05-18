@@ -55,6 +55,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public int getEvent_id() {
+        return event.getEvent_id();
+    }
+
+    @Override
     public String getTitle() {
         return event.getTitle();
     }
@@ -105,6 +110,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public Event addEvent(Event e) {
+        eventList.addEvent(e);
+        return e;
+    }
+
+    @Override
     public ArrayList<Event> getEvents() {
         return eventList.getEvents();
     }
@@ -125,6 +136,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public ArrayList<Event> getEventByAnything(String s) {
+        return eventList.getEventByAnything(s);
+    }
+
+    @Override
     public Event getEventByIndex(int index) {
         return eventList.getEventByIndex(index);
     }
@@ -142,6 +158,11 @@ public class ModelManager implements Model {
     @Override
     public void removeByEvent(Event e) {
         eventList.removeByEvent(e);
+    }
+
+    @Override
+    public void removeByEventID(int id) {
+        eventList.removeByEventID(id);
     }
 
     @Override
@@ -167,5 +188,10 @@ public class ModelManager implements Model {
     @Override
     public ArrayList<Event> getEventTeams() {
         return eventList.getEventTeams();
+    }
+
+    @Override
+    public int getSize() {
+        return eventList.getSize();
     }
 }

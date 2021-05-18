@@ -14,6 +14,12 @@ public class EventList {
         event.setEvent_id(events.size() - 1);
     }
 
+    public Event addEvent(Event e) {
+        events.add(0, e);
+        e.setEvent_id(events.size() - 1);
+        return e;
+    }
+
     public ArrayList<Event> getEvents() {
         return events;
     }
@@ -35,7 +41,9 @@ public class EventList {
                 eventsS.add(events.get(i));
             }
         }
-        return eventsS;
+        if (eventsS != null) {
+            return eventsS;
+        } else throw new NullPointerException("No matched event found.");
     }
 
     public ArrayList<Event> getEventByTitle(String title) {
@@ -46,6 +54,20 @@ public class EventList {
             }
         }
         return eventsT;
+    }
+
+    public ArrayList<Event> getEventByAnything(String s) {
+        ArrayList<Event> list = new ArrayList<>();
+        for (int i = 0; i < events.size(); i++) {
+            if (events.get(i).toString().contains(s)) {
+                list.add(events.get(i));
+            }
+        }
+        if (list != null) {
+            return list;
+        } else {
+            throw new NullPointerException("No result.");
+        }
     }
 
     public Event getEventByIndex(int index) {
@@ -69,6 +91,14 @@ public class EventList {
         for (int i = 0; i < events.size(); i++) {
             if (events.get(i).equals(e)) {
                 events.remove(e);
+            }
+        }
+    }
+
+    public void removeByEventID(int id) {
+        for (int i = 0; i < events.size(); i++) {
+            if (events.get(i).getEvent_id() == id) {
+                events.remove(events.get(i));
             }
         }
     }
@@ -121,6 +151,10 @@ public class EventList {
             }
         }
         return eventsTeams;
+    }
+
+    public int getSize(){
+        return events.size();
     }
 
     @Override

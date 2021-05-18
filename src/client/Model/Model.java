@@ -17,6 +17,7 @@ public interface Model {
     void setRoom(int room);
     void setPlatform(String platform);
     void setOnlineLink(String link, String platform);
+    int getEvent_id();
     String getTitle();
     String getDescription();
     String getPlatform();
@@ -28,17 +29,21 @@ public interface Model {
     boolean isOnline();
     //part2 class eventList
     void add(Event event) throws IllegalArgumentException;
+    Event addEvent(Event event);
     ArrayList<Event> getEvents();
     ArrayList<Event> getEventByCreateTime(String date);
     ArrayList<Event> getEventByStartTime(String date);
     ArrayList<Event> getEventByTitle(String title);
+    ArrayList<Event> getEventByAnything(String s);
     Event getEventByIndex(int index);
     Event getEvent(Event e);
     void remove(int index);
     void removeByEvent(Event e);
+    void removeByEventID(int id);
     ArrayList<Event> getEventsOnline();
     ArrayList<Event> getEventsPhysical();
     ArrayList<Event> getEventsDiscord();
     ArrayList<Event> getEventsZoom();
     ArrayList<Event> getEventTeams();
+    int getSize();
 }
