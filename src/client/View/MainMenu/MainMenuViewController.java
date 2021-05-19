@@ -43,6 +43,7 @@ public class MainMenuViewController
     @FXML
     private void eventsButton()
     {
+        System.out.println("test: eventsButton");
         viewHandler.openView("EventList");
     }
 
@@ -58,4 +59,8 @@ public class MainMenuViewController
         //todo open chat rooms
     }
 
+    public Region getRoot()
+    {
+        return root;
+    }
 }

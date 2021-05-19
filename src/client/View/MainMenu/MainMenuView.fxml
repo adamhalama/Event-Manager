@@ -9,17 +9,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../darkTheme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../darkTheme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.View.MainMenu.MainMenuViewController">
    <children>
       <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #7f878f;">
          <children>
-            <Button fx:id="myAccountButton" mnemonicParsing="false" text="My account">
+            <Button fx:id="myAccountButton" mnemonicParsing="false" onAction="#myAccountButton" text="My account">
                <HBox.margin>
                   <Insets bottom="10.0" left="5.0" right="25.0" top="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="logoutButton" mnemonicParsing="false" text="Log out">
+            <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logoutButton" text="Log out">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
@@ -38,7 +37,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="roomsButton" mnemonicParsing="false" prefWidth="158.0"  text="Rooms" textFill="#3c3b94">
+                  <Button fx:id="roomsButton" mnemonicParsing="false" onAction="#roomsButton" prefWidth="158.0" text="Rooms" textFill="#3c3b94">
                      <font>
                         <Font size="22.0" />
                      </font>
@@ -47,7 +46,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <Button fx:id="eventsButton" mnemonicParsing="false" prefWidth="158.0"  text="Events" textFill="#3c3b94">
+                  <Button mnemonicParsing="false" onAction="#eventsButton" prefWidth="158.0" text="Events" textFill="#3c3b94">
                      <font>
                         <Font size="23.0" />
                      </font>
@@ -56,7 +55,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <Button fx:id="employeesButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="158.0"  text="Employees" textFill="#3c3b94">
+                  <Button fx:id="employeesButton" mnemonicParsing="false" onAction="#employeesButton" prefHeight="50.0" prefWidth="158.0" text="Employees" textFill="#3c3b94">
                      <font>
                         <Font size="23.0" />
                      </font>
@@ -65,7 +64,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <Button fx:id="chatButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="158.0"  text="Chat" textFill="#3c3b94">
+                  <Button fx:id="chatButton" mnemonicParsing="false" onAction="#chatButton" prefHeight="50.0" prefWidth="158.0" text="Chat" textFill="#3c3b94">
                      <font>
                         <Font size="23.0" />
                      </font>

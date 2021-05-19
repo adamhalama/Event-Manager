@@ -4,6 +4,7 @@ package client.View;
 import client.Model.Model;
 import client.View.Event.CreateEventViewController;
 import client.View.Event.EventListViewController;
+import client.View.MainMenu.MainMenuViewController;
 import client.View.Room.CreateRoomViewController;
 import client.ViewModel.ViewModelFactory;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +22,7 @@ public class ViewHandler
     private Model model;
     private CreateRoomViewController createRoomViewController;
     private EventListViewController eventListViewController;
+    private MainMenuViewController mainMenuViewController;
 
     public ViewHandler(ViewModelFactory viewModelFactory, Model model)
     {
@@ -32,7 +34,7 @@ public class ViewHandler
     public void start(Stage primaryStage)
     {
         this.primaryStage = primaryStage;
-        openView("CreateRoom");
+        openView("MainMenu");
     }
 
     public void closeView()
@@ -45,22 +47,25 @@ public class ViewHandler
         Region root = null;
         switch (id)
         {
+            case "MainMenu":
+                root = loadMainMenuView("MainMenu/MainMenuView.fxml");
+                break;
             case "EventList":
-                root = loadEventListView("EventListView.fxml");
+                root = loadEventListView("Event/EventListView.fxml");
                 break;
             case "CreateEvent":
-                root = loadCreateEventView("CreateEventView.fxml");
+                root = loadCreateEventView("Event/CreateEventView.fxml");
                 break;
             case "CreateRoom":
-                root = loadCreateRoomView("CreateRoomView.fxml");
+                root = loadCreateRoomView("Room/CreateRoomView.fxml");
                 break;
             case "EditRoom":
-                root = loadEditRoomView("CreateRoomView.fxml");
+                root = loadEditRoomView("Room/CreateRoomView.fxml");
                 break;
         }
         currentStage.setRoot(root);
 
-        String title = "Chat";
+        String title = "Bruh app";
         if (root.getUserData() != null)
         {
             title += root.getUserData();
@@ -71,6 +76,26 @@ public class ViewHandler
         primaryStage.setHeight(root.getPrefHeight());
         primaryStage.show();
     }
+
+    private Region loadMainMenuView(String fxmlFile)
+    {
+        if (mainMenuViewController == null)
+        {
+            try
+            {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                mainMenuViewController = loader.getController();
+                mainMenuViewController.init(this, viewModelFactory.getMainMenuViewModel(), root);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return mainMenuViewController.getRoot();
+    }
+
 
     private Region loadCreateRoomView(String fxmlFile)
     {
