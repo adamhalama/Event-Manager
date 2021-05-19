@@ -60,6 +60,12 @@ public class ModelManager implements Model
     }
 
     @Override
+    public ArrayList<Room> getRoomsByAnything(String keyword)
+    {
+        return roomList.getRoomsByAnything(keyword);
+    }
+
+    @Override
     public void removeEquipment(Room room, String removedEquipment)
     {
         room.removeEquipment(removedEquipment);

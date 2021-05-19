@@ -43,14 +43,13 @@ public class MainMenuViewController
     @FXML
     private void eventsButton()
     {
-        System.out.println("test: eventsButton");
         viewHandler.openView("EventList");
     }
 
     @FXML
     private void employeesButton()
     {
-        //todo open eployeeList
+        //todo open employeeList
     }
 
     @FXML

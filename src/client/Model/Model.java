@@ -17,6 +17,7 @@ public interface Model {
     public void modifyRoom(String roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor);
     public void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor);
     int getRoomsCreated();
+    ArrayList<Room> getRoomsByAnything(String keyword);
 
     void removeEquipment(Room room, String removedEquipment);
     public void addEquipment(Room room, String addedEquipment);

@@ -10,6 +10,7 @@ public class ViewModelFactory
     private final CreateEventViewModel createEventViewModel;
     private final CreateRoomViewModel createRoomViewModel;
     private final MainMenuViewModel mainMenuViewModel;
+    private final RoomListViewModel roomListViewModel;
 
     public ViewModelFactory(Model model)
     {
@@ -17,6 +18,7 @@ public class ViewModelFactory
         createEventViewModel = new CreateEventViewModel(model);
         createRoomViewModel = new CreateRoomViewModel(model);
         mainMenuViewModel = new MainMenuViewModel(model);
+        roomListViewModel = new RoomListViewModel(model);
     }
 
     public CreateEventViewModel getCreateEventViewModel()
@@ -37,5 +39,10 @@ public class ViewModelFactory
     public MainMenuViewModel getMainMenuViewModel()
     {
         return mainMenuViewModel;
+    }
+
+    public RoomListViewModel getRoomListViewModel()
+    {
+        return roomListViewModel;
     }
 }

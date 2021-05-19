@@ -6,6 +6,7 @@ import client.View.Event.CreateEventViewController;
 import client.View.Event.EventListViewController;
 import client.View.MainMenu.MainMenuViewController;
 import client.View.Room.CreateRoomViewController;
+import client.View.Room.RoomListViewController;
 import client.ViewModel.ViewModelFactory;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,6 +24,9 @@ public class ViewHandler
     private CreateRoomViewController createRoomViewController;
     private EventListViewController eventListViewController;
     private MainMenuViewController mainMenuViewController;
+    private RoomListViewController roomListViewController;
+
+    private int pickedRoomID;
 
     public ViewHandler(ViewModelFactory viewModelFactory, Model model)
     {
@@ -56,6 +60,9 @@ public class ViewHandler
             case "CreateEvent":
                 root = loadCreateEventView("Event/CreateEventView.fxml");
                 break;
+            case "RoomList":
+                root = loadRoomListView("Room/RoomListView.fxml");
+                break;
             case "CreateRoom":
                 root = loadCreateRoomView("Room/CreateRoomView.fxml");
                 break;
@@ -75,6 +82,25 @@ public class ViewHandler
         primaryStage.setWidth(root.getPrefWidth());
         primaryStage.setHeight(root.getPrefHeight());
         primaryStage.show();
+    }
+
+    private Region loadRoomListView(String fxmlFile)
+    {
+        if (roomListViewController == null)
+        {
+            try
+            {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                roomListViewController = loader.getController();
+                roomListViewController.init(this, viewModelFactory.getRoomListViewModel(), root);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return roomListViewController.getRoot();
     }
 
     private Region loadMainMenuView(String fxmlFile)
@@ -174,8 +200,17 @@ public class ViewHandler
         return eventListViewController.getRoot();
     }
 
+    public void setPickedRoomID(int pickedRoomID)
+    {
+        this.pickedRoomID = pickedRoomID;
+    }
 
-// Commented out code is copied from the assignment 3's viewHandler
+    public int getPickedRoomID()
+    {
+        return pickedRoomID;
+    }
+
+    // Commented out code is copied from the assignment 3's viewHandler
 //    private Region loadMainView(String fxmlFile)
 //    {
 //        if (chatViewController == null)

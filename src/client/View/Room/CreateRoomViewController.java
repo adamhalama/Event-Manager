@@ -53,8 +53,7 @@ public class CreateRoomViewController
         equipmentList.setItems(viewModel.getEquipmentList());
 
         equipmentColumn.setCellValueFactory(
-            cellDate -> cellDate.getValue().getEquipmentProperty()
-    );
+                cellDate -> cellDate.getValue().getEquipmentProperty());
 
         roomNumber.textProperty().bindBidirectional(viewModel.getRoomNumberProperty());
         address.textProperty().bindBidirectional(viewModel.getAddressProperty());
@@ -108,6 +107,7 @@ public class CreateRoomViewController
         //todo save the changes, push them, and call parent view
 
         viewModel.confirm(editing);
+        viewHandler.openView("RoomList");
     }
 
     public Region getRoot()

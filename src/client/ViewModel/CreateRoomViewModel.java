@@ -50,6 +50,8 @@ public class CreateRoomViewModel
 
     public void confirm(boolean editing)
     {
+        // todo
+        //  some confirmation
         if (!editing)
             model.addRoom(roomNumber.get(), address.get(), seats.get(), floor.get());
         else

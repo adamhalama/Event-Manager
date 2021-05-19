@@ -57,4 +57,41 @@ public class RoomList
     {
         return roomsCreated;
     }
+
+    public ArrayList<Room> getRoomsByAnything(String keyword)
+    {
+
+        ArrayList<Room> selectedRooms = new ArrayList<>();
+
+        for (int i = 0; i < rooms.size(); i++)
+        {
+            Room current = rooms.get(i);
+            if
+            (
+                    String.valueOf(current.getRoomID()).contains(keyword) ||
+                            current.getBuildingAddress().contains(keyword) ||
+                            String.valueOf(current.getFloor()).contains(keyword) ||
+                            current.getRoomNumber().contains(keyword) ||
+                            String.valueOf(current.getNumberOfSeats()).contains(keyword)
+            )
+            {
+                selectedRooms.add(current);
+            } else
+            {
+                for (int j = 0; j < current.getEquipment().size(); j++)
+                {
+                    String currentEquipment = current.getEquipment().get(j);
+
+                    if (currentEquipment.contains(keyword))
+                    {
+                        selectedRooms.add(current);
+                        break;
+                    }
+                }
+            }
+
+        }
+
+        return selectedRooms;
+    }
 }
