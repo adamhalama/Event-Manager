@@ -110,6 +110,12 @@ public class CreateRoomViewController
         viewHandler.openView("RoomList");
     }
 
+    @FXML
+    private void backButton()
+    {
+        viewHandler.openView("RoomList");
+    }
+
     public Region getRoot()
     {
         return root;

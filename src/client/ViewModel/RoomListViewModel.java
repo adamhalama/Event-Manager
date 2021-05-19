@@ -23,6 +23,23 @@ public class RoomListViewModel
         errorLabel = new SimpleStringProperty();
 
         roomList = FXCollections.observableArrayList();
+
+        reset();
+    }
+
+    public void reset()
+    {
+        searchBox.setValue(null);
+        errorLabel.setValue(null);
+
+        roomList.clear();
+
+        Room[] rooms = model.getRooms().toArray(new Room[0]);
+
+        for (Room r : rooms)
+        {
+            roomList.add(new RoomViewModel(r.getRoomID(), r.getRoomNumber(), r.getFloor(), r.getBuildingAddress(), r.getNumberOfSeats()));
+        }
     }
 
     public ObservableList<RoomViewModel> getRoomList()
@@ -43,6 +60,12 @@ public class RoomListViewModel
 
     public void search()
     {
+        if (searchBox.get().equals(""))
+        {
+            reset();
+            return;
+        }
+        else
         roomList.clear();
 
         Room[] rooms = model.getRoomsByAnything(searchBox.get()).toArray(new Room[0]);

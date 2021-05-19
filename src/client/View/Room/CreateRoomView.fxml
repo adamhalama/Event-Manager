@@ -106,10 +106,18 @@
       </VBox>
       <HBox alignment="CENTER_RIGHT">
          <children>
-            <Button fx:id="confirmButton" mnemonicParsing="false" text="Confirm">
+            <Button mnemonicParsing="false" onAction="#confirmButton" text="Confirm">
                <font>
                   <Font size="15.0" />
                </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#backButton" prefWidth="73.6" text="Back">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="15.0" />
+               </HBox.margin>
             </Button>
          </children>
       </HBox>

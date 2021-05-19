@@ -65,12 +65,16 @@ public class RoomListViewController
 
         errorLabel.textProperty().bindBidirectional(viewModel.getErrorLabelProperty());
 
+        errorLabel.setText("");
+
+        viewModel.reset();
 
     }
 
     @FXML
     private void searchBoxKeyTyped()
     {
+
         viewModel.search();
     }
 
@@ -104,6 +108,12 @@ public class RoomListViewController
     private void backButton()
     {
         viewHandler.openView("MainMenu");
+    }
+
+    @FXML
+    private void addButton()
+    {
+        viewHandler.openView("CreateRoom");
     }
 
 
