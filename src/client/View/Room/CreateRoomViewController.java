@@ -1,6 +1,8 @@
-package client.View;
+package client.View.Room;
 
 
+import client.View.StringIntegerConverter;
+import client.View.ViewHandler;
 import client.ViewModel.CreateRoomViewModel;
 import client.ViewModel.EquipmentViewModel;
 import javafx.beans.binding.Bindings;

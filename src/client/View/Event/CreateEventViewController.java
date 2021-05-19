@@ -1,6 +1,7 @@
-package client.View;
+package client.View.Event;
 
 import Shared.Event.Event;
+import client.View.ViewHandler;
 import client.ViewModel.CreateEventViewModel;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;

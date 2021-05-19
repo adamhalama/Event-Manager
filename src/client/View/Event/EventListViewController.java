@@ -1,5 +1,6 @@
-package client.View;
+package client.View.Event;
 
+import client.View.ViewHandler;
 import client.ViewModel.EventViewModel;
 import client.ViewModel.EventListViewModel;
 import javafx.fxml.FXML;
@@ -87,6 +88,11 @@ public class EventListViewController {
     public void reset(){
         errorLabel.setText("Welcome.");
         viewModel.reset();
+    }
+
+    public Region getRoot()
+    {
+        return root;
     }
 
     /*

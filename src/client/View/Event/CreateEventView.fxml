@@ -14,8 +14,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="622.0" prefWidth="759.0" stylesheets="@darkTheme.css"
-      xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.View.CreateEventViewController">
+<VBox prefHeight="622.0" prefWidth="759.0" stylesheets="@../darkTheme.css"
+      xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.View.Event.CreateEventViewController">
     <children>
       <HBox alignment="CENTER">
          <children>
