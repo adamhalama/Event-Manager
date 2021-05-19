@@ -95,6 +95,41 @@ public class EventListViewController {
         return root;
     }
 
+    //todo fill the press methods
+    // adam:i had to add these so there were no errors and the view could at least start
+
+    @FXML
+    private void refreshPress()
+    {
+
+    }
+
+    @FXML
+    private void searchPress()
+    {
+
+    }
+
+    @FXML private void addPress()
+    {
+
+    }
+
+    @FXML private void editPress()
+    {
+
+    }
+
+    @FXML private void removePress()
+    {
+
+    }
+
+    @FXML private void backPress()
+    {
+        viewHandler.openView("MainMenu");
+    }
+
     /*
     For Jerry only:
     未完成的功能：
