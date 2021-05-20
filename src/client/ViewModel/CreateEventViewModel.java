@@ -43,6 +43,8 @@ public class CreateEventViewModel {
         this.platformProperty = new SimpleStringProperty();
         this.linkProperty = new SimpleStringProperty();
         this.errorProperty = new SimpleStringProperty();
+
+        System.out.println("22222");
     }
 
     public void clear() {

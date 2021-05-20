@@ -110,6 +110,7 @@ public class CreateEventViewController {
         startDate.setDayCellFactory(dayCellFactory);
         //↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑this setting is for disable the date before today
         //you cannot set the event before today
+        System.out.println("11111");
     }
 
     public void reset() {

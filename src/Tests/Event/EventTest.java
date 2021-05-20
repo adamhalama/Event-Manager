@@ -153,7 +153,7 @@ class EventTest {
     }
 
     @Test
-    void addSome(){
+    void addSome() {
         Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
                 true, "Discord", "link");
         Event e2 = new Event("B", "None", 2021, 5, 14, 15, 50, 2021, 5, 14, 16, 30,
@@ -168,7 +168,7 @@ class EventTest {
     }
 
     @Test
-    void search(){
+    void search() {
         Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
                 true, "Discord", "link");
         Event e2 = new Event("B", "None", 2021, 6, 3, 15, 50, 2021, 6, 3, 16, 30,
@@ -181,5 +181,21 @@ class EventTest {
 
         System.out.println(list.getEventOnlyDate("2021-06-04"));
         System.out.println(list.getEventOnlyDate("2021-06-03"));
+        System.out.println(list.getEventByID(3));
+    }
+
+    @Test
+    void dateString() {
+        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
+                true, "Discord", "link");
+        Event e2 = new Event("B", "None", 2021, 6, 3, 15, 50, 2021, 6, 3, 16, 30,
+                true, "Teams", "link");
+        Event e3 = new Event("G", "None", 2021, 6, 4, 9, 50, 2021, 6, 4, 14, 30,
+                false, 1);
+        list.add(e1);
+        list.add(e2);
+        list.add(e3);
+
+        System.out.println(e1.getDateString());
     }
 }

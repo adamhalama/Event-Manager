@@ -1,7 +1,9 @@
 package client.View.Event;
 
 import Shared.Event.Event;
+import client.View.SelectState;
 import client.View.ViewHandler;
+import client.ViewModel.EditEventViewModel;
 import client.ViewModel.EventViewModel;
 import client.ViewModel.EventListViewModel;
 import javafx.fxml.FXML;
@@ -49,14 +51,17 @@ public class EventListViewController {
 
     private ViewHandler viewHandler;
     private EventListViewModel viewModel;
+    private SelectState state;
     private Region root;
 
     public EventListViewController() {
     }
 
-    public void init(ViewHandler viewHandler, EventListViewModel viewModel, Region root) {
+    public void init(ViewHandler viewHandler, EventListViewModel viewModel, Region root,
+                     SelectState state) {
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
+        this.state = state;
         this.root = root;
 
         this.selected = -1;
@@ -181,7 +186,14 @@ public class EventListViewController {
 
     @FXML
     private void editPress() {
-        //TODO add edit surface
+        try {
+            if (eventList.getSelectionModel().getSelectedItem() != null) {
+                state.setEditSelect(eventList.getSelectionModel().getSelectedItem().getIdProperty().get());
+                viewHandler.openView("EditEvent");
+            } else throw new IllegalArgumentException("Please select an event to edit!");
+        } catch (Exception e){
+            errorLabel.setText(e.getMessage());
+        }
     }
 
     @FXML

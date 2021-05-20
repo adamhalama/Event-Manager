@@ -2,6 +2,7 @@ package client.ViewModel;
 
 
 import client.Model.Model;
+import client.View.SelectState;
 
 
 public class ViewModelFactory
@@ -11,16 +12,20 @@ public class ViewModelFactory
     private final CreateRoomViewModel createRoomViewModel;
     private final MainMenuViewModel mainMenuViewModel;
     private final RoomListViewModel roomListViewModel;
+    private final EditEventViewModel editEventViewModel;
+    private SelectState state;
     private final RoomViewModel roomViewModel;
 
-    public ViewModelFactory(Model model)
+    public ViewModelFactory(Model model, SelectState state)
     {
+        this.state = state;
         eventListViewModel = new EventListViewModel(model);
         createEventViewModel = new CreateEventViewModel(model);
         createRoomViewModel = new CreateRoomViewModel(model);
         mainMenuViewModel = new MainMenuViewModel(model);
         roomListViewModel = new RoomListViewModel(model);
         roomViewModel = new RoomViewModel(model);
+        editEventViewModel = new EditEventViewModel(model, state);
     }
 
     public CreateEventViewModel getCreateEventViewModel()
@@ -51,5 +56,9 @@ public class ViewModelFactory
     public RoomViewModel getRoomViewModel()
     {
         return roomViewModel;
+    }
+
+    public EditEventViewModel getEditEventViewModel() {
+        return editEventViewModel;
     }
 }

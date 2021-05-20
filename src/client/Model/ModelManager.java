@@ -5,27 +5,25 @@ import Shared.Event.EventList;
 import Shared.Room.Room;
 import Shared.Room.RoomList;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 
 //TODO Add database updating
 
-public class ModelManager implements Model
-{
+public class ModelManager implements Model {
     private Event event;
     private EventList eventList;
     private RoomList roomList;
 
-    public ModelManager()
-    {
+    public ModelManager() {
         this.event = new Event();
         this.eventList = new EventList();
         this.roomList = new RoomList();
     }
 
     @Override
-    public void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor)
-    {
+    public void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor) {
         roomList.addRoom(roomCode, buildingAddress, numberOfSeats, floor);
     }
 
@@ -36,14 +34,12 @@ public class ModelManager implements Model
     }
 
     @Override
-    public void removeRoom(int roomID)
-    {
+    public void removeRoom(int roomID) {
         roomList.removeRoom(roomID);
     }
 
     @Override
-    public void removeRoom(Room room)
-    {
+    public void removeRoom(Room room) {
         roomList.removeRoom(room);
     }
 
@@ -60,8 +56,7 @@ public class ModelManager implements Model
     }
 
     @Override
-    public int getRoomsCreated()
-    {
+    public int getRoomsCreated() {
         return RoomList.getRoomsCreated();
     }
 
@@ -90,80 +85,73 @@ public class ModelManager implements Model
     }
 
     @Override
-    public void addEquipment(Room room, String addedEquipment)
-    {
+    public void addEquipment(Room room, String addedEquipment) {
         room.addEquipment(addedEquipment);
     }
 
     @Override
-    public void setBuildingAddress(Room room, String buildingAddress)
-    {
+    public void setBuildingAddress(Room room, String buildingAddress) {
         room.setBuildingAddress(buildingAddress);
     }
 
     @Override
-    public void setEquipment(Room room, ArrayList<String> equipment)
-    {
+    public void setEquipment(Room room, ArrayList<String> equipment) {
         room.setEquipment(equipment);
     }
 
     @Override
-    public void setFloor(Room room, int floor)
-    {
+    public void setFloor(Room room, int floor) {
         room.setFloor(floor);
     }
 
     @Override
-    public void setNumberOfSeats(Room room, int numberOfSeats)
-    {
+    public void setNumberOfSeats(Room room, int numberOfSeats) {
         room.setNumberOfSeats(numberOfSeats);
     }
 
     @Override
-    public void setRoomNumber(Room room, String roomNumber)
-    {
+    public void setRoomNumber(Room room, String roomNumber) {
         room.setRoomNumber(roomNumber);
     }
 
     @Override
-    public void setTitle(String title)
-    {
+    public void setTitle(String title) {
         event.setTitle(title);
     }
 
     @Override
-    public void setTimeS(int year, int month, int day, int hour, int minute)
-    {
+    public void setTimeS(int year, int month, int day, int hour, int minute) {
         event.setTimeS(year, month, day, hour, minute);
     }
 
     @Override
-    public void setTimeE(int year, int month, int day, int hour, int minute)
-    {
+    public void setTimeE(int year, int month, int day, int hour, int minute) {
         event.setTimeE(year, month, day, hour, minute);
     }
 
     @Override
-    public void setDescription(String des)
-    {
+    public void setDescription(String des) {
         event.setDescription(des);
     }
 
     @Override
-    public void setOnline(boolean isOnline)
-    {
+    public void setOnline(boolean isOnline) {
         event.setOnline(isOnline);
     }
 
     @Override
-    public void setRoom(int room)
-    {
+    public void setRoom(int room) {
         event.setRoom(room);
     }
 
     @Override
     public void setPlatform(String platform) {
         event.setPlatform(platform);
+    }
+
+    @Override
+    public void setDateString(String dateString) {
+        event.setDateString(dateString);
     }
 
     @Override
@@ -212,6 +200,11 @@ public class ModelManager implements Model
     }
 
     @Override
+    public LocalDate getDateString() {
+        return event.getDateString();
+    }
+
+    @Override
     public int getRoomID() {
         return event.getRoomID();
     }
@@ -238,8 +231,7 @@ public class ModelManager implements Model
     }
 
     @Override
-    public ArrayList<Event> getEventByCreateTime(String date)
-    {
+    public ArrayList<Event> getEventByCreateTime(String date) {
         return eventList.getEventByCreateTime(date);
     }
 
@@ -274,20 +266,22 @@ public class ModelManager implements Model
     }
 
     @Override
-    public Event getEvent(Event e)
-    {
+    public Event getEvent(Event e) {
         return eventList.getEvent(e);
     }
 
     @Override
-    public void remove(int index)
-    {
+    public Event getEventByID(int id) {
+        return eventList.getEventByID(id);
+    }
+
+    @Override
+    public void remove(int index) {
         eventList.remove(index);
     }
 
     @Override
-    public void removeByEvent(Event e)
-    {
+    public void removeByEvent(Event e) {
         eventList.removeByEvent(e);
     }
 
@@ -307,26 +301,22 @@ public class ModelManager implements Model
     }
 
     @Override
-    public ArrayList<Event> getEventsPhysical()
-    {
+    public ArrayList<Event> getEventsPhysical() {
         return eventList.getEventsPhysical();
     }
 
     @Override
-    public ArrayList<Event> getEventsDiscord()
-    {
+    public ArrayList<Event> getEventsDiscord() {
         return eventList.getEventsDiscord();
     }
 
     @Override
-    public ArrayList<Event> getEventsZoom()
-    {
+    public ArrayList<Event> getEventsZoom() {
         return eventList.getEventsZoom();
     }
 
     @Override
-    public ArrayList<Event> getEventTeams()
-    {
+    public ArrayList<Event> getEventTeams() {
         return eventList.getEventTeams();
     }
 
