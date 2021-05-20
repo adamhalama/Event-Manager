@@ -155,6 +155,15 @@ public class EventList {
         return eventsOnline;
     }
 
+    public Event getEventByID(int id){
+        for (int i = 0; i < events.size(); i++){
+            if (events.get(i).getEvent_id() == id){
+                return events.get(i);
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Event> getEventsPhysical() {
         ArrayList<Event> eventsOffline = new ArrayList<>();
         for (int i = 0; i < events.size(); i++) {

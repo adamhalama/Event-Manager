@@ -3,6 +3,7 @@ package Shared.Event;
 import Shared.Event.Platform.PlatformFactory;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -11,6 +12,7 @@ public class Event {
     private final String time_create; //when creating this event
     private String time_start; //when the event starts
     private String time_end; //when the event ends
+    private String dateString;
     //maybe change for the GUI
     private int dayS;
     private int monthS;
@@ -48,11 +50,17 @@ public class Event {
 
         // i set a limit for time here, the meeting should only be held from 9 - 17 on workdays
         String timeFormat = "";
+        dateString = "";
         timeFormat += String.valueOf(yearS);
+        dateString += String.valueOf(yearS);
         timeFormat += "-";
+        dateString += "-";
         timeFormat += setMonthSFull(monthS);
+        dateString += setMonthSFull(monthS);
         timeFormat += "-";
+        dateString += "-";
         timeFormat += setDaySFull(dayS);
+        dateString += setDaySFull(dayS);
         timeFormat += "  ";
         timeFormat += String.valueOf(hourS);
         timeFormat += ":";
@@ -121,11 +129,17 @@ public class Event {
 
         // i set a limit for time here, the meeting should only be held from 9 - 17 on workdays
         String timeFormat = "";
+        dateString = "";
         timeFormat += String.valueOf(yearS);
+        dateString += String.valueOf(yearS);
         timeFormat += "-";
+        dateString += "-";
         timeFormat += setMonthSFull(monthS);
+        dateString += setMonthSFull(monthS);
         timeFormat += "-";
+        dateString += "-";
         timeFormat += setDaySFull(dayS);
+        dateString += setDaySFull(dayS);
         timeFormat += "  ";
         timeFormat += String.valueOf(hourS);
         timeFormat += ":";
@@ -277,6 +291,12 @@ public class Event {
         return title;
     }
 
+    public LocalDate getDateString(){
+        System.out.println(dateString);
+        LocalDate localDate = LocalDate.parse(dateString);
+        return localDate;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -383,6 +403,10 @@ public class Event {
             de = "0" + dE;
         } else de = String.valueOf(dE);
         return de;
+    }
+
+    public void setDateString(String dateString){
+        this.dateString = dateString;
     }
 
     public Calendar getCalendarS() {

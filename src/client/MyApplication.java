@@ -2,6 +2,7 @@ package client;
 
 import client.Model.Model;
 import client.Model.ModelManager;
+import client.View.SelectState;
 import client.View.ViewHandler;
 import client.ViewModel.ViewModelFactory;
 import javafx.application.Application;
@@ -15,8 +16,9 @@ public class MyApplication extends Application
     public void start(Stage primaryStage)
     {
         Model model = new ModelManager();
-        ViewModelFactory viewModelFactory = new ViewModelFactory(model);
-        ViewHandler view = new ViewHandler(viewModelFactory, model);
+        SelectState state = new SelectState();
+        ViewModelFactory viewModelFactory = new ViewModelFactory(model, state);
+        ViewHandler view = new ViewHandler(viewModelFactory, model, state);
         view.start(primaryStage);
 
         //todo start the connection with server

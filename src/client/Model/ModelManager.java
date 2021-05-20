@@ -5,6 +5,7 @@ import Shared.Event.EventList;
 import Shared.Room.Room;
 import Shared.Room.RoomList;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 
@@ -140,6 +141,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void setDateString(String dateString) {
+        event.setDateString(dateString);
+    }
+
+    @Override
     public void setOnlineLink(String link, String platform) {
         event.setOnlineLink(link, platform);
     }
@@ -182,6 +188,11 @@ public class ModelManager implements Model {
     @Override
     public String getTime_end() {
         return event.getTime_end();
+    }
+
+    @Override
+    public LocalDate getDateString() {
+        return event.getDateString();
     }
 
     @Override
@@ -248,6 +259,11 @@ public class ModelManager implements Model {
     @Override
     public Event getEvent(Event e) {
         return eventList.getEvent(e);
+    }
+
+    @Override
+    public Event getEventByID(int id) {
+        return eventList.getEventByID(id);
     }
 
     @Override

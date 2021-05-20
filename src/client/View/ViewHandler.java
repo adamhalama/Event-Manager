@@ -3,6 +3,7 @@ package client.View;
 
 import client.Model.Model;
 import client.View.Event.CreateEventViewController;
+import client.View.Event.EditEventViewController;
 import client.View.Event.EventListViewController;
 import client.View.MainMenu.MainMenuViewController;
 import client.View.Room.CreateRoomViewController;
@@ -25,13 +26,16 @@ public class ViewHandler
     private EventListViewController eventListViewController;
     private MainMenuViewController mainMenuViewController;
     private RoomListViewController roomListViewController;
+    private EditEventViewController editEventViewController;
+    private SelectState selectState;
 
     private int pickedRoomID;
 
-    public ViewHandler(ViewModelFactory viewModelFactory, Model model)
+    public ViewHandler(ViewModelFactory viewModelFactory, Model model, SelectState selectState)
     {
         this.viewModelFactory = viewModelFactory;
         this.model = model;
+        this.selectState = selectState;
         currentStage = new Scene(new Region());
     }
 
@@ -69,6 +73,8 @@ public class ViewHandler
             case "EditRoom":
                 root = loadEditRoomView("Room/CreateRoomView.fxml");
                 break;
+            case "EditEvent":
+                root = loadEditEventViewController("Event/EditEventView.fxml");
         }
         currentStage.setRoot(root);
 
@@ -193,13 +199,33 @@ public class ViewHandler
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 eventListViewController = loader.getController();
-                eventListViewController.init(this, viewModelFactory.getEventListViewModel(), root);
+                eventListViewController.init(this, viewModelFactory.getEventListViewModel(), root,
+                        selectState);
             } catch (Exception e)
             {
                 e.printStackTrace();
             }
         }
         return eventListViewController.getRoot();
+    }
+
+    private Region loadEditEventViewController(String fxmlFile)
+    {
+        if (editEventViewController == null)
+        {
+            try
+            {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                editEventViewController = loader.getController();
+                editEventViewController.init(this, viewModelFactory.getEditEventViewModel(), root, selectState);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return editEventViewController.getRoot();
     }
 
     public void setPickedRoomID(int pickedRoomID)

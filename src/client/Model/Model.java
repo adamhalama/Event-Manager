@@ -3,6 +3,7 @@ package client.Model;
 import Shared.Event.Event;
 import Shared.Room.Room;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface Model {
@@ -37,6 +38,7 @@ public interface Model {
     void setOnline(boolean isOnline);
     void setRoom(int room);
     void setPlatform(String platform);
+    void setDateString(String dateString);
     void setOnlineLink(String link, String platform);
     int getEvent_id();
     String getTitle();
@@ -46,6 +48,7 @@ public interface Model {
     String getTime_create();
     String getTime_start();
     String getTime_end();
+    LocalDate getDateString();
     int getRoomID();
     boolean isOnline();
     //part2 class eventList
@@ -60,6 +63,7 @@ public interface Model {
     ArrayList<Event> getEventOnlyDate(String date);
     Event getEventByIndex(int index);
     Event getEvent(Event e);
+    Event getEventByID(int id);
     void remove(int index);
     void removeByEvent(Event e);
     void removeByEventID(int id);
