@@ -60,6 +60,9 @@ public class RoomListViewModel
 
     public void search()
     {
+        if (searchBox == null)
+            return;
+
         if (searchBox.get().equals(""))
         {
             reset();

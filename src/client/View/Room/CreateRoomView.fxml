@@ -18,7 +18,7 @@
    <children>
       <HBox alignment="CENTER" prefHeight="39.0" prefWidth="600.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="Add a room" textAlignment="CENTER">
+            <Label fx:id="topLabel" alignment="CENTER" contentDisplay="CENTER" text="Add a room" textAlignment="CENTER">
                <font>
                   <Font size="32.0" />
                </font>
@@ -35,7 +35,6 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -66,20 +65,34 @@
                   <Label text="Add equipment:" />
                </children>
             </HBox>
-            <TextField fx:id="roomNumber" maxWidth="1.7976931348623157E308" prefHeight="26.0" promptText="Example: A201" GridPane.columnIndex="1" />
+            <TextField fx:id="roomNumber" maxWidth="1.7976931348623157E308" prefHeight="26.0" promptText="Example: A201" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="2.0" />
+               </GridPane.margin></TextField>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <children>
-                  <TextField fx:id="equipmentToAdd" prefHeight="26.0" prefWidth="252.0" promptText="Example: Projector BENQ FullHD" />
-                  <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#addButton" stylesheets="@../darkTheme.css" text="Add" textAlignment="CENTER">
+                  <TextField fx:id="equipmentToAdd" prefHeight="26.0" prefWidth="252.0" promptText="Example: Projector BENQ FullHD">
                      <HBox.margin>
-                        <Insets left="5.0" />
+                        <Insets top="2.0" />
+                     </HBox.margin></TextField>
+                  <Button fx:id="addButton" minWidth="-Infinity" mnemonicParsing="false" onAction="#addButton" stylesheets="@../darkTheme.css" text="Add" textAlignment="CENTER">
+                     <HBox.margin>
+                        <Insets left="5.0" top="2.0" />
                      </HBox.margin></Button>
                </children>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextField fx:id="floor" maxWidth="1.7976931348623157E308" prefHeight="26.0" promptText="Example: 2" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="address" maxWidth="1.7976931348623157E308" prefHeight="26.0" promptText="Example: Chr M Østergaards Vej 4, 8700 Horsens" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="numberOfSeats" maxWidth="1.7976931348623157E308" prefHeight="26.0" promptText="Example: 10" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="floor" maxWidth="1.7976931348623157E308" prefHeight="26.0" promptText="Example: 2" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="2.0" top="2.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="address" maxWidth="1.7976931348623157E308" prefHeight="26.0" promptText="Example: Chr M Østergaards Vej 4, 8700 Horsens" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets top="2.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="numberOfSeats" maxWidth="1.7976931348623157E308" prefHeight="26.0" promptText="Example: 10" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets bottom="2.0" />
+               </GridPane.margin></TextField>
          </children>
          <VBox.margin>
             <Insets left="30.0" right="30.0" />
@@ -97,7 +110,7 @@
                </content>
             </ScrollPane>
             <HBox alignment="CENTER" prefHeight="146.0" prefWidth="560.0" />
-            <Button alignment="CENTER_RIGHT" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#removeSelectedButton" text="Remove selected">
+            <Button fx:id="removeButton" alignment="CENTER_RIGHT" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#removeSelectedButton" text="Remove selected">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
@@ -106,7 +119,7 @@
       </VBox>
       <HBox alignment="CENTER_RIGHT">
          <children>
-            <Button mnemonicParsing="false" onAction="#confirmButton" text="Confirm">
+            <Button fx:id="confirmEditButton" mnemonicParsing="false" onAction="#confirmButton" text="Confirm">
                <font>
                   <Font size="15.0" />
                </font>

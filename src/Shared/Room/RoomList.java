@@ -42,21 +42,23 @@ public class RoomList
         rooms.remove(room);
     }
 
-    public void modifyRoom(String roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor)
+    public void modifyRoom(String roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
     {
         for (int i = 0; i < rooms.size(); i++)
         {
             if (roomID.equals(rooms.get(i).getRoomID()))
             {
-                rooms.get(i).modifyRoom(roomCode, buildingAddress, numberOfSeats, floor);
+                rooms.get(i).modifyRoom(roomCode, buildingAddress, numberOfSeats, floor, equipment);
                 break;
             }
         }
+
+
     }
 
-    public void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor)
+    public void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
     {
-        room.modifyRoom(roomCode, buildingAddress, numberOfSeats, floor);
+        room.modifyRoom(roomCode, buildingAddress, numberOfSeats, floor, equipment);
     }
 
     public static int getRoomsCreated()
@@ -74,11 +76,11 @@ public class RoomList
             Room current = rooms.get(i);
             if
             (
-                    String.valueOf(current.getRoomID()).contains(keyword) ||
-                            current.getBuildingAddress().contains(keyword) ||
-                            String.valueOf(current.getFloor()).contains(keyword) ||
-                            current.getRoomNumber().contains(keyword) ||
-                            String.valueOf(current.getNumberOfSeats()).contains(keyword)
+                    String.valueOf(current.getRoomID()).toLowerCase().contains(keyword.toLowerCase()) ||
+                            current.getBuildingAddress().toLowerCase().contains(keyword.toLowerCase()) ||
+                            String.valueOf(current.getFloor()).toLowerCase().contains(keyword.toLowerCase()) ||
+                            current.getRoomNumber().toLowerCase().contains(keyword.toLowerCase()) ||
+                            String.valueOf(current.getNumberOfSeats()).toLowerCase().contains(keyword.toLowerCase())
             )
             {
                 selectedRooms.add(current);
@@ -88,7 +90,7 @@ public class RoomList
                 {
                     String currentEquipment = current.getEquipment().get(j);
 
-                    if (currentEquipment.contains(keyword))
+                    if (currentEquipment.toLowerCase().contains(keyword.toLowerCase()))
                     {
                         selectedRooms.add(current);
                         break;
@@ -104,5 +106,16 @@ public class RoomList
     public ArrayList<Room> getRooms()
     {
         return rooms;
+    }
+
+    public Room getRoomByID(int roomID)
+    {
+        for (Room r:
+             rooms)
+        {
+            if (r.getRoomID() == roomID)
+                return r;
+        }
+        return null;
     }
 }

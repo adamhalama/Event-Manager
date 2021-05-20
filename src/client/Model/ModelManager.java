@@ -48,15 +48,15 @@ public class ModelManager implements Model
     }
 
     @Override
-    public void modifyRoom(String roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor)
+    public void modifyRoom(String roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
     {
-        roomList.modifyRoom(roomID, roomCode, buildingAddress, numberOfSeats, floor);
+        roomList.modifyRoom(roomID, roomCode, buildingAddress, numberOfSeats, floor, equipment);
     }
 
     @Override
-    public void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor)
+    public void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
     {
-        roomList.modifyRoom(room, roomCode, buildingAddress, numberOfSeats, floor);
+        roomList.modifyRoom(room, roomCode, buildingAddress, numberOfSeats, floor, equipment);
     }
 
     @Override
@@ -75,6 +75,12 @@ public class ModelManager implements Model
     public ArrayList<Room> getRoomsByAnything(String keyword)
     {
         return roomList.getRoomsByAnything(keyword);
+    }
+
+    @Override
+    public Room getRoomByID(int roomID)
+    {
+        return roomList.getRoomByID(roomID);
     }
 
     @Override

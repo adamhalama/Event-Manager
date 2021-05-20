@@ -15,10 +15,12 @@ public interface Model {
     void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment);
     void removeRoom(int roomID);
     void removeRoom(Room room);
-    void modifyRoom(String roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor);void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor);
+    void modifyRoom(String roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment);
+    void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment);
     int getRoomsCreated();
     ArrayList<Room> getRooms();
     ArrayList<Room> getRoomsByAnything(String keyword);
+    Room getRoomByID(int roomID);
 
     void removeEquipment(Room room, String removedEquipment);
     public void addEquipment(Room room, String addedEquipment);
