@@ -27,4 +27,9 @@ public class Message
     {
         return this.message;
     }
+
+    @Override public String toString()
+    {
+        return "{" + "userID=" + userID + ", timestamp=" + timestamp + ", message='" + message + '\'' + '}';
+    }
 }
