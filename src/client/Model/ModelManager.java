@@ -244,25 +244,32 @@ public class ModelManager implements Model
     }
 
     @Override
-    public ArrayList<Event> getEventByStartTime(String date)
-    {
+    public ArrayList<Event> getEventByStartTime(String date) {
         return eventList.getEventByStartTime(date);
     }
 
     @Override
-    public ArrayList<Event> getEventByTitle(String title)
-    {
+    public ArrayList<Event> getEventByTitle(String title) {
         return eventList.getEventByTitle(title);
     }
 
     @Override
-    public ArrayList<Event> getEventByAnything(String s) {
-        return eventList.getEventByAnything(s);
+    public ArrayList<Event> getEventByAnything(String s, String d) {
+        return eventList.getEventByAnything(s, d);
     }
 
     @Override
-    public Event getEventByIndex(int index)
-    {
+    public ArrayList<Event> getEventExceptDate(String s) {
+        return eventList.getEventExceptDate(s);
+    }
+
+    @Override
+    public ArrayList<Event> getEventOnlyDate(String date) {
+        return eventList.getEventOnlyDate(date);
+    }
+
+    @Override
+    public Event getEventByIndex(int index) {
         return eventList.getEventByIndex(index);
     }
 
@@ -290,8 +297,12 @@ public class ModelManager implements Model
     }
 
     @Override
-    public ArrayList<Event> getEventsOnline()
-    {
+    public void removeAllEvents() {
+        eventList.removeAll();
+    }
+
+    @Override
+    public ArrayList<Event> getEventsOnline() {
         return eventList.getEventsOnline();
     }
 

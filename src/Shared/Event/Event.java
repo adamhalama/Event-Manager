@@ -18,6 +18,10 @@ public class Event {
     private int dayE;
     private int monthE;
     private int yearE;
+    private int hourS;
+    private int minuteS;
+    private int hourE;
+    private int minuteE;
 
     private Calendar calendarS;
     private Calendar calendarE;
@@ -46,9 +50,9 @@ public class Event {
         String timeFormat = "";
         timeFormat += String.valueOf(yearS);
         timeFormat += "-";
-        timeFormat += String.valueOf(monthS);
+        timeFormat += setMonthSFull(monthS);
         timeFormat += "-";
-        timeFormat += String.valueOf(dayS);
+        timeFormat += setDaySFull(dayS);
         timeFormat += "  ";
         timeFormat += String.valueOf(hourS);
         timeFormat += ":";
@@ -61,14 +65,16 @@ public class Event {
             this.dayS = dayS;
             this.monthS = monthS;
             this.yearS = yearS;
+            this.hourS = hourS;
+            this.minuteS = minuteS;
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
         String timeFormat1 = "";
         timeFormat1 += String.valueOf(yearE);
         timeFormat1 += "-";
-        timeFormat1 += String.valueOf(monthE);
+        timeFormat1 += setMonthEFull(monthE);
         timeFormat1 += "-";
-        timeFormat1 += String.valueOf(dayE);
+        timeFormat1 += setDayEFull(dayE);
         timeFormat1 += "  ";
         timeFormat1 += String.valueOf(hourE);
         timeFormat1 += ":";
@@ -81,6 +87,8 @@ public class Event {
                 this.dayE = dayE;
                 this.monthE = monthE;
                 this.yearE = yearE;
+                this.hourE = hourE;
+                this.minuteE = minuteE;
             } else throw new IllegalArgumentException("Invalid time set!");
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
@@ -113,6 +121,12 @@ public class Event {
 
         // i set a limit for time here, the meeting should only be held from 9 - 17 on workdays
         String timeFormat = "";
+        timeFormat += String.valueOf(yearS);
+        timeFormat += "-";
+        timeFormat += setMonthSFull(monthS);
+        timeFormat += "-";
+        timeFormat += setDaySFull(dayS);
+        timeFormat += "  ";
         timeFormat += String.valueOf(hourS);
         timeFormat += ":";
         timeFormat += String.valueOf(minuteS);
@@ -124,14 +138,16 @@ public class Event {
             this.dayS = dayS;
             this.monthS = monthS;
             this.yearS = yearS;
+            this.hourS = hourS;
+            this.minuteS = minuteS;
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
         String timeFormat1 = "";
         timeFormat1 += String.valueOf(yearE);
         timeFormat1 += "-";
-        timeFormat1 += String.valueOf(monthE);
+        timeFormat1 += setMonthEFull(monthE);
         timeFormat1 += "-";
-        timeFormat1 += String.valueOf(dayE);
+        timeFormat1 += setDayEFull(dayE);
         timeFormat1 += "  ";
         timeFormat1 += String.valueOf(hourE);
         timeFormat1 += ":";
@@ -144,6 +160,8 @@ public class Event {
                 this.dayE = dayE;
                 this.monthE = monthE;
                 this.yearE = yearE;
+                this.hourE = hourE;
+                this.minuteE = minuteE;
             } else throw new IllegalArgumentException("Invalid time set!");
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
@@ -295,6 +313,78 @@ public class Event {
         return isOnline;
     }
 
+    public int getDayE() {
+        return dayE;
+    }
+
+    public int getDayS() {
+        return dayS;
+    }
+
+    public int getHourE() {
+        return hourE;
+    }
+
+    public int getHourS() {
+        return hourS;
+    }
+
+    public int getMinuteE() {
+        return minuteE;
+    }
+
+    public int getMinuteS() {
+        return minuteS;
+    }
+
+    public int getMonthE() {
+        return monthE;
+    }
+
+    public int getMonthS() {
+        return monthS;
+    }
+
+    public int getYearE() {
+        return yearE;
+    }
+
+    public int getYearS() {
+        return yearS;
+    }
+
+    public String setMonthSFull(int mS) {
+        String ms = "";
+        if (mS < 10) {
+            ms = "0" + mS;
+        } else ms = String.valueOf(mS);
+        return ms;
+    }
+
+    public String setMonthEFull(int mE) {
+        String me = "";
+        if (mE < 10) {
+            me = "0" + mE;
+        } else me = String.valueOf(mE);
+        return me;
+    }
+
+    public String setDaySFull(int dS) {
+        String ds = "";
+        if (dS < 10) {
+            ds = "0" + dS;
+        } else ds = String.valueOf(dS);
+        return ds;
+    }
+
+    public String setDayEFull(int dE) {
+        String de = "";
+        if (dE < 10) {
+            de = "0" + dE;
+        } else de = String.valueOf(dE);
+        return de;
+    }
+
     public Calendar getCalendarS() {
         return calendarS;
     }
@@ -307,7 +397,15 @@ public class Event {
     public String toString() {
         return "ID: " + getEvent_id() + " Title: " + getTitle() + ", Time create: " + getTime_create() + ", Start: " + getTime_start() + ", End: " + getTime_end()
                 + ", Description: " + getDescription() + ", isOnline: " + isOnline() + ", (if online)Platform: " + getPlatform() +
-                ", (if online)Link: " + getOnlineLink();
-        //should print the room or platform also
+                ", (if online)Link: " + getOnlineLink() + ", (if physical)Room: " + getRoomID();
+    }
+
+    public String contentString() {
+        return getEvent_id() + " " + getTitle() + " " + getTime_create() + " " + getTime_start() + " " + getTime_end()
+                + " " + getPlatform() + " " + getOnlineLink() + " " + getRoomID();
+    }
+
+    public String dateString(){
+        return getTime_start() + " " + getTime_end();
     }
 }
