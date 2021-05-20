@@ -3,10 +3,10 @@ package server.DatabaseModel;
 // Copy this in the same folder with the name DatabaseCredentials.java and place your own credentials
 public class DatabaseCredentialsExample
 {
-  public static String HOST = "localhost";
-  public static String USER = "postgres";
-  public static String PASSWORD = "123QWEasd";
-  public static int PORT = 5432;
-  public static String NAME = "postgres";
-  public static String SCHEMA_NAME = "sep2database";
+  public final static String HOST = "localhost";
+  public final static String USER = "postgres";
+  public final static String PASSWORD = "123QWEasd";
+  public final static int PORT = 5432;
+  public final static String NAME = "postgres";
+  public final static String SCHEMA_NAME = "sep2database";
 }

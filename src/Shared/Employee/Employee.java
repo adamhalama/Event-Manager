@@ -131,5 +131,10 @@ public class Employee
         return role;
     }
 
-
+    @Override public String toString()
+    {
+        return "{" + "id=" + id + ", username='" + username + '\''
+            + ", name='" + name + '\'' + ", surname='" + surname + '\''
+            + ", role='" + role + '\'' + "}";
+    }
 }
