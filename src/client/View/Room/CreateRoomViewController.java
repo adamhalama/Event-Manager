@@ -7,14 +7,14 @@ import client.ViewModel.CreateRoomViewModel;
 import client.ViewModel.EquipmentViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 
 
 public class CreateRoomViewController
 {
+    @FXML
+    private Label topLabel;
     @FXML
     private TextField roomNumber;
     @FXML
@@ -30,17 +30,21 @@ public class CreateRoomViewController
     @FXML
     private TableColumn<EquipmentViewModel, String> equipmentColumn;
 
+    @FXML
+    private Button addButton, removeButton, confirmEditButton;
+
     private ViewHandler viewHandler;
     private CreateRoomViewModel viewModel;
     private Region root;
 
     private boolean editing;
+    private boolean viewing;
 
     public CreateRoomViewController()
     {
     }
 
-    public void init(ViewHandler viewHandler, CreateRoomViewModel viewModel, Region root, boolean editing)
+    public void init(ViewHandler viewHandler, CreateRoomViewModel viewModel, Region root)
     {
         StringIntegerConverter converter = new StringIntegerConverter(0);
 
@@ -48,7 +52,6 @@ public class CreateRoomViewController
         this.viewModel = viewModel;
         this.root = root;
 
-        this.editing = editing;
 
         equipmentList.setItems(viewModel.getEquipmentList());
 
@@ -59,6 +62,7 @@ public class CreateRoomViewController
         address.textProperty().bindBidirectional(viewModel.getAddressProperty());
         equipmentToAdd.textProperty().bindBidirectional(viewModel.getEquipmentToAddProperty());
 
+        topLabel.textProperty().bindBidirectional(viewModel.getTopLabelProperty());
 
         Bindings.bindBidirectional(
                 floor.textProperty(),
@@ -68,7 +72,6 @@ public class CreateRoomViewController
                 numberOfSeats.textProperty(),
                 viewModel.getSeatsProperty(),
                 converter); // NUMBER OF SEATS
-
 
     }
 
@@ -82,9 +85,40 @@ public class CreateRoomViewController
         numberOfSeats.setText(null);
     }
 
+    private void enableEditing()
+    {
+        roomNumber.setDisable(false);
+        address.setDisable(false);
+        equipmentToAdd.setDisable(false);
+        floor.setDisable(false);
+        numberOfSeats.setDisable(false);
+
+        addButton.setDisable(false);
+        removeButton.setDisable(false);
+        confirmEditButton.setText("Confirm");
+    }
+
+    private void disableEditing()
+    {
+        roomNumber.setDisable(true);
+        address.setDisable(true);
+        equipmentToAdd.setDisable(true);
+        floor.setDisable(true);
+        numberOfSeats.setDisable(true);
+
+        addButton.setDisable(true);
+        removeButton.setDisable(true);
+        confirmEditButton.setText("Edit");
+    }
+
     public boolean isEditing()
     {
         return editing;
+    }
+
+    public void setEditing(boolean editing)
+    {
+        this.editing = editing;
     }
 
     @FXML
@@ -105,9 +139,13 @@ public class CreateRoomViewController
     private void confirmButton()
     {
         //todo save the changes, push them, and call parent view
-
-        viewModel.confirm(editing);
-        viewHandler.openView("RoomList");
+        if (!viewing)
+        {
+            viewModel.confirm(editing, viewHandler.getPickedRoomID());
+            viewHandler.openView("RoomList");
+        }
+        else
+            viewHandler.openView("EditRoom");
     }
 
     @FXML
@@ -119,5 +157,15 @@ public class CreateRoomViewController
     public Region getRoot()
     {
         return root;
+    }
+
+    public void setViewing(boolean b)
+    {
+        this.viewing = b;
+
+        if (viewing)
+            disableEditing();
+        else
+            enableEditing();
     }
 }

@@ -43,13 +43,15 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void modifyRoom(String roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor) {
-        roomList.modifyRoom(roomID, roomCode, buildingAddress, numberOfSeats, floor);
+    public void modifyRoom(String roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
+    {
+        roomList.modifyRoom(roomID, roomCode, buildingAddress, numberOfSeats, floor, equipment);
     }
 
     @Override
-    public void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor) {
-        roomList.modifyRoom(room, roomCode, buildingAddress, numberOfSeats, floor);
+    public void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
+    {
+        roomList.modifyRoom(room, roomCode, buildingAddress, numberOfSeats, floor, equipment);
     }
 
     @Override
@@ -68,7 +70,14 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void removeEquipment(Room room, String removedEquipment) {
+    public Room getRoomByID(int roomID)
+    {
+        return roomList.getRoomByID(roomID);
+    }
+
+    @Override
+    public void removeEquipment(Room room, String removedEquipment)
+    {
         room.removeEquipment(removedEquipment);
     }
 

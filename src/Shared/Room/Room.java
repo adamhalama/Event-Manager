@@ -44,12 +44,13 @@ public class Room
         lastModifiedDate = creationDate;
     }
 
-    public void modifyRoom(String roomNumber, String buildingAddress, int numberOfSeats, int floor)
+    public void modifyRoom(String roomNumber, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
     {
         this.roomNumber = roomNumber;
         this.floor = floor;
         this.buildingAddress = buildingAddress;
         this.numberOfSeats = numberOfSeats;
+        this.equipment = equipment;
     }
 
     public void removeEquipment(String removedEquipment)

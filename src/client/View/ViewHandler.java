@@ -22,12 +22,16 @@ public class ViewHandler
     private ViewModelFactory viewModelFactory;
     private CreateEventViewController createEventViewController;
     private Model model;
+
+    private CreateEventViewController createEventViewController;
     private CreateRoomViewController createRoomViewController;
     private EventListViewController eventListViewController;
     private MainMenuViewController mainMenuViewController;
     private RoomListViewController roomListViewController;
     private EditEventViewController editEventViewController;
     private SelectState selectState;
+
+//    private RoomViewController roomViewController;
 
     private int pickedRoomID;
 
@@ -72,6 +76,9 @@ public class ViewHandler
                 break;
             case "EditRoom":
                 root = loadEditRoomView("Room/CreateRoomView.fxml");
+                break;
+            case "Room":
+                root = loadRoomView("Room/CreateRoomView.fxml");
                 break;
             case "EditEvent":
                 root = loadEditEventViewController("Event/EditEventView.fxml");
@@ -140,12 +147,17 @@ public class ViewHandler
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 createRoomViewController = loader.getController();
-                createRoomViewController.init(this, viewModelFactory.getCreateRoomViewModel(), root, false);
+                createRoomViewController.init(this, viewModelFactory.getCreateRoomViewModel(), root);
             } catch (Exception e)
             {
                 e.printStackTrace();
             }
         }
+        createRoomViewController.setEditing(false);
+        createRoomViewController.setViewing(false);
+        viewModelFactory.getCreateRoomViewModel().setCurrentRoomID(0);
+        viewModelFactory.getCreateRoomViewModel().setOnlyViewing(false);
+
         viewModelFactory.getCreateRoomViewModel().reset();
         return createRoomViewController.getRoot();
     }
@@ -160,12 +172,43 @@ public class ViewHandler
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 createRoomViewController = loader.getController();
-                createRoomViewController.init(this, viewModelFactory.getCreateRoomViewModel(), root, true);
+                createRoomViewController.init(this, viewModelFactory.getCreateRoomViewModel(), root);
             } catch (Exception e)
             {
                 e.printStackTrace();
             }
         }
+        createRoomViewController.setEditing(true);
+        createRoomViewController.setViewing(false);
+        viewModelFactory.getCreateRoomViewModel().setCurrentRoomID(pickedRoomID);
+        viewModelFactory.getCreateRoomViewModel().setOnlyViewing(false);
+
+        viewModelFactory.getCreateRoomViewModel().reset();
+        return createRoomViewController.getRoot();
+    }
+
+    private Region loadRoomView(String fxmlFile)
+    {
+        if (createRoomViewController == null)
+        {
+            try
+            {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                createRoomViewController = loader.getController();
+                createRoomViewController.init(this, viewModelFactory.getCreateRoomViewModel(), root);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        createRoomViewController.setEditing(false);
+        createRoomViewController.setViewing(true);
+        viewModelFactory.getCreateRoomViewModel().setCurrentRoomID(pickedRoomID);
+        viewModelFactory.getCreateRoomViewModel().setOnlyViewing(true);
+
+        viewModelFactory.getCreateRoomViewModel().reset();
         return createRoomViewController.getRoot();
     }
 
