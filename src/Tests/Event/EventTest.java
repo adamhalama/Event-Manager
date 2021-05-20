@@ -50,7 +50,7 @@ class EventTest {
     @Test
     void setStartAfterEnd() {
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {
-            list.getEventByIndex(2).setTimeE(2021, 4, 20, 16, 30);
+            list.getEventByIndex(2).setTimeE(16, 30);
         });
         assertEquals("Invalid time set!", e.getMessage());
     }
@@ -58,7 +58,7 @@ class EventTest {
     @Test
     void setEndDateNotWorkDays() {
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {
-            list.getEventByIndex(2).setTimeE(2021, 5, 15, 16, 30);
+            list.getEventByIndex(2).setTimeE(16, 30);
         });
         assertEquals("You should set time at work hours!", e.getMessage());
     }
@@ -66,7 +66,7 @@ class EventTest {
     @Test
     void setEndTimeNotWorkHour() {
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {
-            list.getEventByIndex(2).setTimeE(2021, 5, 14, 17, 30);
+            list.getEventByIndex(2).setTimeE(17, 30);
         });
         assertEquals("You should set time at work hours!", e.getMessage());
     }
@@ -74,7 +74,7 @@ class EventTest {
     @Test
     void setEndDateNotSameDay() {
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {
-            list.getEventByIndex(2).setTimeE(2021, 5, 17, 16, 30);
+            list.getEventByIndex(2).setTimeE(16, 30);
         });
         assertEquals("Invalid time set!", e.getMessage());
     }
@@ -197,5 +197,15 @@ class EventTest {
         list.add(e3);
 
         System.out.println(e1.getDateString());
+    }
+
+    @Test
+    void setDate(){
+        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
+                true, "Discord", "link");
+        e1.setStartTime(12, 30);
+        e1.setEndTime(15, 15);
+        e1.setTime(9, 30 , 16 , 00);
+        System.out.println(e1.dateString());
     }
 }

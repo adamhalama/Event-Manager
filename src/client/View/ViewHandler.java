@@ -22,7 +22,6 @@ public class ViewHandler
     private ViewModelFactory viewModelFactory;
     private CreateEventViewController createEventViewController;
     private Model model;
-
     private CreateRoomViewController createRoomViewController;
     private EventListViewController eventListViewController;
     private MainMenuViewController mainMenuViewController;

@@ -9,11 +9,13 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Font;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 public class EditEventViewController {
     @FXML
@@ -35,6 +37,8 @@ public class EditEventViewController {
     @FXML
     private Button physicalButton;
     @FXML
+    private Button resetButton;
+    @FXML
     private ChoiceBox<Integer> roomMenu;
     @FXML
     private ChoiceBox<String> platformMenu;
@@ -42,6 +46,12 @@ public class EditEventViewController {
     private TextField linkTextField;
     @FXML
     private Label errorLabel;
+    @FXML
+    private Label startTimeLabel;
+    @FXML
+    private Label endTimeLabel;
+    @FXML
+    private Label buttonLabel;
     private int chooseStatus;
     private int id;
 
@@ -114,16 +124,20 @@ public class EditEventViewController {
         startDate.setDayCellFactory(dayCellFactory);
         startDate.setValue(viewModel.getDate());
         titleTextField.setText(viewModel.getTitle(id));
-//        System.out.println(viewModel.getTitleProperty().get());
-//        if (!viewModel.getDescriptionProperty().get().equals("None")){
-//            descriptionArea.setText(viewModel.getDescriptionProperty().get());
-//        }
-//        if (!viewModel.getLinkProperty().get().equals("None")){
-//            linkTextField.setText(viewModel.getLinkProperty().get());
-//        }
-//        if (viewModel.isOnline()) {
-//            onlinePress();
-//        } else physicalPress();
+        if (!viewModel.getDes(id).equals("None")){
+            descriptionArea.setText(viewModel.getDes(id));
+        }
+        if (!viewModel.getLink(id).equals("None")){
+            linkTextField.setText(viewModel.getLink(id));
+        }
+        if (viewModel.isOnline()) {
+            onlinePress();
+        } else physicalPress();
+
+        this.physicalButton.setVisible(false);
+        this.onlineButton.setVisible(false);
+        this.resetButton.setVisible(false);
+
     }
 
     @FXML
@@ -160,8 +174,6 @@ public class EditEventViewController {
 
     @FXML
     private void editPress(){
-
-
         LocalDate date = this.startDate.getValue();
         int dayS = date.getDayOfMonth();
         int dayE = dayS;
@@ -275,7 +287,7 @@ public class EditEventViewController {
                 platform = "Teams";
                 break;
             default:
-                platform = null;
+                platform = "null";
         }
 
         int room;
@@ -292,9 +304,79 @@ public class EditEventViewController {
             default:
                 room = 0;
         }
+
+        viewModel.setTitle(titleTextField.getText(), id);
+        viewModel.setDes(descriptionArea.getText(), id);
+        if (!isDateEqual(yearS, monthS, dayS, id)){
+            viewModel.setDate(yearS, monthS, dayS, id);
+        }
+
+        try {
+            if (hourS != 0 && minuteS != -1 && hourE != 0 && minuteE != -1) {
+                viewModel.setTime(hourS, minuteS, hourE, minuteE, id);
+            } else if (hourS != 0 && minuteS != -1 && hourE == 0 && minuteE == -1) {
+                viewModel.setStartHour(hourS, minuteS, id);
+            } else if (hourS == 0 && minuteS == -1 && hourE != 0 && minuteE != -1) {
+                viewModel.setEndHour(hourE, minuteE, id);
+            } else if (hourS == 0 && minuteS == -1 && hourE == 0 && minuteE == -1){
+                // nothing need to change
+            } else throw new IllegalArgumentException("Invalid selection!");
+        } catch (Exception e){
+            errorLabel.setText(e.getMessage());
+        }
+
+        if (!platform.equals("null")){
+            viewModel.setPlatform(platform, id);
+        }
+
+        if (room != 0){
+            viewModel.setRoom(room, id);
+        }
+
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setTitle("edit");
+        a.setHeaderText("Edit success!");
+        Optional<ButtonType> result = a.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            a.close();
+        }
+    }
+
+    @FXML private void startTimeInfo(){
+        final Tooltip t1 = new Tooltip();
+        t1.setText(
+                "The original start time is " + viewModel.getStartTime(id) + '\n' +
+                        "Please leave it empty if you don't want to change the time and date."
+        );
+        t1.setFont(new Font("Arial", 14));
+        Tooltip.install(startTimeLabel, t1);
+    }
+
+    @FXML private void endTimeInfo(){
+        final Tooltip t2 = new Tooltip();
+        t2.setText(
+                "The original end time is " + viewModel.getEndTime(id) + '\n' +
+                        "Please leave it empty if you don't want to change the time and date."
+        );
+        t2.setFont(new Font("Arial", 14));
+        Tooltip.install(endTimeLabel, t2);
+    }
+
+    @FXML private void buttonInfo(){
+        final Tooltip t3 = new Tooltip();
+        t3.setText(
+                "You cannot reset the meeting type here."
+        );
+        t3.setFont(new Font("Arial", 14));
+        Tooltip.install(buttonLabel, t3);
     }
 
     public Region getRoot() {
         return root;
+    }
+
+    private boolean isDateEqual(int y, int m, int d, int id){
+        return viewModel.getYear(id) == y && viewModel.getMonth(id) == m
+                && viewModel.getDay(id) == d;
     }
 }
