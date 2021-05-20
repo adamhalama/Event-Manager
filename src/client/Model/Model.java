@@ -55,12 +55,15 @@ public interface Model {
     ArrayList<Event> getEventByCreateTime(String date);
     ArrayList<Event> getEventByStartTime(String date);
     ArrayList<Event> getEventByTitle(String title);
-    ArrayList<Event> getEventByAnything(String s);
+    ArrayList<Event> getEventByAnything(String s, String d);
+    ArrayList<Event> getEventExceptDate(String s);
+    ArrayList<Event> getEventOnlyDate(String date);
     Event getEventByIndex(int index);
     Event getEvent(Event e);
     void remove(int index);
     void removeByEvent(Event e);
     void removeByEventID(int id);
+    void removeAllEvents();
     ArrayList<Event> getEventsOnline();
     ArrayList<Event> getEventsPhysical();
     ArrayList<Event> getEventsDiscord();

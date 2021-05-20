@@ -117,7 +117,7 @@ public class CreateEventViewController {
         descriptionArea.setText(null);
         startDate.setValue(null);
         linkTextField.setText(null);
-        this.chooseStatus = -1;
+        resetPress();
     }
 
     @FXML
@@ -299,11 +299,10 @@ public class CreateEventViewController {
                             true, platform, link);
                     viewModel.addEvent(e);
                     viewModel.setIdProperty(e.getEvent_id());
-                    reset();
                     Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                     a.setTitle("Event added." + " Type: online room.");
                     a.setHeaderText("Event has been added.");
-                    a.setContentText(viewModel.getWholeMessage());
+                    a.setContentText(e.toString());
                     Optional<ButtonType> result = a.showAndWait();
                     if (result.get() == ButtonType.OK) {
                         a.close();
@@ -316,11 +315,10 @@ public class CreateEventViewController {
                             false, room);
                     viewModel.addEvent(e);
                     viewModel.setIdProperty(e.getEvent_id());
-                    reset();
                     Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                     a.setTitle("Event added." + " Type: physical room.");
                     a.setHeaderText("Event has been added.");
-                    a.setContentText(viewModel.getWholeMessage());
+                    a.setContentText(e.toString());
                     Optional<ButtonType> result = a.showAndWait();
                     if (result.get() == ButtonType.OK) {
                         a.close();
@@ -331,6 +329,8 @@ public class CreateEventViewController {
             if (getChooseStatus() == -1) {
                 throw new IllegalArgumentException("Please select a meeting type.");
             }
+
+            reset();
 
         } catch (Exception e) {
             viewModel.setErrorProperty(e.getMessage());
@@ -354,8 +354,7 @@ public class CreateEventViewController {
 
     @FXML
     private void cancelPress() {
-        //change the view in the final version
-        viewHandler.closeView();
+        viewHandler.openView("EventList");
     }
 
     public Region getRoot() {

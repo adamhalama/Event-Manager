@@ -4,19 +4,23 @@ import java.util.ArrayList;
 
 public class EventList {
     private ArrayList<Event> events;
+    private int id;
 
     public EventList() {
         this.events = new ArrayList<>();
+        this.id = 1;
     }
 
     public void add(Event event) {
-        events.add(0, event);
-        event.setEvent_id(events.size() - 1);
+        events.add(event);
+        event.setEvent_id(id);
+        id++;
     }
 
     public Event addEvent(Event e) {
-        events.add(0, e);
-        e.setEvent_id(events.size() - 1);
+        events.add(e);
+        e.setEvent_id(id);
+        id++;
         return e;
     }
 
@@ -56,13 +60,44 @@ public class EventList {
         return eventsT;
     }
 
-    public ArrayList<Event> getEventByAnything(String s) {
+    public ArrayList<Event> getEventByAnything(String s, String date) {
         ArrayList<Event> list = new ArrayList<>();
         for (int i = 0; i < events.size(); i++) {
-            if (events.get(i).toString().contains(s)) {
+            if (events.get(i).contentString().contains(s)
+            && events.get(i).dateString().contains(date)) {
                 list.add(events.get(i));
             }
         }
+        if (list != null) {
+            return list;
+        } else {
+            throw new NullPointerException("No result.");
+        }
+    }
+
+    public ArrayList<Event> getEventExceptDate(String s){
+        ArrayList<Event> list = new ArrayList<>();
+        for (int i = 0; i < events.size(); i++){
+            if (events.get(i).contentString().contains(s)){
+                list.add(events.get(i));
+            }
+        }
+
+        if (list != null) {
+            return list;
+        } else {
+            throw new NullPointerException("No result.");
+        }
+    }
+
+    public ArrayList<Event> getEventOnlyDate(String date){
+        ArrayList<Event> list = new ArrayList<>();
+        for (int i = 0; i < events.size(); i++){
+            if (events.get(i).dateString().contains(date)){
+                list.add(events.get(i));
+            }
+        }
+
         if (list != null) {
             return list;
         } else {
@@ -89,7 +124,10 @@ public class EventList {
 
     public void removeByEvent(Event e) {
         for (int i = 0; i < events.size(); i++) {
-            if (events.get(i).equals(e)) {
+            if (events.get(i).getTitle().equals(e.getTitle()) && events.get(i).getTime_create().equals(e.getTime_create()) &&
+                    events.get(i).getTime_start().equals(e.getTime_start()) && events.get(i).getTime_end().equals(e.getTime_end()) &&
+                    events.get(i).isOnline() == e.isOnline() && events.get(i).getPlatform().equals(e.getPlatform()) &&
+                    events.get(i).getRoomID() == e.getRoomID()) {
                 events.remove(e);
             }
         }
@@ -101,6 +139,10 @@ public class EventList {
                 events.remove(events.get(i));
             }
         }
+    }
+
+    public void removeAll() {
+        events.removeAll(events);
     }
 
     public ArrayList<Event> getEventsOnline() {
@@ -153,7 +195,7 @@ public class EventList {
         return eventsTeams;
     }
 
-    public int getSize(){
+    public int getSize() {
         return events.size();
     }
 
