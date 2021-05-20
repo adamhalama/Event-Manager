@@ -96,6 +96,11 @@
                         <ChoiceBox fx:id="hourMenuS" prefHeight="26.0" prefWidth="84.0" />
                         <Label prefHeight="37.0" prefWidth="12.0" text=" :" />
                         <ChoiceBox fx:id="minuteMenuS" prefHeight="26.0" prefWidth="84.0" />
+                  <Label fx:id="startTimeLabel" onMouseMoved="#startTimeInfo" text=" ☻">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
                     </children>
                     <GridPane.margin>
                         <Insets left="5.0" />
@@ -118,6 +123,11 @@
                             </children>
                         </HBox>
                         <ChoiceBox fx:id="minuteMenuE" prefHeight="26.0" prefWidth="84.0" />
+                  <Label fx:id="endTimeLabel" onMouseMoved="#endTimeInfo" text=" ☻">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
                     </children>
                     <GridPane.margin>
                         <Insets left="5.0" />
@@ -181,6 +191,11 @@
                         <Insets left="10.0" right="50.0" />
                     </HBox.margin>
                 </Button>
+            <Label fx:id="buttonLabel" onMouseMoved="#buttonInfo" text=" ☻">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
             </children>
             <VBox.margin>
                 <Insets bottom="10.0" />

@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Font;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
@@ -45,6 +46,12 @@ public class EditEventViewController {
     private TextField linkTextField;
     @FXML
     private Label errorLabel;
+    @FXML
+    private Label startTimeLabel;
+    @FXML
+    private Label endTimeLabel;
+    @FXML
+    private Label buttonLabel;
     private int chooseStatus;
     private int id;
 
@@ -333,6 +340,35 @@ public class EditEventViewController {
         if (result.get() == ButtonType.OK) {
             a.close();
         }
+    }
+
+    @FXML private void startTimeInfo(){
+        final Tooltip t1 = new Tooltip();
+        t1.setText(
+                "The original start time is " + viewModel.getStartTime(id) + '\n' +
+                        "Please leave it empty if you don't want to change the time and date."
+        );
+        t1.setFont(new Font("Arial", 14));
+        Tooltip.install(startTimeLabel, t1);
+    }
+
+    @FXML private void endTimeInfo(){
+        final Tooltip t2 = new Tooltip();
+        t2.setText(
+                "The original end time is " + viewModel.getEndTime(id) + '\n' +
+                        "Please leave it empty if you don't want to change the time and date."
+        );
+        t2.setFont(new Font("Arial", 14));
+        Tooltip.install(endTimeLabel, t2);
+    }
+
+    @FXML private void buttonInfo(){
+        final Tooltip t3 = new Tooltip();
+        t3.setText(
+                "You cannot reset the meeting type here."
+        );
+        t3.setFont(new Font("Arial", 14));
+        Tooltip.install(buttonLabel, t3);
     }
 
     public Region getRoot() {

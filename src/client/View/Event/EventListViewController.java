@@ -9,6 +9,7 @@ import client.ViewModel.EventListViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Font;
 import javafx.util.StringConverter;
 
 import java.text.SimpleDateFormat;
@@ -90,6 +91,18 @@ public class EventListViewController {
                 cellData.getValue().getPlatformProperty());
         roomColumn.setCellValueFactory(cellData ->
                 cellData.getValue().getRoomProperty());
+
+        final Tooltip t1 = new Tooltip();
+        t1.setText("You can only enter numbers!");
+        t1.setFont(new Font("Arial", 12));
+        Tooltip.install(ySTextField, t1);
+        Tooltip.install(mSTextField, t1);
+        Tooltip.install(dSTextField, t1);
+
+        final Tooltip t2 = new Tooltip();
+        t2.setText("Enter the thing you want to search without date.");
+        t2.setFont(new Font("Arial", 12));
+        Tooltip.install(searchTextField, t2);
         reset();
     }
 

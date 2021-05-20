@@ -248,6 +248,14 @@ public class EditEventViewModel {
         model.getEventByID(id).setRoom(roomID);
     }
 
+    public String getStartTime(int id){
+        return model.getEventByID(id).getTime_start();
+    }
+
+    public String getEndTime(int id){
+        return model.getEventByID(id).getTime_end();
+    }
+
     public void setTitleProperty(String titleProperty) {
         this.titleProperty.set(titleProperty);
     }
