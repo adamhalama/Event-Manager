@@ -28,8 +28,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
-    {
+    public void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment) {
         roomList.addRoom(roomCode, buildingAddress, numberOfSeats, floor, equipment);
     }
 
@@ -59,14 +58,12 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public ArrayList<Room> getRooms()
-    {
+    public ArrayList<Room> getRooms() {
         return roomList.getRooms();
     }
 
     @Override
-    public ArrayList<Room> getRoomsByAnything(String keyword)
-    {
+    public ArrayList<Room> getRoomsByAnything(String keyword) {
         return roomList.getRoomsByAnything(keyword);
     }
 
@@ -116,8 +113,28 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void setTimeE(int year, int month, int day, int hour, int minute) {
-        event.setTimeE(year, month, day, hour, minute);
+    public void setTimeE(int hour, int minute) {
+        event.setTimeE(hour, minute);
+    }
+
+    @Override
+    public void setStartTime(int h, int m) {
+        event.setStartTime(h, m);
+    }
+
+    @Override
+    public void setEndTime(int h, int m) {
+        event.setEndTime(h, m);
+    }
+
+    @Override
+    public void setTime(int hS, int mS, int hE, int mE) {
+        event.setTime(hS, mS, hE, mE);
+    }
+
+    @Override
+    public void setDate(int y, int m, int d) {
+        event.setDate(y, m, d);
     }
 
     @Override

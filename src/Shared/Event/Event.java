@@ -62,9 +62,9 @@ public class Event {
         timeFormat += setDaySFull(dayS);
         dateString += setDaySFull(dayS);
         timeFormat += "  ";
-        timeFormat += String.valueOf(hourS);
+        timeFormat += setHourFull(hourS);
         timeFormat += ":";
-        timeFormat += String.valueOf(minuteS);
+        timeFormat += setMinuteFull(minuteS);
         this.calendarS = Calendar.getInstance();
         calendarS.set(yearS, monthS - 1, dayS, hourS, minuteS);
         if ((hourS >= 9 && hourS < 17) &&
@@ -84,9 +84,9 @@ public class Event {
         timeFormat1 += "-";
         timeFormat1 += setDayEFull(dayE);
         timeFormat1 += "  ";
-        timeFormat1 += String.valueOf(hourE);
+        timeFormat1 += setHourFull(hourE);
         timeFormat1 += ":";
-        timeFormat1 += String.valueOf(minuteE);
+        timeFormat1 += setMinuteFull(minuteE);
         this.calendarE = Calendar.getInstance();
         calendarE.set(yearE, monthE - 1, dayE, hourE, minuteE);
         if ((hourE >= 9 && hourE < 17) && (calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6)) {
@@ -141,9 +141,9 @@ public class Event {
         timeFormat += setDaySFull(dayS);
         dateString += setDaySFull(dayS);
         timeFormat += "  ";
-        timeFormat += String.valueOf(hourS);
+        timeFormat += setHourFull(hourS);
         timeFormat += ":";
-        timeFormat += String.valueOf(minuteS);
+        timeFormat += setMinuteFull(minuteS);
         this.calendarS = Calendar.getInstance();
         calendarS.set(yearS, monthS - 1, dayS, hourS, minuteS);
         if ((hourS >= 9 && hourS < 17) &&
@@ -163,9 +163,9 @@ public class Event {
         timeFormat1 += "-";
         timeFormat1 += setDayEFull(dayE);
         timeFormat1 += "  ";
-        timeFormat1 += String.valueOf(hourE);
+        timeFormat1 += setHourFull(hourE);
         timeFormat1 += ":";
-        timeFormat1 += String.valueOf(minuteE);
+        timeFormat1 += setMinuteFull(minuteE);
         this.calendarE = Calendar.getInstance();
         calendarE.set(yearE, monthE - 1, dayE, hourE, minuteE);
         if ((hourE >= 9 && hourE < 17) && (calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6)) {
@@ -217,47 +217,47 @@ public class Event {
 
     public void setTimeS(int year, int month, int day, int hour, int minute) {
         // i set a limit for time here, the meeting should only be held from 9 - 17 on workdays
-        String timeFormat = "";
-        timeFormat += String.valueOf(year);
-        timeFormat += "-";
-        timeFormat += String.valueOf(month);
-        timeFormat += "-";
-        timeFormat += String.valueOf(day);
-        timeFormat += "  ";
-        timeFormat += String.valueOf(hour);
-        timeFormat += ":";
-        timeFormat += String.valueOf(minute);
+        String timeFormat1 = "";
+        timeFormat1 += String.valueOf(year);
+        timeFormat1 += "-";
+        timeFormat1 += setMonthEFull(month);
+        timeFormat1 += "-";
+        timeFormat1 += setDayEFull(day);
+        timeFormat1 += "  ";
+        timeFormat1 += setHourFull(hour);
+        timeFormat1 += ":";
+        timeFormat1 += setMinuteFull(minute);
         calendarS.set(year, month - 1, day, hour, minute);
         if ((hour >= 9 && hour < 17) && (calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6)) {
-            if (!calendarE.before(calendarS) && (year == yearE && month == monthE && day == dayE)) {
-                this.time_start = timeFormat;
-                this.dayS = day;
-                this.monthS = month;
-                this.yearS = year;
-            } else throw new IllegalArgumentException("Invalid time set!");
+            time_start = timeFormat1;
+            dayS = day;
+            dayE = dayS;
+            monthS = month;
+            monthE = monthS;
+            yearS = year;
+            yearE = yearS;
+            hourS = hour;
+            minuteS = minute;
         } else throw new IllegalArgumentException("You should set time at work hours!");
     }
 
-    public void setTimeE(int year, int month, int day, int hour, int minute) {
+    public void setTimeE(int hour, int minute) {
         // i set a limit for time here, the meeting should only be held from 9 - 17 on workdays
-        String timeFormat = "";
-        timeFormat += String.valueOf(year);
-        timeFormat += "-";
-        timeFormat += String.valueOf(month);
-        timeFormat += "-";
-        timeFormat += String.valueOf(day);
-        timeFormat += "  ";
-        timeFormat += String.valueOf(hour);
-        timeFormat += ":";
-        timeFormat += String.valueOf(minute);
-        calendarE.set(year, month - 1, day, hour, minute);
+        String timeFormat1 = "";
+        timeFormat1 += String.valueOf(yearE);
+        timeFormat1 += "-";
+        timeFormat1 += setMonthEFull(monthE);
+        timeFormat1 += "-";
+        timeFormat1 += setDayEFull(dayE);
+        timeFormat1 += "  ";
+        timeFormat1 += setHourFull(hour);
+        timeFormat1 += ":";
+        timeFormat1 += setMinuteFull(minute);
+        calendarE.set(yearE, monthE - 1, dayE, hour, minute);
         if ((hour >= 9 && hour < 17) && (calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6)) {
-            if (!calendarE.before(calendarS) && (yearS == year && monthS == month && dayS == day)) {
-                this.time_end = timeFormat;
-                this.dayE = day;
-                this.monthE = month;
-                this.yearE = year;
-            } else throw new IllegalArgumentException("Invalid time set!");
+            this.time_end = timeFormat1;
+            this.hourE = hour;
+            this.minuteE = minute;
         } else throw new IllegalArgumentException("You should set time at work hours!");
     }
 
@@ -287,11 +287,116 @@ public class Event {
         } else this.onlineLink = platformFactory.getPlatform(platform).meetingLink(link);
     }
 
+    public void setDate(int y, int m, int d) {
+        String timeFormat1 = "";
+        timeFormat1 += String.valueOf(y);
+        timeFormat1 += "-";
+        timeFormat1 += setMonthEFull(m);
+        timeFormat1 += "-";
+        timeFormat1 += setDayEFull(d);
+        timeFormat1 += "  ";
+        timeFormat1 += setHourFull(hourS);
+        timeFormat1 += ":";
+        timeFormat1 += setMinuteFull(minuteS);
+
+        String timeFormat2 = "";
+        timeFormat2 += String.valueOf(y);
+        timeFormat2 += "-";
+        timeFormat2 += setMonthEFull(m);
+        timeFormat2 += "-";
+        timeFormat2 += setDayEFull(d);
+        timeFormat2 += "  ";
+        timeFormat2 += setHourFull(hourE);
+        timeFormat2 += ":";
+        timeFormat2 += setMinuteFull(minuteE);
+        calendarS.set(y, m - 1, d);
+        if ((calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6)) {
+            time_start = timeFormat1;
+            time_end = timeFormat2;
+            dayS = d;
+            dayE = dayS;
+            monthS = m;
+            monthE = monthS;
+            yearS = y;
+            yearE = yearS;
+        } else throw new IllegalArgumentException("You should set time at work hours!");
+    }
+
+    public void setStartTime(int h, int m){
+        String timeFormat1 = "";
+        timeFormat1 += String.valueOf(yearS);
+        timeFormat1 += "-";
+        timeFormat1 += setMonthEFull(monthS);
+        timeFormat1 += "-";
+        timeFormat1 += setDayEFull(dayS);
+        timeFormat1 += "  ";
+        timeFormat1 += setHourFull(h);
+        timeFormat1 += ":";
+        timeFormat1 += setMinuteFull(m);
+        if (h >= 9 && h < 17 && (h < hourE)){
+            time_start = timeFormat1;
+            hourS = h;
+            minuteS = m;
+        } else throw new IllegalArgumentException("Invalid start time!");
+    }
+
+    public void setEndTime(int h, int m){
+        String timeFormat1 = "";
+        timeFormat1 += String.valueOf(yearE);
+        timeFormat1 += "-";
+        timeFormat1 += setMonthEFull(monthE);
+        timeFormat1 += "-";
+        timeFormat1 += setDayEFull(dayE);
+        timeFormat1 += "  ";
+        timeFormat1 += setHourFull(h);
+        timeFormat1 += ":";
+        timeFormat1 += setMinuteFull(m);
+        if (h >= 9 && h < 17 && h > hourS){
+            time_end = timeFormat1;
+            hourE = h;
+            minuteE = m;
+        } throw new IllegalArgumentException("Invalid end time!");
+    }
+
+    public void setTime(int hS, int mS, int hE, int mE){
+        String timeFormat1 = "";
+        timeFormat1 += String.valueOf(yearS);
+        timeFormat1 += "-";
+        timeFormat1 += setMonthEFull(monthS);
+        timeFormat1 += "-";
+        timeFormat1 += setDayEFull(dayS);
+        timeFormat1 += "  ";
+        timeFormat1 += setHourFull(hS);
+        timeFormat1 += ":";
+        timeFormat1 += setMinuteFull(mS);
+
+        String timeFormat2 = "";
+        timeFormat2 += String.valueOf(yearE);
+        timeFormat2 += "-";
+        timeFormat2 += setMonthEFull(monthE);
+        timeFormat2 += "-";
+        timeFormat2 += setDayEFull(dayE);
+        timeFormat2 += "  ";
+        timeFormat2 += setHourFull(hE);
+        timeFormat2 += ":";
+        timeFormat2 += setMinuteFull(mE);
+        calendarS.set(yearS, monthS - 1, dayS, hS, mS);
+        calendarE.set(yearE, monthE - 1, dayE, hE, mE);
+        if ((hS >= 9 && hS < 17) && (hE >= 9 && hE < 17) && (hS < hE) && (calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6)) {
+            time_start = timeFormat1;
+            time_end = timeFormat2;
+            hourS = hS;
+            hourE = hE;
+            minuteS = mS;
+            minuteE = mE;
+        } else throw new IllegalArgumentException("You should set time at work hours!");
+    }
+
     public String getTitle() {
         return title;
     }
 
-    public LocalDate getDateString(){
+    public LocalDate getDateString() {
         System.out.println(dateString);
         LocalDate localDate = LocalDate.parse(dateString);
         return localDate;
@@ -405,7 +510,23 @@ public class Event {
         return de;
     }
 
-    public void setDateString(String dateString){
+    public String setHourFull(int hour){
+        String hf = "";
+        if (hour < 10){
+            hf = "0" + hour;
+        } else hf = String.valueOf(hour);
+        return hf;
+    }
+
+    public String setMinuteFull(int minute){
+        String mf = "";
+        if (minute == 0){
+            mf = "00";
+        } else mf = String.valueOf(minute);
+        return mf;
+    }
+
+    public void setDateString(String dateString) {
         this.dateString = dateString;
     }
 
@@ -429,7 +550,7 @@ public class Event {
                 + " " + getPlatform() + " " + getOnlineLink() + " " + getRoomID();
     }
 
-    public String dateString(){
+    public String dateString() {
         return getTime_start() + " " + getTime_end();
     }
 }

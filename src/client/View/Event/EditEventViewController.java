@@ -14,6 +14,7 @@ import javafx.util.StringConverter;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 public class EditEventViewController {
     @FXML
@@ -34,6 +35,8 @@ public class EditEventViewController {
     private Button onlineButton;
     @FXML
     private Button physicalButton;
+    @FXML
+    private Button resetButton;
     @FXML
     private ChoiceBox<Integer> roomMenu;
     @FXML
@@ -114,16 +117,20 @@ public class EditEventViewController {
         startDate.setDayCellFactory(dayCellFactory);
         startDate.setValue(viewModel.getDate());
         titleTextField.setText(viewModel.getTitle(id));
-//        System.out.println(viewModel.getTitleProperty().get());
-//        if (!viewModel.getDescriptionProperty().get().equals("None")){
-//            descriptionArea.setText(viewModel.getDescriptionProperty().get());
-//        }
-//        if (!viewModel.getLinkProperty().get().equals("None")){
-//            linkTextField.setText(viewModel.getLinkProperty().get());
-//        }
-//        if (viewModel.isOnline()) {
-//            onlinePress();
-//        } else physicalPress();
+        if (!viewModel.getDes(id).equals("None")){
+            descriptionArea.setText(viewModel.getDes(id));
+        }
+        if (!viewModel.getLink(id).equals("None")){
+            linkTextField.setText(viewModel.getLink(id));
+        }
+        if (viewModel.isOnline()) {
+            onlinePress();
+        } else physicalPress();
+
+        this.physicalButton.setVisible(false);
+        this.onlineButton.setVisible(false);
+        this.resetButton.setVisible(false);
+
     }
 
     @FXML
@@ -160,8 +167,6 @@ public class EditEventViewController {
 
     @FXML
     private void editPress(){
-
-
         LocalDate date = this.startDate.getValue();
         int dayS = date.getDayOfMonth();
         int dayE = dayS;
@@ -275,7 +280,7 @@ public class EditEventViewController {
                 platform = "Teams";
                 break;
             default:
-                platform = null;
+                platform = "null";
         }
 
         int room;
@@ -292,9 +297,50 @@ public class EditEventViewController {
             default:
                 room = 0;
         }
+
+        viewModel.setTitle(titleTextField.getText(), id);
+        viewModel.setDes(descriptionArea.getText(), id);
+        if (!isDateEqual(yearS, monthS, dayS, id)){
+            viewModel.setDate(yearS, monthS, dayS, id);
+        }
+
+        try {
+            if (hourS != 0 && minuteS != -1 && hourE != 0 && minuteE != -1) {
+                viewModel.setTime(hourS, minuteS, hourE, minuteE, id);
+            } else if (hourS != 0 && minuteS != -1 && hourE == 0 && minuteE == -1) {
+                viewModel.setStartHour(hourS, minuteS, id);
+            } else if (hourS == 0 && minuteS == -1 && hourE != 0 && minuteE != -1) {
+                viewModel.setEndHour(hourE, minuteE, id);
+            } else if (hourS == 0 && minuteS == -1 && hourE == 0 && minuteE == -1){
+                // nothing need to change
+            } else throw new IllegalArgumentException("Invalid selection!");
+        } catch (Exception e){
+            errorLabel.setText(e.getMessage());
+        }
+
+        if (!platform.equals("null")){
+            viewModel.setPlatform(platform, id);
+        }
+
+        if (room != 0){
+            viewModel.setRoom(room, id);
+        }
+
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setTitle("edit");
+        a.setHeaderText("Edit success!");
+        Optional<ButtonType> result = a.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            a.close();
+        }
     }
 
     public Region getRoot() {
         return root;
+    }
+
+    private boolean isDateEqual(int y, int m, int d, int id){
+        return viewModel.getYear(id) == y && viewModel.getMonth(id) == m
+                && viewModel.getDay(id) == d;
     }
 }
