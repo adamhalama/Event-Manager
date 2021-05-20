@@ -37,7 +37,7 @@ public class MainMenuViewController
     @FXML
     private void roomsButton()
     {
-        //todo open roomList
+        viewHandler.openView("RoomList");
     }
 
     @FXML

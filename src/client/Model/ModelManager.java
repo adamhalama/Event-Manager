@@ -30,6 +30,12 @@ public class ModelManager implements Model
     }
 
     @Override
+    public void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
+    {
+        roomList.addRoom(roomCode, buildingAddress, numberOfSeats, floor, equipment);
+    }
+
+    @Override
     public void removeRoom(int roomID)
     {
         roomList.removeRoom(roomID);
@@ -57,6 +63,12 @@ public class ModelManager implements Model
     public int getRoomsCreated()
     {
         return RoomList.getRoomsCreated();
+    }
+
+    @Override
+    public ArrayList<Room> getRooms()
+    {
+        return roomList.getRooms();
     }
 
     @Override

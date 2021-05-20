@@ -19,6 +19,12 @@ public class RoomList
         roomsCreated++;
     }
 
+    public void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
+    {
+        rooms.add(new Room(roomsCreated, roomCode, buildingAddress, numberOfSeats, floor, equipment));
+        roomsCreated++;
+    }
+
     public void removeRoom(int roomID)
     {
         for (int i = 0; i < rooms.size(); i++)
@@ -93,5 +99,10 @@ public class RoomList
         }
 
         return selectedRooms;
+    }
+
+    public ArrayList<Room> getRooms()
+    {
+        return rooms;
     }
 }

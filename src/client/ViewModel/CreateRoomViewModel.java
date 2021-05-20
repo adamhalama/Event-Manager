@@ -8,6 +8,8 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.ArrayList;
+
 public class CreateRoomViewModel
 {
     private StringProperty roomNumber;
@@ -32,6 +34,17 @@ public class CreateRoomViewModel
         equipmentList = FXCollections.observableArrayList();
     }
 
+    public void reset()
+    {
+        roomNumber.setValue(null);
+        floor.setValue(null);
+        address.set(null);
+        seats.setValue(null);
+        equipmentToAdd.setValue(null);
+
+        equipmentList.clear();
+    }
+
     public void addEquipment(boolean editing)
     {
         if (equipmentToAdd.getValue() != null && !equipmentToAdd.get().equals(""))
@@ -53,7 +66,22 @@ public class CreateRoomViewModel
         // todo
         //  some confirmation
         if (!editing)
-            model.addRoom(roomNumber.get(), address.get(), seats.get(), floor.get());
+        {
+            if (equipmentList.isEmpty())
+                model.addRoom(roomNumber.get(), address.get(), seats.get(), floor.get());
+            else
+            {
+                ArrayList<String> equipment = new ArrayList<>();
+
+                for (EquipmentViewModel e:
+                     equipmentList)
+                {
+                    equipment.add(e.getEquipmentProperty().get());
+                }
+
+                model.addRoom(roomNumber.get(), address.get(), seats.get(), floor.get(), equipment);
+            }
+        }
         else
             return;
         // something like room.modify();

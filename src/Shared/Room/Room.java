@@ -30,6 +30,20 @@ public class Room
         lastModifiedDate = creationDate;
     }
 
+    public Room(int roomID, String roomNumber, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
+    {
+        this.roomID = roomID;
+        this.roomNumber = roomNumber;
+        this.floor = floor;
+        this.buildingAddress = buildingAddress;
+
+        this.numberOfSeats = numberOfSeats;
+        this.equipment = equipment;
+
+        creationDate = new Timestamp(System.currentTimeMillis());
+        lastModifiedDate = creationDate;
+    }
+
     public void modifyRoom(String roomNumber, String buildingAddress, int numberOfSeats, int floor)
     {
         this.roomNumber = roomNumber;

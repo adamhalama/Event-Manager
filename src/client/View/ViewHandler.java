@@ -100,6 +100,7 @@ public class ViewHandler
                 e.printStackTrace();
             }
         }
+        viewModelFactory.getRoomListViewModel().reset();
         return roomListViewController.getRoot();
     }
 
@@ -139,6 +140,7 @@ public class ViewHandler
                 e.printStackTrace();
             }
         }
+        viewModelFactory.getCreateRoomViewModel().reset();
         return createRoomViewController.getRoot();
     }
 

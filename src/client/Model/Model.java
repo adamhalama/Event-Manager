@@ -12,11 +12,12 @@ public interface Model {
     //part2 class room
 
     void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor);
+    void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment);
     void removeRoom(int roomID);
     void removeRoom(Room room);
-    public void modifyRoom(String roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor);
-    public void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor);
+    void modifyRoom(String roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor);void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor);
     int getRoomsCreated();
+    ArrayList<Room> getRooms();
     ArrayList<Room> getRoomsByAnything(String keyword);
 
     void removeEquipment(Room room, String removedEquipment);
