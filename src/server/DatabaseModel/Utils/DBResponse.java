@@ -1,4 +1,6 @@
-package server.DatabaseModel.models;
+package server.DatabaseModel.Utils;
+
+import server.DatabaseModel.Utils.ResponseRow;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;

@@ -1,4 +1,4 @@
-package server.DatabaseModel.models;
+package server.DatabaseModel.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

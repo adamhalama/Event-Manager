@@ -1,9 +1,12 @@
 package server.DatabaseModel.models;
 
+import server.DatabaseModel.Utils.DBResponse;
+import server.DatabaseModel.Utils.SQLBuilder;
+
 import java.sql.*;
 import java.util.ArrayList;
 
-import static server.DatabaseModel.models.SQLBuilder.Operations.*;
+import static server.DatabaseModel.Utils.SQLBuilder.Operations.*;
 
 public class Model
 {
@@ -42,23 +45,23 @@ public class Model
   }
 
   public DBResponse modelGetAll() throws SQLException {
-    return this.modelGetAll(null, null, 0);
+    return this.modelGetAll(null, null, 0, 0);
   }
   public DBResponse modelGetAll(String order) throws SQLException {
-    return this.modelGetAll(order, null, 0);
+    return this.modelGetAll(order, null, 0, 0);
   }
-  public DBResponse modelGetAll(String order, int limit) throws SQLException {
-    return this.modelGetAll(order, null, limit);
+  public DBResponse modelGetAll(String order, int limit, int offset) throws SQLException {
+    return this.modelGetAll(order, null, limit, offset);
   }
   public DBResponse modelGetAllWhere(String where) throws SQLException {
-    return this.modelGetAll(null, where, 0);
+    return this.modelGetAll(null, where, 0, 0);
   }
-  public DBResponse modelGetAllWhere(String where, int limit) throws SQLException {
-    return this.modelGetAll(null, where, limit);
+  public DBResponse modelGetAllWhere(String where, int limit, int offset) throws SQLException {
+    return this.modelGetAll(null, where, limit, offset);
   }
-  public DBResponse modelGetAll(String order, String where, int limit) throws SQLException
+  public DBResponse modelGetAll(String order, String where, int limit, int offset) throws SQLException
   {
-    String sql = (new SQLBuilder(SELECT, this.table).order(order).where(where).limit(limit).build());
+    String sql = (new SQLBuilder(SELECT, this.table).order(order).where(where).offset(offset).limit(limit).build());
     Statement statement = this.connection.createStatement();
     ResultSet response = statement.executeQuery(sql);
     DBResponse dbResponse = getDataFromResponse(response);
@@ -85,7 +88,6 @@ public class Model
   public DBResponse modelInsert(String[] fields, String[] values) throws SQLException
   {
     String sql = (new SQLBuilder(INSERT, this.table).addFields(fields, values).build());
-    System.out.println(sql);
     PreparedStatement statement = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
     statement.executeUpdate();
     DBResponse dbResponse = getDataFromResponse(statement);
@@ -96,7 +98,6 @@ public class Model
   public DBResponse modelUpdate(String[] fields, String[] values, String where) throws SQLException
   {
     String sql = (new SQLBuilder(UPDATE, this.table).addFields(fields, values).where(where).build());
-    System.out.println(sql);
     PreparedStatement statement = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
     statement.executeUpdate();
     DBResponse dbResponse = getDataFromResponse(statement);

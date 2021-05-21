@@ -1,6 +1,5 @@
-package server.DatabaseModel.models;
+package server.DatabaseModel.Utils;
 
-import Shared.Employee.Employee;
 import server.DatabaseModel.DatabaseCredentials;
 
 import java.util.ArrayList;
@@ -14,6 +13,7 @@ public class SQLBuilder
   private String table, sql_where, sql_order;
   private ArrayList<String> fields = new ArrayList<>();
   private ArrayList<String> values = new ArrayList<>();
+  private int sql_offset = 0;
   private int sql_limit = 0;
   private Operations operation;
 
@@ -29,6 +29,11 @@ public class SQLBuilder
 
   public SQLBuilder order(String sql_order) {
     this.sql_order = sql_order;
+    return this;
+  }
+
+  public SQLBuilder offset(int sql_offset) {
+    this.sql_offset = sql_offset;
     return this;
   }
 
@@ -85,10 +90,14 @@ public class SQLBuilder
     if(this.sql_order != null ) {
       sql += " ORDER BY " + this.sql_order;
     }
+    if(this.sql_offset > 0) {
+      sql += " OFFSET " + this.sql_offset;
+    }
     if(this.sql_limit > 0) {
       sql += " LIMIT " + this.sql_limit;
     }
     sql += ";";
+    System.out.println(sql);
     return sql;
   }
 

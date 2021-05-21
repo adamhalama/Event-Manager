@@ -53,13 +53,17 @@ public interface Model {
     //part1 class event
     void setTitle(String title);
     void setTimeS(int year, int month, int day, int hour, int minute);
-    void setTimeE(int year, int month, int day, int hour, int minute);
+    void setTimeE(int hour, int minute);
+    void setStartTime(int h, int m);
+    void setEndTime(int h, int m);
+    void setTime(int hS, int mS, int hE, int mE);
     void setDescription(String des);
     void setOnline(boolean isOnline);
     void setRoom(int room);
     void setPlatform(String platform);
     void setDateString(String dateString);
     void setOnlineLink(String link, String platform);
+    void setDate(int y, int m, int d);
     int getEvent_id();
     String getTitle();
     String getDescription();

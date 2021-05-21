@@ -44,7 +44,7 @@ class MessageRoomTest
 
   @BeforeEach void setUp()
   {
-    this.messageRoom = new MessageRoom("Message Room", this.users, this.messagesChunk1);
+    this.messageRoom = new MessageRoom(1, "Message Room", this.users, this.messagesChunk1);
   }
 
   @Test void setName()

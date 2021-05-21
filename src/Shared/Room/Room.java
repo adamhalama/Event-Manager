@@ -1,6 +1,5 @@
 package Shared.Room;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Room
@@ -13,9 +12,6 @@ public class Room
     private int numberOfSeats;
     private ArrayList<String> equipment;
 
-    private final Timestamp creationDate;
-    private Timestamp lastModifiedDate;
-
     public Room(int roomID, String roomNumber, String buildingAddress, int numberOfSeats, int floor)
     {
         this.roomID = roomID;
@@ -25,9 +21,6 @@ public class Room
 
         this.numberOfSeats = numberOfSeats;
         equipment = new ArrayList<>();
-
-        creationDate = new Timestamp(System.currentTimeMillis());
-        lastModifiedDate = creationDate;
     }
 
     public Room(int roomID, String roomNumber, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
@@ -39,9 +32,6 @@ public class Room
 
         this.numberOfSeats = numberOfSeats;
         this.equipment = equipment;
-
-        creationDate = new Timestamp(System.currentTimeMillis());
-        lastModifiedDate = creationDate;
     }
 
     public void modifyRoom(String roomNumber, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
@@ -56,43 +46,36 @@ public class Room
     public void removeEquipment(String removedEquipment)
     {
         equipment.remove(removedEquipment);
-        lastModifiedDate = new Timestamp(System.currentTimeMillis());
     }
 
     public void addEquipment(String addedEquipment)
     {
         equipment.add(addedEquipment);
-        lastModifiedDate = new Timestamp(System.currentTimeMillis());
     }
 
     public void setBuildingAddress(String buildingAddress)
     {
         this.buildingAddress = buildingAddress;
-        lastModifiedDate = new Timestamp(System.currentTimeMillis());
     }
 
     public void setEquipment(ArrayList<String> equipment)
     {
         this.equipment = equipment;
-        lastModifiedDate = new Timestamp(System.currentTimeMillis());
     }
 
     public void setFloor(int floor)
     {
         this.floor = floor;
-        lastModifiedDate = new Timestamp(System.currentTimeMillis());
     }
 
     public void setNumberOfSeats(int numberOfSeats)
     {
         this.numberOfSeats = numberOfSeats;
-        lastModifiedDate = new Timestamp(System.currentTimeMillis());
     }
 
     public void setRoomNumber(String roomNumber)
     {
         this.roomNumber = roomNumber;
-        lastModifiedDate = new Timestamp(System.currentTimeMillis());
     }
 
     public int getRoomID()
@@ -125,14 +108,11 @@ public class Room
         return roomNumber;
     }
 
-    public Timestamp getCreationDate()
+    @Override public String toString()
     {
-        return creationDate;
-    }
-
-    public Timestamp getLastModifiedDate()
-    {
-        return lastModifiedDate;
+        return "{" + "roomID=" + roomID + ", roomNumber='" + roomNumber
+            + '\'' + ", floor=" + floor + ", buildingAddress='"
+            + buildingAddress + '\'' + ", numberOfSeats=" + numberOfSeats + '}';
     }
 }
 

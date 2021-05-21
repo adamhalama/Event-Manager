@@ -1,6 +1,8 @@
 package server.DatabaseModel.models;
 
 import Shared.Employee.Employee;
+import server.DatabaseModel.Utils.DBResponse;
+import server.DatabaseModel.Utils.ResponseRow;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -29,30 +31,30 @@ public class EmployeeModel extends Model
 
   public ArrayList<Employee> getAll()
   {
-    return this.getAll();
+    return this.getAll(null, null, 0, 0);
   }
   public ArrayList<Employee> getAll(String order)
   {
     return this.getAll(order);
   }
-  public ArrayList<Employee> getAll(String order, int limit)
+  public ArrayList<Employee> getAll(String order, int limit, int offset)
   {
-    return this.getAll(order, null, limit);
+    return this.getAll(order, null, limit, offset);
   }
   public ArrayList<Employee> getAllWhere(String where)
   {
-    return this.getAll(null, where, 0);
+    return this.getAll(null, where, 0, 0);
   }
-  public ArrayList<Employee> getAllWhere(String where, int limit)
+  public ArrayList<Employee> getAllWhere(String where, int limit, int offset)
   {
-    return this.getAll(null, where, limit);
+    return this.getAll(null, where, limit, offset);
   }
-  public ArrayList<Employee> getAll(String order, String where, int limit)
+  public ArrayList<Employee> getAll(String order, String where, int limit, int offset)
   {
     ArrayList<Employee> employees = new ArrayList<>();
     try
     {
-      DBResponse dbResponse = super.modelGetAll(order, where, limit);
+      DBResponse dbResponse = super.modelGetAll(order, where, limit, offset);
       employees = getEmployeesFromResponse(dbResponse);
     }
     catch (SQLException e)
@@ -62,6 +64,10 @@ public class EmployeeModel extends Model
     return employees;
   }
 
+  public Employee getByID(int id) throws SQLException
+  {
+    return this.getOne("id = " + id, null);
+  }
   public Employee getOne(String where)
       throws SQLException
   {

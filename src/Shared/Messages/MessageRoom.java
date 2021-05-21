@@ -4,13 +4,22 @@ import java.util.ArrayList;
 
 public class MessageRoom
 {
+    private int id; // Room id
     private String name; // Room name
     private ArrayList<Integer> usersIDs; // Message Room users PK
     private ArrayList<Message> messages; // Loaded messages list
     private boolean allMessagesLoaded = true; // Will be used to know if all messages were loaded to disable infinite scroll (I guess)
 
-    public MessageRoom(String name, ArrayList<Integer> usersIDs, ArrayList<Message> messages)
+    public MessageRoom(int id, String name)
     {
+        this.id = id;
+        this.name = name;
+        this.usersIDs = new ArrayList<>();
+        this.messages = new ArrayList<>();
+    }
+    public MessageRoom(int id, String name, ArrayList<Integer> usersIDs, ArrayList<Message> messages)
+    {
+        this.id = id;
         this.name = name;
         this.usersIDs = usersIDs;
         this.messages = messages;
@@ -65,5 +74,10 @@ public class MessageRoom
     public ArrayList<Message> getMessages()
     {
         return this.messages;
+    }
+
+    @Override public String toString()
+    {
+        return "{" + "id='" + id + '\'' + ", name=" + name +'}';
     }
 }
