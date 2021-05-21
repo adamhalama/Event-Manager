@@ -1,6 +1,8 @@
 package server;
 
-import java.net.MalformedURLException;
+import server.DatabaseModel.DatabaseHandler;
+
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -8,11 +10,12 @@ import java.rmi.registry.Registry;
 class Server
 {
     public static void main(String[] args)
-            throws RemoteException, MalformedURLException
+        throws IOException
     {
+        DatabaseHandler databaseHandler = new DatabaseHandler();
         startRegistry();
-        RmiCaseServer server = new RmiCaseServer();
-        server.start();
+        RmiServer server = new RmiServer();
+        server.start(databaseHandler);
         System.out.println("Server started...");
     }
 

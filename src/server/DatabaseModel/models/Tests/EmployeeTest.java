@@ -19,6 +19,7 @@ public class EmployeeTest
 
     /*--GET ONE--*/
     //Employee employee = databaseHandler.employee.getByID(1); // Get by id
+    //Employee employee = databaseHandler.employee.getByUsernameAndPassword("JackHamer", "6YXQoRRvhxWpbXSmsoO1eQ==:uLGnvQ44iDBwUUQCs8YsmA=="); // Get by credentials
     //Employee employee = databaseHandler.employee.getOne("id = 1"); // Get one where
     //Employee employee = databaseHandler.employee.getOne("id = 1", "id DESC"); // Get one where and sorted
     //System.out.println(employee);

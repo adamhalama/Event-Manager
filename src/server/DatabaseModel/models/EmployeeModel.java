@@ -68,6 +68,10 @@ public class EmployeeModel extends Model
   {
     return this.getOne("id = " + id, null);
   }
+  public Employee getByUsernameAndPassword(String username, String encryptedPassword) throws SQLException
+  {
+    return this.getOne("username = '" + username + "' AND password = '" + encryptedPassword + "'", null);
+  }
   public Employee getOne(String where)
       throws SQLException
   {

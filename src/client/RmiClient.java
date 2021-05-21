@@ -1,18 +1,18 @@
 package client;
 
-import server.TextConverter;
+import server.API;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 
-public class RmiCaseClient
+public class RmiClient
 {
-  private TextConverter server;
+  private API server;
 
-  public RmiCaseClient()
+  public RmiClient()
   {
     try
     {
-      server = (TextConverter) Naming.lookup("rmi://localhost:1099/Case");
+      server = (API) Naming.lookup("rmi://localhost:1099/Case");
     }
     catch (Exception ex)
     {
@@ -22,10 +22,11 @@ public class RmiCaseClient
 
   public String convert(String text, boolean upper) throws RemoteException
   {
-    if (upper)
+    /*if (upper)
     {
       return server.toUpperCase(text);
     }
-    return server.capitalize(text);
+    return server.capitalize(text);*/
+    return "";
   }
 }
