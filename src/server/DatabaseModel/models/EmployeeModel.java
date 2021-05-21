@@ -64,6 +64,10 @@ public class EmployeeModel extends Model
     return employees;
   }
 
+  public Employee getByID(int id) throws SQLException
+  {
+    return this.getOne("id = " + id, null);
+  }
   public Employee getOne(String where)
       throws SQLException
   {

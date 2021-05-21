@@ -18,6 +18,7 @@ public class EmployeeTest
     System.out.println(employee);*/
 
     /*--GET ONE--*/
+    //Employee employee = databaseHandler.employee.getByID(1); // Get by id
     //Employee employee = databaseHandler.employee.getOne("id = 1"); // Get one where
     //Employee employee = databaseHandler.employee.getOne("id = 1", "id DESC"); // Get one where and sorted
     //System.out.println(employee);

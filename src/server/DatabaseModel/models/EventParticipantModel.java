@@ -7,11 +7,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class MessageRoomParticipantModel extends Model
+public class EventParticipantModel extends Model
 {
 
-  public MessageRoomParticipantModel(Connection connection) {
-    super(connection, "message_room_participant");
+  public EventParticipantModel(Connection connection) {
+    super(connection, "event_participant");
   }
 
   private int[] arrayListToInt(ArrayList<Integer> numbersArrList) {
@@ -23,11 +23,11 @@ public class MessageRoomParticipantModel extends Model
     return ret;
   }
 
-  public boolean exists(int messageRoomID, int userID)
+  public boolean exists(int eventID, int userID)
   {
     try
     {
-      DBResponse dbResponse = super.modelGetAll(null, "message_room_id = " + messageRoomID + " AND employee_id = " + userID , 1, 0);
+      DBResponse dbResponse = super.modelGetAll(null, "event_id = " + eventID + " AND employee_id = " + userID , 1, 0);
       return dbResponse.getRawRows().size() >= 1;
     }
     catch (SQLException e)
@@ -37,12 +37,12 @@ public class MessageRoomParticipantModel extends Model
     return false;
   }
 
-  public int[] getParticipants(int messageRoomID)
+  public int[] getParticipants(int eventID)
   {
     ArrayList<Integer> participants = new ArrayList<>();
     try
     {
-      DBResponse dbResponse = super.modelGetAll(null, "message_room_id = " + messageRoomID, 0, 0);
+      DBResponse dbResponse = super.modelGetAll(null, "event_id = " + eventID, 0, 0);
       ArrayList<ResponseRow> responseRows = dbResponse.getRows();
       for(ResponseRow row : responseRows)
       {
@@ -65,7 +65,7 @@ public class MessageRoomParticipantModel extends Model
       ArrayList<ResponseRow> responseRows = dbResponse.getRows();
       for(ResponseRow row : responseRows)
       {
-        participants.add(Integer.valueOf(row.getField("message_room_id")));
+        participants.add(Integer.valueOf(row.getField("event_id")));
       }
     }
     catch (SQLException e)
@@ -75,12 +75,12 @@ public class MessageRoomParticipantModel extends Model
     return this.arrayListToInt(participants);
   }
 
-  public boolean create(int messageRoomID, int userID)
+  public boolean create(int eventID, int userID)
   {
     try
     {
-      DBResponse dbResponse = super.modelInsert(new String[] {"message_room_id", "employee_id"},
-          new String[] {String.valueOf(messageRoomID), String.valueOf(userID)});
+      DBResponse dbResponse = super.modelInsert(new String[] {"event_id", "employee_id"},
+          new String[] {String.valueOf(eventID), String.valueOf(userID)});
       return dbResponse.getRawRows().size() >= 1;
     }
     catch (SQLException e)
