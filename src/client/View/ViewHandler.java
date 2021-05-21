@@ -2,6 +2,7 @@ package client.View;
 
 
 import client.Model.Model;
+import client.View.Employee.EmployeeListController;
 import client.View.Event.CreateEventViewController;
 import client.View.Event.EditEventViewController;
 import client.View.Event.EventListViewController;
@@ -23,17 +24,19 @@ public class ViewHandler
     private CreateEventViewController createEventViewController;
     private Model model;
 
-    private CreateEventViewController createEventViewController;
     private CreateRoomViewController createRoomViewController;
     private EventListViewController eventListViewController;
     private MainMenuViewController mainMenuViewController;
     private RoomListViewController roomListViewController;
     private EditEventViewController editEventViewController;
     private SelectState selectState;
+    private EmployeeListController employeeListViewController;
 
 //    private RoomViewController roomViewController;
 
     private int pickedRoomID;
+    private int pickedEmployeeID;
+
 
     public ViewHandler(ViewModelFactory viewModelFactory, Model model, SelectState selectState)
     {
@@ -82,6 +85,16 @@ public class ViewHandler
                 break;
             case "EditEvent":
                 root = loadEditEventViewController("Event/EditEventView.fxml");
+                break;
+            case "EmployeeList":
+                root = loadEmployeeListViewController("Employee/EmployeeListView.fxml");
+                break;
+            /*case "CreateEmployee":
+                root = loadEmployeeListViewController("Employee/EmployeeListView.fxml");
+                break;
+            case "Employee":
+                root = loadEmployeeListViewController("Employee/EmployeeListView.fxml");
+                break;*/
         }
         currentStage.setRoot(root);
 
@@ -95,6 +108,28 @@ public class ViewHandler
         primaryStage.setWidth(root.getPrefWidth());
         primaryStage.setHeight(root.getPrefHeight());
         primaryStage.show();
+    }
+
+
+
+
+    private Region loadMainMenuView(String fxmlFile)
+    {
+        if (mainMenuViewController == null)
+        {
+            try
+            {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                mainMenuViewController = loader.getController();
+                mainMenuViewController.init(this, viewModelFactory.getMainMenuViewModel(), root);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return mainMenuViewController.getRoot();
     }
 
     private Region loadRoomListView(String fxmlFile)
@@ -116,27 +151,6 @@ public class ViewHandler
         viewModelFactory.getRoomListViewModel().reset();
         return roomListViewController.getRoot();
     }
-
-    private Region loadMainMenuView(String fxmlFile)
-    {
-        if (mainMenuViewController == null)
-        {
-            try
-            {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource(fxmlFile));
-                Region root = loader.load();
-                mainMenuViewController = loader.getController();
-                mainMenuViewController.init(this, viewModelFactory.getMainMenuViewModel(), root);
-            } catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-        return mainMenuViewController.getRoot();
-    }
-
-
     private Region loadCreateRoomView(String fxmlFile)
     {
         if (createRoomViewController == null)
@@ -271,6 +285,27 @@ public class ViewHandler
         return editEventViewController.getRoot();
     }
 
+    private Region loadEmployeeListViewController(String fxmlFile)
+    {
+        if (employeeListViewController == null)
+        {
+            try
+            {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                employeeListViewController = loader.getController();
+                employeeListViewController.init(this, viewModelFactory.getEmployeeListViewModel(), root);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        viewModelFactory.getEmployeeListViewModel().reset();
+        return employeeListViewController.getRoot();
+    }
+
+
     public void setPickedRoomID(int pickedRoomID)
     {
         this.pickedRoomID = pickedRoomID;
@@ -279,6 +314,16 @@ public class ViewHandler
     public int getPickedRoomID()
     {
         return pickedRoomID;
+    }
+
+    public void setPickedEmployeeID(int pickedEmployeeID)
+    {
+        this.pickedEmployeeID = pickedEmployeeID;
+    }
+
+    public int getPickedEmployeeID()
+    {
+        return pickedEmployeeID;
     }
 
     // Commented out code is copied from the assignment 3's viewHandler

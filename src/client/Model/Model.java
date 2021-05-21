@@ -1,5 +1,6 @@
 package client.Model;
 
+import Shared.Employee.Employee;
 import Shared.Event.Event;
 import Shared.Room.Room;
 
@@ -7,8 +8,25 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface Model {
-    //only for event now
+    //only for event, room, employee now
     //add other methods for other classes later
+
+    //part 3 class employee
+
+    void addEmployee(Employee employee);
+    void addEmployee(String username, String name, String surname, String role);
+    void addEmployee(String username, String name, String surname, ArrayList<Integer> events,
+                     ArrayList<Integer> messageRooms, String role, ArrayList<String> permissions);
+    void removeEmployee(int employeeID);
+    ArrayList<Employee> getEmployees();
+    ArrayList<Employee> getEmployeesByMessageRoom(int messageRoom);
+    ArrayList<Employee> getEmployeesByEvent(int eventID);
+    ArrayList<Employee> getEmployeesByRole(String role);
+    ArrayList<Employee> getEmployeesByText(String text);
+    ArrayList<Employee> getEmployeesByAnything(String keyword);
+    Employee getEmployeeByID(int ID);
+
+
 
     //part2 class room
 

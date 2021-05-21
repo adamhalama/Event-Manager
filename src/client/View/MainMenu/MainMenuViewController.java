@@ -49,7 +49,7 @@ public class MainMenuViewController
     @FXML
     private void employeesButton()
     {
-        //todo open employeeList
+        viewHandler.openView("EmployeeList");
     }
 
     @FXML

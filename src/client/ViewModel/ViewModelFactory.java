@@ -13,6 +13,7 @@ public class ViewModelFactory
     private final MainMenuViewModel mainMenuViewModel;
     private final RoomListViewModel roomListViewModel;
     private final EditEventViewModel editEventViewModel;
+    private final EmployeeListViewModel employeeListViewModel;
     private SelectState state;
     private final RoomViewModel roomViewModel;
 
@@ -26,6 +27,7 @@ public class ViewModelFactory
         roomListViewModel = new RoomListViewModel(model);
         roomViewModel = new RoomViewModel(model);
         editEventViewModel = new EditEventViewModel(model, state);
+        employeeListViewModel = new EmployeeListViewModel(model);
     }
 
     public CreateEventViewModel getCreateEventViewModel()
@@ -60,5 +62,10 @@ public class ViewModelFactory
 
     public EditEventViewModel getEditEventViewModel() {
         return editEventViewModel;
+    }
+
+    public EmployeeListViewModel getEmployeeListViewModel()
+    {
+        return employeeListViewModel;
     }
 }
