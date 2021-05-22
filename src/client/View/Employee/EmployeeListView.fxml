@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<VBox alignment="CENTER" prefHeight="501.0" prefWidth="769.0" stylesheets="@../darkTheme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.View.Employee.EmployeeListController">
+<VBox alignment="CENTER" prefHeight="501.0" prefWidth="769.0" stylesheets="@../darkTheme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.View.Employee.EmployeeListViewController">
    <children>
       <HBox alignment="CENTER">
          <children>

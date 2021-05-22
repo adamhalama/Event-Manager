@@ -13,7 +13,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 
-public class EmployeeListController
+public class EmployeeListViewController
 {
     @FXML
     private TextField searchBox;
@@ -24,9 +24,9 @@ public class EmployeeListController
     @FXML
     private TableColumn<EmployeeViewModel, String> nameColumn;
     @FXML
-    private TableColumn<EmployeeViewModel, Number> surnameColumn;
+    private TableColumn<EmployeeViewModel, String> surnameColumn;
     @FXML
-    private TableColumn<EmployeeViewModel, Number> roleColumn;
+    private TableColumn<EmployeeViewModel, String> roleColumn;
 
     @FXML
     private Label errorLabel;
@@ -35,7 +35,7 @@ public class EmployeeListController
     private EmployeeListViewModel viewModel;
     private Region root;
 
-    public EmployeeListController(){}
+    public EmployeeListViewController(){}
 
     public void init(ViewHandler viewHandler, EmployeeListViewModel viewModel, Region root)
     {
@@ -44,6 +44,20 @@ public class EmployeeListController
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         this.root = root;
+
+        searchBox.textProperty().bindBidirectional(viewModel.getSearchBoxProperty());
+        employeeTable.setItems(viewModel.getEmployeeList());
+
+        userIDColumn.setCellValueFactory
+                (cellData -> cellData.getValue().getUserIDProperty());
+        nameColumn.setCellValueFactory
+                (cellData -> cellData.getValue().getNameProperty());
+        surnameColumn.setCellValueFactory
+                (cellData -> cellData.getValue().getSurnameProperty());
+        roleColumn.setCellValueFactory
+                (cellData -> cellData.getValue().getSurnameProperty());
+
+        errorLabel.textProperty().bind(viewModel.getErrorLabelProperty());
     }
 
     @FXML
@@ -76,7 +90,7 @@ public class EmployeeListController
     @FXML
     private void removeButton()
     {
-
+        viewModel.removeEmployee(employeeTable.getSelectionModel().getSelectedIndex(), employeeTable.getSelectionModel().getSelectedItem().getCurrentEmployeeID());
     }
 
     @FXML

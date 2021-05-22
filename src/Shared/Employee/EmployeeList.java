@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class EmployeeList
 {
     private ArrayList<Employee> employees;
-    private static int employeesCreated;
+    private static int employeesCreated = 1;
 
     private EventList eventList;
 

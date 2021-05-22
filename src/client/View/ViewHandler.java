@@ -2,7 +2,8 @@ package client.View;
 
 
 import client.Model.Model;
-import client.View.Employee.EmployeeListController;
+import client.View.Employee.EmployeeListViewController;
+import client.View.Employee.EmployeeViewController;
 import client.View.Event.CreateEventViewController;
 import client.View.Event.EditEventViewController;
 import client.View.Event.EventListViewController;
@@ -29,12 +30,14 @@ public class ViewHandler
     private RoomListViewController roomListViewController;
     private EditEventViewController editEventViewController;
     private SelectState selectState;
-    private EmployeeListController employeeListViewController;
+    private EmployeeListViewController employeeListViewController;
+    private EmployeeViewController employeeViewController;
 
 //    private RoomViewController roomViewController;
 
     private int pickedRoomID;
     private int pickedEmployeeID;
+
 
 
     public ViewHandler(ViewModelFactory viewModelFactory, Model model, SelectState selectState)
@@ -88,12 +91,15 @@ public class ViewHandler
             case "EmployeeList":
                 root = loadEmployeeListViewController("Employee/EmployeeListView.fxml");
                 break;
-            /*case "CreateEmployee":
-                root = loadEmployeeListViewController("Employee/EmployeeListView.fxml");
+            case "CreateEmployee":
+                root = loadCreateEmployeeViewController("Employee/EmployeeView.fxml");
+                break;
+            case "EditEmployee":
+                root = loadEditEmployeeViewController("Employee/EmployeeView.fxml");
                 break;
             case "Employee":
-                root = loadEmployeeListViewController("Employee/EmployeeListView.fxml");
-                break;*/
+                root = loadEmployeeViewController("Employee/EmployeeView.fxml");
+                break;
         }
         currentStage.setRoot(root);
 
@@ -108,8 +114,6 @@ public class ViewHandler
         primaryStage.setHeight(root.getPrefHeight());
         primaryStage.show();
     }
-
-
 
 
     private Region loadMainMenuView(String fxmlFile)
@@ -303,6 +307,85 @@ public class ViewHandler
         viewModelFactory.getEmployeeListViewModel().reset();
         return employeeListViewController.getRoot();
     }
+
+    private Region loadCreateEmployeeViewController(String fxmlFile)
+    {
+        if (employeeViewController == null)
+        {
+            try
+            {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                employeeViewController = loader.getController();
+                employeeViewController.init(this, viewModelFactory.getEmployeeViewModel(), root);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        employeeViewController.setEditing(false);
+        employeeViewController.setViewing(false);
+        viewModelFactory.getEmployeeViewModel().setCurrentEmployeeID(0);
+        viewModelFactory.getEmployeeViewModel().setOnlyViewing(false);
+
+        viewModelFactory.getEmployeeViewModel().reset();
+        return employeeViewController.getRoot();
+    }
+
+    private Region loadEditEmployeeViewController(String fxmlFile)
+    {
+        if (employeeViewController == null)
+        {
+            try
+            {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                employeeViewController = loader.getController();
+                employeeViewController.init(this, viewModelFactory.getEmployeeViewModel(), root);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        employeeViewController.setEditing(true);
+        employeeViewController.setViewing(false);
+        viewModelFactory.getEmployeeViewModel().setCurrentEmployeeID(pickedEmployeeID);
+        viewModelFactory.getEmployeeViewModel().setOnlyViewing(false);
+
+        viewModelFactory.getEmployeeViewModel().reset();
+        return employeeViewController.getRoot();
+    }
+
+    private Region loadEmployeeViewController(String fxmlFile)
+    {
+        if (employeeViewController == null)
+        {
+            try
+            {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                employeeViewController = loader.getController();
+                employeeViewController.init(this, viewModelFactory.getEmployeeViewModel(), root);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        employeeViewController.setEditing(false);
+        employeeViewController.setViewing(true);
+        viewModelFactory.getEmployeeViewModel().setCurrentEmployeeID(pickedEmployeeID);
+        viewModelFactory.getEmployeeViewModel().setOnlyViewing(true);
+
+        viewModelFactory.getEmployeeViewModel().reset();
+        return employeeViewController.getRoot();
+    }
+
 
 
     public void setPickedRoomID(int pickedRoomID)

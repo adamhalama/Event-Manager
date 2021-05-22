@@ -14,6 +14,7 @@ public class ViewModelFactory
     private final RoomListViewModel roomListViewModel;
     private final EditEventViewModel editEventViewModel;
     private final EmployeeListViewModel employeeListViewModel;
+    private final EmployeeViewModel employeeViewModel;
     private SelectState state;
     private final RoomViewModel roomViewModel;
 
@@ -28,6 +29,7 @@ public class ViewModelFactory
         roomViewModel = new RoomViewModel(model);
         editEventViewModel = new EditEventViewModel(model, state);
         employeeListViewModel = new EmployeeListViewModel(model);
+        employeeViewModel = new EmployeeViewModel(model);
     }
 
     public CreateEventViewModel getCreateEventViewModel()
@@ -67,5 +69,10 @@ public class ViewModelFactory
     public EmployeeListViewModel getEmployeeListViewModel()
     {
         return employeeListViewModel;
+    }
+
+    public EmployeeViewModel getEmployeeViewModel()
+    {
+        return employeeViewModel;
     }
 }

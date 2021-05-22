@@ -46,12 +46,12 @@ public class EmployeeListViewModel
         return employeeList;
     }
 
-    public StringProperty searchBoxProperty()
+    public StringProperty getSearchBoxProperty()
     {
         return searchBox;
     }
 
-    public StringProperty errorLabelProperty()
+    public StringProperty getErrorLabelProperty()
     {
         return errorLabel;
     }
