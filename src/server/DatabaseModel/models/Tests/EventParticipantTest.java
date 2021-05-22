@@ -22,7 +22,7 @@ public class EventParticipantTest
     /*--GET ALL--*/
     /*int[] eventParticipants = databaseHandler.eventParticipant.getParticipants(1); // Get room participants
     System.out.println("[ " + String.join(", ", Arrays.stream(eventParticipants).mapToObj(String::valueOf).toArray(String[]::new)) + " ]");
-    int[] userEvents = databaseHandler.eventParticipant.getRooms(1); // Get user rooms
+    int[] userEvents = databaseHandler.eventParticipant.getEvents(1); // Get user rooms
     System.out.println("[ " + String.join(", ", Arrays.stream(userEvents).mapToObj(String::valueOf).toArray(String[]::new)) + " ]");*/
   }
 }

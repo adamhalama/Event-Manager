@@ -1,6 +1,6 @@
 package client;
 
-import server.API;
+import Shared.API;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 

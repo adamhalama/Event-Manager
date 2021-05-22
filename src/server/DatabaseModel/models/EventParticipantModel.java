@@ -56,7 +56,7 @@ public class EventParticipantModel extends Model
     return this.arrayListToInt(participants);
   }
 
-  public int[] getRooms(int userID)
+  public int[] getEvents(int userID)
   {
     ArrayList<Integer> participants = new ArrayList<>();
     try

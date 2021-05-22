@@ -1,5 +1,7 @@
 package Shared.Employee;
 
+import Shared.Event.Event;
+
 import java.util.ArrayList;
 
 public class Employee
@@ -38,6 +40,11 @@ public class Employee
         this.permissions = new ArrayList<>();
     }
 
+    public void setEvents(ArrayList<Integer> events)
+    {
+        this.events = events;
+    }
+
     public void addEvent(int event)
     {
         events.add(event);
@@ -46,6 +53,11 @@ public class Employee
     public void removeEvent(int event)
     {
         events.remove(event);
+    }
+
+    public void setMessageRooms(ArrayList<Integer> rooms)
+    {
+        this.messageRooms = rooms;
     }
 
     public void addMessageRoom(int messageRoom)
