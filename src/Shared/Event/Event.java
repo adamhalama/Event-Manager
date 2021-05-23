@@ -4,12 +4,13 @@ import Shared.Event.Platform.PlatformFactory;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.Date;
 
 public class Event {
     private int event_id;
-    private final String time_create; //when creating this event
+    private String time_create; //when creating this event
     private String time_start; //when the event starts
     private String time_end; //when the event ends
     private String dateString;
@@ -24,6 +25,7 @@ public class Event {
     private int minuteS;
     private int hourE;
     private int minuteE;
+    private long timestamp;
 
     private Calendar calendarS;
     private Calendar calendarE;
@@ -35,7 +37,6 @@ public class Event {
     private PlatformFactory platformFactory;
     private int roomID; //if physical, choose a room (it could be another type, let's see in the future)
 
-    //TODO add another constructor for physical room
     public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
                  int yearE, int monthE, int dayE, int hourE, int minuteE, boolean isOnline, String platform, String link) {
         this.event_id = 0;
@@ -75,6 +76,7 @@ public class Event {
             this.yearS = yearS;
             this.hourS = hourS;
             this.minuteS = minuteS;
+            this.timestamp = dateToStamp(timeFormat);
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
         String timeFormat1 = "";
@@ -154,6 +156,7 @@ public class Event {
             this.yearS = yearS;
             this.hourS = hourS;
             this.minuteS = minuteS;
+            this.timestamp = dateToStamp(timeFormat);
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
         String timeFormat1 = "";
@@ -188,21 +191,37 @@ public class Event {
     }
 
     public Event() {
-        this.event_id = 0;
-        this.title = null;
-        this.description = null;
-        this.yearS = 0;
-        this.monthS = 0;
-        this.dayS = 0;
-        this.yearE = 0;
-        this.monthE = 0;
-        this.dayE = 0;
+        this.event_id = -1;
+        this.time_create = null;
         this.time_start = null;
         this.time_end = null;
-        this.time_create = null;
-        this.isOnline = false;
-        this.platformFactory = null;
+        this.dateString = null;
+        this.dayS = 0;
+        this.monthS = 0;
+        this.yearS = 0;
+        this.dayE = 0;
+        this.monthE = 0;
+        this.yearE = 0;
+        this.hourS = 0;
+        this.minuteS = 0;
+        this.hourE = 0;
+        this.minuteE = 0;
+        this.timestamp = 0;
         this.roomID = 0;
+    }
+
+    public long dateToStamp(String date){
+        LocalDate dateStamp = LocalDate.parse(date);
+        if (!"".equals(date)) { // if date not null
+            try {
+                timestamp = dateStamp.atStartOfDay(ZoneOffset.ofHours(1)).toInstant().toEpochMilli();
+            } catch (Exception e) {
+                System.out.println("Empty date！");
+            }
+        }else {    //date is null
+            timestamp = System.currentTimeMillis();  // current time
+        }
+        return timestamp;
     }
 
     public void setEvent_id(int event_id) {
@@ -238,6 +257,7 @@ public class Event {
             yearE = yearS;
             hourS = hour;
             minuteS = minute;
+            timestamp = dateToStamp(timeFormat1);
         } else throw new IllegalArgumentException("You should set time at work hours!");
     }
 
@@ -402,6 +422,10 @@ public class Event {
         return localDate;
     }
 
+    public long getTimestamp() {
+        return timestamp;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -528,14 +552,6 @@ public class Event {
 
     public void setDateString(String dateString) {
         this.dateString = dateString;
-    }
-
-    public Calendar getCalendarS() {
-        return calendarS;
-    }
-
-    public Calendar getCalendarE() {
-        return calendarE;
     }
 
     @Override

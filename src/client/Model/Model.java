@@ -28,7 +28,7 @@ public interface Model {
 
 
 
-    //part2 class room
+    //part4 class room
 
     void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor);
     void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment);
@@ -64,6 +64,7 @@ public interface Model {
     void setDateString(String dateString);
     void setOnlineLink(String link, String platform);
     void setDate(int y, int m, int d);
+    long getTimestamp();
     int getEvent_id();
     String getTitle();
     String getDescription();
@@ -75,7 +76,9 @@ public interface Model {
     LocalDate getDateString();
     int getRoomID();
     boolean isOnline();
+
     //part2 class eventList
+
     void add(Event event) throws IllegalArgumentException;
     Event addEvent(Event event);
     ArrayList<Event> getEvents();

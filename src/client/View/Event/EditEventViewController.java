@@ -4,7 +4,6 @@ import client.View.SelectState;
 import client.View.ViewHandler;
 import client.ViewModel.CreateEventViewModel;
 import client.ViewModel.EditEventViewModel;
-import client.ViewModel.EventListViewModel;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

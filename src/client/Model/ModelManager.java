@@ -227,6 +227,11 @@ public class ModelManager implements Model
     }
 
     @Override
+    public long getTimestamp() {
+        return event.getTimestamp();
+    }
+
+    @Override
     public void setDescription(String des) {
         event.setDescription(des);
     }
