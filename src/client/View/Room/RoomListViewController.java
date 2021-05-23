@@ -87,21 +87,39 @@ public class RoomListViewController
     @FXML
     private void openButton()
     {
-        viewHandler.setPickedRoomID(roomTable.getSelectionModel().getSelectedItem().getRoomIDProperty().get());
-        viewHandler.openView("Room");
+        try
+        {
+            viewHandler.setPickedRoomID(roomTable.getSelectionModel().getSelectedItem().getRoomIDProperty().get());
+            viewHandler.openView("Room");
+        } catch (Exception e)
+        {
+            errorLabel.setText("Select a room to open first");
+        }
     }
 
     @FXML
     private void editButton()
     {
-        viewHandler.setPickedRoomID(roomTable.getSelectionModel().getSelectedItem().getRoomIDProperty().get());
-        viewHandler.openView("EditRoom");
+        try
+        {
+            viewHandler.setPickedRoomID(roomTable.getSelectionModel().getSelectedItem().getRoomIDProperty().get());
+            viewHandler.openView("EditRoom");
+        } catch (Exception e)
+        {
+            errorLabel.setText("Select a room to edit first");
+        }
     }
 
     @FXML
     private void removeButton()
     {
-        viewModel.removeRoom(roomTable.getSelectionModel().getSelectedIndex(), roomTable.getSelectionModel().getSelectedItem().getRoomIDProperty().get());
+        try
+        {
+            viewModel.removeRoom(roomTable.getSelectionModel().getSelectedIndex(), roomTable.getSelectionModel().getSelectedItem().getRoomIDProperty().get());
+        } catch (Exception e)
+        {
+            errorLabel.setText("Select a room to remove first");
+        }
     }
 
     @FXML
