@@ -121,11 +121,11 @@ class EventTest {
 
     @Test
     void removeByID() {
-        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
+        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50,  14, 30,
                 true, "Discord", "link");
-        Event e2 = new Event("B", "None", 2021, 5, 14, 15, 50, 2021, 5, 14, 16, 30,
+        Event e2 = new Event("B", "None", 2021, 5, 14, 15, 50, 16, 30,
                 true, "Teams", "link");
-        Event e3 = new Event("C", "None", 2021, 5, 14, 10, 50, 2021, 5, 14, 14, 30,
+        Event e3 = new Event("C", "None", 2021, 5, 14, 10, 50, 14, 30,
                 true, "Zoom", "link");
         list.add(e1);
         list.add(e2);
@@ -137,11 +137,11 @@ class EventTest {
 
     @Test
     void removeAll() {
-        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
+        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 14, 30,
                 true, "Discord", "link");
-        Event e2 = new Event("B", "None", 2021, 5, 14, 15, 50, 2021, 5, 14, 16, 30,
+        Event e2 = new Event("B", "None", 2021, 5, 14, 15, 50, 16, 30,
                 true, "Teams", "link");
-        Event e3 = new Event("G", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
+        Event e3 = new Event("G", "None", 2021, 5, 14, 9, 50, 14, 30,
                 false, 1);
         list.add(e1);
         list.add(e2);
@@ -154,11 +154,11 @@ class EventTest {
 
     @Test
     void addSome() {
-        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
+        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 14, 30,
                 true, "Discord", "link");
-        Event e2 = new Event("B", "None", 2021, 5, 14, 15, 50, 2021, 5, 14, 16, 30,
+        Event e2 = new Event("B", "None", 2021, 5, 14, 15, 50, 16, 30,
                 true, "Teams", "link");
-        Event e3 = new Event("G", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
+        Event e3 = new Event("G", "None", 2021, 5, 14, 9, 50, 14, 30,
                 false, 1);
         list.add(e1);
         list.add(e2);
@@ -169,11 +169,11 @@ class EventTest {
 
     @Test
     void search() {
-        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
+        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 14, 30,
                 true, "Discord", "link");
-        Event e2 = new Event("B", "None", 2021, 6, 3, 15, 50, 2021, 6, 3, 16, 30,
+        Event e2 = new Event("B", "None", 2021, 6, 3, 15, 50, 16, 30,
                 true, "Teams", "link");
-        Event e3 = new Event("G", "None", 2021, 6, 4, 9, 50, 2021, 6, 4, 14, 30,
+        Event e3 = new Event("G", "None", 2021, 6, 4, 9, 50,  14, 30,
                 false, 1);
         list.add(e1);
         list.add(e2);
@@ -186,11 +186,11 @@ class EventTest {
 
     @Test
     void dateString() {
-        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
+        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 14, 30,
                 true, "Discord", "link");
-        Event e2 = new Event("B", "None", 2021, 6, 3, 15, 50, 2021, 6, 3, 16, 30,
+        Event e2 = new Event("B", "None", 2021, 6, 3, 15, 50, 16, 30,
                 true, "Teams", "link");
-        Event e3 = new Event("G", "None", 2021, 6, 4, 9, 50, 2021, 6, 4, 14, 30,
+        Event e3 = new Event("G", "None", 2021, 6, 4, 9, 50, 14, 30,
                 false, 1);
         list.add(e1);
         list.add(e2);
@@ -201,7 +201,7 @@ class EventTest {
 
     @Test
     void setDate(){
-        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 2021, 5, 14, 14, 30,
+        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 14, 30,
                 true, "Discord", "link");
         e1.setStartTime(12, 30);
         e1.setEndTime(15, 15);

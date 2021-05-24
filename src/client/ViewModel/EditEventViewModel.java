@@ -25,7 +25,7 @@ public class EditEventViewModel {
     private int id;
     private SelectState state;
 
-    public EditEventViewModel(Model model, SelectState state){
+    public EditEventViewModel(Model model, SelectState state) {
         this.state = state;
         this.id = state.getEditSelect();
         this.model = model;
@@ -87,15 +87,15 @@ public class EditEventViewModel {
         return titleProperty;
     }
 
-    public String getTitle(int id){
+    public String getTitle(int id) {
         return model.getEventByID(id).getTitle();
     }
 
-    public String getDes(int id){
+    public String getDes(int id) {
         return model.getEventByID(id).getDescription();
     }
 
-    public String getLink(int id){
+    public String getLink(int id) {
         return model.getEventByID(id).getOnlineLink();
     }
 
@@ -107,7 +107,7 @@ public class EditEventViewModel {
         return startHour;
     }
 
-    public IntegerProperty getIdProperty(){
+    public IntegerProperty getIdProperty() {
         return idProperty;
     }
 
@@ -147,7 +147,7 @@ public class EditEventViewModel {
         return errorProperty;
     }
 
-    public LocalDate getDate(){
+    public LocalDate getDate() {
         this.id = state.getEditSelect();
         return model.getEventByID(id).getDateString();
     }
@@ -196,27 +196,27 @@ public class EditEventViewModel {
         return id;
     }
 
-    public void setTitle(String title, int id){
+    public void setTitle(String title, int id) {
         model.getEventByID(id).setTitle(title);
     }
 
-    public void setDes(String des, int id){
+    public void setDes(String des, int id) {
         model.getEventByID(id).setDateString(des);
     }
 
-    public void setDate(int y, int m, int d, int id){
+    public void setDate(int y, int m, int d, int id) {
         model.getEventByID(id).setDate(y, m, d);
     }
 
-    public void setStartHour(int h, int m, int id){
+    public void setStartHour(int h, int m, int id) {
         model.getEventByID(id).setStartTime(h, m);
     }
 
-    public void setEndHour(int h, int m, int id){
+    public void setEndHour(int h, int m, int id) {
         model.getEventByID(id).setEndTime(h, m);
     }
 
-    public void setTime(int hS, int mS, int hE, int mE, int id){
+    public void setTime(int hS, int mS, int hE, int mE, int id) {
         model.getEventByID(id).setTime(hS, mS, hE, mE);
     }
 
@@ -228,39 +228,43 @@ public class EditEventViewModel {
         this.startMin.set(startMin);
     }
 
-    public int getYear(int id){
+    public int getYear(int id) {
         return model.getEventByID(id).getYearS();
     }
 
-    public int getMonth(int id){
+    public int getMonth(int id) {
         return model.getEventByID(id).getMonthS();
     }
 
-    public int getDay(int id){
+    public int getDay(int id) {
         return model.getEventByID(id).getDayS();
     }
 
-    public void setPlatform(String platform, int id){
+    public void setPlatform(String platform, int id) {
         model.getEventByID(id).setPlatform(platform);
     }
 
-    public void setRoom(int roomID, int id){
+    public void setRoom(int roomID, int id) {
         model.getEventByID(id).setRoom(roomID);
     }
 
-    public String getStartTime(int id){
+    public String getStartTime(int id) {
         return model.getEventByID(id).getTime_start();
     }
 
-    public String getEndTime(int id){
+    public String getEndTime(int id) {
         return model.getEventByID(id).getTime_end();
+    }
+
+    public int getRoom(int id) {
+        return model.getEventByID(id).getRoomID();
     }
 
     public void setTitleProperty(String titleProperty) {
         this.titleProperty.set(titleProperty);
     }
 
-    public int getID(){
+    public int getID() {
         return model.getEvent_id();
     }
 

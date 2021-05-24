@@ -6,13 +6,14 @@ import client.ViewModel.CreateEventViewModel;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
-import javafx.scene.text.Font;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
+
 import java.util.Optional;
 
 
@@ -296,7 +297,7 @@ public class CreateEventViewController {
             if (viewModel.isOnline()) {
                 if (title != null || yearS != 0 && monthS != 0 && dayS != 0 && hourS != 0 && minuteS != -1 && hourE != 0 && minuteE != -1
                         && platform != null && getChooseStatus() != -1) {
-                    Event e = new Event(title, des, yearS, monthS, dayS, hourS, minuteS, yearE, monthE, dayE, hourE, minuteE,
+                    Event e = new Event(title, des, yearS, monthS, dayS, hourS, minuteS, hourE, minuteE,
                             true, platform, link);
                     viewModel.addEvent(e);
                     viewModel.setIdProperty(e.getEvent_id());
@@ -312,7 +313,7 @@ public class CreateEventViewController {
             } else {
                 if (title != null && yearS != 0 && monthS != 0 && dayS != 0 && hourS != 0 && minuteS != -1
                         && hourE != 0 && minuteE != -1 && room != 0 && getChooseStatus() != -1) {
-                    Event e = new Event(title, des, yearS, monthS, dayS, hourS, minuteS, yearE, monthE, dayE, hourE, minuteE,
+                    Event e = new Event(title, des, yearS, monthS, dayS, hourS, minuteS, hourE, minuteE,
                             false, room);
                     viewModel.addEvent(e);
                     viewModel.setIdProperty(e.getEvent_id());

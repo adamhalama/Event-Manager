@@ -51,6 +51,9 @@ public class EditEventViewController {
     private Label endTimeLabel;
     @FXML
     private Label buttonLabel;
+    @FXML
+    private Label roomInfoLabel;
+
     private int chooseStatus;
     private int id;
 
@@ -59,10 +62,11 @@ public class EditEventViewController {
     private SelectState selectState;
     private Region root;
 
-    public EditEventViewController(){}
+    public EditEventViewController() {
+    }
 
     public void init(ViewHandler viewHandler, EditEventViewModel viewModel, Region root,
-                     SelectState state){
+                     SelectState state) {
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         this.root = root;
@@ -123,10 +127,10 @@ public class EditEventViewController {
         startDate.setDayCellFactory(dayCellFactory);
         startDate.setValue(viewModel.getDate());
         titleTextField.setText(viewModel.getTitle(id));
-        if (!viewModel.getDes(id).equals("None")){
+        if (!viewModel.getDes(id).equals("None")) {
             descriptionArea.setText(viewModel.getDes(id));
         }
-        if (!viewModel.getLink(id).equals("None")){
+        if (!viewModel.getLink(id).equals("None")) {
             linkTextField.setText(viewModel.getLink(id));
         }
         if (viewModel.isOnline()) {
@@ -136,7 +140,6 @@ public class EditEventViewController {
         this.physicalButton.setVisible(false);
         this.onlineButton.setVisible(false);
         this.resetButton.setVisible(false);
-
     }
 
     @FXML
@@ -167,12 +170,12 @@ public class EditEventViewController {
     }
 
     @FXML
-    private void cancelPress(){
+    private void cancelPress() {
         viewHandler.openView("EventList");
     }
 
     @FXML
-    private void editPress(){
+    private void editPress() {
         LocalDate date = this.startDate.getValue();
         int dayS = date.getDayOfMonth();
         int dayE = dayS;
@@ -306,7 +309,7 @@ public class EditEventViewController {
 
         viewModel.setTitle(titleTextField.getText(), id);
         viewModel.setDes(descriptionArea.getText(), id);
-        if (!isDateEqual(yearS, monthS, dayS, id)){
+        if (!isDateEqual(yearS, monthS, dayS, id)) {
             viewModel.setDate(yearS, monthS, dayS, id);
         }
 
@@ -317,18 +320,18 @@ public class EditEventViewController {
                 viewModel.setStartHour(hourS, minuteS, id);
             } else if (hourS == 0 && minuteS == -1 && hourE != 0 && minuteE != -1) {
                 viewModel.setEndHour(hourE, minuteE, id);
-            } else if (hourS == 0 && minuteS == -1 && hourE == 0 && minuteE == -1){
+            } else if (hourS == 0 && minuteS == -1 && hourE == 0 && minuteE == -1) {
                 // nothing need to change
             } else throw new IllegalArgumentException("Invalid selection!");
-        } catch (Exception e){
+        } catch (Exception e) {
             errorLabel.setText(e.getMessage());
         }
 
-        if (!platform.equals("null")){
+        if (!platform.equals("null")) {
             viewModel.setPlatform(platform, id);
         }
 
-        if (room != 0){
+        if (room != 0) {
             viewModel.setRoom(room, id);
         }
 
@@ -341,7 +344,8 @@ public class EditEventViewController {
         }
     }
 
-    @FXML private void startTimeInfo(){
+    @FXML
+    private void startTimeInfo() {
         final Tooltip t1 = new Tooltip();
         t1.setText(
                 "The original start time is " + viewModel.getStartTime(id) + '\n' +
@@ -351,7 +355,8 @@ public class EditEventViewController {
         Tooltip.install(startTimeLabel, t1);
     }
 
-    @FXML private void endTimeInfo(){
+    @FXML
+    private void endTimeInfo() {
         final Tooltip t2 = new Tooltip();
         t2.setText(
                 "The original end time is " + viewModel.getEndTime(id) + '\n' +
@@ -361,7 +366,8 @@ public class EditEventViewController {
         Tooltip.install(endTimeLabel, t2);
     }
 
-    @FXML private void buttonInfo(){
+    @FXML
+    private void buttonInfo() {
         final Tooltip t3 = new Tooltip();
         t3.setText(
                 "You cannot reset the meeting type here."
@@ -370,12 +376,27 @@ public class EditEventViewController {
         Tooltip.install(buttonLabel, t3);
     }
 
+    @FXML
+    private void roomInfo() {
+        final Tooltip t4 = new Tooltip();
+        t4.setText(
+                "The original room is " + viewModel.getRoom(id) + '\n' +
+                        "Please leave it empty if you don't want to change the room."
+        );
+        t4.setFont(new Font("Arial", 14));
+        Tooltip.install(roomInfoLabel, t4);
+    }
+
     public Region getRoot() {
         return root;
     }
 
-    private boolean isDateEqual(int y, int m, int d, int id){
+    private boolean isDateEqual(int y, int m, int d, int id) {
         return viewModel.getYear(id) == y && viewModel.getMonth(id) == m
                 && viewModel.getDay(id) == d;
+    }
+
+    public int getChooseStatus() {
+        return chooseStatus;
     }
 }

@@ -48,6 +48,20 @@ public class EventListViewController {
     private TableColumn<EventViewModel, Number> roomColumn;
     @FXML
     private Label errorLabel;
+    @FXML
+    private Label dateInfoLabel;
+    @FXML
+    private Button addButton;
+    @FXML
+    private Button editButton;
+    @FXML
+    private Button removeButton;
+    @FXML
+    private Button backButton;
+    @FXML
+    private Button refreshButton;
+    @FXML
+    private Button searchButton;
     private int selected;
 
     private ViewHandler viewHandler;
@@ -92,6 +106,7 @@ public class EventListViewController {
         roomColumn.setCellValueFactory(cellData ->
                 cellData.getValue().getRoomProperty());
 
+        /* tips when mouse move on the icons */
         final Tooltip t1 = new Tooltip();
         t1.setText("You can only enter numbers!");
         t1.setFont(new Font("Arial", 12));
@@ -103,6 +118,48 @@ public class EventListViewController {
         t2.setText("Enter the thing you want to search without date.");
         t2.setFont(new Font("Arial", 12));
         Tooltip.install(searchTextField, t2);
+        reset();
+
+        final Tooltip t3 = new Tooltip();
+        t3.setText("Only allow the number");
+        t3.setFont(new Font("Arial", 12));
+        Tooltip.install(dateInfoLabel, t3);
+        reset();
+
+        final Tooltip t4 = new Tooltip();
+        t4.setText("Add an event");
+        t4.setFont(new Font("Arial", 12));
+        Tooltip.install(addButton, t4);
+        reset();
+
+        final Tooltip t5 = new Tooltip();
+        t5.setText("Edit the select event");
+        t5.setFont(new Font("Arial", 12));
+        Tooltip.install(editButton, t5);
+        reset();
+
+        final Tooltip t6 = new Tooltip();
+        t6.setText("Remove the select event");
+        t6.setFont(new Font("Arial", 12));
+        Tooltip.install(removeButton, t6);
+        reset();
+
+        final Tooltip t7 = new Tooltip();
+        t7.setText("Back to the main page");
+        t7.setFont(new Font("Arial", 12));
+        Tooltip.install(backButton, t7);
+        reset();
+
+        final Tooltip t8 = new Tooltip();
+        t8.setText("Refresh the table");
+        t8.setFont(new Font("Arial", 12));
+        Tooltip.install(refreshButton, t8);
+        reset();
+
+        final Tooltip t9 = new Tooltip();
+        t9.setText("Search the events");
+        t9.setFont(new Font("Arial", 12));
+        Tooltip.install(searchButton, t9);
         reset();
     }
 
