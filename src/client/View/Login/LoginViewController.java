@@ -28,4 +28,20 @@ public class LoginViewController {
         this.userTextField.textProperty().bindBidirectional(viewModel.getUsernameProperty());
         this.passField.textProperty().bindBidirectional(viewModel.getPasswordProperty());
     }
+
+    @FXML void onEnter(){
+        loginPress();
+    }
+
+    @FXML void showPress(){
+
+    }
+
+    @FXML void forgetPassword(){
+
+    }
+
+    @FXML void loginPress(){
+
+    }
 }
