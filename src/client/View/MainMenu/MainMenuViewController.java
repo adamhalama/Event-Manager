@@ -3,10 +3,15 @@ package client.View.MainMenu;
 import client.View.ViewHandler;
 import client.ViewModel.MainMenuViewModel;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 
 public class MainMenuViewController
 {
+    @FXML
+    private Button roomsButton, eventsButton, employeesButton, chatButton, myAccountButton, logoutButton;
+
     private ViewHandler viewHandler;
     private MainMenuViewModel viewModel;
     private Region root;

@@ -1,76 +1,140 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../darkTheme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.View.MainMenu.MainMenuViewController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="346.0" prefWidth="600.0" stylesheets="@../darkTheme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.View.MainMenu.MainMenuViewController">
    <children>
-      <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #7f878f;">
+      <HBox alignment="CENTER" style="-fx-background-color: #7f878f;">
          <children>
-            <Button fx:id="myAccountButton" mnemonicParsing="false" onAction="#myAccountButton" text="My account">
-               <HBox.margin>
-                  <Insets bottom="10.0" left="5.0" right="25.0" top="10.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logoutButton" text="Log out">
-               <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </HBox.margin>
-            </Button>
+            <Label minHeight="-Infinity" prefHeight="69.0" prefWidth="255.0" text="Bruh team communication">
+               <font>
+                  <Font name="MS Outlook" size="22.0" />
+               </font>
+            </Label>
+            <Pane minHeight="-Infinity" prefHeight="76.0" prefWidth="306.0">
+               <children>
+                  <Button fx:id="myAccountButton" alignment="CENTER" contentDisplay="CENTER" layoutX="97.0" layoutY="14.0" mnemonicParsing="false" onAction="#myAccountButton" prefHeight="41.0" prefWidth="93.0" />
+                  <ImageView fitHeight="31.0" fitWidth="36.0" layoutX="128.0" layoutY="19.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/myAccountIcon.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="113.0" layoutY="56.0" text="My account" />
+                  <Button fx:id="logoutButton" layoutX="199.0" layoutY="14.0" mnemonicParsing="false" onAction="#logoutButton" prefHeight="41.0" prefWidth="93.0" />
+                  <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="230.0" layoutY="19.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/disconnectedIcon.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="225.0" layoutY="55.0" text="Log out" />
+               </children>
+            </Pane>
          </children>
       </HBox>
-      <GridPane prefHeight="375.0" prefWidth="600.0">
+      <GridPane prefHeight="260.0" prefWidth="600.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <Pane GridPane.columnIndex="1">
                <children>
-                  <Button fx:id="roomsButton" mnemonicParsing="false" onAction="#roomsButton" prefWidth="158.0" text="Rooms" textFill="#3c3b94">
+                  <Button fx:id="eventsButton" layoutX="34.0" layoutY="43.0" mnemonicParsing="false" onAction="#eventsButton" prefHeight="56.0" prefWidth="85.0" textFill="#3c3b94">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Button>
+                  <ImageView accessibleRole="BUTTON" fitHeight="48.0" fitWidth="81.0" layoutX="52.0" layoutY="47.0" mouseTransparent="true" onMouseClicked="#eventsButton" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/eventsIcon.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="NONE" />
+                     </cursor>
+                  </ImageView>
+                  <Label layoutX="127.0" layoutY="43.0" text="Events">
+                     <font>
+                        <Font name="MS Outlook" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="TOP_LEFT" layoutX="129.0" layoutY="64.0" prefHeight="41.0" prefWidth="144.0" text="Add new events, delete, edit and view existing" wrapText="true" />
+               </children>
+            </Pane>
+            <Pane GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Button fx:id="chatButton" layoutX="29.0" layoutY="43.0" mnemonicParsing="false" onAction="#chatButton" prefHeight="56.0" prefWidth="93.0" textFill="#3c3b94">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="103.0" fitWidth="48.0" layoutX="51.0" layoutY="47.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/chatIcon.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="129.0" layoutY="42.0" text="Chat">
+                     <font>
+                        <Font name="MS Outlook" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="TOP_LEFT" layoutX="129.0" layoutY="66.0" prefHeight="41.0" prefWidth="166.0" text="Chat with other employees, group chats, private messages" wrapText="true" />
+               </children>
+            </Pane>
+            <Pane GridPane.rowIndex="1">
+               <children>
+                  <Button fx:id="employeesButton" layoutX="30.0" layoutY="43.0" mnemonicParsing="false" onAction="#employeesButton" prefHeight="56.0" prefWidth="93.0" textFill="#3c3b94">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="67.0" fitWidth="48.0" layoutX="52.0" layoutY="47.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/employeesIcon.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="130.0" layoutY="42.0" text="Employees">
+                     <font>
+                        <Font name="MS Outlook" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="TOP_LEFT" layoutX="129.0" layoutY="67.0" prefHeight="41.0" prefWidth="153.0" text="Add new employees, delete, edit and view existing" wrapText="true" />
+               </children>
+            </Pane>
+            <Pane>
+               <children>
+                  <Button fx:id="roomsButton" layoutX="30.0" layoutY="43.0" mnemonicParsing="false" onAction="#roomsButton" prefHeight="56.0" prefWidth="93.0" textFill="#3c3b94">
                      <font>
                         <Font size="22.0" />
                      </font>
                   </Button>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#eventsButton" prefWidth="158.0" text="Events" textFill="#3c3b94">
+                  <ImageView fitHeight="88.0" fitWidth="48.0" layoutX="52.0" layoutY="47.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/buildingsIcon.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="130.0" layoutY="42.0" text="Rooms">
                      <font>
-                        <Font size="23.0" />
+                        <Font name="MS Outlook" size="18.0" />
                      </font>
-                  </Button>
+                  </Label>
+                  <Label alignment="TOP_LEFT" layoutX="129.0" layoutY="64.0" prefHeight="41.0" prefWidth="144.0" text="Add new rooms, delete, edit and view existing" wrapText="true" />
                </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
-               <children>
-                  <Button fx:id="employeesButton" mnemonicParsing="false" onAction="#employeesButton" prefHeight="50.0" prefWidth="158.0" text="Employees" textFill="#3c3b94">
-                     <font>
-                        <Font size="23.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <children>
-                  <Button fx:id="chatButton" mnemonicParsing="false" onAction="#chatButton" prefHeight="50.0" prefWidth="158.0" text="Chat" textFill="#3c3b94">
-                     <font>
-                        <Font size="23.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
+            </Pane>
          </children>
       </GridPane>
    </children>
