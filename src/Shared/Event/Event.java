@@ -1,11 +1,13 @@
 package Shared.Event;
 
+import Shared.Employee.Employee;
 import Shared.Event.Platform.PlatformFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -27,8 +29,8 @@ public class Event {
     private int hourE;
     private int minuteE;
     private long timestamp;
-
     private Calendar calendarS;
+
     private String title; //the title of the event
     private String description;
     private boolean isOnline;
@@ -36,9 +38,12 @@ public class Event {
     private String onlineLink; //for share the link to fellows
     private PlatformFactory platformFactory;
     private int roomID; //if physical, choose a room (it could be another type, let's see in the future)
+    private int creatorID;
+    private ArrayList<Integer> participants;
 
     public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
-                 int hourE, int minuteE, boolean isOnline, String platform, String link) {
+                 int hourE, int minuteE, boolean isOnline, String platform, String link,
+                 int creatorID, ArrayList<Integer> participants) {
         this.event_id = 0;
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
@@ -102,10 +107,13 @@ public class Event {
             this.platformString = "";
             this.onlineLink = "";
         }
+
+        this.creatorID = creatorID;
+        this.participants = participants;
     }
 
     public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
-                 int hourE, int minuteE, boolean isOnline, int roomID) {
+                 int hourE, int minuteE, boolean isOnline, int roomID, int creatorID, ArrayList<Integer> participants) {
         this.event_id = 0;
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
@@ -163,6 +171,9 @@ public class Event {
         if (!isOnline) {
             this.roomID = roomID;
         }
+
+        this.creatorID = creatorID;
+        this.participants = participants;
     }
 
     public Event() {
@@ -183,6 +194,8 @@ public class Event {
         this.minuteE = 0;
         this.timestamp = 0;
         this.roomID = 0;
+        this.creatorID = -1;
+        this.participants = null;
     }
 
     public long dateToStamp(String date) {
@@ -351,6 +364,28 @@ public class Event {
             minuteS = mS;
             minuteE = mE;
         } else throw new IllegalArgumentException("You should set time at work hours!");
+    }
+
+    public void addParticipants(int id) {
+        if (id > 0) {
+            participants.add(id);
+        } else throw new IllegalArgumentException("Invalid employee id!");
+    }
+
+    public void removeParticipants(int id) {
+        for (int i = 0; i < participants.size(); i++) {
+            if (participants.get(i) == id) {
+                participants.remove(i);
+            }
+        }
+    }
+
+    public ArrayList<Integer> getParticipants() {
+        return participants;
+    }
+
+    public int getCreatorID() {
+        return creatorID;
     }
 
     public String getTitle() {

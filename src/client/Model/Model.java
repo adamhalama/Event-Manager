@@ -83,6 +83,10 @@ public interface Model {
     void setDateString(String dateString);
     void setOnlineLink(String link, String platform);
     void setDate(int y, int m, int d);
+    void addParticipants(int id);
+    void removeParticipants(int id);
+    ArrayList<Integer> getParticipants();
+    int getCreatorID();
     long getTimestamp();
     int getEvent_id();
     String getTitle();

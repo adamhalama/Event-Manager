@@ -321,6 +321,26 @@ public class ModelManager implements Model
     }
 
     @Override
+    public void addParticipants(int id) {
+        event.addParticipants(id);
+    }
+
+    @Override
+    public void removeParticipants(int id) {
+        event.removeParticipants(id);
+    }
+
+    @Override
+    public ArrayList<Integer> getParticipants() {
+        return event.getParticipants();
+    }
+
+    @Override
+    public int getCreatorID() {
+        return event.getCreatorID();
+    }
+
+    @Override
     public long getTimestamp() {
         return event.getTimestamp();
     }
