@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class EmployeeList
 {
     private ArrayList<Employee> employees;
-    private static int employeesCreated = 1;
+    private static int employeesCreated = 0;
 
     private EventList eventList;
 
@@ -24,14 +24,14 @@ public class EmployeeList
 
     public void addEmployee(String username, String name, String surname, String role)
     {
-        employees.add(new Employee(employeesCreated, username, name, surname, role));
+        employees.add(new Employee(employeesCreated + 1, username, name, surname, role));
         employeesCreated++;
     }
 
     public void addEmployee(String username, String name, String surname, ArrayList<Integer> events,
                      ArrayList<Integer> messageRooms, String role, ArrayList<String> permissions)
     {
-        employees.add(new Employee(employeesCreated, username, name, surname, events, messageRooms, role, permissions));
+        employees.add(new Employee(employeesCreated + 1, username, name, surname, events, messageRooms, role, permissions));
         employeesCreated++;
     }
 

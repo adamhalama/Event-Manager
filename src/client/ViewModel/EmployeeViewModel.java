@@ -25,7 +25,7 @@ public class EmployeeViewModel
     private StringProperty choiceBox;
     private StringProperty addButton, removeButton;
 
-    private ObservableList<PermissionViewModel> permissionList;
+    private ObservableList<PermissionViewModel> permissionTable;
 
     private StringProperty confirmEditButton;
 
@@ -66,7 +66,7 @@ public class EmployeeViewModel
         addButton = new SimpleStringProperty();
         removeButton = new SimpleStringProperty();
 
-        permissionList = FXCollections.observableArrayList();
+        permissionTable = FXCollections.observableArrayList();
 
         confirmEditButton = new SimpleStringProperty();
 
@@ -75,7 +75,7 @@ public class EmployeeViewModel
     public void reset()
     {
         eventsList.clear();
-        permissionList.clear();
+        permissionTable.clear();
         messageRoomList.clear();
 //        TODO
 //        REMOVE THIS WHEN MESSAGEROOM LIST IS COMPLETE
@@ -133,7 +133,7 @@ public class EmployeeViewModel
             for (String permission:
                  currentEmp.getPermissions())
             {
-                permissionList.add(new PermissionViewModel(permission));
+                permissionTable.add(new PermissionViewModel(permission));
             }
 
         }
@@ -155,29 +155,29 @@ public class EmployeeViewModel
     public void addButton(String permission)
     {
         for (PermissionViewModel perm:
-             permissionList)
+                permissionTable)
         {
             if(perm.getPermissionProperty().get().equals(permission))
                 return;
         }
-        permissionList.add(new PermissionViewModel(permission));
+        permissionTable.add(new PermissionViewModel(permission));
     }
 
     public void removeSelectedButton(int selectedItem)
     {
-        permissionList.remove(selectedItem);
+        permissionTable.remove(selectedItem);
     }
 
     public void confirmButton()
     {
         //TODO pass the password to the database
-        if (permissionList.isEmpty())
+        if (permissionTable.isEmpty())
             model.addEmployee(username.get(), name.get(), surname.get(), role.get());
         else
         {
             ArrayList<String> permissions = new ArrayList<>();
             for (PermissionViewModel pers:
-                 permissionList)
+                    permissionTable)
             {
 
                 if (pers.getPermissionProperty().equals("Event join"))
@@ -191,9 +191,9 @@ public class EmployeeViewModel
                 if (pers.getPermissionProperty().equals("Room create/edit"))
                     permissions.add("room_create_edit");
                 if (pers.getPermissionProperty().equals("Manage employees"))
-                    permissions.add("manage_employees");
+                    permissions.add("employees_create_edit");
                 if (pers.getPermissionProperty().equals("Manage chat rooms"))
-                    permissions.add("manage_chat_rooms");
+                    permissions.add("chat_rooms_create_edit");
             }
 
             model.addEmployee(username.get(), name.get(), surname.get(), new ArrayList<>(), new ArrayList<>(), role.get(), permissions);
@@ -230,9 +230,9 @@ public class EmployeeViewModel
         return messageRoomList;
     }
 
-    public ObservableList<PermissionViewModel> getPermissionList()
+    public ObservableList<PermissionViewModel> getPermissionTable()
     {
-        return permissionList;
+        return permissionTable;
     }
 
     public StringProperty getEmployeeIDTextLabelProperty()

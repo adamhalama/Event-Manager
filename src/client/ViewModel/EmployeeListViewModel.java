@@ -41,6 +41,11 @@ public class EmployeeListViewModel
         }
     }
 
+    public void setErrorLabel(String text)
+    {
+        errorLabel.setValue(text);
+    }
+
     public ObservableList<EmployeeViewModel> getEmployeeList()
     {
         return employeeList;

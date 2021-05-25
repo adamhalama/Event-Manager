@@ -79,5 +79,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="javafx-swt-sep2" level="application" />
+    <orderEntry type="library" name="MyObserver-1.3" level="application" />
   </component>
 </module>

@@ -10,18 +10,18 @@ public class RoomList
     public RoomList()
     {
         rooms = new ArrayList<>();
-        roomsCreated = 1;
+        roomsCreated = 0;
     }
 
     public void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor)
     {
-        rooms.add(new Room(roomsCreated, roomCode, buildingAddress, numberOfSeats, floor));
+        rooms.add(new Room(roomsCreated + 1, roomCode, buildingAddress, numberOfSeats, floor));
         roomsCreated++;
     }
 
     public void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
     {
-        rooms.add(new Room(roomsCreated, roomCode, buildingAddress, numberOfSeats, floor, equipment));
+        rooms.add(new Room(roomsCreated + 1, roomCode, buildingAddress, numberOfSeats, floor, equipment));
         roomsCreated++;
     }
 

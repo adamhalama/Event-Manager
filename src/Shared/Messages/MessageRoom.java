@@ -8,7 +8,20 @@ public class MessageRoom
     private String name; // Room name
     private ArrayList<Integer> usersIDs; // Message Room users PK
     private ArrayList<Message> messages; // Loaded messages list
+    private boolean isPrivate; //if true the message room can have only 2 members
     private boolean allMessagesLoaded = true; // Will be used to know if all messages were loaded to disable infinite scroll (I guess)
+
+    public MessageRoom(int id, String name,int firstParticipant, int secondParticipant)
+    {
+        this.id = id;
+        this.name = name;
+        this.usersIDs = new ArrayList<>();
+        this.messages = new ArrayList<>();
+
+        usersIDs.add(firstParticipant);
+        usersIDs.add(secondParticipant);
+        isPrivate = true;
+    }
 
     public MessageRoom(int id, String name)
     {
@@ -16,13 +29,24 @@ public class MessageRoom
         this.name = name;
         this.usersIDs = new ArrayList<>();
         this.messages = new ArrayList<>();
+        isPrivate = false;
     }
-    public MessageRoom(int id, String name, ArrayList<Integer> usersIDs, ArrayList<Message> messages)
+    public MessageRoom(int id, String name, ArrayList<Integer> usersIDs)
+    {
+        this.id = id;
+        this.name = name;
+        this.usersIDs = usersIDs;
+        this.messages = new ArrayList<>();
+        isPrivate = false;
+    }
+
+    public MessageRoom(int id, String name, ArrayList<Integer> usersIDs, ArrayList<Message> messages, boolean isPrivate)
     {
         this.id = id;
         this.name = name;
         this.usersIDs = usersIDs;
         this.messages = messages;
+        this.isPrivate = isPrivate;
     }
 
     public void setName(String name)
@@ -33,6 +57,11 @@ public class MessageRoom
     public void setUsersIDs(ArrayList<Integer> usersIDs)
     {
         this.usersIDs = usersIDs;
+    }
+
+    public void addUser(int ID)
+    {
+        usersIDs.add(ID);
     }
 
     public void setMessages(ArrayList<Message> messages)
@@ -61,6 +90,11 @@ public class MessageRoom
         return this.name;
     }
 
+    public int getId()
+    {
+        return id;
+    }
+
     public boolean getAllMessagesLoaded()
     {
         return this.allMessagesLoaded;
@@ -74,6 +108,19 @@ public class MessageRoom
     public ArrayList<Message> getMessages()
     {
         return this.messages;
+    }
+
+    public Message getLastMessage()
+    {
+        if (messages == null || messages.size() == 0)
+            return null;
+        else
+            return messages.get(messages.size() - 1);
+    }
+
+    public boolean isPrivate()
+    {
+        return isPrivate;
     }
 
     @Override public String toString()

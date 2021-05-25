@@ -2,6 +2,8 @@ package client.View;
 
 
 import client.Model.Model;
+import client.View.Chat.MessageRoomListViewController;
+import client.View.Chat.MessageRoomViewController;
 import client.View.Employee.EmployeeListViewController;
 import client.View.Employee.EmployeeViewController;
 import client.View.Event.CreateEventViewController;
@@ -32,11 +34,14 @@ public class ViewHandler
     private SelectState selectState;
     private EmployeeListViewController employeeListViewController;
     private EmployeeViewController employeeViewController;
+    private MessageRoomListViewController messageRoomListViewController;
+    private MessageRoomViewController messageRoomViewController;
 
 //    private RoomViewController roomViewController;
 
     private int pickedRoomID;
     private int pickedEmployeeID;
+    private int pickedMessageRoomID;
 
 
 
@@ -100,6 +105,24 @@ public class ViewHandler
             case "Employee":
                 root = loadEmployeeViewController("Employee/EmployeeView.fxml");
                 break;
+            case "MessageRoomList":
+                root = loadMessageRoomListViewController("Chat/MessageRoomListView.fxml");
+                break;
+            case "MessageRoom":
+                root = loadMessageRoomViewController("Chat/MessageRoomView.fxml");
+                break;
+            case "CreateMessageRoom":
+                root = loadMessageRoomListViewController("Chat/CreateMessageRoomView.fxml");
+                break;
+                //todo make createMessageRoom
+            case "EditMessageRoom":
+                root = loadMessageRoomListViewController("Chat/CreateMessageRoomView.fxml");
+                break;
+                //todo make editMessageRoom
+
+            default:
+                System.out.println("Unknown view");
+                return;
         }
         currentStage.setRoot(root);
 
@@ -114,6 +137,7 @@ public class ViewHandler
         primaryStage.setHeight(root.getPrefHeight());
         primaryStage.show();
     }
+
 
 
     private Region loadMainMenuView(String fxmlFile)
@@ -132,6 +156,7 @@ public class ViewHandler
                 e.printStackTrace();
             }
         }
+        viewModelFactory.getMainMenuViewModel().reset();
         return mainMenuViewController.getRoot();
     }
 
@@ -324,7 +349,6 @@ public class ViewHandler
                 e.printStackTrace();
             }
         }
-
         employeeViewController.setEditing(false);
         employeeViewController.setViewing(false);
         viewModelFactory.getEmployeeViewModel().setCurrentEmployeeID(0);
@@ -350,7 +374,6 @@ public class ViewHandler
                 e.printStackTrace();
             }
         }
-
         employeeViewController.setEditing(true);
         employeeViewController.setViewing(false);
         viewModelFactory.getEmployeeViewModel().setCurrentEmployeeID(pickedEmployeeID);
@@ -376,7 +399,6 @@ public class ViewHandler
                 e.printStackTrace();
             }
         }
-
         employeeViewController.setEditing(false);
         employeeViewController.setViewing(true);
         viewModelFactory.getEmployeeViewModel().setCurrentEmployeeID(pickedEmployeeID);
@@ -385,6 +407,50 @@ public class ViewHandler
         viewModelFactory.getEmployeeViewModel().reset();
         return employeeViewController.getRoot();
     }
+
+    private Region loadMessageRoomListViewController(String fxmlFile)
+    {
+        if (messageRoomListViewController == null)
+        {
+            try
+            {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                messageRoomListViewController = loader.getController();
+                messageRoomListViewController.init(this, viewModelFactory.getMessageRoomListViewModel(), root);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        messageRoomListViewController.reset();
+        return messageRoomListViewController.getRoot();
+    }
+
+    private Region loadMessageRoomViewController(String fxmlFile)
+    {
+        if (messageRoomViewController == null)
+        {
+            try
+            {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                messageRoomViewController = loader.getController();
+                messageRoomViewController.init(this, viewModelFactory.getMessageRoomViewModel(), root);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        viewModelFactory.getMessageRoomViewModel().setMessageRoomID(pickedMessageRoomID);
+        messageRoomViewController.setPrivate(model.getMessageRoomByID(pickedMessageRoomID).isPrivate());
+
+        messageRoomViewController.reset();
+        return messageRoomViewController.getRoot();
+    }
+
 
 
 
@@ -406,6 +472,16 @@ public class ViewHandler
     public int getPickedEmployeeID()
     {
         return pickedEmployeeID;
+    }
+
+    public void setPickedMessageRoomID(int messageRoomID)
+    {
+        pickedMessageRoomID = messageRoomID;
+    }
+
+    public int getPickedMessageRoomID()
+    {
+        return pickedMessageRoomID;
     }
 
     // Commented out code is copied from the assignment 3's viewHandler

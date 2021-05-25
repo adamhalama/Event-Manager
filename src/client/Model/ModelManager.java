@@ -4,6 +4,9 @@ import Shared.Employee.Employee;
 import Shared.Employee.EmployeeList;
 import Shared.Event.Event;
 import Shared.Event.EventList;
+import Shared.Messages.Message;
+import Shared.Messages.MessageRoom;
+import Shared.Messages.MessageRoomList;
 import Shared.Room.Room;
 import Shared.Room.RoomList;
 
@@ -15,10 +18,14 @@ import java.util.ArrayList;
 
 public class ModelManager implements Model
 {
+
     private EmployeeList employeeList;
     private Event event;
     private EventList eventList;
     private RoomList roomList;
+    private MessageRoomList messageRoomList;
+
+    private int loggedClientID;
 
     public ModelManager()
     {
@@ -26,9 +33,96 @@ public class ModelManager implements Model
         this.eventList = new EventList();
         this.roomList = new RoomList();
         this.employeeList = new EmployeeList();
+        this.messageRoomList = new MessageRoomList();
 
         employeeList.setEventList(eventList);
+        messageRoomList.setEmployeeList(employeeList);
+
+        //todo REMOVE THIS
+
+        employeeList.addEmployee("Adam123", "Adam", "Halama", "CFO");
+
+        messageRoomList.addMessageRoom("Test room 1");
+        messageRoomList.getMessageRoomByID(1).addUser(1);
+        messageRoomList.getMessageRoomByID(1).addMessage(new Message(1, (System.currentTimeMillis()) , "Helooooo"));
     }
+
+    @Override
+    public int getLoggedClientID()
+    {
+        return loggedClientID;
+    }
+
+    @Override
+    public void addMessageRoom(String name)
+    {
+        messageRoomList.addMessageRoom(name);
+    }
+
+    @Override
+    public void addMessageRoom(String name, ArrayList<Integer> usersIDs)
+    {
+        messageRoomList.addMessageRoom(name, usersIDs);
+    }
+
+    @Override
+    public void removeMessageRoom(int messageRoomID)
+    {
+        messageRoomList.removeMessageRoom(messageRoomID);
+    }
+
+    @Override
+    public void removeMessageRoom(MessageRoom room)
+    {
+        messageRoomList.removeMessageRoom(room);
+    }
+
+    @Override
+    public ArrayList<MessageRoom> getMessageRoomsByEmployeeID(int employeeID)
+    {
+        return messageRoomList.getMessageRoomsByEmployeeID(employeeID);
+    }
+
+    @Override
+    public ArrayList<MessageRoom> getMessageRoomsByAnything(String keyword)
+    {
+        return messageRoomList.getMessageRoomsByAnything(keyword);
+    }
+
+    @Override
+    public ArrayList<MessageRoom> getMessageRooms()
+    {
+        return messageRoomList.getMessageRooms();
+    }
+
+    @Override
+    public String getSenderAndBody(Message message)
+    {
+        if (message == null)
+            return "";
+        return employeeList.getEmployeeByID(message.getUserID()).getFullName() + ": " + message.getMessage();
+    }
+
+    @Override
+    public ArrayList<String> getMessageRoomParticipantNames(MessageRoom messageRoom)
+    {
+        ArrayList<String> participants = new ArrayList<>();
+
+        for (int userID:
+             messageRoom.getUsersIDs())
+        {
+            participants.add(employeeList.getEmployeeByID(userID).getName());
+        }
+
+        return participants;
+    }
+
+    @Override
+    public MessageRoom getMessageRoomByID(int id)
+    {
+        return messageRoomList.getMessageRoomByID(id);
+    }
+
 
     @Override
     public void addEmployee(Employee employee)
