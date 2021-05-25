@@ -35,8 +35,10 @@ public class ModelManager implements Model
         this.employeeList = new EmployeeList();
         this.messageRoomList = new MessageRoomList();
 
+        employeeList.setMessageRoomList(messageRoomList);
         employeeList.setEventList(eventList);
         messageRoomList.setEmployeeList(employeeList);
+
 
         //todo REMOVE THIS
 

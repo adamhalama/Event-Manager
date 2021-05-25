@@ -1,6 +1,8 @@
 package Shared.Employee;
 
 import Shared.Event.EventList;
+import Shared.Messages.MessageRoom;
+import Shared.Messages.MessageRoomList;
 
 import java.util.ArrayList;
 
@@ -10,6 +12,7 @@ public class EmployeeList
     private static int employeesCreated = 0;
 
     private EventList eventList;
+    private MessageRoomList messageRoomList;
 
     public EmployeeList()
     {
@@ -117,6 +120,7 @@ public class EmployeeList
     {
         ArrayList<Employee> picked = new ArrayList<>();
 
+        for1:
         for (Employee e :
                 employees)
         {
@@ -134,27 +138,24 @@ public class EmployeeList
                 {
                     if (eventList.getEventByID(evt).getTitle().toLowerCase()
                             .contains(keyword.toLowerCase()))
-                    {
-                        picked.add(e);
-                        break;
-                    }
+                        picked.add(e); continue for1;
                 }
-            }
-            else if(!picked.contains(e))
+            } else if(!picked.contains(e))
             {
                 for (String perm:
                      e.getPermissions())
                 {
                     if (perm.toLowerCase().contains(keyword.toLowerCase()))
-                    {
-                        picked.add(e);
-                        break;
-                    }
+                        picked.add(e); continue for1;
                 }
-            }
-            else if(!picked.contains(e))
+            } else if(!picked.contains(e))
             {
-                //todo by message room name
+                for (MessageRoom room:
+                     messageRoomList.getMessageRoomsByEmployeeID(e.getId()))
+                {
+                    if (!room.isPrivate() && room.getName().toLowerCase().contains(keyword.toLowerCase()))
+                        picked.add(e); continue for1;
+                }
             }
         }
 
@@ -165,4 +166,5 @@ public class EmployeeList
     {
         this.eventList = eventList;
     }
+    public void setMessageRoomList(MessageRoomList messageRoomList){this.messageRoomList = messageRoomList;}
 }

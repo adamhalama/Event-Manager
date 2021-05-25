@@ -77,9 +77,7 @@ public class EmployeeViewModel
         eventsList.clear();
         permissionTable.clear();
         messageRoomList.clear();
-//        TODO
-//        REMOVE THIS WHEN MESSAGEROOM LIST IS COMPLETE
-        messageRoomList.add("Add messageRoomList, needed for this to work with chat names and not ID's");
+
 
         passwordLabel.setValue("Password: ");
         repeatPasswordLabel.setValue("Repeat password: ");
@@ -125,8 +123,8 @@ public class EmployeeViewModel
             for (Integer messageRoomID :
                     currentEmp.getMessageRooms())
             {
-                //TODO currently not doable, the chatroomList is missing
-                break;
+                if (!model.getMessageRoomByID(messageRoomID).isPrivate())
+                    messageRoomList.add(model.getMessageRoomByID(messageRoomID).getName());
             }
 
             for (String permission :
@@ -137,7 +135,7 @@ public class EmployeeViewModel
 
             if (onlyViewing)
             {
-
+                //todo make setDisable
             }
 
         }

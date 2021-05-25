@@ -130,16 +130,13 @@ public class CreateRoomViewController
     @FXML
     private void removeSelectedButton()
     {
-        //todo maybe swap for getFocusedIndex
-
         viewModel.removeEquipment(equipmentList.getSelectionModel().getSelectedIndex(), editing);
     }
 
     @FXML
     private void confirmButton()
     {
-        //todo save the changes, push them, and call parent view
-        if (!viewing)
+        if (!viewing) //editing
         {
             viewModel.confirm(editing, viewHandler.getPickedRoomID());
             viewHandler.openView("RoomList");
