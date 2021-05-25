@@ -168,7 +168,7 @@ public class EventListViewController {
         viewModel.reset();
     }
 
-    public void resetSearch(){
+    public void resetSearch() {
         errorLabel.setText("");
         viewModel.resetSearch();
     }
@@ -217,7 +217,7 @@ public class EventListViewController {
             } catch (Exception e) {
                 errorLabel.setText(e.getMessage());
             }
-        } else if (searchTextField.getText() != null && isValidDate()){
+        } else if (searchTextField.getText() != null && isValidDate()) {
             try {
                 if (ySTextField.getText().length() == 4) {
                     dateS += ySTextField.getText();
@@ -261,7 +261,19 @@ public class EventListViewController {
                 state.setEditSelect(eventList.getSelectionModel().getSelectedItem().getIdProperty().get());
                 viewHandler.openView("EditEvent");
             } else throw new IllegalArgumentException("Please select an event to edit!");
-        } catch (Exception e){
+        } catch (Exception e) {
+            errorLabel.setText(e.getMessage());
+        }
+    }
+
+    @FXML
+    private void infoPress() {
+        try {
+            if (eventList.getSelectionModel().getSelectedItem() != null) {
+                state.setEditSelect(eventList.getSelectionModel().getSelectedItem().getIdProperty().get());
+                viewHandler.openView("EventInfo");
+            } else throw new IllegalArgumentException("Please select an event to see info!");
+        } catch (Exception e) {
             errorLabel.setText(e.getMessage());
         }
     }
@@ -293,18 +305,18 @@ public class EventListViewController {
         viewHandler.openView("MainMenu");
     }
 
-    private boolean isValidMonth(String month){
+    private boolean isValidMonth(String month) {
         return (month.equals("1") || month.equals("2") || month.equals("3") || month.equals("4") || month.equals("5") || month.equals("6")
                 || month.equals("7") || month.equals("8") || month.equals("9") || month.equals("10") || month.equals("11") || month.equals("12")
                 || month.equals("01") || month.equals("02") || month.equals("03") || month.equals("04") || month.equals("05") || month.equals("06")
                 || month.equals("07") || month.equals("08") || month.equals("09"));
     }
 
-    private boolean isValidDay(String day){
+    private boolean isValidDay(String day) {
         return (Integer.valueOf(day) > 0 && (Integer.valueOf(day) <= 31));
     }
 
-    private boolean isValidDate(){
+    private boolean isValidDate() {
         return ySTextField.getText() != null && mSTextField.getText() != null && dSTextField.getText() != null;
     }
 }

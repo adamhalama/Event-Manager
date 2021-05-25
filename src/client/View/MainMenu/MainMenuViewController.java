@@ -35,7 +35,7 @@ public class MainMenuViewController
     @FXML
     private void myAccountButton()
     {
-        //todo open a specific employee
+        viewHandler.openView("Login");
     }
 
     @FXML

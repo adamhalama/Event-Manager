@@ -8,10 +8,13 @@ import client.View.Employee.EmployeeListViewController;
 import client.View.Employee.EmployeeViewController;
 import client.View.Event.CreateEventViewController;
 import client.View.Event.EditEventViewController;
+import client.View.Event.EventInfoViewController;
 import client.View.Event.EventListViewController;
+import client.View.Login.LoginViewController;
 import client.View.MainMenu.MainMenuViewController;
 import client.View.Room.CreateRoomViewController;
 import client.View.Room.RoomListViewController;
+import client.ViewModel.EventInfoViewModel;
 import client.ViewModel.ViewModelFactory;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,8 +22,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 
-public class ViewHandler
-{
+public class ViewHandler {
     private Stage primaryStage;
     private Scene currentStage;
     private ViewModelFactory viewModelFactory;
@@ -36,6 +38,8 @@ public class ViewHandler
     private EmployeeViewController employeeViewController;
     private MessageRoomListViewController messageRoomListViewController;
     private MessageRoomViewController messageRoomViewController;
+    private LoginViewController loginViewController;
+    private EventInfoViewController eventInfoViewController;
 
 //    private RoomViewController roomViewController;
 
@@ -44,31 +48,25 @@ public class ViewHandler
     private int pickedMessageRoomID;
 
 
-
-    public ViewHandler(ViewModelFactory viewModelFactory, Model model, SelectState selectState)
-    {
+    public ViewHandler(ViewModelFactory viewModelFactory, Model model, SelectState selectState) {
         this.viewModelFactory = viewModelFactory;
         this.model = model;
         this.selectState = selectState;
         currentStage = new Scene(new Region());
     }
 
-    public void start(Stage primaryStage)
-    {
+    public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         openView("MainMenu");
     }
 
-    public void closeView()
-    {
+    public void closeView() {
         primaryStage.close();
     }
 
-    public void openView(String id)
-    {
+    public void openView(String id) {
         Region root = null;
-        switch (id)
-        {
+        switch (id) {
             case "MainMenu":
                 root = loadMainMenuView("MainMenu/MainMenuView.fxml");
                 break;
@@ -114,12 +112,17 @@ public class ViewHandler
             case "CreateMessageRoom":
                 root = loadMessageRoomListViewController("Chat/CreateMessageRoomView.fxml");
                 break;
-                //todo make createMessageRoom
+            //todo make createMessageRoom
             case "EditMessageRoom":
                 root = loadMessageRoomListViewController("Chat/CreateMessageRoomView.fxml");
                 break;
-                //todo make editMessageRoom
-
+            //todo make editMessageRoom
+            case "Login":
+                root = loadLoginViewController("Login/LoginView.fxml");
+                break;
+            case "EventInfo" :
+                root = loadEventInfoViewController("Event/EventInfoView.fxml");
+                break;
             default:
                 System.out.println("Unknown view");
                 return;
@@ -127,8 +130,7 @@ public class ViewHandler
         currentStage.setRoot(root);
 
         String title = "Bruh app";
-        if (root.getUserData() != null)
-        {
+        if (root.getUserData() != null) {
             title += root.getUserData();
         }
         primaryStage.setTitle(title);
@@ -139,20 +141,15 @@ public class ViewHandler
     }
 
 
-
-    private Region loadMainMenuView(String fxmlFile)
-    {
-        if (mainMenuViewController == null)
-        {
-            try
-            {
+    private Region loadMainMenuView(String fxmlFile) {
+        if (mainMenuViewController == null) {
+            try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 mainMenuViewController = loader.getController();
                 mainMenuViewController.init(this, viewModelFactory.getMainMenuViewModel(), root);
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -160,38 +157,61 @@ public class ViewHandler
         return mainMenuViewController.getRoot();
     }
 
-    private Region loadRoomListView(String fxmlFile)
-    {
-        if (roomListViewController == null)
-        {
-            try
-            {
+    private Region loadLoginViewController(String fxmlFile) {
+        if (loginViewController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                loginViewController = loader.getController();
+                loginViewController.init(this, viewModelFactory.getLoginViewModel(), root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return loginViewController.getRoot();
+    }
+
+    private Region loadEventInfoViewController(String fxmlFile) {
+        if (eventInfoViewController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                eventInfoViewController = loader.getController();
+                eventInfoViewController.init(this, viewModelFactory.getEventInfoViewModel(), root, selectState);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return eventInfoViewController.getRoot();
+    }
+
+    private Region loadRoomListView(String fxmlFile) {
+        if (roomListViewController == null) {
+            try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 roomListViewController = loader.getController();
                 roomListViewController.init(this, viewModelFactory.getRoomListViewModel(), root);
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         viewModelFactory.getRoomListViewModel().reset();
         return roomListViewController.getRoot();
     }
-    private Region loadCreateRoomView(String fxmlFile)
-    {
-        if (createRoomViewController == null)
-        {
-            try
-            {
+
+    private Region loadCreateRoomView(String fxmlFile) {
+        if (createRoomViewController == null) {
+            try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 createRoomViewController = loader.getController();
                 createRoomViewController.init(this, viewModelFactory.getCreateRoomViewModel(), root);
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -204,19 +224,15 @@ public class ViewHandler
         return createRoomViewController.getRoot();
     }
 
-    private Region loadEditRoomView(String fxmlFile)
-    {
-        if (createRoomViewController == null)
-        {
-            try
-            {
+    private Region loadEditRoomView(String fxmlFile) {
+        if (createRoomViewController == null) {
+            try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 createRoomViewController = loader.getController();
                 createRoomViewController.init(this, viewModelFactory.getCreateRoomViewModel(), root);
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -229,19 +245,15 @@ public class ViewHandler
         return createRoomViewController.getRoot();
     }
 
-    private Region loadRoomView(String fxmlFile)
-    {
-        if (createRoomViewController == null)
-        {
-            try
-            {
+    private Region loadRoomView(String fxmlFile) {
+        if (createRoomViewController == null) {
+            try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 createRoomViewController = loader.getController();
                 createRoomViewController.init(this, viewModelFactory.getCreateRoomViewModel(), root);
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -255,77 +267,61 @@ public class ViewHandler
     }
 
 
-    private Region loadCreateEventView(String fxmlFile)
-    {
-        if (createEventViewController == null)
-        {
-            try
-            {
+    private Region loadCreateEventView(String fxmlFile) {
+        if (createEventViewController == null) {
+            try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 createEventViewController = loader.getController();
                 createEventViewController.init(this, viewModelFactory.getCreateEventViewModel(), root);
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return createEventViewController.getRoot();
     }
 
-    private Region loadEventListView(String fxmlFile)
-    {
-        if (eventListViewController == null)
-        {
-            try
-            {
+    private Region loadEventListView(String fxmlFile) {
+        if (eventListViewController == null) {
+            try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 eventListViewController = loader.getController();
                 eventListViewController.init(this, viewModelFactory.getEventListViewModel(), root,
                         selectState);
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return eventListViewController.getRoot();
     }
 
-    private Region loadEditEventViewController(String fxmlFile)
-    {
-        if (editEventViewController == null)
-        {
-            try
-            {
+    private Region loadEditEventViewController(String fxmlFile) {
+        if (editEventViewController == null) {
+            try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 editEventViewController = loader.getController();
                 editEventViewController.init(this, viewModelFactory.getEditEventViewModel(), root, selectState);
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return editEventViewController.getRoot();
     }
 
-    private Region loadEmployeeListViewController(String fxmlFile)
-    {
-        if (employeeListViewController == null)
-        {
-            try
-            {
+    private Region loadEmployeeListViewController(String fxmlFile) {
+        if (employeeListViewController == null) {
+            try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 employeeListViewController = loader.getController();
                 employeeListViewController.init(this, viewModelFactory.getEmployeeListViewModel(), root);
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -333,19 +329,15 @@ public class ViewHandler
         return employeeListViewController.getRoot();
     }
 
-    private Region loadCreateEmployeeViewController(String fxmlFile)
-    {
-        if (employeeViewController == null)
-        {
-            try
-            {
+    private Region loadCreateEmployeeViewController(String fxmlFile) {
+        if (employeeViewController == null) {
+            try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 employeeViewController = loader.getController();
                 employeeViewController.init(this, viewModelFactory.getEmployeeViewModel(), root);
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -358,19 +350,15 @@ public class ViewHandler
         return employeeViewController.getRoot();
     }
 
-    private Region loadEditEmployeeViewController(String fxmlFile)
-    {
-        if (employeeViewController == null)
-        {
-            try
-            {
+    private Region loadEditEmployeeViewController(String fxmlFile) {
+        if (employeeViewController == null) {
+            try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 employeeViewController = loader.getController();
                 employeeViewController.init(this, viewModelFactory.getEmployeeViewModel(), root);
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -383,19 +371,15 @@ public class ViewHandler
         return employeeViewController.getRoot();
     }
 
-    private Region loadEmployeeViewController(String fxmlFile)
-    {
-        if (employeeViewController == null)
-        {
-            try
-            {
+    private Region loadEmployeeViewController(String fxmlFile) {
+        if (employeeViewController == null) {
+            try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 employeeViewController = loader.getController();
                 employeeViewController.init(this, viewModelFactory.getEmployeeViewModel(), root);
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -408,19 +392,15 @@ public class ViewHandler
         return employeeViewController.getRoot();
     }
 
-    private Region loadMessageRoomListViewController(String fxmlFile)
-    {
-        if (messageRoomListViewController == null)
-        {
-            try
-            {
+    private Region loadMessageRoomListViewController(String fxmlFile) {
+        if (messageRoomListViewController == null) {
+            try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 messageRoomListViewController = loader.getController();
                 messageRoomListViewController.init(this, viewModelFactory.getMessageRoomListViewModel(), root);
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -428,19 +408,15 @@ public class ViewHandler
         return messageRoomListViewController.getRoot();
     }
 
-    private Region loadMessageRoomViewController(String fxmlFile)
-    {
-        if (messageRoomViewController == null)
-        {
-            try
-            {
+    private Region loadMessageRoomViewController(String fxmlFile) {
+        if (messageRoomViewController == null) {
+            try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 messageRoomViewController = loader.getController();
                 messageRoomViewController.init(this, viewModelFactory.getMessageRoomViewModel(), root);
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -452,35 +428,27 @@ public class ViewHandler
     }
 
 
-
-
-    public void setPickedRoomID(int pickedRoomID)
-    {
+    public void setPickedRoomID(int pickedRoomID) {
         this.pickedRoomID = pickedRoomID;
     }
 
-    public int getPickedRoomID()
-    {
+    public int getPickedRoomID() {
         return pickedRoomID;
     }
 
-    public void setPickedEmployeeID(int pickedEmployeeID)
-    {
+    public void setPickedEmployeeID(int pickedEmployeeID) {
         this.pickedEmployeeID = pickedEmployeeID;
     }
 
-    public int getPickedEmployeeID()
-    {
+    public int getPickedEmployeeID() {
         return pickedEmployeeID;
     }
 
-    public void setPickedMessageRoomID(int messageRoomID)
-    {
+    public void setPickedMessageRoomID(int messageRoomID) {
         pickedMessageRoomID = messageRoomID;
     }
 
-    public int getPickedMessageRoomID()
-    {
+    public int getPickedMessageRoomID() {
         return pickedMessageRoomID;
     }
 
