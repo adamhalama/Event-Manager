@@ -23,6 +23,18 @@ public class MessageRoom
         isPrivate = true;
     }
 
+    public MessageRoom(int id, String name,int firstParticipant, int secondParticipant, ArrayList<Message> messages)
+    {
+        this.id = id;
+        this.name = name;
+        this.usersIDs = new ArrayList<>();
+        this.messages = messages;
+
+        usersIDs.add(firstParticipant);
+        usersIDs.add(secondParticipant);
+        isPrivate = true;
+    }
+
     public MessageRoom(int id, String name)
     {
         this.id = id;

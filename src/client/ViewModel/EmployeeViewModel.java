@@ -88,7 +88,7 @@ public class EmployeeViewModel
         removeButton.setValue("Remove selected");
         choiceBox.setValue("");
 
-        if(currentEmployeeID == 0) // creating
+        if (currentEmployeeID == 0) // creating
         {
             topLabel.setValue("Create Employee");
             employeeIDTextLabel.setValue("");
@@ -102,8 +102,7 @@ public class EmployeeViewModel
             surname.setValue("");
             role.setValue("");
 
-        }
-        else if (!onlyViewing) // editing
+        } else  // editing or viewing
         {
             Employee currentEmp = model.getEmployeeByID(currentEmployeeID);
 
@@ -112,38 +111,37 @@ public class EmployeeViewModel
 
             username.setValue(currentEmp.getSurname());
             password.setValue("");
+            repeatPassword.setValue("");
             name.setValue(currentEmp.getName());
             surname.setValue(currentEmp.getSurname());
             role.setValue(currentEmp.getRole());
 
-            for (Integer eventID:
-                 currentEmp.getEvents())
+            for (Integer eventID :
+                    currentEmp.getEvents())
             {
                 eventsList.add(model.getEventByID(eventID).getTitle());
             }
 
-            for (Integer messageRoomID:
-                 currentEmp.getMessageRooms())
+            for (Integer messageRoomID :
+                    currentEmp.getMessageRooms())
             {
                 //TODO currently not doable, the chatroomList is missing
                 break;
             }
-            messageRoomList.add("Add messageRoomList, needed for this to work with chat names and not ID's");
 
-            for (String permission:
-                 currentEmp.getPermissions())
+            for (String permission :
+                    currentEmp.getPermissions())
             {
                 permissionTable.add(new PermissionViewModel(permission));
             }
 
-        }
-        else if (onlyViewing) // only viewing
-        {
+            if (onlyViewing)
+            {
+
+            }
 
         }
     }
-
-
 
 
     public void passwordTyped()
@@ -154,10 +152,10 @@ public class EmployeeViewModel
 
     public void addButton(String permission)
     {
-        for (PermissionViewModel perm:
+        for (PermissionViewModel perm :
                 permissionTable)
         {
-            if(perm.getPermissionProperty().get().equals(permission))
+            if (perm.getPermissionProperty().get().equals(permission))
                 return;
         }
         permissionTable.add(new PermissionViewModel(permission));
@@ -170,33 +168,67 @@ public class EmployeeViewModel
 
     public void confirmButton()
     {
-        //TODO pass the password to the database
-        if (permissionTable.isEmpty())
-            model.addEmployee(username.get(), name.get(), surname.get(), role.get());
-        else
+        if (currentEmployeeID == 0)
         {
-            ArrayList<String> permissions = new ArrayList<>();
-            for (PermissionViewModel pers:
-                    permissionTable)
+            //TODO pass the password to the database
+            if (permissionTable.isEmpty())
+                model.addEmployee(username.get(), name.get(), surname.get(), role.get());
+            else
             {
+                ArrayList<String> permissions = new ArrayList<>();
+                for (PermissionViewModel pers :
+                        permissionTable)
+                {
+                    if (pers.getPermissionProperty().equals("Event join"))
+                        permissions.add("event_join");
+                    if (pers.getPermissionProperty().equals("Event create"))
+                        permissions.add("event_create");
+                    if (pers.getPermissionProperty().equals("Event edit"))
+                        permissions.add("event_edit");
+                    if (pers.getPermissionProperty().equals("Event invite"))
+                        permissions.add("event_invite");
+                    if (pers.getPermissionProperty().equals("Room create/edit"))
+                        permissions.add("room_create_edit");
+                    if (pers.getPermissionProperty().equals("Manage employees"))
+                        permissions.add("employees_create_edit");
+                    if (pers.getPermissionProperty().equals("Manage chat rooms"))
+                        permissions.add("chat_rooms_create_edit");
+                }
 
-                if (pers.getPermissionProperty().equals("Event join"))
-                    permissions.add("event_join");
-                if (pers.getPermissionProperty().equals("Event create"))
-                    permissions.add("event_create");
-                if (pers.getPermissionProperty().equals("Event edit"))
-                    permissions.add("event_edit");
-                if (pers.getPermissionProperty().equals("Event invite"))
-                    permissions.add("event_invite");
-                if (pers.getPermissionProperty().equals("Room create/edit"))
-                    permissions.add("room_create_edit");
-                if (pers.getPermissionProperty().equals("Manage employees"))
-                    permissions.add("employees_create_edit");
-                if (pers.getPermissionProperty().equals("Manage chat rooms"))
-                    permissions.add("chat_rooms_create_edit");
+                model.addEmployee(username.get(), name.get(), surname.get(), new ArrayList<>(), new ArrayList<>(), role.get(), permissions);
             }
+        } else
+        {
 
-            model.addEmployee(username.get(), name.get(), surname.get(), new ArrayList<>(), new ArrayList<>(), role.get(), permissions);
+            Employee e = model.getEmployeeByID(currentEmployeeID);
+            e.setName(name.get());
+            e.setSurname(surname.get());
+            e.setUsername(username.get());
+            e.setRole(role.get());
+
+            if (permissionTable.isEmpty())
+            {
+                ArrayList<String> permissions = new ArrayList<>();
+                for (PermissionViewModel pers :
+                        permissionTable)
+                {
+                    if (pers.getPermissionProperty().equals("Event join"))
+                        permissions.add("event_join");
+                    if (pers.getPermissionProperty().equals("Event create"))
+                        permissions.add("event_create");
+                    if (pers.getPermissionProperty().equals("Event edit"))
+                        permissions.add("event_edit");
+                    if (pers.getPermissionProperty().equals("Event invite"))
+                        permissions.add("event_invite");
+                    if (pers.getPermissionProperty().equals("Room create/edit"))
+                        permissions.add("room_create_edit");
+                    if (pers.getPermissionProperty().equals("Manage employees"))
+                        permissions.add("employees_create_edit");
+                    if (pers.getPermissionProperty().equals("Manage chat rooms"))
+                        permissions.add("chat_rooms_create_edit");
+                }
+                e.setPermissions(permissions);
+            }
         }
     }
 

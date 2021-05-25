@@ -79,6 +79,7 @@ public class MessageRoomListViewController
             viewHandler.openView("MessageRoom");
         } catch (Exception e)
         {
+            e.printStackTrace();
             setErrorLabel("Select a chat room to open first");
         }
     }

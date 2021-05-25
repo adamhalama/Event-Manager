@@ -66,14 +66,14 @@ public class MessageRoomViewModel implements NamedPropertyChangeSubject
         membersList.clear();
         if (isPrivate)
         {
-            // the other person in the chat other than you
-            topLabel.setValue("");
+            topLabel.setValue("Private chat between:");
+
         } else
         {
             topLabel.setValue("Group chat members:");
 
-            membersList.addAll(model.getMessageRoomParticipantNames(model.getMessageRoomByID(messageRoomID)));
         }
+        membersList.addAll(model.getMessageRoomParticipantNames(model.getMessageRoomByID(messageRoomID)));
 
         for (Message message :
                 model.getMessageRoomByID(messageRoomID).getMessages())

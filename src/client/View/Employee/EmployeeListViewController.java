@@ -65,6 +65,7 @@ public class EmployeeListViewController
         viewModel.setErrorLabel(text);
     }
 
+
     @FXML
     private void searchBoxKeyTyped()
     {
@@ -109,7 +110,7 @@ public class EmployeeListViewController
     {
         try
         {
-            viewModel.removeEmployee(employeeTable.getSelectionModel().getSelectedIndex(), employeeTable.getSelectionModel().getSelectedItem().getCurrentEmployeeID());
+            viewModel.removeEmployee(employeeTable.getSelectionModel().getSelectedIndex(), employeeTable.getSelectionModel().getSelectedItem().getUserIDProperty().get());
         } catch (Exception e)
         {
             this.setErrorLabel("Select an employee to remove first");

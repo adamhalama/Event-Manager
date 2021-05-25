@@ -21,9 +21,16 @@ public class MessageRoomList
         messageRoomsCreated++;
     }
 
+    public void addPrivateMessageRoom(String name, int firstParticipant, int secondParticipant)
+    {
+        messageRooms.add(new MessageRoom(messageRoomsCreated + 1, name, firstParticipant, secondParticipant));
+        messageRoomsCreated++;
+    }
+
     public void addMessageRoom(String name, ArrayList<Integer> usersIDs)
     {
-        messageRooms.add(new MessageRoom(messageRoomsCreated, name, usersIDs));
+        messageRooms.add(new MessageRoom(messageRoomsCreated + 1, name, usersIDs));
+        messageRoomsCreated++;
     }
 
     public void removeMessageRoom(int messageRoomID)

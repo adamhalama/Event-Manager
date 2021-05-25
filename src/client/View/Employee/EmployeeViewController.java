@@ -82,6 +82,45 @@ public class EmployeeViewController
         confirmEditButton.textProperty().bindBidirectional(viewModel.getConfirmEditButtonProperty());
     }
 
+    private void enableEditing()
+    {
+        username.setDisable(false);
+        password.setDisable(false);
+        repeatPassword.setDisable(false);
+        name.setDisable(false);
+        surname.setDisable(false);
+        role.setDisable(false);
+        choiceBox.setDisable(false);
+        addButton.setDisable(false);
+        removeButton.setDisable(false);
+
+        confirmEditButton.setText("Confirm");
+    }
+
+    private void disableEditing()
+    {
+        username.setDisable(true);
+        password.setDisable(true);
+        repeatPassword.setDisable(true);
+        name.setDisable(true);
+        surname.setDisable(true);
+        role.setDisable(true);
+        choiceBox.setDisable(true);
+        addButton.setDisable(true);
+        removeButton.setDisable(true);
+
+        confirmEditButton.setText("Edit");
+    }
+
+    public void setViewing(boolean isViewing)
+    {
+        this.viewing = isViewing;
+
+        if (viewing)
+            disableEditing();
+        else
+            enableEditing();
+    }
 
     @FXML
     private void passwordTyped()
@@ -120,6 +159,7 @@ public class EmployeeViewController
         else
         {
             viewModel.confirmButton();
+            viewModel.reset();
             viewHandler.openView("EmployeeList");
         }
     }
@@ -133,11 +173,6 @@ public class EmployeeViewController
     public void setEditing(boolean editing)
     {
         this.editing = editing;
-    }
-
-    public void setViewing(boolean viewing)
-    {
-        this.viewing = viewing;
     }
 
     public void setRepeatPasswordColor(boolean isRed)

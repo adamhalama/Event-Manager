@@ -41,10 +41,17 @@ public class ModelManager implements Model
         //todo REMOVE THIS
 
         employeeList.addEmployee("Adam123", "Adam", "Halama", "CFO");
+        employeeList.addEmployee("Klaudi123", "klaudi", "Var", "CBO");
 
-        messageRoomList.addMessageRoom("Test room 1");
+
+        messageRoomList.addMessageRoom("Test room t1");
         messageRoomList.getMessageRoomByID(1).addUser(1);
         messageRoomList.getMessageRoomByID(1).addMessage(new Message(1, (System.currentTimeMillis()) , "Helooooo"));
+
+
+        messageRoomList.addPrivateMessageRoom("Private message room t2", 1, 2);
+
+
     }
 
     @Override

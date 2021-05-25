@@ -18,8 +18,6 @@ public class MessageRoomViewController implements PropertyChangeListener
     @FXML
     private Label topLabel;
     @FXML
-    private ScrollPane scrollPane;
-    @FXML
     private ListView<String> listView;
     @FXML
     private TableView<MessageViewModel> messageTable;
@@ -69,8 +67,6 @@ public class MessageRoomViewController implements PropertyChangeListener
 
     public void reset()
     {
-        scrollPane.setVisible(!isPrivate);
-
         viewModel.reset();
     }
 

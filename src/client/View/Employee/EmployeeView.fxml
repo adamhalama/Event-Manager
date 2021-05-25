@@ -5,10 +5,11 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -18,15 +19,45 @@
 
 <VBox prefHeight="709.0" prefWidth="872.0" stylesheets="@../darkTheme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.View.Employee.EmployeeViewController">
    <children>
-      <VBox alignment="CENTER">
+      <GridPane prefHeight="79.0" prefWidth="832.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <Label fx:id="topLabel" text="Employee name">
+            <VBox alignment="CENTER" GridPane.columnIndex="1">
+               <children>
+                  <Label fx:id="topLabel" text="Employee name">
+                     <font>
+                        <Font size="31.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <Button cancelButton="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backButton" prefHeight="34.0" prefWidth="34.0">
                <font>
-                  <Font size="31.0" />
+                  <Font size="15.0" />
                </font>
-            </Label>
+               <graphic>
+                  <ImageView fitHeight="44.0" fitWidth="47.0" mouseTransparent="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/closeWindowIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <GridPane.margin>
+                  <Insets top="20.0" />
+               </GridPane.margin>
+            </Button>
          </children>
-      </VBox>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </GridPane>
       <HBox alignment="CENTER">
          <children>
             <Label fx:id="employeeIDTextLabel" text="Employee ID: ">
@@ -91,7 +122,7 @@
             </TextField>
             <TextField fx:id="surname" maxWidth="1.7976931348623157E308" prefHeight="26.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
-                  <Insets top="2.0" />
+                  <Insets bottom="2.0" top="2.0" />
                </GridPane.margin>
             </TextField>
             <TextField fx:id="role" maxWidth="1.7976931348623157E308" prefHeight="26.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
@@ -111,80 +142,17 @@
             </HBox>
          </children>
       </GridPane>
-      <GridPane prefHeight="390.0" prefWidth="832.0">
+      <GridPane prefHeight="358.0" prefWidth="832.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="239.599951171875" minHeight="10.0" prefHeight="39.19998397827149" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="339.2000160217285" minHeight="10.0" prefHeight="339.2000160217285" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="239.599951171875" minHeight="10.0" prefHeight="55.60001602172852" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="339.2000160217285" minHeight="10.0" prefHeight="285.99998397827153" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
-               <children>
-                  <ScrollPane maxWidth="-Infinity" prefHeight="356.0" prefWidth="356.0">
-                     <content>
-                        <ListView fx:id="eventsList" prefHeight="400.0" prefWidth="257.0" />
-                     </content>
-                  </ScrollPane>
-               </children>
-               <padding>
-                  <Insets right="5.0" />
-               </padding>
-            </VBox>
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <children>
-                  <ScrollPane maxWidth="-Infinity" prefHeight="356.0" prefWidth="356.0">
-                     <content>
-                        <TableView fx:id="permissionTable" prefHeight="400.0" prefWidth="251.0">
-                           <columns>
-                              <TableColumn fx:id="permissionColumn" editable="false" minWidth="-1.0" prefWidth="258.39999997615814" text="Permissions" />
-                           </columns>
-                        </TableView>
-                     </content>
-                  </ScrollPane>
-                  <Button fx:id="removeButton" alignment="CENTER_RIGHT" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#removeSelectedButton" text="Remove selected">
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin>
-                  </Button>
-               </children>
-               <GridPane.margin>
-                  <Insets left="5.0" right="5.0" />
-               </GridPane.margin>
-            </VBox>
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <children>
-                  <ScrollPane maxWidth="-Infinity" prefHeight="356.0" prefWidth="356.0">
-                     <content>
-                        <ListView fx:id="messageRoomList" prefHeight="400.0" prefWidth="254.0" />
-                     </content>
-                  </ScrollPane>
-               </children>
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin>
-            </VBox>
-            <VBox alignment="TOP_CENTER" GridPane.columnIndex="1">
-               <children>
-                  <Label text="Add a permission:" />
-                  <HBox alignment="CENTER">
-                     <children>
-                        <ChoiceBox fx:id="choiceBox" maxWidth="-Infinity" prefHeight="26.0" prefWidth="302.0" />
-                        <Button fx:id="addButton" minWidth="-Infinity" mnemonicParsing="false" onAction="#addButton" stylesheets="@../darkTheme.css" text="Add" textAlignment="CENTER">
-                           <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" top="2.0" />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                  </HBox>
-               </children>
-               <GridPane.margin>
-                  <Insets bottom="10.0" left="5.0" right="5.0" />
-               </GridPane.margin>
-            </VBox>
             <HBox alignment="CENTER">
                <children>
                   <Label text="Events:">
@@ -194,6 +162,37 @@
                   </Label>
                </children>
             </HBox>
+            <VBox alignment="TOP_CENTER" prefHeight="46.0" prefWidth="268.0" GridPane.columnIndex="1">
+               <children>
+                  <Label text="Add a permission:" />
+                  <HBox alignment="CENTER">
+                     <children>
+                        <ChoiceBox fx:id="choiceBox" maxWidth="-Infinity" prefHeight="26.0" prefWidth="224.0">
+                           <HBox.margin>
+                              <Insets bottom="5.0" />
+                           </HBox.margin></ChoiceBox>
+                        <Button fx:id="addButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addButton" prefHeight="26.0" prefWidth="26.0" stylesheets="@../darkTheme.css" textAlignment="CENTER">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" top="2.0" />
+                           </HBox.margin>
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="36.0" mouseTransparent="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Icons/addGenericIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="5.0" right="5.0" />
+               </GridPane.margin>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
+            </VBox>
             <HBox alignment="CENTER" GridPane.columnIndex="2">
                <children>
                   <Label text="Message rooms:">
@@ -203,6 +202,46 @@
                   </Label>
                </children>
             </HBox>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+               <children>
+                  <ListView fx:id="eventsList" prefHeight="400.0" prefWidth="257.0" />
+               </children>
+               <padding>
+                  <Insets right="5.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <TableView fx:id="permissionTable" prefHeight="400.0" prefWidth="251.0">
+                     <columns>
+                        <TableColumn fx:id="permissionColumn" editable="false" minWidth="-1.0" prefWidth="258.39999997615814" text="Permissions" />
+                     </columns>
+                  </TableView>
+                  <Button fx:id="removeButton" alignment="CENTER_RIGHT" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#removeSelectedButton" prefHeight="31.0" prefWidth="138.0" text="Remove selected">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="33.0" fitWidth="28.0" mouseTransparent="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Icons/deleteBinIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+               <GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                  <ListView fx:id="messageRoomList" prefHeight="400.0" prefWidth="254.0" />
+               </children>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </VBox>
          </children>
          <VBox.margin>
             <Insets top="15.0" />
@@ -210,23 +249,27 @@
       </GridPane>
       <HBox alignment="CENTER_RIGHT">
          <children>
-            <Button fx:id="confirmEditButton" mnemonicParsing="false" onAction="#confirmButton" text="Confirm">
+            <Button fx:id="confirmEditButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmButton" prefHeight="31.0" prefWidth="108.0" text="Confirm">
                <font>
                   <Font size="15.0" />
                </font>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#backButton" prefWidth="73.6" text="Back">
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="15.0" />
-               </HBox.margin>
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="30.0" mouseTransparent="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/saveIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
          </children>
          <VBox.margin>
             <Insets top="11.0" />
          </VBox.margin>
+      </HBox>
+      <HBox>
+         <children>
+            <Label fx:id="errorLabel" text="errorLabel" textFill="RED" />
+         </children>
       </HBox>
    </children>
    <padding>
