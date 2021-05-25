@@ -1,5 +1,6 @@
 package client;
 
+import Shared.API;
 import client.Model.Model;
 import client.Model.ModelManager;
 import client.View.SelectState;
@@ -7,6 +8,7 @@ import client.View.ViewHandler;
 import client.ViewModel.ViewModelFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import server.RmiServer;
 
 import java.rmi.RemoteException;
 import java.util.Scanner;
@@ -17,7 +19,8 @@ public class MyApplication extends Application
     {
         Model model = new ModelManager();
         SelectState state = new SelectState();
-        ViewModelFactory viewModelFactory = new ViewModelFactory(model, state);
+        API api = new RmiServer();
+        ViewModelFactory viewModelFactory = new ViewModelFactory(model, state, api);
         ViewHandler view = new ViewHandler(viewModelFactory, model, state);
         view.start(primaryStage);
 

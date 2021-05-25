@@ -101,4 +101,5 @@ public interface Model {
     ArrayList<Event> getEventsZoom();
     ArrayList<Event> getEventTeams();
     int getSize();
+
 }

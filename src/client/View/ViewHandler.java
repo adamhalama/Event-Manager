@@ -7,6 +7,7 @@ import client.View.Employee.EmployeeViewController;
 import client.View.Event.CreateEventViewController;
 import client.View.Event.EditEventViewController;
 import client.View.Event.EventListViewController;
+import client.View.Login.LoginViewController;
 import client.View.MainMenu.MainMenuViewController;
 import client.View.Room.CreateRoomViewController;
 import client.View.Room.RoomListViewController;
@@ -32,6 +33,7 @@ public class ViewHandler
     private SelectState selectState;
     private EmployeeListViewController employeeListViewController;
     private EmployeeViewController employeeViewController;
+    private LoginViewController loginViewController;
 
 //    private RoomViewController roomViewController;
 
@@ -100,6 +102,8 @@ public class ViewHandler
             case "Employee":
                 root = loadEmployeeViewController("Employee/EmployeeView.fxml");
                 break;
+            case "Login":
+                root = loadLoginViewController("Login/LoginView.fxml");
         }
         currentStage.setRoot(root);
 
@@ -384,6 +388,24 @@ public class ViewHandler
 
         viewModelFactory.getEmployeeViewModel().reset();
         return employeeViewController.getRoot();
+    }
+
+    private Region loadLoginViewController(String fxmlFile){
+        if (loginViewController == null)
+        {
+            try
+            {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                loginViewController = loader.getController();
+                loginViewController.init(this, viewModelFactory.getLoginViewModel(), root);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return loginViewController.getRoot();
     }
 
 

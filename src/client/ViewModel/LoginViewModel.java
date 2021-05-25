@@ -1,5 +1,6 @@
 package client.ViewModel;
 
+import Shared.API;
 import client.Model.Model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -7,10 +8,12 @@ import javafx.beans.property.StringProperty;
 public class LoginViewModel {
     private StringProperty usernameProperty;
     private StringProperty passwordProperty;
+    private API modelAPI;
 
-    public LoginViewModel(){
+    public LoginViewModel(API api) {
         this.usernameProperty = new SimpleStringProperty();
         this.passwordProperty = new SimpleStringProperty();
+        this.modelAPI = api;
     }
 
     public StringProperty getUsernameProperty() {
@@ -19,5 +22,13 @@ public class LoginViewModel {
 
     public StringProperty getPasswordProperty() {
         return passwordProperty;
+    }
+
+    public void login(String username, String password) {
+        try {
+            modelAPI.loginEmployee(username, password);
+        } catch (Exception e) {
+            e.getMessage();
+        }
     }
 }

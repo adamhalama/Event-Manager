@@ -1,6 +1,7 @@
 package client.ViewModel;
 
 
+import Shared.API;
 import client.Model.Model;
 import client.View.SelectState;
 
@@ -15,10 +16,11 @@ public class ViewModelFactory
     private final EditEventViewModel editEventViewModel;
     private final EmployeeListViewModel employeeListViewModel;
     private final EmployeeViewModel employeeViewModel;
+    private final LoginViewModel loginViewModel;
     private SelectState state;
     private final RoomViewModel roomViewModel;
 
-    public ViewModelFactory(Model model, SelectState state)
+    public ViewModelFactory(Model model, SelectState state, API api)
     {
         this.state = state;
         eventListViewModel = new EventListViewModel(model);
@@ -30,6 +32,7 @@ public class ViewModelFactory
         editEventViewModel = new EditEventViewModel(model, state);
         employeeListViewModel = new EmployeeListViewModel(model);
         employeeViewModel = new EmployeeViewModel(model);
+        loginViewModel = new LoginViewModel(api);
     }
 
     public CreateEventViewModel getCreateEventViewModel()
@@ -74,5 +77,9 @@ public class ViewModelFactory
     public EmployeeViewModel getEmployeeViewModel()
     {
         return employeeViewModel;
+    }
+
+    public LoginViewModel getLoginViewModel() {
+        return loginViewModel;
     }
 }
