@@ -95,6 +95,7 @@ public class RoomListViewController
         {
             errorLabel.setText("Select a room to open first");
         }
+        //todo switch errorLabel.setText to a viewModel method call which will set it - no logic in Controller
     }
 
     @FXML

@@ -55,9 +55,14 @@ public class EmployeeListViewController
         surnameColumn.setCellValueFactory
                 (cellData -> cellData.getValue().getSurnameProperty());
         roleColumn.setCellValueFactory
-                (cellData -> cellData.getValue().getSurnameProperty());
+                (cellData -> cellData.getValue().getRoleProperty());
 
         errorLabel.textProperty().bind(viewModel.getErrorLabelProperty());
+    }
+
+    private void setErrorLabel(String text)
+    {
+        viewModel.setErrorLabel(text);
     }
 
     @FXML
@@ -76,21 +81,39 @@ public class EmployeeListViewController
     @FXML
     private void openButton()
     {
-        viewHandler.setPickedEmployeeID(employeeTable.getSelectionModel().getSelectedItem().getUserIDProperty().get());
-        viewHandler.openView("Employee");
+        try
+        {
+            viewHandler.setPickedEmployeeID(employeeTable.getSelectionModel().getSelectedItem().getUserIDProperty().get());
+            viewHandler.openView("Employee");
+        } catch (Exception e)
+        {
+            this.setErrorLabel("Select an employee to open first");
+        }
     }
 
     @FXML
     private void editButton()
     {
-        viewHandler.setPickedEmployeeID(employeeTable.getSelectionModel().getSelectedItem().getUserIDProperty().get());
-        viewHandler.openView("EditEmployee");
+        try
+        {
+            viewHandler.setPickedEmployeeID(employeeTable.getSelectionModel().getSelectedItem().getUserIDProperty().get());
+            viewHandler.openView("EditEmployee");
+        } catch (Exception e)
+        {
+            this.setErrorLabel("Select an employee to edit first");
+        }
     }
 
     @FXML
     private void removeButton()
     {
-        viewModel.removeEmployee(employeeTable.getSelectionModel().getSelectedIndex(), employeeTable.getSelectionModel().getSelectedItem().getCurrentEmployeeID());
+        try
+        {
+            viewModel.removeEmployee(employeeTable.getSelectionModel().getSelectedIndex(), employeeTable.getSelectionModel().getSelectedItem().getCurrentEmployeeID());
+        } catch (Exception e)
+        {
+            this.setErrorLabel("Select an employee to remove first");
+        }
     }
 
     @FXML

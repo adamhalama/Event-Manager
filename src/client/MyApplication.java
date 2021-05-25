@@ -17,6 +17,9 @@ public class MyApplication extends Application
 {
     public void start(Stage primaryStage)
     {
+        RmiClient client = new RmiClient();
+
+
         Model model = new ModelManager();
         SelectState state = new SelectState();
         API api = new RmiServer();

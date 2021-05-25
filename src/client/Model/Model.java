@@ -2,6 +2,8 @@ package client.Model;
 
 import Shared.Employee.Employee;
 import Shared.Event.Event;
+import Shared.Messages.Message;
+import Shared.Messages.MessageRoom;
 import Shared.Room.Room;
 
 import java.time.LocalDate;
@@ -10,6 +12,23 @@ import java.util.ArrayList;
 public interface Model {
     //only for event, room, employee now
     //add other methods for other classes later
+
+
+    //messageRoom class
+
+    int getLoggedClientID();
+
+    void addMessageRoom(String name);
+    void addMessageRoom(String name, ArrayList<Integer> usersIDs);
+    void removeMessageRoom(int messageRoomID);
+    void removeMessageRoom(MessageRoom room);
+    ArrayList<MessageRoom> getMessageRoomsByEmployeeID(int employeeID);
+    ArrayList<MessageRoom> getMessageRoomsByAnything(String keyword);
+    ArrayList<MessageRoom> getMessageRooms();
+    String getSenderAndBody(Message message);
+    ArrayList<String> getMessageRoomParticipantNames(MessageRoom messageRoom);
+    MessageRoom getMessageRoomByID(int id);
+
 
     //part 3 class employee
 

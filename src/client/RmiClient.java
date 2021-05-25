@@ -3,6 +3,7 @@ package client;
 import Shared.API;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 
 public class RmiClient
 {
@@ -20,8 +21,21 @@ public class RmiClient
     }
   }
 
+  public void test()
+  {
+    try
+    {
+      System.out.println(server.getEmployee(1));
+    } catch (SQLException throwables)
+    {
+      throwables.printStackTrace();
+    }
+  }
+
   public String convert(String text, boolean upper) throws RemoteException
   {
+
+
     /*if (upper)
     {
       return server.toUpperCase(text);

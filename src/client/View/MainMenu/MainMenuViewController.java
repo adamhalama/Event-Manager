@@ -4,6 +4,7 @@ import client.View.ViewHandler;
 import client.ViewModel.MainMenuViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 
@@ -11,6 +12,8 @@ public class MainMenuViewController
 {
     @FXML
     private Button roomsButton, eventsButton, employeesButton, chatButton, myAccountButton, logoutButton;
+    @FXML
+    private Label errorLabel;
 
     private ViewHandler viewHandler;
     private MainMenuViewModel viewModel;
@@ -25,6 +28,8 @@ public class MainMenuViewController
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         this.root = root;
+
+        errorLabel.textProperty().bind(viewModel.getErrorLabelProperty());
     }
 
     @FXML
@@ -60,7 +65,7 @@ public class MainMenuViewController
     @FXML
     private void chatButton()
     {
-        //todo open chat rooms
+        viewHandler.openView("MessageRoomList");
     }
 
     public Region getRoot()

@@ -143,6 +143,11 @@ public class Employee
         return role;
     }
 
+    public String getFullName()
+    {
+        return name + " " + surname;
+    }
+
     @Override public String toString()
     {
         return "{" + "id=" + id + ", username='" + username + '\''

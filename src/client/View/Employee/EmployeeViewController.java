@@ -75,7 +75,7 @@ public class EmployeeViewController
         addButton.textProperty().bindBidirectional(viewModel.getAddButtonProperty());
         removeButton.textProperty().bindBidirectional(viewModel.getRemoveButtonProperty());
 
-        permissionTable.setItems(viewModel.getPermissionList());
+        permissionTable.setItems(viewModel.getPermissionTable());
         permissionColumn.setCellValueFactory(
                 cellDate -> cellDate.getValue().getPermissionProperty());
 
