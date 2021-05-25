@@ -32,6 +32,8 @@ public class EmployeeViewController
 
     @FXML
     private Button confirmEditButton;
+    @FXML
+    private Label errorLabel;
 
 
     private ViewHandler viewHandler;
@@ -41,6 +43,7 @@ public class EmployeeViewController
     private boolean editing;
     private boolean viewing;
     private int currentEmployeeID;
+    private boolean openedFromMenu;
 
 
     public void init(ViewHandler viewHandler, EmployeeViewModel viewModel, Region root)
@@ -80,6 +83,13 @@ public class EmployeeViewController
                 cellDate -> cellDate.getValue().getPermissionProperty());
 
         confirmEditButton.textProperty().bindBidirectional(viewModel.getConfirmEditButtonProperty());
+        errorLabel.textProperty().bind(viewModel.getErrorLabelProperty());
+
+        //TODO make it so you can view and edit MYACcount even if you dont have the permission to edit
+        //  OPTIONAL
+
+        //TODO hide passwords if only viewing.
+        // TODO disable edit  if you dont have permission
     }
 
     private void enableEditing()
@@ -143,6 +153,7 @@ public class EmployeeViewController
     private void addButton()
     {
         viewModel.addButton(choiceBox.getValue());
+        //TODO FIX picture on addButton
     }
 
     @FXML
@@ -154,12 +165,21 @@ public class EmployeeViewController
     @FXML
     private void confirmButton()
     {
+
         if (viewing)
-            viewHandler.openView("EditEmployee");
+        {
+            if (openedFromMenu)
+                viewHandler.openView("EditMyAccount");
+            else
+                viewHandler.openView("EditEmployee");
+        }
         else
         {
             viewModel.confirmButton();
             viewModel.reset();
+            if (openedFromMenu) //confirm editing and opening myAccount once again
+                viewHandler.openView("MyAccount");
+            else
             viewHandler.openView("EmployeeList");
         }
     }
@@ -167,19 +187,16 @@ public class EmployeeViewController
     @FXML
     private void backButton()
     {
-        viewHandler.openView("EmployeeList");
+        if (openedFromMenu)
+            viewHandler.openView("MainMenu");
+        else
+            viewHandler.openView("EmployeeList");
     }
 
     public void setEditing(boolean editing)
     {
         this.editing = editing;
     }
-
-    public void setRepeatPasswordColor(boolean isRed)
-    {
-
-    }
-
 
     public Region getRoot()
     {
@@ -194,5 +211,10 @@ public class EmployeeViewController
     public void setCurrentEmployeeID(int currentEmployeeID)
     {
         this.currentEmployeeID = currentEmployeeID;
+    }
+
+    public void setOpenedFromMenu(boolean openedFromMenu)
+    {
+        this.openedFromMenu = openedFromMenu;
     }
 }

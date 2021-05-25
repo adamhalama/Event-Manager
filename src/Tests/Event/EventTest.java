@@ -119,6 +119,7 @@ class EventTest {
         assertEquals("You cannot choose an online platform if you have physical meeting!", e.getMessage());
     }
 
+    /*
     @Test
     void removeByID() {
         Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50,  14, 30,
@@ -207,5 +208,5 @@ class EventTest {
         e1.setEndTime(15, 15);
         e1.setTime(9, 30 , 16 , 00);
         System.out.println(e1.dateString());
-    }
+    }*/
 }

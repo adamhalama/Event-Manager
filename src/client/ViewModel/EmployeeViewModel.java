@@ -27,7 +27,7 @@ public class EmployeeViewModel
 
     private ObservableList<PermissionViewModel> permissionTable;
 
-    private StringProperty confirmEditButton;
+    private StringProperty confirmEditButton, errorLabel;
 
     private int currentEmployeeID;
     private boolean onlyViewing;
@@ -69,6 +69,7 @@ public class EmployeeViewModel
         permissionTable = FXCollections.observableArrayList();
 
         confirmEditButton = new SimpleStringProperty();
+        errorLabel = new SimpleStringProperty();
 
     }
 
@@ -85,6 +86,8 @@ public class EmployeeViewModel
         addButton.setValue("Add");
         removeButton.setValue("Remove selected");
         choiceBox.setValue("");
+
+        errorLabel.setValue("");
 
         if (currentEmployeeID == 0) // creating
         {
@@ -318,6 +321,11 @@ public class EmployeeViewModel
     public StringProperty getConfirmEditButtonProperty()
     {
         return confirmEditButton;
+    }
+
+    public StringProperty getErrorLabelProperty()
+    {
+        return errorLabel;
     }
 
     public int getCurrentEmployeeID()

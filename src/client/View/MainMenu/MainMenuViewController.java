@@ -35,7 +35,7 @@ public class MainMenuViewController
     @FXML
     private void myAccountButton()
     {
-        viewHandler.openView("Login");
+        viewHandler.openView("MyAccount");
     }
 
     @FXML

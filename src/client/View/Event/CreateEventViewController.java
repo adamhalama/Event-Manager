@@ -294,7 +294,7 @@ public class CreateEventViewController {
                 link = linkTextField.getText();
             } else link = "None";
 
-            if (viewModel.isOnline()) {
+            /*if (viewModel.isOnline()) {
                 if (title != null || yearS != 0 && monthS != 0 && dayS != 0 && hourS != 0 && minuteS != -1 && hourE != 0 && minuteE != -1
                         && platform != null && getChooseStatus() != -1) {
                     Event e = new Event(title, des, yearS, monthS, dayS, hourS, minuteS, hourE, minuteE,
@@ -326,7 +326,7 @@ public class CreateEventViewController {
                         a.close();
                     }
                 }
-            }
+            }*/
 
             if (getChooseStatus() == -1) {
                 throw new IllegalArgumentException("Please select a meeting type.");

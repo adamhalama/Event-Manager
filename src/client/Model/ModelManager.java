@@ -53,6 +53,7 @@ public class ModelManager implements Model
 
         messageRoomList.addPrivateMessageRoom("Private message room t2", 1, 2);
 
+        loggedClientID = 1;
 
     }
 

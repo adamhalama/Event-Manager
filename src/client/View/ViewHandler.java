@@ -14,7 +14,6 @@ import client.View.Login.LoginViewController;
 import client.View.MainMenu.MainMenuViewController;
 import client.View.Room.CreateRoomViewController;
 import client.View.Room.RoomListViewController;
-import client.ViewModel.EventInfoViewModel;
 import client.ViewModel.ViewModelFactory;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -76,6 +75,9 @@ public class ViewHandler {
             case "CreateEvent":
                 root = loadCreateEventView("Event/CreateEventView.fxml");
                 break;
+            case "EditEvent":
+                root = loadEditEventView("Event/EditEventView.fxml");
+                break;
             case "RoomList":
                 root = loadRoomListView("Room/RoomListView.fxml");
                 break;
@@ -88,40 +90,43 @@ public class ViewHandler {
             case "Room":
                 root = loadRoomView("Room/CreateRoomView.fxml");
                 break;
-            case "EditEvent":
-                root = loadEditEventViewController("Event/EditEventView.fxml");
-                break;
             case "EmployeeList":
-                root = loadEmployeeListViewController("Employee/EmployeeListView.fxml");
+                root = loadEmployeeListView("Employee/EmployeeListView.fxml");
                 break;
             case "CreateEmployee":
-                root = loadCreateEmployeeViewController("Employee/EmployeeView.fxml");
+                root = loadCreateEmployeeView("Employee/EmployeeView.fxml");
                 break;
             case "EditEmployee":
-                root = loadEditEmployeeViewController("Employee/EmployeeView.fxml");
+                root = loadEditEmployeeView("Employee/EmployeeView.fxml");
                 break;
             case "Employee":
-                root = loadEmployeeViewController("Employee/EmployeeView.fxml");
+                root = loadEmployeeView("Employee/EmployeeView.fxml");
                 break;
             case "MessageRoomList":
-                root = loadMessageRoomListViewController("Chat/MessageRoomListView.fxml");
+                root = loadMessageRoomListView("Chat/MessageRoomListView.fxml");
                 break;
             case "MessageRoom":
-                root = loadMessageRoomViewController("Chat/MessageRoomView.fxml");
+                root = loadMessageRoomView("Chat/MessageRoomView.fxml");
                 break;
             case "CreateMessageRoom":
-                root = loadMessageRoomListViewController("Chat/CreateMessageRoomView.fxml");
+                root = loadMessageRoomListView("Chat/CreateMessageRoomView.fxml");
                 break;
             //todo make createMessageRoom
             case "EditMessageRoom":
-                root = loadMessageRoomListViewController("Chat/CreateMessageRoomView.fxml");
+                root = loadMessageRoomListView("Chat/CreateMessageRoomView.fxml");
                 break;
             //todo make editMessageRoom
             case "Login":
-                root = loadLoginViewController("Login/LoginView.fxml");
+                root = loadLoginView("Login/LoginView.fxml");
                 break;
             case "EventInfo" :
-                root = loadEventInfoViewController("Event/EventInfoView.fxml");
+                root = loadEventInfoView("Event/EventInfoView.fxml");
+                break;
+            case "MyAccount":
+                root = loadMyAccountView("Employee/EmployeeView.fxml");
+                break;
+            case "EditMyAccount":
+                root = loadEditMyAccountView("Employee/EmployeeView.fxml");
                 break;
             default:
                 System.out.println("Unknown view");
@@ -141,6 +146,8 @@ public class ViewHandler {
     }
 
 
+
+
     private Region loadMainMenuView(String fxmlFile) {
         if (mainMenuViewController == null) {
             try {
@@ -157,7 +164,7 @@ public class ViewHandler {
         return mainMenuViewController.getRoot();
     }
 
-    private Region loadLoginViewController(String fxmlFile) {
+    private Region loadLoginView(String fxmlFile) {
         if (loginViewController == null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -172,7 +179,7 @@ public class ViewHandler {
         return loginViewController.getRoot();
     }
 
-    private Region loadEventInfoViewController(String fxmlFile) {
+    private Region loadEventInfoView(String fxmlFile) {
         if (eventInfoViewController == null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -298,7 +305,7 @@ public class ViewHandler {
         return eventListViewController.getRoot();
     }
 
-    private Region loadEditEventViewController(String fxmlFile) {
+    private Region loadEditEventView(String fxmlFile) {
         if (editEventViewController == null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -313,7 +320,7 @@ public class ViewHandler {
         return editEventViewController.getRoot();
     }
 
-    private Region loadEmployeeListViewController(String fxmlFile) {
+    private Region loadEmployeeListView(String fxmlFile) {
         if (employeeListViewController == null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -329,7 +336,7 @@ public class ViewHandler {
         return employeeListViewController.getRoot();
     }
 
-    private Region loadCreateEmployeeViewController(String fxmlFile) {
+    private Region loadCreateEmployeeView(String fxmlFile) {
         if (employeeViewController == null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -341,6 +348,7 @@ public class ViewHandler {
                 e.printStackTrace();
             }
         }
+        employeeViewController.setOpenedFromMenu(false);
         employeeViewController.setEditing(false);
         employeeViewController.setViewing(false);
         viewModelFactory.getEmployeeViewModel().setCurrentEmployeeID(0);
@@ -350,7 +358,7 @@ public class ViewHandler {
         return employeeViewController.getRoot();
     }
 
-    private Region loadEditEmployeeViewController(String fxmlFile) {
+    private Region loadEditEmployeeView(String fxmlFile) {
         if (employeeViewController == null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -362,6 +370,7 @@ public class ViewHandler {
                 e.printStackTrace();
             }
         }
+        employeeViewController.setOpenedFromMenu(false);
         employeeViewController.setEditing(true);
         employeeViewController.setViewing(false);
         viewModelFactory.getEmployeeViewModel().setCurrentEmployeeID(pickedEmployeeID);
@@ -371,7 +380,7 @@ public class ViewHandler {
         return employeeViewController.getRoot();
     }
 
-    private Region loadEmployeeViewController(String fxmlFile) {
+    private Region loadEmployeeView(String fxmlFile) {
         if (employeeViewController == null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -383,6 +392,7 @@ public class ViewHandler {
                 e.printStackTrace();
             }
         }
+        employeeViewController.setOpenedFromMenu(false);
         employeeViewController.setEditing(false);
         employeeViewController.setViewing(true);
         viewModelFactory.getEmployeeViewModel().setCurrentEmployeeID(pickedEmployeeID);
@@ -392,7 +402,53 @@ public class ViewHandler {
         return employeeViewController.getRoot();
     }
 
-    private Region loadMessageRoomListViewController(String fxmlFile) {
+    private Region loadMyAccountView(String fxmlFile)
+    {
+        if (employeeViewController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                employeeViewController = loader.getController();
+                employeeViewController.init(this, viewModelFactory.getEmployeeViewModel(), root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        employeeViewController.setOpenedFromMenu(true);
+        employeeViewController.setEditing(false);
+        employeeViewController.setViewing(true);
+        viewModelFactory.getEmployeeViewModel().setCurrentEmployeeID(model.getLoggedClientID());
+        viewModelFactory.getEmployeeViewModel().setOnlyViewing(true);
+
+        viewModelFactory.getEmployeeViewModel().reset();
+        return employeeViewController.getRoot();
+    }
+
+    private Region loadEditMyAccountView(String fxmlFile) {
+        if (employeeViewController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                employeeViewController = loader.getController();
+                employeeViewController.init(this, viewModelFactory.getEmployeeViewModel(), root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        employeeViewController.setOpenedFromMenu(true);
+        employeeViewController.setEditing(true);
+        employeeViewController.setViewing(false);
+        viewModelFactory.getEmployeeViewModel().setCurrentEmployeeID(model.getLoggedClientID());
+        viewModelFactory.getEmployeeViewModel().setOnlyViewing(false);
+
+        viewModelFactory.getEmployeeViewModel().reset();
+        return employeeViewController.getRoot();
+    }
+
+
+    private Region loadMessageRoomListView(String fxmlFile) {
         if (messageRoomListViewController == null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -408,7 +464,7 @@ public class ViewHandler {
         return messageRoomListViewController.getRoot();
     }
 
-    private Region loadMessageRoomViewController(String fxmlFile) {
+    private Region loadMessageRoomView(String fxmlFile) {
         if (messageRoomViewController == null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
