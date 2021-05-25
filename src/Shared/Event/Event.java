@@ -29,7 +29,6 @@ public class Event {
     private long timestamp;
 
     private Calendar calendarS;
-    private Calendar calendarE;
     private String title; //the title of the event
     private String description;
     private boolean isOnline;

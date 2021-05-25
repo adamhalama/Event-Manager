@@ -26,9 +26,10 @@ public class LoginViewController {
 
     private Region root;
 
-    public LoginViewController(){}
+    public LoginViewController() {
+    }
 
-    public void init(ViewHandler viewHandler, LoginViewModel viewModel, Region root){
+    public void init(ViewHandler viewHandler, LoginViewModel viewModel, Region root) {
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         this.root = root;
@@ -37,35 +38,39 @@ public class LoginViewController {
 
     }
 
-    @FXML void onEnter(){
+    @FXML
+    void onEnter() {
         loginPress();
     }
 
-    @FXML void showPress(){
+    @FXML
+    void showPress() {
         // show the password button
         // the step: remove the passwordField first and add a textField
 
     }
 
-    @FXML void forgetPassword(){
+    @FXML
+    void forgetPassword() {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setHeaderText("Forget password?");
         a.setContentText("Please contact administrator for help.");
         Optional<ButtonType> result = a.showAndWait();
-        if (result.get() == ButtonType.APPLY){
+        if (result.get() == ButtonType.APPLY) {
             a.close();
         }
     }
 
-    @FXML void loginPress(){
+    @FXML
+    void loginPress() {
         try {
             viewModel.login(userTextField.getText(), passField.getText());
             viewHandler.openView("MainMenu");
-        } catch (Exception e){
+        } catch (Exception e) {
             Alert b = new Alert(Alert.AlertType.ERROR);
             b.setHeaderText("Wrong username or password");
             Optional<ButtonType> result = b.showAndWait();
-            if (result.get() == ButtonType.APPLY){
+            if (result.get() == ButtonType.APPLY) {
                 b.close();
             }
         }
@@ -75,7 +80,7 @@ public class LoginViewController {
         return root;
     }
 
-    private void initTextField(TextField field){
+    private void initTextField(TextField field) {
         field.setLayoutX(333);
         field.setLayoutY(48);
     }
