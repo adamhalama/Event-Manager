@@ -2,6 +2,7 @@ package Shared.Event;
 
 import Shared.Event.Platform.PlatformFactory;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
@@ -38,7 +39,7 @@ public class Event {
     private int roomID; //if physical, choose a room (it could be another type, let's see in the future)
 
     public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
-                 int yearE, int monthE, int dayE, int hourE, int minuteE, boolean isOnline, String platform, String link) {
+                 int hourE, int minuteE, boolean isOnline, String platform, String link) {
         this.event_id = 0;
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
@@ -80,26 +81,13 @@ public class Event {
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
         String timeFormat1 = "";
-        timeFormat1 += String.valueOf(yearE);
-        timeFormat1 += "-";
-        timeFormat1 += setMonthEFull(monthE);
-        timeFormat1 += "-";
-        timeFormat1 += setDayEFull(dayE);
-        timeFormat1 += "  ";
         timeFormat1 += setHourFull(hourE);
         timeFormat1 += ":";
         timeFormat1 += setMinuteFull(minuteE);
-        this.calendarE = Calendar.getInstance();
-        calendarE.set(yearE, monthE - 1, dayE, hourE, minuteE);
-        if ((hourE >= 9 && hourE < 17) && (calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6)) {
-            if (!calendarE.before(calendarS) && (yearS == yearE && monthS == monthE && dayS == dayE)) {
-                this.time_end = timeFormat1;
-                this.dayE = dayE;
-                this.monthE = monthE;
-                this.yearE = yearE;
-                this.hourE = hourE;
-                this.minuteE = minuteE;
-            } else throw new IllegalArgumentException("Invalid time set!");
+        if (hourE >= 9 && hourE < 17) {
+            this.time_end = timeFormat1;
+            this.hourE = hourE;
+            this.minuteE = minuteE;
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
         this.description = description;
@@ -118,7 +106,7 @@ public class Event {
     }
 
     public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
-                 int yearE, int monthE, int dayE, int hourE, int minuteE, boolean isOnline, int roomID) {
+                 int hourE, int minuteE, boolean isOnline, int roomID) {
         this.event_id = 0;
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
@@ -160,30 +148,18 @@ public class Event {
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
         String timeFormat1 = "";
-        timeFormat1 += String.valueOf(yearE);
-        timeFormat1 += "-";
-        timeFormat1 += setMonthEFull(monthE);
-        timeFormat1 += "-";
-        timeFormat1 += setDayEFull(dayE);
-        timeFormat1 += "  ";
         timeFormat1 += setHourFull(hourE);
         timeFormat1 += ":";
         timeFormat1 += setMinuteFull(minuteE);
-        this.calendarE = Calendar.getInstance();
-        calendarE.set(yearE, monthE - 1, dayE, hourE, minuteE);
-        if ((hourE >= 9 && hourE < 17) && (calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6)) {
-            if (!calendarE.before(calendarS) && (yearS == yearE && monthS == monthE && dayS == dayE)) {
-                this.time_end = timeFormat1;
-                this.dayE = dayE;
-                this.monthE = monthE;
-                this.yearE = yearE;
-                this.hourE = hourE;
-                this.minuteE = minuteE;
-            } else throw new IllegalArgumentException("Invalid time set!");
+        if (hourE >= 9 && hourE < 17) {
+            this.time_end = timeFormat1;
+            this.hourE = hourE;
+            this.minuteE = minuteE;
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
         this.description = description;
         this.isOnline = isOnline;
+        this.onlineLink = "None";
 
         if (!isOnline) {
             this.roomID = roomID;
@@ -210,18 +186,15 @@ public class Event {
         this.roomID = 0;
     }
 
-    public long dateToStamp(String date){
-        LocalDate dateStamp = LocalDate.parse(date);
-        if (!"".equals(date)) { // if date not null
-            try {
-                timestamp = dateStamp.atStartOfDay(ZoneOffset.ofHours(1)).toInstant().toEpochMilli();
-            } catch (Exception e) {
-                System.out.println("Empty date！");
-            }
-        }else {    //date is null
-            timestamp = System.currentTimeMillis();  // current time
+    public long dateToStamp(String date) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date dateTime = sdf.parse(date);
+            return dateTime.getTime();
+        } catch (ParseException e) {
+            e.getMessage();
         }
-        return timestamp;
+        return 0;
     }
 
     public void setEvent_id(int event_id) {
@@ -247,14 +220,11 @@ public class Event {
         timeFormat1 += ":";
         timeFormat1 += setMinuteFull(minute);
         calendarS.set(year, month - 1, day, hour, minute);
-        if ((hour >= 9 && hour < 17) && (calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6)) {
+        if (hour >= 9 && hour < 17) {
             time_start = timeFormat1;
             dayS = day;
-            dayE = dayS;
             monthS = month;
-            monthE = monthS;
             yearS = year;
-            yearE = yearS;
             hourS = hour;
             minuteS = minute;
             timestamp = dateToStamp(timeFormat1);
@@ -264,17 +234,10 @@ public class Event {
     public void setTimeE(int hour, int minute) {
         // i set a limit for time here, the meeting should only be held from 9 - 17 on workdays
         String timeFormat1 = "";
-        timeFormat1 += String.valueOf(yearE);
-        timeFormat1 += "-";
-        timeFormat1 += setMonthEFull(monthE);
-        timeFormat1 += "-";
-        timeFormat1 += setDayEFull(dayE);
-        timeFormat1 += "  ";
         timeFormat1 += setHourFull(hour);
         timeFormat1 += ":";
         timeFormat1 += setMinuteFull(minute);
-        calendarE.set(yearE, monthE - 1, dayE, hour, minute);
-        if ((hour >= 9 && hour < 17) && (calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6)) {
+        if (hour >= 9 && hour < 17) {
             this.time_end = timeFormat1;
             this.hourE = hour;
             this.minuteE = minute;
@@ -320,29 +283,20 @@ public class Event {
         timeFormat1 += setMinuteFull(minuteS);
 
         String timeFormat2 = "";
-        timeFormat2 += String.valueOf(y);
-        timeFormat2 += "-";
-        timeFormat2 += setMonthEFull(m);
-        timeFormat2 += "-";
-        timeFormat2 += setDayEFull(d);
-        timeFormat2 += "  ";
         timeFormat2 += setHourFull(hourE);
         timeFormat2 += ":";
         timeFormat2 += setMinuteFull(minuteE);
         calendarS.set(y, m - 1, d);
-        if ((calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6)) {
+        if ((calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6)) {
             time_start = timeFormat1;
             time_end = timeFormat2;
             dayS = d;
-            dayE = dayS;
             monthS = m;
-            monthE = monthS;
             yearS = y;
-            yearE = yearS;
         } else throw new IllegalArgumentException("You should set time at work hours!");
     }
 
-    public void setStartTime(int h, int m){
+    public void setStartTime(int h, int m) {
         String timeFormat1 = "";
         timeFormat1 += String.valueOf(yearS);
         timeFormat1 += "-";
@@ -353,32 +307,27 @@ public class Event {
         timeFormat1 += setHourFull(h);
         timeFormat1 += ":";
         timeFormat1 += setMinuteFull(m);
-        if (h >= 9 && h < 17 && (h < hourE)){
+        if (h >= 9 && h < 17 && (h < hourE)) {
             time_start = timeFormat1;
             hourS = h;
             minuteS = m;
         } else throw new IllegalArgumentException("Invalid start time!");
     }
 
-    public void setEndTime(int h, int m){
+    public void setEndTime(int h, int m) {
         String timeFormat1 = "";
-        timeFormat1 += String.valueOf(yearE);
-        timeFormat1 += "-";
-        timeFormat1 += setMonthEFull(monthE);
-        timeFormat1 += "-";
-        timeFormat1 += setDayEFull(dayE);
-        timeFormat1 += "  ";
         timeFormat1 += setHourFull(h);
         timeFormat1 += ":";
         timeFormat1 += setMinuteFull(m);
-        if (h >= 9 && h < 17 && h > hourS){
+        if (h >= 9 && h < 17 && h > hourS) {
             time_end = timeFormat1;
             hourE = h;
             minuteE = m;
-        } throw new IllegalArgumentException("Invalid end time!");
+        }
+        throw new IllegalArgumentException("Invalid end time!");
     }
 
-    public void setTime(int hS, int mS, int hE, int mE){
+    public void setTime(int hS, int mS, int hE, int mE) {
         String timeFormat1 = "";
         timeFormat1 += String.valueOf(yearS);
         timeFormat1 += "-";
@@ -391,18 +340,11 @@ public class Event {
         timeFormat1 += setMinuteFull(mS);
 
         String timeFormat2 = "";
-        timeFormat2 += String.valueOf(yearE);
-        timeFormat2 += "-";
-        timeFormat2 += setMonthEFull(monthE);
-        timeFormat2 += "-";
-        timeFormat2 += setDayEFull(dayE);
-        timeFormat2 += "  ";
         timeFormat2 += setHourFull(hE);
         timeFormat2 += ":";
         timeFormat2 += setMinuteFull(mE);
         calendarS.set(yearS, monthS - 1, dayS, hS, mS);
-        calendarE.set(yearE, monthE - 1, dayE, hE, mE);
-        if ((hS >= 9 && hS < 17) && (hE >= 9 && hE < 17) && (hS < hE) && (calendarE.get(Calendar.DAY_OF_WEEK) >= 2 && calendarE.get(Calendar.DAY_OF_WEEK) <= 6)) {
+        if ((hS >= 9 && hS < 17) && (hE >= 9 && hE < 17) && (hS < hE) && (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6)) {
             time_start = timeFormat1;
             time_end = timeFormat2;
             hourS = hS;
@@ -534,17 +476,17 @@ public class Event {
         return de;
     }
 
-    public String setHourFull(int hour){
+    public String setHourFull(int hour) {
         String hf = "";
-        if (hour < 10){
+        if (hour < 10) {
             hf = "0" + hour;
         } else hf = String.valueOf(hour);
         return hf;
     }
 
-    public String setMinuteFull(int minute){
+    public String setMinuteFull(int minute) {
         String mf = "";
-        if (minute == 0){
+        if (minute == 0) {
             mf = "00";
         } else mf = String.valueOf(minute);
         return mf;

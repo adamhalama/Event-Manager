@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="438.0" prefWidth="614.0" stylesheets="@../darkTheme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.View.Login.LoginViewController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="84.0" prefWidth="600.0" style="-fx-background-color: #7f878f;">
+         <children>
+            <Label prefHeight="62.0" prefWidth="186.0" text="Login">
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="62.0" fitWidth="65.0">
+               <image>
+                  <Image url="@../Icons/icons8-login-as-user-100.png" />
+               </image>
+            </ImageView>
+         </children></HBox>
+      <GridPane prefHeight="222.0" prefWidth="363.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="187.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="413.0" minWidth="10.0" prefWidth="413.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="202.0" minHeight="10.0" prefHeight="109.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="122.0" minHeight="0.0" prefHeight="113.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label prefHeight="62.0" prefWidth="162.0" text="Username : ">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+               <children>
+                  <Label prefHeight="62.0" prefWidth="162.0" text="Password : ">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <children>
+                  <TextField fx:id="userTextField" onAction="#onEnter" prefHeight="48.0" prefWidth="360.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <PasswordField fx:id="passField" onAction="#onEnter" prefHeight="48.0" prefWidth="333.0" />
+                  <Label prefHeight="15.0" prefWidth="14.0" text=" " />
+                  <Button mnemonicParsing="false" onMouseMoved="#showPress" prefHeight="21.0" prefWidth="0.0">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="22.0">
+                           <image>
+                              <Image url="@../Icons/icons8-show-password-100.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
+      <GridPane prefHeight="42.0" prefWidth="614.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="208.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="392.0" minWidth="10.0" prefWidth="392.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" />
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#forgetPassword" prefHeight="18.0" prefWidth="163.0" text="Forget password ?">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0">
+                           <image>
+                              <Image url="@../Icons/icons8-forgot-password-100.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
+      <HBox alignment="CENTER_RIGHT" prefHeight="81.0" prefWidth="614.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#loginPress" prefHeight="66.0" prefWidth="10.0">
+               <graphic>
+                  <ImageView fitHeight="58.0" fitWidth="49.0">
+                     <image>
+                        <Image url="@../Icons/icons8-enter-100.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label prefHeight="15.0" prefWidth="28.0" text=" " />
+         </children>
+      </HBox>
+   </children>
+</VBox>
