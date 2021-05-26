@@ -3,7 +3,7 @@ package client.ViewModel;
 
 import Shared.API;
 import client.Model.Model;
-import client.View.SelectState;
+import client.View.Helpers.SelectState;
 
 
 public class ViewModelFactory

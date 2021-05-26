@@ -1,4 +1,4 @@
-package client.View;
+package client.View.Helpers;
 
 public class SelectState {
     private int editSelect;

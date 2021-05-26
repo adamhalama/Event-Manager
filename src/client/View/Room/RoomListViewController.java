@@ -1,6 +1,6 @@
 package client.View.Room;
 
-import client.View.StringIntegerConverter;
+import client.View.Helpers.StringIntegerConverter;
 import client.View.ViewHandler;
 import client.ViewModel.RoomListViewModel;
 import client.ViewModel.RoomViewModel;
