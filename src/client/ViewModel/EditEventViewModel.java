@@ -1,7 +1,7 @@
 package client.ViewModel;
 
 import client.Model.Model;
-import client.View.SelectState;
+import client.View.Helpers.SelectState;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -1,6 +1,6 @@
 package client.View.Employee;
 
-import client.View.StringIntegerConverter;
+import client.View.Helpers.StringIntegerConverter;
 import client.View.ViewHandler;
 import client.ViewModel.EmployeeViewModel;
 import client.ViewModel.PermissionViewModel;

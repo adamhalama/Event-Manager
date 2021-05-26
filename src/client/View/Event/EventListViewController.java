@@ -1,20 +1,14 @@
 package client.View.Event;
 
-import Shared.Event.Event;
-import client.View.SelectState;
+import client.View.Helpers.SelectState;
 import client.View.ViewHandler;
-import client.ViewModel.EditEventViewModel;
 import client.ViewModel.EventViewModel;
 import client.ViewModel.EventListViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
-import javafx.util.StringConverter;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class EventListViewController {

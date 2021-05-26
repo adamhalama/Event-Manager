@@ -26,7 +26,7 @@ public class RmiClient
     try
     {
       System.out.println(server.getEmployee(1));
-    } catch (SQLException throwables)
+    } catch (SQLException | RemoteException throwables)
     {
       throwables.printStackTrace();
     }

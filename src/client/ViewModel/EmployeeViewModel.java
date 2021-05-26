@@ -34,7 +34,7 @@ public class EmployeeViewModel
 
     private Model model;
 
-    public EmployeeViewModel(int userID, String name, String surname, String role)
+    public EmployeeViewModel(int userID, String name, String surname, String role) // for the data in the EmployeeListView
     {
         this.userID = new SimpleIntegerProperty(userID);
         this.name = new SimpleStringProperty(name);

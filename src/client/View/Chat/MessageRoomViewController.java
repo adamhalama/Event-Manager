@@ -1,8 +1,7 @@
 package client.View.Chat;
 
-import client.View.StringIntegerConverter;
+import client.View.Helpers.StringIntegerConverter;
 import client.View.ViewHandler;
-import client.ViewModel.CreateRoomViewModel;
 import client.ViewModel.MessageRoomViewModel;
 import client.ViewModel.MessageViewModel;
 import javafx.application.Platform;
