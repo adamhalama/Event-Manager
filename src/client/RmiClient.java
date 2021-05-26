@@ -13,7 +13,7 @@ public class RmiClient
   {
     try
     {
-      server = (API) Naming.lookup("rmi://localhost:1099/Case");
+      server = (API) Naming.lookup("rmi://localhost:1099/API");
     }
     catch (Exception ex)
     {
@@ -34,8 +34,6 @@ public class RmiClient
 
   public String convert(String text, boolean upper) throws RemoteException
   {
-
-
     /*if (upper)
     {
       return server.toUpperCase(text);

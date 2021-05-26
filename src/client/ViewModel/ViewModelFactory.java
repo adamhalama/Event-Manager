@@ -3,6 +3,7 @@ package client.ViewModel;
 
 import Shared.API;
 import client.Model.Model;
+import client.RmiClient;
 import client.View.SelectState;
 
 
@@ -24,7 +25,7 @@ public class ViewModelFactory
     private final EventInfoViewModel eventInfoViewModel;
 
 
-    public ViewModelFactory(Model model, SelectState state, API api)
+    public ViewModelFactory(Model model, SelectState state, RmiClient api)
     {
         this.state = state;
         eventListViewModel = new EventListViewModel(model);

@@ -1,10 +1,9 @@
 package Shared.Employee;
 
-import Shared.Event.Event;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Employee
+public class Employee implements Serializable
 {
     private int id;
     private String username;
