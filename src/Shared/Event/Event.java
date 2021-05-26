@@ -2,6 +2,7 @@ package Shared.Event;
 
 import Shared.Employee.Employee;
 import Shared.Event.Platform.PlatformFactory;
+import client.Model.Model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,10 +41,11 @@ public class Event {
     private int roomID; //if physical, choose a room (it could be another type, let's see in the future)
     private int creatorID;
     private ArrayList<Integer> participants;
+    private Model model;
 
     public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
-                 int hourE, int minuteE, boolean isOnline, String platform, String link,
-                 int creatorID, ArrayList<Integer> participants) {
+                 int hourE, int minuteE, boolean isOnline, String platform, String link, Model model,
+                  ArrayList<Integer> participants) {
         this.event_id = 0;
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
@@ -108,12 +110,14 @@ public class Event {
             this.onlineLink = "";
         }
 
-        this.creatorID = creatorID;
+        this.model = model;
+        this.creatorID = model.getLoggedClientID();
         this.participants = participants;
     }
 
     public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
-                 int hourE, int minuteE, boolean isOnline, int roomID, int creatorID, ArrayList<Integer> participants) {
+                 int hourE, int minuteE, boolean isOnline, int roomID,
+                 Model model, ArrayList<Integer> participants) {
         this.event_id = 0;
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
@@ -172,7 +176,8 @@ public class Event {
             this.roomID = roomID;
         }
 
-        this.creatorID = creatorID;
+        this.model = model;
+        this.creatorID = model.getLoggedClientID();
         this.participants = participants;
     }
 

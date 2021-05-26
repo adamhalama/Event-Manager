@@ -8,16 +8,14 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class EmployeeListViewModel
-{
+public class EmployeeListViewModel {
     private StringProperty searchBox;
     private ObservableList<EmployeeViewModel> employeeList;
     private StringProperty errorLabel;
     private Model model;
 
 
-    public EmployeeListViewModel(Model model)
-    {
+    public EmployeeListViewModel(Model model) {
         this.model = model;
 
         searchBox = new SimpleStringProperty();
@@ -28,61 +26,55 @@ public class EmployeeListViewModel
         reset();
     }
 
-    public void reset()
-    {
+    public void reset() {
         searchBox.setValue(null);
         errorLabel.setValue(null);
 
         employeeList.clear();
 
-        for (Employee e: model.getEmployees())
-        {
+        for (Employee e : model.getEmployees()) {
             employeeList.add(new EmployeeViewModel(e.getId(), e.getName(), e.getSurname(), e.getRole()));
         }
     }
 
-    public void setErrorLabel(String text)
-    {
+    public void setErrorLabel(String text) {
         errorLabel.setValue(text);
     }
 
-    public ObservableList<EmployeeViewModel> getEmployeeList()
-    {
+    public ObservableList<EmployeeViewModel> getEmployeeList() {
         return employeeList;
     }
 
-    public StringProperty getSearchBoxProperty()
-    {
+    public StringProperty getSearchBoxProperty() {
         return searchBox;
     }
 
-    public StringProperty getErrorLabelProperty()
-    {
+    public StringProperty getErrorLabelProperty() {
         return errorLabel;
     }
 
-    public void search()
-    {
+    public void search() {
         if (searchBox == null)
             return;
 
-        if (searchBox.get().equals(""))
-        {
+        if (searchBox.get().equals("")) {
             reset();
             return;
         } else
-        employeeList.clear();
+            employeeList.clear();
 
-        for (Employee e:
-             model.getEmployeesByAnything(searchBox.get()))
-        {
+        for (Employee e :
+                model.getEmployeesByAnything(searchBox.get())) {
             employeeList.add(new EmployeeViewModel(e.getId(), e.getName(), e.getSurname(), e.getRole()));
         }
     }
 
-    public void removeEmployee(int selectedIndex, int employeeID)
-    {
+    public void removeEmployee(int selectedIndex, int employeeID) {
         employeeList.remove(selectedIndex);
         model.removeEmployee(employeeID);
+    }
+
+    public void addToEvent(int id) {
+        model.addParticipants(id);
     }
 }

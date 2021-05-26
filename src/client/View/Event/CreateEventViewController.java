@@ -1,12 +1,15 @@
 package client.View.Event;
 
+import Shared.Employee.Employee;
 import Shared.Event.Event;
+import client.Model.Model;
 import client.View.ViewHandler;
 import client.ViewModel.CreateEventViewModel;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import client.ViewModel.EmployeeViewModel;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -14,6 +17,7 @@ import javafx.scene.layout.Region;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -42,6 +46,11 @@ public class CreateEventViewController {
     private ChoiceBox<String> platformMenu;
     @FXML
     private TextField linkTextField;
+    @FXML private TableView<EmployeeViewModel> participantTable;
+    @FXML private TableColumn<EmployeeViewModel, Number> usernameColumn;
+    @FXML private TableColumn<EmployeeViewModel, Number> nameColumn;
+    @FXML private TableColumn<EmployeeViewModel, Number> idColumn;
+    @FXML private TableColumn<EmployeeViewModel, Number> roleColumn;
     @FXML
     private Label errorLabel;
     private int chooseStatus;
@@ -49,14 +58,17 @@ public class CreateEventViewController {
     private ViewHandler viewHandler;
     private CreateEventViewModel viewModel;
     private Region root;
+    private Model model;
 
     public CreateEventViewController() {
     }
 
-    public void init(ViewHandler viewHandler, CreateEventViewModel viewModel, Region root) {
+    public void init(ViewHandler viewHandler, CreateEventViewModel viewModel, Region root
+    , Model model) {
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         this.root = root;
+        this.model = model;
 
         this.titleTextField.textProperty().bindBidirectional(viewModel.getTitleProperty());
         this.descriptionArea.textProperty().bindBidirectional(viewModel.getDescriptionProperty());
@@ -147,6 +159,18 @@ public class CreateEventViewController {
         this.linkTextField.setVisible(false);
         viewModel.setIsOnline(false);
         this.chooseStatus = 1;
+    }
+
+    @FXML private void addEmployeePress(){
+        viewHandler.openView("EventEmployee");
+    }
+
+    @FXML private void removeEmployeePress(){
+
+    }
+
+    @FXML private void refreshPress(){
+
     }
 
     @FXML
@@ -294,11 +318,13 @@ public class CreateEventViewController {
                 link = linkTextField.getText();
             } else link = "None";
 
-            /*if (viewModel.isOnline()) {
+            ArrayList<Integer> participantsID = new ArrayList<>();
+
+            if (viewModel.isOnline()) {
                 if (title != null || yearS != 0 && monthS != 0 && dayS != 0 && hourS != 0 && minuteS != -1 && hourE != 0 && minuteE != -1
                         && platform != null && getChooseStatus() != -1) {
                     Event e = new Event(title, des, yearS, monthS, dayS, hourS, minuteS, hourE, minuteE,
-                            true, platform, link);
+                            true, platform, link, model, participantsID);
                     viewModel.addEvent(e);
                     viewModel.setIdProperty(e.getEvent_id());
                     Alert a = new Alert(Alert.AlertType.CONFIRMATION);
@@ -314,7 +340,7 @@ public class CreateEventViewController {
                 if (title != null && yearS != 0 && monthS != 0 && dayS != 0 && hourS != 0 && minuteS != -1
                         && hourE != 0 && minuteE != -1 && room != 0 && getChooseStatus() != -1) {
                     Event e = new Event(title, des, yearS, monthS, dayS, hourS, minuteS, hourE, minuteE,
-                            false, room);
+                            false, room, model, participantsID);
                     viewModel.addEvent(e);
                     viewModel.setIdProperty(e.getEvent_id());
                     Alert a = new Alert(Alert.AlertType.CONFIRMATION);
@@ -326,7 +352,7 @@ public class CreateEventViewController {
                         a.close();
                     }
                 }
-            }*/
+            }
 
             if (getChooseStatus() == -1) {
                 throw new IllegalArgumentException("Please select a meeting type.");

@@ -6,10 +6,7 @@ import client.View.Chat.MessageRoomListViewController;
 import client.View.Chat.MessageRoomViewController;
 import client.View.Employee.EmployeeListViewController;
 import client.View.Employee.EmployeeViewController;
-import client.View.Event.CreateEventViewController;
-import client.View.Event.EditEventViewController;
-import client.View.Event.EventInfoViewController;
-import client.View.Event.EventListViewController;
+import client.View.Event.*;
 import client.View.Login.LoginViewController;
 import client.View.MainMenu.MainMenuViewController;
 import client.View.Room.CreateRoomViewController;
@@ -39,6 +36,7 @@ public class ViewHandler {
     private MessageRoomViewController messageRoomViewController;
     private LoginViewController loginViewController;
     private EventInfoViewController eventInfoViewController;
+    private EventEmployeeViewController eventEmployeeViewController;
 
 //    private RoomViewController roomViewController;
 
@@ -128,6 +126,9 @@ public class ViewHandler {
             case "EditMyAccount":
                 root = loadEditMyAccountView("Employee/EmployeeView.fxml");
                 break;
+            case "EventEmployee":
+                root = loadEventEmployeeViewController("Event/EventEmployeeView.fxml");
+                break;
             default:
                 System.out.println("Unknown view");
                 return;
@@ -192,6 +193,21 @@ public class ViewHandler {
             }
         }
         return eventInfoViewController.getRoot();
+    }
+
+    private Region loadEventEmployeeViewController(String fxmlFile) {
+        if (eventEmployeeViewController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                eventEmployeeViewController = loader.getController();
+                eventEmployeeViewController.init(this, viewModelFactory.getEmployeeListViewModel(), root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return eventEmployeeViewController.getRoot();
     }
 
     private Region loadRoomListView(String fxmlFile) {
@@ -281,7 +297,7 @@ public class ViewHandler {
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 createEventViewController = loader.getController();
-                createEventViewController.init(this, viewModelFactory.getCreateEventViewModel(), root);
+                createEventViewController.init(this, viewModelFactory.getCreateEventViewModel(), root, model);
             } catch (Exception e) {
                 e.printStackTrace();
             }

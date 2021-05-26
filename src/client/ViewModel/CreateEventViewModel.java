@@ -8,6 +8,7 @@ import javafx.util.StringConverter;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class CreateEventViewModel {
@@ -15,8 +16,6 @@ public class CreateEventViewModel {
     private IntegerProperty idProperty;
     private StringProperty titleProperty;
     private StringProperty descriptionProperty;
-    private DatePicker startDate;
-    private DatePicker endDate;
     private IntegerProperty startHour;
     private IntegerProperty startMin;
     private IntegerProperty endHour;
@@ -25,6 +24,10 @@ public class CreateEventViewModel {
     private IntegerProperty roomProperty;
     private StringProperty platformProperty;
     private StringProperty linkProperty;
+    private StringProperty usernameProperty;
+    private StringProperty nameProperty;
+    private StringProperty employeeIdProperty;
+    private StringProperty roleProperty;
     private StringProperty errorProperty;
 
     public CreateEventViewModel(Model model) {
@@ -32,8 +35,6 @@ public class CreateEventViewModel {
         this.idProperty = new SimpleIntegerProperty();
         this.titleProperty = new SimpleStringProperty();
         this.descriptionProperty = new SimpleStringProperty();
-        this.startDate = new DatePicker(LocalDate.now());
-        this.endDate = new DatePicker(LocalDate.now());
         this.startHour = new SimpleIntegerProperty();
         this.startMin = new SimpleIntegerProperty();
         this.endHour = new SimpleIntegerProperty();
@@ -43,14 +44,17 @@ public class CreateEventViewModel {
         this.platformProperty = new SimpleStringProperty();
         this.linkProperty = new SimpleStringProperty();
         this.errorProperty = new SimpleStringProperty();
+
+        this.usernameProperty = new SimpleStringProperty();
+        this.nameProperty = new SimpleStringProperty();
+        this.employeeIdProperty = new SimpleStringProperty();
+        this.roleProperty = new SimpleStringProperty();
     }
 
     public void clear() {
         titleProperty.set(null);
         descriptionProperty.set(null);
 
-        startDate = new DatePicker(LocalDate.now());
-        endDate = startDate;
         //not for sure ↑
         startHour.setValue(null);
         startMin.setValue(null);
@@ -61,6 +65,10 @@ public class CreateEventViewModel {
         platformProperty.set(null);
         linkProperty.set(null);
         errorProperty.set(null);
+        usernameProperty.set(null);
+        nameProperty.set(null);
+        employeeIdProperty.set(null);
+        roleProperty.set(null);
     }
 
     public void addEvent(Event e) {
@@ -79,7 +87,7 @@ public class CreateEventViewModel {
         return startHour;
     }
 
-    public IntegerProperty getIdProperty(){
+    public IntegerProperty getIdProperty() {
         return idProperty;
     }
 
@@ -131,11 +139,27 @@ public class CreateEventViewModel {
         this.idProperty.set(idProperty);
     }
 
-    public int getID(){
+    public int getID() {
         return model.getEvent_id();
     }
 
     public String getWholeMessage() {
         return model.getEventByIndex(0).toString();
+    }
+
+    public StringProperty getUsernameProperty() {
+        return usernameProperty;
+    }
+
+    public StringProperty getNameProperty() {
+        return nameProperty;
+    }
+
+    public StringProperty getEmployeeIdProperty() {
+        return employeeIdProperty;
+    }
+
+    public StringProperty getRoleProperty() {
+        return roleProperty;
     }
 }
