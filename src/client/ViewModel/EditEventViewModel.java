@@ -1,7 +1,7 @@
 package client.ViewModel;
 
 import client.Model.Model;
-import client.View.SelectState;
+import client.View.Helpers.SelectState;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,7 +34,6 @@ public class EditEventViewModel {
         this.id = state.getEditSelect();
         this.model = model;
         this.errorProperty = new SimpleStringProperty();
-        this.employeeList = FXCollections.observableArrayList();
         if (id < 0) {
             this.idProperty = new SimpleIntegerProperty();
             this.titleProperty = new SimpleStringProperty();
@@ -58,10 +57,7 @@ public class EditEventViewModel {
             this.startMin = new SimpleIntegerProperty(model.getEventByID(id).getMinuteS());
             this.endHour = new SimpleIntegerProperty(model.getEventByID(id).getHourE());
             this.endMin = new SimpleIntegerProperty(model.getEventByID(id).getMinuteE());
-            for (int i = 0;i < model.getEventByID(id).getParticipants().size(); i++) {
-                model.addIDT(model.getEventByID(id).getParticipants().get(i));
-                System.out.println("work");
-            }
+
             if (model.getEventByID(id).isOnline()) {
                 this.isOnline = new SimpleBooleanProperty(model.getEventByID(id).isOnline());
                 this.roomProperty = new SimpleIntegerProperty();
@@ -94,16 +90,6 @@ public class EditEventViewModel {
         employeeList.clear();
     }
 
-    public ObservableList<EmployeeViewModel> update(){
-        for (int i = 0; i < model.getParticipantsT().size(); i++){
-            int id = model.getParticipantsT().get(i).getId();
-            String username = model.getParticipantsT().get(i).getName();
-            String name = model.getParticipantsT().get(i).getFullName();
-            String role = model.getParticipantsT().get(i).getRole();
-            employeeList.add(i, new EmployeeViewModel(id, username, name, role));
-        }
-        return employeeList;
-    }
 
     public void removeParticipant(int id){
         for (int i = 0; i < employeeList.size(); i++){
@@ -138,48 +124,12 @@ public class EditEventViewModel {
         return descriptionProperty;
     }
 
-    public IntegerProperty getStartHour() {
-        return startHour;
-    }
-
-    public IntegerProperty getIdProperty() {
-        return idProperty;
-    }
-
-    public IntegerProperty getStartMin() {
-        return startMin;
-    }
-
-    public IntegerProperty getEndHour() {
-        return endHour;
-    }
-
-    public IntegerProperty getEndMin() {
-        return endMin;
-    }
-
     public BooleanProperty getIsOnline() {
         return isOnline;
     }
 
     public boolean isOnline() {
         return model.isOnline();
-    }
-
-    public StringProperty getPlatformProperty() {
-        return platformProperty;
-    }
-
-    public IntegerProperty getRoomProperty() {
-        return roomProperty;
-    }
-
-    public StringProperty getLinkProperty() {
-        return linkProperty;
-    }
-
-    public StringProperty getErrorProperty() {
-        return errorProperty;
     }
 
     public LocalDate getDate() {
@@ -189,38 +139,6 @@ public class EditEventViewModel {
 
     public void setIsOnline(boolean isOnline) {
         model.setOnline(isOnline);
-    }
-
-    public void setErrorProperty(String errorProperty) {
-        this.errorProperty.set(errorProperty);
-    }
-
-    public void setIdProperty(int idProperty) {
-        this.idProperty.set(idProperty);
-    }
-
-    public void setDescriptionProperty(String descriptionProperty) {
-        this.descriptionProperty.set(descriptionProperty);
-    }
-
-    public void setEndHour(int endHour) {
-        this.endHour.set(endHour);
-    }
-
-    public void setEndMin(int endMin) {
-        this.endMin.set(endMin);
-    }
-
-    public void setLinkProperty(String linkProperty) {
-        this.linkProperty.set(linkProperty);
-    }
-
-    public void setPlatformProperty(String platformProperty) {
-        this.platformProperty.set(platformProperty);
-    }
-
-    public void setRoomProperty(int roomProperty) {
-        this.roomProperty.set(roomProperty);
     }
 
     public void setId(int id) {
@@ -255,14 +173,6 @@ public class EditEventViewModel {
         model.getEventByID(id).setTime(hS, mS, hE, mE);
     }
 
-    public void setStartHour(int startHour) {
-        this.startHour.set(startHour);
-    }
-
-    public void setStartMin(int startMin) {
-        this.startMin.set(startMin);
-    }
-
     public int getYear(int id) {
         return model.getEventByID(id).getYearS();
     }
@@ -295,15 +205,8 @@ public class EditEventViewModel {
         return model.getEventByID(id).getRoomID();
     }
 
-    public void setTitleProperty(String titleProperty) {
-        this.titleProperty.set(titleProperty);
-    }
-
     public int getID() {
         return model.getEvent_id();
     }
 
-    public String getWholeMessage() {
-        return model.getEventByIndex(0).toString();
-    }
 }

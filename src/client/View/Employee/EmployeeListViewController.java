@@ -1,11 +1,9 @@
 package client.View.Employee;
 
-import client.View.StringIntegerConverter;
+import client.View.Helpers.StringIntegerConverter;
 import client.View.ViewHandler;
 import client.ViewModel.EmployeeListViewModel;
 import client.ViewModel.EmployeeViewModel;
-import client.ViewModel.RoomListViewModel;
-import client.ViewModel.RoomViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;

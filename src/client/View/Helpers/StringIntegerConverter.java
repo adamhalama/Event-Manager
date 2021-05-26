@@ -1,4 +1,4 @@
-package client.View;
+package client.View.Helpers;
 
 import javafx.util.StringConverter;
 

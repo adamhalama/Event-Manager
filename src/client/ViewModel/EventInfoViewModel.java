@@ -1,7 +1,7 @@
 package client.ViewModel;
 
 import client.Model.Model;
-import client.View.SelectState;
+import client.View.Helpers.SelectState;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;

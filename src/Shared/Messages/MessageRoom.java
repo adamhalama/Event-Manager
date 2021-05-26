@@ -2,17 +2,57 @@ package Shared.Messages;
 
 import java.util.ArrayList;
 
+/**
+ * Represents one message room. Chat room or private message room between two people.
+ * @author Group 6 - 2Y ICT A21
+ * @version 1.0 - May 2021
+ * @since 1.0
+ */
 public class MessageRoom
 {
-    private int id; // Room id
-    private String name; // Room name
-    private ArrayList<Integer> usersIDs; // Message Room users PK
-    private ArrayList<Message> messages; // Loaded messages list
-    private boolean isPrivate; //if true the message room can have only 2 members
-    private boolean allMessagesLoaded = true; // Will be used to know if all messages were loaded to disable infinite scroll (I guess)
+    /**
+     * Room ID, representing the system id of the message room.
+     */
+    private int id;
+    /**
+     * Name of the message room, mostly used in group chats.
+     */
+    private String name;
+    /**
+     * An arraylist that contains the users tha belong to this room, by storing their system ID's.
+     */
+    private ArrayList<Integer> usersIDs;
+    /**
+     * An arraylist that contains the messages sent in the message room.
+     */
+    private ArrayList<Message> messages;
+    /**
+     * Holds a boolean containing the information if the room is a group chat or a private chat.
+     * true - Private chat - 2 people,
+     * false - Group chat - unlimited number of people
+     */
+    private boolean isPrivate;
+    /**
+     * A boolean holding the information if all the messages are loaded from the database.
+     * Used to know if all messages were loaded to disable infinite scroll
+     */
+    private boolean allMessagesLoaded = true;
 
+    /**
+     * Three-argument constructor. Used for private rooms.
+     * The two IDs can't be the same.
+     * @param id An integer containing the ID of the message room.
+     * @param name a String containing the name of the chat.
+     * @param firstParticipant an integer containing the ID of one of the users in the private chat.
+     * @param secondParticipant an integer containing the ID of the second user in the private chat.
+     */
     public MessageRoom(int id, String name,int firstParticipant, int secondParticipant)
     {
+        if (firstParticipant == secondParticipant)
+        {
+            System.out.println("Two same users cant be in the same room");
+            return;
+        }
         this.id = id;
         this.name = name;
         this.usersIDs = new ArrayList<>();
@@ -23,6 +63,16 @@ public class MessageRoom
         isPrivate = true;
     }
 
+    /**
+     * Four-argument constructor. Used for private rooms.
+     * The two IDs can't be the same.
+     * Used when loading from the database
+     * @param id An integer containing the ID of the message room.
+     * @param name a String containing the name of the chat.
+     * @param firstParticipant an integer containing the ID of one of the users in the private chat.
+     * @param secondParticipant an integer containing the ID of the second user in the private chat.
+     * @param messages a
+     */
     public MessageRoom(int id, String name,int firstParticipant, int secondParticipant, ArrayList<Message> messages)
     {
         this.id = id;

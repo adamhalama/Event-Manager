@@ -1,9 +1,8 @@
 package client.View.Event;
 
 import client.Model.Model;
-import client.View.SelectState;
+import client.View.Helpers.SelectState;
 import client.View.ViewHandler;
-import client.ViewModel.CreateEventViewModel;
 import client.ViewModel.EditEventViewModel;
 import client.ViewModel.EmployeeViewModel;
 import javafx.collections.FXCollections;
@@ -93,15 +92,15 @@ public class EditEventViewController {
         this.descriptionArea.textProperty().bindBidirectional(viewModel.getDescriptionProperty());
         this.errorLabel.setText("Welcome!");
 
-        this.participantTable.setItems(viewModel.update());
-        surnameColumn.setCellValueFactory(cellData ->
-                cellData.getValue().getSurnameProperty());
-        nameColumn.setCellValueFactory(cellData ->
-                cellData.getValue().getNameProperty());
-        idColumn.setCellValueFactory(cellData ->
-                cellData.getValue().getUserIDProperty());
-        roleColumn.setCellValueFactory(cellData ->
-                cellData.getValue().getRoleProperty());
+//        this.participantTable.setItems(viewModel.getEmployeeList());
+//        surnameColumn.setCellValueFactory(cellData ->
+//                cellData.getValue().getSurnameProperty());
+//        nameColumn.setCellValueFactory(cellData ->
+//                cellData.getValue().getNameProperty());
+//        idColumn.setCellValueFactory(cellData ->
+//                cellData.getValue().getUserIDProperty());
+//        roleColumn.setCellValueFactory(cellData ->
+//                cellData.getValue().getRoleProperty());
 
         this.hourMenuS.setItems(FXCollections.observableArrayList(9, 10, 11, 12, 13, 14, 15, 16));
         this.minuteMenuS.setItems(FXCollections.observableArrayList("00", "15", "30", "45"));
@@ -338,8 +337,13 @@ public class EditEventViewController {
             viewModel.setDate(yearS, monthS, dayS, id);
         }
 
-        ArrayList<Integer> participantsID = viewModel.getIDs();
-        model.setParticipants(participantsID);
+        ArrayList<Integer> participantsIDs = new ArrayList<>();
+
+        for (EmployeeViewModel employee:
+                participantTable.getItems())
+        {
+            participantsIDs.add(employee.getUserIDProperty().get());
+        }
 
         try {
             if (hourS != 0 && minuteS != -1 && hourE != 0 && minuteE != -1) {
@@ -442,7 +446,6 @@ public class EditEventViewController {
         }
     }
     @FXML private void refreshPress(){
-        participantTable.setItems(viewModel.update());
     }
 
     public Region getRoot() {

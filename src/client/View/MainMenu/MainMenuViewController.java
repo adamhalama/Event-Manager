@@ -1,5 +1,6 @@
 package client.View.MainMenu;
 
+import client.View.Helpers.ConfirmationButton;
 import client.View.ViewHandler;
 import client.ViewModel.MainMenuViewModel;
 import javafx.fxml.FXML;
@@ -41,6 +42,7 @@ public class MainMenuViewController
     @FXML
     private void logoutButton()
     {
+        ConfirmationButton.confirmationView("Are you sure you want to log out?");
         //todo log out
     }
 

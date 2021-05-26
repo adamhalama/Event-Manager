@@ -3,7 +3,7 @@ package client;
 import Shared.API;
 import client.Model.Model;
 import client.Model.ModelManager;
-import client.View.SelectState;
+import client.View.Helpers.SelectState;
 import client.View.ViewHandler;
 import client.ViewModel.ViewModelFactory;
 import javafx.application.Application;

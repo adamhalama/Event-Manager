@@ -1,6 +1,6 @@
 package client.View.Event;
 
-import client.View.SelectState;
+import client.View.Helpers.SelectState;
 import client.View.ViewHandler;
 import client.ViewModel.EventInfoViewModel;
 import javafx.fxml.FXML;
