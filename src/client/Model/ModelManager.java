@@ -9,7 +9,11 @@ import Shared.Messages.MessageRoom;
 import Shared.Messages.MessageRoomList;
 import Shared.Room.Room;
 import Shared.Room.RoomList;
+import client.RmiClient;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -28,10 +32,14 @@ public class ModelManager implements Model
     private ArrayList<Employee> employeesT;
     private Model model;
 
-    private int loggedClientID;
+    private Employee loggedEmployee;
 
-    public ModelManager()
+    private RmiClient api;
+
+    public ModelManager(RmiClient client)
     {
+        this.api = client;
+
         this.event = new Event();
         this.eventList = new EventList();
         this.roomList = new RoomList();
@@ -58,14 +66,30 @@ public class ModelManager implements Model
 
         messageRoomList.addPrivateMessageRoom("Private message room t2", 1, 2);
 
-        loggedClientID = 1;
+        /*try
+        {
+            System.out.println(api.registerEmployee("admin", "admin", "Admin", "Admin", "Admin"));
+        } catch (GeneralSecurityException | IOException | SQLException e)
+        {
+            e.printStackTrace();
+        }*/
+
+//        loggedClientID = 1;
 
     }
 
     @Override
+    public void login(String username, String password) throws SQLException, GeneralSecurityException, IOException
+    {
+         loggedEmployee = api.loginEmployee(username, password);
+    }
+
+
+
+    @Override
     public int getLoggedClientID()
     {
-        return loggedClientID;
+        return loggedEmployee.getId();
     }
 
     @Override

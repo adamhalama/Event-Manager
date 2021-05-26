@@ -6,6 +6,9 @@ import Shared.Messages.Message;
 import Shared.Messages.MessageRoom;
 import Shared.Room.Room;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -15,6 +18,8 @@ public interface Model {
 
 
     //messageRoom class
+
+    void login(String username, String password) throws SQLException, GeneralSecurityException, IOException;
 
     int getLoggedClientID();
 

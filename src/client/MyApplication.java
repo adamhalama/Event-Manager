@@ -15,9 +15,9 @@ public class MyApplication extends Application
     {
         RmiClient client = new RmiClient();
         client.test();
-        Model model = new ModelManager();
+        Model model = new ModelManager(client);
         SelectState state = new SelectState();
-        ViewModelFactory viewModelFactory = new ViewModelFactory(model, state, client);
+        ViewModelFactory viewModelFactory = new ViewModelFactory(model, state);
         ViewHandler view = new ViewHandler(viewModelFactory, model, state);
         view.start(primaryStage);
 
