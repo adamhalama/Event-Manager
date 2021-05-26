@@ -7,8 +7,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.util.ArrayList;
-
 public class EventInfoViewModel {
     private StringProperty title;
     private StringProperty description;

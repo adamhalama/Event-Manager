@@ -26,6 +26,7 @@ public class ModelManager implements Model
     private MessageRoomList messageRoomList;
     private ArrayList<Integer> idT;
     private ArrayList<Employee> employeesT;
+    private Model model;
 
     private int loggedClientID;
 

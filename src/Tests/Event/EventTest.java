@@ -2,8 +2,12 @@ package Tests.Event;
 
 import Shared.Event.Event;
 import Shared.Event.EventList;
+import client.Model.Model;
+import client.Model.ModelManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -119,94 +123,16 @@ class EventTest {
         assertEquals("You cannot choose an online platform if you have physical meeting!", e.getMessage());
     }
 
-    /*
     @Test
-    void removeByID() {
-        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50,  14, 30,
-                true, "Discord", "link");
-        Event e2 = new Event("B", "None", 2021, 5, 14, 15, 50, 16, 30,
-                true, "Teams", "link");
-        Event e3 = new Event("C", "None", 2021, 5, 14, 10, 50, 14, 30,
-                true, "Zoom", "link");
-        list.add(e1);
-        list.add(e2);
-        list.add(e3);
-
-        list.removeByEventID(0);
-        System.out.println(list.getEvents());
+    void addParticipant() {
+        Model model = new ModelManager();
+        ArrayList<Integer> list = new ArrayList<>();
+        EventList eventList = new EventList();
+        list.add(1);
+        list.add(2);
+        Event e5 = new Event("E", "None", 2021, 5, 3, 9, 50, 14, 30,
+                false, 1, model, list);
+        eventList.add(e5);
+        System.out.println(eventList.getEventByID(1).creatorParticipantString());
     }
-
-    @Test
-    void removeAll() {
-        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 14, 30,
-                true, "Discord", "link");
-        Event e2 = new Event("B", "None", 2021, 5, 14, 15, 50, 16, 30,
-                true, "Teams", "link");
-        Event e3 = new Event("G", "None", 2021, 5, 14, 9, 50, 14, 30,
-                false, 1);
-        list.add(e1);
-        list.add(e2);
-        list.add(e3);
-
-        list.removeAll();
-        System.out.println(list.getEvents());
-        assertEquals(0, list.getSize());
-    }
-
-    @Test
-    void addSome() {
-        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 14, 30,
-                true, "Discord", "link");
-        Event e2 = new Event("B", "None", 2021, 5, 14, 15, 50, 16, 30,
-                true, "Teams", "link");
-        Event e3 = new Event("G", "None", 2021, 5, 14, 9, 50, 14, 30,
-                false, 1);
-        list.add(e1);
-        list.add(e2);
-        list.add(e3);
-
-        assertEquals(2, e3.getEvent_id());
-    }
-
-    @Test
-    void search() {
-        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 14, 30,
-                true, "Discord", "link");
-        Event e2 = new Event("B", "None", 2021, 6, 3, 15, 50, 16, 30,
-                true, "Teams", "link");
-        Event e3 = new Event("G", "None", 2021, 6, 4, 9, 50,  14, 30,
-                false, 1);
-        list.add(e1);
-        list.add(e2);
-        list.add(e3);
-
-        System.out.println(list.getEventOnlyDate("2021-06-04"));
-        System.out.println(list.getEventOnlyDate("2021-06-03"));
-        System.out.println(list.getEventByID(3));
-    }
-
-    @Test
-    void dateString() {
-        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 14, 30,
-                true, "Discord", "link");
-        Event e2 = new Event("B", "None", 2021, 6, 3, 15, 50, 16, 30,
-                true, "Teams", "link");
-        Event e3 = new Event("G", "None", 2021, 6, 4, 9, 50, 14, 30,
-                false, 1);
-        list.add(e1);
-        list.add(e2);
-        list.add(e3);
-
-        System.out.println(e1.getDateString());
-    }
-
-    @Test
-    void setDate(){
-        Event e1 = new Event("A", "None", 2021, 5, 14, 9, 50, 14, 30,
-                true, "Discord", "link");
-        e1.setStartTime(12, 30);
-        e1.setEndTime(15, 15);
-        e1.setTime(9, 30 , 16 , 00);
-        System.out.println(e1.dateString());
-    }*/
 }

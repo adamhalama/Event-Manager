@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="659.0" prefWidth="984.0" stylesheets="@../darkTheme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.View.Event.EventListViewController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="659.0" prefWidth="1119.0" stylesheets="@../darkTheme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.View.Event.EventListViewController">
    <children>
       <GridPane alignment="CENTER" prefHeight="175.0" prefWidth="794.0">
         <columnConstraints>
@@ -105,7 +105,7 @@
          <children>
             <ScrollPane prefHeight="340.0" prefWidth="880.0">
                <content>
-                  <TableView fx:id="eventList" prefHeight="335.0" prefWidth="966.0">
+                  <TableView fx:id="eventList" prefHeight="335.0" prefWidth="1112.0">
                     <columns>
                         <TableColumn fx:id="idColumn" prefWidth="53.0" text="ID" />
                       <TableColumn fx:id="titleColumn" prefWidth="90.0" text="Title" />
@@ -116,7 +116,8 @@
                         <TableColumn fx:id="isOnlineColumn" prefWidth="93.0" text="Online ?" />
                         <TableColumn fx:id="platformColumn" prefWidth="60.0" text="Platform" />
                         <TableColumn fx:id="roomColumn" prefWidth="66.0" text="Room" />
-                        <TableColumn fx:id="creatorColumn" prefWidth="156.0" text="Creator" />
+                        <TableColumn fx:id="creatorColumn" prefWidth="119.0" text="Creator" />
+                        <TableColumn fx:id="sizeColumn" prefWidth="174.0" text="Number of participants" />
                     </columns>
                   </TableView>
                </content>

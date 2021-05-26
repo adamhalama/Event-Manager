@@ -49,6 +49,8 @@ public class EventListViewController {
     @FXML
     private TableColumn<EventViewModel, String> creatorColumn;
     @FXML
+    private TableColumn<EventViewModel, Number> sizeColumn;
+    @FXML
     private Label errorLabel;
     @FXML
     private Label dateInfoLabel;
@@ -109,6 +111,8 @@ public class EventListViewController {
                 cellData.getValue().getRoomProperty());
         creatorColumn.setCellValueFactory(cellData ->
                 cellData.getValue().getCreatorProperty());
+        sizeColumn.setCellValueFactory(cellData ->
+                cellData.getValue().getSizeProperty());
 
         /* tips when mouse move on the icons */
         final Tooltip t1 = new Tooltip();

@@ -60,6 +60,7 @@ public class EditEventViewModel {
             this.endMin = new SimpleIntegerProperty(model.getEventByID(id).getMinuteE());
             for (int i = 0;i < model.getEventByID(id).getParticipants().size(); i++) {
                 model.addIDT(model.getEventByID(id).getParticipants().get(i));
+                System.out.println("work");
             }
             if (model.getEventByID(id).isOnline()) {
                 this.isOnline = new SimpleBooleanProperty(model.getEventByID(id).isOnline());
@@ -94,7 +95,7 @@ public class EditEventViewModel {
     }
 
     public ObservableList<EmployeeViewModel> update(){
-        for (int i = 0; i < model.getParticipants().size(); i++){
+        for (int i = 0; i < model.getParticipantsT().size(); i++){
             int id = model.getParticipantsT().get(i).getId();
             String username = model.getParticipantsT().get(i).getName();
             String name = model.getParticipantsT().get(i).getFullName();

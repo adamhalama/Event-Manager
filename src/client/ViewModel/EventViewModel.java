@@ -27,6 +27,7 @@ public class EventViewModel {
     private StringProperty linkProperty;
     private StringProperty wholeMessage;
     private StringProperty creatorProperty;
+    private IntegerProperty sizeProperty;
 
     public EventViewModel(Event event) {
         this.idProperty = new SimpleIntegerProperty(event.getEvent_id());
@@ -51,6 +52,7 @@ public class EventViewModel {
         this.minuteSProperty = new SimpleIntegerProperty(event.getMinuteS());
         this.minuteEProperty = new SimpleIntegerProperty(event.getMinuteE());
         this.creatorProperty = new SimpleStringProperty(event.getCreator());
+        this.sizeProperty = new SimpleIntegerProperty(event.participantsSize());
     }
 
     public IntegerProperty getIdProperty() {
@@ -99,6 +101,10 @@ public class EventViewModel {
 
     public StringProperty getCreatorProperty() {
         return creatorProperty;
+    }
+
+    public IntegerProperty getSizeProperty() {
+        return sizeProperty;
     }
 
     public IntegerProperty getYearSProperty() {

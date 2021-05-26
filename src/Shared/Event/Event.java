@@ -491,6 +491,10 @@ public class Event {
         return yearS;
     }
 
+    public int participantsSize(){
+        return participants.size();
+    }
+
     public String setMonthSFull(int mS) {
         String ms = "";
         if (mS < 10) {
