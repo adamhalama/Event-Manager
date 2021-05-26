@@ -133,6 +133,9 @@ class EventTest {
         Event e5 = new Event("E", "None", 2021, 5, 3, 9, 50, 14, 30,
                 false, 1, model, list);
         eventList.add(e5);
-        System.out.println(eventList.getEventByID(1).creatorParticipantString());
+        for (int i = 0; i < list.size(); i++){
+            model.addIDT(list.get(i));
+        }
+        System.out.println(model.getParticipantsT());
     }
 }
