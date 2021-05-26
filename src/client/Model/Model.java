@@ -125,4 +125,10 @@ public interface Model {
     ArrayList<Event> getEventTeams();
     int getSize();
 
+    //extra part for choose participants
+    ArrayList<Integer> getParticipantsIDT(); //temporary store the ids
+    ArrayList<Employee> getParticipantsT(); //temporary store the employees
+    void addIDT(int id);
+    void addEmployeeT(int id);
+    void removeEmployeeT(int id);
 }

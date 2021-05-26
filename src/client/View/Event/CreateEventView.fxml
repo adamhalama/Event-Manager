@@ -318,8 +318,8 @@
          <children>
             <TableView fx:id="participantTable" prefHeight="200.0" prefWidth="200.0">
               <columns>
-                <TableColumn fx:id="usernameColumn" prefWidth="285.0" text="Username" />
                 <TableColumn fx:id="nameColumn" minWidth="0.0" prefWidth="242.0" text="Name" />
+                <TableColumn fx:id="surnameColumn" prefWidth="285.0" text="Surname" />
                   <TableColumn fx:id="idColumn" minWidth="0.0" prefWidth="83.0" text="ID" />
                   <TableColumn fx:id="roleColumn" minWidth="0.0" prefWidth="125.0" text="Role" />
               </columns>

@@ -24,6 +24,8 @@ public class ModelManager implements Model
     private EventList eventList;
     private RoomList roomList;
     private MessageRoomList messageRoomList;
+    private ArrayList<Integer> idT;
+    private ArrayList<Employee> employeesT;
 
     private int loggedClientID;
 
@@ -34,6 +36,8 @@ public class ModelManager implements Model
         this.roomList = new RoomList();
         this.employeeList = new EmployeeList();
         this.messageRoomList = new MessageRoomList();
+        this.idT = new ArrayList<>();
+        this.employeesT = new ArrayList<>();
 
         employeeList.setMessageRoomList(messageRoomList);
         employeeList.setEventList(eventList);
@@ -550,4 +554,35 @@ public class ModelManager implements Model
     public int getSize() {
         return eventList.getSize();
     }
+
+    @Override
+    public ArrayList<Integer> getParticipantsIDT() {
+        return idT;
+    }
+
+    @Override
+    public ArrayList<Employee> getParticipantsT() {
+        return employeesT;
+    }
+
+    @Override
+    public void addIDT(int id) {
+        idT.add(id);
+        addEmployeeT(id);
+    }
+
+    @Override
+    public void addEmployeeT(int id) {
+        employeesT.add(employeeList.getEmployeeByID(id));
+    }
+
+    @Override
+    public void removeEmployeeT(int id) {
+        for (int i = 0; i < employeesT.size(); i++){
+            if (employeesT.get(i).getId() == id){
+                employeesT.remove(i);
+            }
+        }
+    }
+
 }

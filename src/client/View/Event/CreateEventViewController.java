@@ -47,10 +47,10 @@ public class CreateEventViewController {
     @FXML
     private TextField linkTextField;
     @FXML private TableView<EmployeeViewModel> participantTable;
-    @FXML private TableColumn<EmployeeViewModel, Number> usernameColumn;
-    @FXML private TableColumn<EmployeeViewModel, Number> nameColumn;
+    @FXML private TableColumn<EmployeeViewModel, String> surnameColumn;
+    @FXML private TableColumn<EmployeeViewModel, String> nameColumn;
     @FXML private TableColumn<EmployeeViewModel, Number> idColumn;
-    @FXML private TableColumn<EmployeeViewModel, Number> roleColumn;
+    @FXML private TableColumn<EmployeeViewModel, String> roleColumn;
     @FXML
     private Label errorLabel;
     private int chooseStatus;
@@ -74,6 +74,17 @@ public class CreateEventViewController {
         this.descriptionArea.textProperty().bindBidirectional(viewModel.getDescriptionProperty());
         this.errorLabel.setText("Welcome!");
         this.chooseStatus = -1;
+
+        //TODO init table
+        this.participantTable.setItems(viewModel.update());
+        surnameColumn.setCellValueFactory(cellData ->
+                cellData.getValue().getSurnameProperty());
+        nameColumn.setCellValueFactory(cellData ->
+                cellData.getValue().getNameProperty());
+        idColumn.setCellValueFactory(cellData ->
+                cellData.getValue().getUserIDProperty());
+        roleColumn.setCellValueFactory(cellData ->
+                cellData.getValue().getRoleProperty());
 
         this.hourMenuS.setItems(FXCollections.observableArrayList(9, 10, 11, 12, 13, 14, 15, 16));
         this.minuteMenuS.setItems(FXCollections.observableArrayList("00", "15", "30", "45"));
@@ -166,11 +177,23 @@ public class CreateEventViewController {
     }
 
     @FXML private void removeEmployeePress(){
-
+        if (!(participantTable.getSelectionModel().getSelectedItem() == null)) {
+            viewModel.removeParticipant(
+                    participantTable.getSelectionModel().getSelectedItem().getUserIDProperty().get()
+            );
+        } else {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Please select a participant first!");
+            Optional<ButtonType> result = a.showAndWait();
+            if (result.get() == ButtonType.OK){
+                a.close();
+            }
+        }
     }
 
     @FXML private void refreshPress(){
-
+        viewModel.clear();
+        participantTable.setItems(viewModel.update());
     }
 
     @FXML
@@ -318,7 +341,7 @@ public class CreateEventViewController {
                 link = linkTextField.getText();
             } else link = "None";
 
-            ArrayList<Integer> participantsID = new ArrayList<>();
+            ArrayList<Integer> participantsID = viewModel.getIDs();
 
             if (viewModel.isOnline()) {
                 if (title != null || yearS != 0 && monthS != 0 && dayS != 0 && hourS != 0 && minuteS != -1 && hourE != 0 && minuteE != -1

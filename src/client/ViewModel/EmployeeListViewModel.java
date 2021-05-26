@@ -75,6 +75,6 @@ public class EmployeeListViewModel {
     }
 
     public void addToEvent(int id) {
-        model.addParticipants(id);
+        model.addIDT(id);
     }
 }

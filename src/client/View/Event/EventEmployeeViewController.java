@@ -17,7 +17,7 @@ public class EventEmployeeViewController {
     @FXML
     private TableColumn<EmployeeViewModel, String> nameColumn;
     @FXML
-    private TableColumn<EmployeeViewModel, String> usernameColumn;
+    private TableColumn<EmployeeViewModel, String> surnameColumn;
     @FXML
     private TableColumn<EmployeeViewModel, String> roleColumn;
 
@@ -37,7 +37,7 @@ public class EventEmployeeViewController {
 
         IDColumn.setCellValueFactory
                 (cellData -> cellData.getValue().getUserIDProperty());
-        usernameColumn.setCellValueFactory
+        surnameColumn.setCellValueFactory
                 (cellData -> cellData.getValue().getNameProperty());
         nameColumn.setCellValueFactory
                 (cellData -> cellData.getValue().getSurnameProperty());

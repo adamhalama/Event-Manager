@@ -3,6 +3,8 @@ package client.ViewModel;
 import Shared.Event.Event;
 import client.Model.Model;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.DatePicker;
 import javafx.util.StringConverter;
 
@@ -28,6 +30,7 @@ public class CreateEventViewModel {
     private StringProperty nameProperty;
     private StringProperty employeeIdProperty;
     private StringProperty roleProperty;
+    private ObservableList<EmployeeViewModel> employeeList;
     private StringProperty errorProperty;
 
     public CreateEventViewModel(Model model) {
@@ -49,26 +52,31 @@ public class CreateEventViewModel {
         this.nameProperty = new SimpleStringProperty();
         this.employeeIdProperty = new SimpleStringProperty();
         this.roleProperty = new SimpleStringProperty();
+        this.employeeList = FXCollections.observableArrayList();
     }
 
     public void clear() {
-        titleProperty.set(null);
-        descriptionProperty.set(null);
+        employeeList.clear();
+    }
 
-        //not for sure ↑
-        startHour.setValue(null);
-        startMin.setValue(null);
-        endHour.setValue(null);
-        endMin.setValue(null);
-        isOnline.setValue(null);
-        roomProperty.setValue(null);
-        platformProperty.set(null);
-        linkProperty.set(null);
-        errorProperty.set(null);
-        usernameProperty.set(null);
-        nameProperty.set(null);
-        employeeIdProperty.set(null);
-        roleProperty.set(null);
+    public ObservableList<EmployeeViewModel> update(){
+        for (int i = 0; i < model.getParticipantsIDT().size(); i++){
+            int id = model.getParticipantsT().get(i).getId();
+            String username = model.getParticipantsT().get(i).getName(); //should be username
+            String name = model.getParticipantsT().get(i).getFullName();
+            String role = model.getParticipantsT().get(i).getRole();
+            employeeList.add(i, new EmployeeViewModel(id, username, name, role));
+        }
+        return employeeList;
+    }
+
+    public void removeParticipant(int id){
+        for (int i = 0; i < employeeList.size(); i++){
+            if (employeeList.get(i).getUserIDProperty().get() == id){
+                employeeList.remove(i);
+                model.removeEmployeeT(id);
+            }
+        }
     }
 
     public void addEvent(Event e) {
@@ -161,5 +169,9 @@ public class CreateEventViewModel {
 
     public StringProperty getRoleProperty() {
         return roleProperty;
+    }
+
+    public ArrayList<Integer> getIDs(){
+        return model.getParticipantsIDT();
     }
 }

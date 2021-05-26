@@ -377,6 +377,10 @@ public class Event {
         } else throw new IllegalArgumentException("Invalid employee id!");
     }
 
+    public void addParticipantsFull(Employee e){
+
+    }
+
     public void removeParticipants(int id) {
         for (int i = 0; i < participants.size(); i++) {
             if (participants.get(i) == id) {
