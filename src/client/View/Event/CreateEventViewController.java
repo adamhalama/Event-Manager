@@ -46,11 +46,16 @@ public class CreateEventViewController {
     private ChoiceBox<String> platformMenu;
     @FXML
     private TextField linkTextField;
-    @FXML private TableView<EmployeeViewModel> participantTable;
-    @FXML private TableColumn<EmployeeViewModel, String> surnameColumn;
-    @FXML private TableColumn<EmployeeViewModel, String> nameColumn;
-    @FXML private TableColumn<EmployeeViewModel, Number> idColumn;
-    @FXML private TableColumn<EmployeeViewModel, String> roleColumn;
+    @FXML
+    private TableView<EmployeeViewModel> participantTable;
+    @FXML
+    private TableColumn<EmployeeViewModel, String> surnameColumn;
+    @FXML
+    private TableColumn<EmployeeViewModel, String> nameColumn;
+    @FXML
+    private TableColumn<EmployeeViewModel, Number> idColumn;
+    @FXML
+    private TableColumn<EmployeeViewModel, String> roleColumn;
     @FXML
     private Label errorLabel;
     private int chooseStatus;
@@ -64,7 +69,7 @@ public class CreateEventViewController {
     }
 
     public void init(ViewHandler viewHandler, CreateEventViewModel viewModel, Region root
-    , Model model) {
+            , Model model) {
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         this.root = root;
@@ -75,7 +80,6 @@ public class CreateEventViewController {
         this.errorLabel.setText("Welcome!");
         this.chooseStatus = -1;
 
-        //TODO init table
         this.participantTable.setItems(viewModel.update());
         surnameColumn.setCellValueFactory(cellData ->
                 cellData.getValue().getSurnameProperty());
@@ -143,6 +147,7 @@ public class CreateEventViewController {
         startDate.setValue(null);
         linkTextField.setText(null);
         resetPress();
+        model.clearTemporary();
     }
 
     @FXML
@@ -172,26 +177,35 @@ public class CreateEventViewController {
         this.chooseStatus = 1;
     }
 
-    @FXML private void addEmployeePress(){
+    @FXML
+    private void addEmployeePress() {
         viewHandler.openView("EventEmployee");
     }
 
-    @FXML private void removeEmployeePress(){
+    @FXML
+    private void removeEmployeePress() {
         if (!(participantTable.getSelectionModel().getSelectedItem() == null)) {
-            viewModel.removeParticipant(
-                    participantTable.getSelectionModel().getSelectedItem().getUserIDProperty().get()
-            );
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setHeaderText("Remove this participant?");
+            Optional<ButtonType> result = a.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                viewModel.removeParticipant(
+                        participantTable.getSelectionModel().getSelectedItem().getUserIDProperty().get()
+                );
+            }
+
         } else {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("Please select a participant first!");
             Optional<ButtonType> result = a.showAndWait();
-            if (result.get() == ButtonType.OK){
+            if (result.get() == ButtonType.OK) {
                 a.close();
             }
         }
     }
 
-    @FXML private void refreshPress(){
+    @FXML
+    private void refreshPress() {
         viewModel.clear();
         participantTable.setItems(viewModel.update());
     }

@@ -377,10 +377,6 @@ public class Event {
         } else throw new IllegalArgumentException("Invalid employee id!");
     }
 
-    public void addParticipantsFull(Employee e){
-
-    }
-
     public void removeParticipants(int id) {
         for (int i = 0; i < participants.size(); i++) {
             if (participants.get(i) == id) {
@@ -389,12 +385,20 @@ public class Event {
         }
     }
 
+    public void setParticipants(ArrayList<Integer> employees){
+        this.participants = employees;
+    }
+
     public ArrayList<Integer> getParticipants() {
         return participants;
     }
 
     public int getCreatorID() {
         return creatorID;
+    }
+
+    public String getCreator(){
+        return model.getEmployeeByID(creatorID).getFullName();
     }
 
     public String getTitle() {
@@ -539,11 +543,24 @@ public class Event {
         this.dateString = dateString;
     }
 
+    public String creatorParticipantString(){
+        return "Creator: " + getCreator() + ", Participant(ID): " + getParticipants();
+    }
+
+    public String participantString(){
+        String participant = "";
+        for (int i = 0; i < participants.size(); i++){
+            participant += getParticipants().get(i);
+            participant += ", ";
+        }
+        return participant;
+    }
+
     @Override
     public String toString() {
         return "ID: " + getEvent_id() + " Title: " + getTitle() + ", Time create: " + getTime_create() + ", Start: " + getTime_start() + ", End: " + getTime_end()
                 + ", Description: " + getDescription() + ", isOnline: " + isOnline() + ", (if online)Platform: " + getPlatform() +
-                ", (if online)Link: " + getOnlineLink() + ", (if physical)Room: " + getRoomID();
+                ", (if online)Link: " + getOnlineLink() + ", (if physical)Room: " + getRoomID() + ", " + creatorParticipantString();
     }
 
     public String contentString() {

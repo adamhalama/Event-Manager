@@ -345,6 +345,11 @@ public class ModelManager implements Model
     }
 
     @Override
+    public void setParticipants(ArrayList<Integer> employees) {
+        event.setParticipants(employees);
+    }
+
+    @Override
     public ArrayList<Integer> getParticipants() {
         return event.getParticipants();
     }
@@ -583,6 +588,12 @@ public class ModelManager implements Model
                 employeesT.remove(i);
             }
         }
+    }
+
+    @Override
+    public void clearTemporary() {
+        employeesT.clear();
+        idT.clear();
     }
 
 }

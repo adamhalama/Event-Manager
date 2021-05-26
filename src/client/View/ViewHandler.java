@@ -202,7 +202,8 @@ public class ViewHandler {
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 eventEmployeeViewController = loader.getController();
-                eventEmployeeViewController.init(this, viewModelFactory.getEmployeeListViewModel(), root);
+                eventEmployeeViewController.init(this, viewModelFactory.getEmployeeListViewModel(),
+                        root, selectState);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -328,7 +329,8 @@ public class ViewHandler {
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 editEventViewController = loader.getController();
-                editEventViewController.init(this, viewModelFactory.getEditEventViewModel(), root, selectState);
+                editEventViewController.init(this, viewModelFactory.getEditEventViewModel(),
+                        root, selectState, model);
             } catch (Exception e) {
                 e.printStackTrace();
             }

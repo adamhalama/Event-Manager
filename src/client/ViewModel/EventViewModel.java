@@ -26,6 +26,7 @@ public class EventViewModel {
     private StringProperty platformProperty;
     private StringProperty linkProperty;
     private StringProperty wholeMessage;
+    private StringProperty creatorProperty;
 
     public EventViewModel(Event event) {
         this.idProperty = new SimpleIntegerProperty(event.getEvent_id());
@@ -49,6 +50,7 @@ public class EventViewModel {
         this.hourEProperty = new SimpleIntegerProperty(event.getHourE());
         this.minuteSProperty = new SimpleIntegerProperty(event.getMinuteS());
         this.minuteEProperty = new SimpleIntegerProperty(event.getMinuteE());
+        this.creatorProperty = new SimpleStringProperty(event.getCreator());
     }
 
     public IntegerProperty getIdProperty() {
@@ -95,43 +97,47 @@ public class EventViewModel {
         return wholeMessage;
     }
 
-    public IntegerProperty getYearSProperty(){
+    public StringProperty getCreatorProperty() {
+        return creatorProperty;
+    }
+
+    public IntegerProperty getYearSProperty() {
         return yearSProperty;
     }
 
-    public IntegerProperty getYearEProperty(){
+    public IntegerProperty getYearEProperty() {
         return yearEProperty;
     }
 
-    public IntegerProperty getMonthSProperty(){
+    public IntegerProperty getMonthSProperty() {
         return monthSProperty;
     }
 
-    public IntegerProperty getMonthEProperty(){
+    public IntegerProperty getMonthEProperty() {
         return monthEProperty;
     }
 
-    public IntegerProperty getDaySProperty(){
+    public IntegerProperty getDaySProperty() {
         return daySProperty;
     }
 
-    public IntegerProperty getDayEProperty(){
+    public IntegerProperty getDayEProperty() {
         return dayEProperty;
     }
 
-    public IntegerProperty getHourSProperty(){
+    public IntegerProperty getHourSProperty() {
         return hourSProperty;
     }
 
-    public IntegerProperty getHourEProperty(){
+    public IntegerProperty getHourEProperty() {
         return hourEProperty;
     }
 
-    public IntegerProperty getMinuteSProperty(){
+    public IntegerProperty getMinuteSProperty() {
         return minuteSProperty;
     }
 
-    public IntegerProperty getMinuteEProperty(){
+    public IntegerProperty getMinuteEProperty() {
         return minuteEProperty;
     }
 }

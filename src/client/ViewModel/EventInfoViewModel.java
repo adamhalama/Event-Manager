@@ -7,6 +7,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.util.ArrayList;
+
 public class EventInfoViewModel {
     private StringProperty title;
     private StringProperty description;
@@ -18,6 +20,7 @@ public class EventInfoViewModel {
     private IntegerProperty room;
     private StringProperty participant;
     private StringProperty creator;
+    private StringProperty employeeInfo;
     private StringProperty createTime;
     private Model model;
     private SelectState selectState;
@@ -55,21 +58,58 @@ public class EventInfoViewModel {
             }
             this.participant = new SimpleStringProperty();
             this.creator = new SimpleStringProperty();
-            //this.participant = model.getEventByID(id).
-            //this.creator = model.getEventByID(id).
+            this.participant = new SimpleStringProperty(model.getEventByID(id).participantString());
+            this.creator = new SimpleStringProperty(model.getEventByID(id).getCreator());
+            this.employeeInfo = new SimpleStringProperty(model.getEventByID(id).participantString());
             this.createTime = new SimpleStringProperty(model.getEventByID(id).getTime_create());
         }
     }
 
-    public String getTitle(int id){return model.getEventByID(id).getTitle() ;}
-    public String getDes(int id){return model.getEventByID(id).getDescription() ;}
-    public String getStart(int id){return model.getEventByID(id).getTime_start() ;}
-    public String getEnd(int id){return model.getEventByID(id).getTime_end() ;}
-    public String getCreate(int id){return model.getEventByID(id).getTime_create() ;}
-    public String getLink(int id){return model.getEventByID(id).getOnlineLink() ;}
-    public String getPlatform(int id){return model.getEventByID(id).getPlatform() ;}
-    //public String getParticipant(int id){return model.getEventByID(id). ;}
-    //public String getCreator(int id){return model.getEventByID(id). ;}
-    public boolean getTYpe(int id){return model.getEventByID(id).isOnline() ;}
-    public int getRoom(int id){return model.getEventByID(id).getRoomID() ;}
+    public String getTitle(int id) {
+        return model.getEventByID(id).getTitle();
+    }
+
+    public String getDes(int id) {
+        return model.getEventByID(id).getDescription();
+    }
+
+    public String getStart(int id) {
+        return model.getEventByID(id).getTime_start();
+    }
+
+    public String getEnd(int id) {
+        return model.getEventByID(id).getTime_end();
+    }
+
+    public String getCreate(int id) {
+        return model.getEventByID(id).getTime_create();
+    }
+
+    public String getLink(int id) {
+        return model.getEventByID(id).getOnlineLink();
+    }
+
+    public String getPlatform(int id) {
+        return model.getEventByID(id).getPlatform();
+    }
+
+    public String getParticipantCreatorInfo(int id){
+        return model.getEventByID(id).creatorParticipantString();
+    }
+
+    public String getParticipant(int id) {
+        return model.getEventByID(id).participantString();
+    }
+
+    public String getCreator(int id) {
+        return model.getEventByID(id).getCreator();
+    }
+
+    public boolean getTYpe(int id) {
+        return model.getEventByID(id).isOnline();
+    }
+
+    public int getRoom(int id) {
+        return model.getEventByID(id).getRoomID();
+    }
 }

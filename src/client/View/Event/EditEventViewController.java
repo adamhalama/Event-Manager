@@ -1,9 +1,11 @@
 package client.View.Event;
 
+import client.Model.Model;
 import client.View.SelectState;
 import client.View.ViewHandler;
 import client.ViewModel.CreateEventViewModel;
 import client.ViewModel.EditEventViewModel;
+import client.ViewModel.EmployeeViewModel;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -14,6 +16,7 @@ import javafx.util.StringConverter;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class EditEventViewController {
@@ -53,6 +56,16 @@ public class EditEventViewController {
     private Label buttonLabel;
     @FXML
     private Label roomInfoLabel;
+    @FXML
+    private TableView<EmployeeViewModel> participantTable;
+    @FXML
+    private TableColumn<EmployeeViewModel, String> surnameColumn;
+    @FXML
+    private TableColumn<EmployeeViewModel, String> nameColumn;
+    @FXML
+    private TableColumn<EmployeeViewModel, Number> idColumn;
+    @FXML
+    private TableColumn<EmployeeViewModel, String> roleColumn;
 
     private int chooseStatus;
     private int id;
@@ -61,22 +74,34 @@ public class EditEventViewController {
     private EditEventViewModel viewModel;
     private SelectState selectState;
     private Region root;
+    private Model model;
 
     public EditEventViewController() {
     }
 
     public void init(ViewHandler viewHandler, EditEventViewModel viewModel, Region root,
-                     SelectState state) {
+                     SelectState state, Model model) {
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         this.root = root;
         this.selectState = state;
         this.chooseStatus = -1;
+        this.model = model;
         this.id = state.getEditSelect();
 
         this.titleTextField.textProperty().bindBidirectional(viewModel.getTitleProperty());
         this.descriptionArea.textProperty().bindBidirectional(viewModel.getDescriptionProperty());
         this.errorLabel.setText("Welcome!");
+
+        this.participantTable.setItems(viewModel.update());
+        surnameColumn.setCellValueFactory(cellData ->
+                cellData.getValue().getSurnameProperty());
+        nameColumn.setCellValueFactory(cellData ->
+                cellData.getValue().getNameProperty());
+        idColumn.setCellValueFactory(cellData ->
+                cellData.getValue().getUserIDProperty());
+        roleColumn.setCellValueFactory(cellData ->
+                cellData.getValue().getRoleProperty());
 
         this.hourMenuS.setItems(FXCollections.observableArrayList(9, 10, 11, 12, 13, 14, 15, 16));
         this.minuteMenuS.setItems(FXCollections.observableArrayList("00", "15", "30", "45"));
@@ -313,6 +338,9 @@ public class EditEventViewController {
             viewModel.setDate(yearS, monthS, dayS, id);
         }
 
+        ArrayList<Integer> participantsID = viewModel.getIDs();
+        model.setParticipants(participantsID);
+
         try {
             if (hourS != 0 && minuteS != -1 && hourE != 0 && minuteE != -1) {
                 viewModel.setTime(hourS, minuteS, hourE, minuteE, id);
@@ -334,6 +362,8 @@ public class EditEventViewController {
         if (room != 0) {
             viewModel.setRoom(room, id);
         }
+
+        selectState.setAdd(true);
 
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setTitle("edit");
@@ -385,6 +415,34 @@ public class EditEventViewController {
         );
         t4.setFont(new Font("Arial", 14));
         Tooltip.install(roomInfoLabel, t4);
+    }
+
+    @FXML private void addEmployeePress(){
+        selectState.setAdd(false);
+        viewHandler.openView("EventEmployee");
+    }
+    @FXML private void removeEmployeePress(){
+        if (!(participantTable.getSelectionModel().getSelectedItem() == null)) {
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setHeaderText("Remove this participant?");
+            Optional<ButtonType> result = a.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                viewModel.removeParticipant(
+                        participantTable.getSelectionModel().getSelectedItem().getUserIDProperty().get()
+                );
+            }
+
+        } else {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Please select a participant first!");
+            Optional<ButtonType> result = a.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                a.close();
+            }
+        }
+    }
+    @FXML private void refreshPress(){
+        participantTable.setItems(viewModel.update());
     }
 
     public Region getRoot() {

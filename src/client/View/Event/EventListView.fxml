@@ -116,8 +116,7 @@
                         <TableColumn fx:id="isOnlineColumn" prefWidth="93.0" text="Online ?" />
                         <TableColumn fx:id="platformColumn" prefWidth="60.0" text="Platform" />
                         <TableColumn fx:id="roomColumn" prefWidth="66.0" text="Room" />
-                        <TableColumn fx:id="roomColumn1" prefWidth="66.0" text="Room" />
-                        <TableColumn fx:id="creatorColumn" prefWidth="89.0" text="Creator" />
+                        <TableColumn fx:id="creatorColumn" prefWidth="156.0" text="Creator" />
                     </columns>
                   </TableView>
                </content>

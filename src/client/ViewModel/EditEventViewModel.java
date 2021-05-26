@@ -3,9 +3,12 @@ package client.ViewModel;
 import client.Model.Model;
 import client.View.SelectState;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.DatePicker;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class EditEventViewModel {
     private Model model;
@@ -22,6 +25,7 @@ public class EditEventViewModel {
     private StringProperty platformProperty;
     private StringProperty linkProperty;
     private StringProperty errorProperty;
+    private ObservableList<EmployeeViewModel> employeeList;
     private int id;
     private SelectState state;
 
@@ -30,6 +34,7 @@ public class EditEventViewModel {
         this.id = state.getEditSelect();
         this.model = model;
         this.errorProperty = new SimpleStringProperty();
+        this.employeeList = FXCollections.observableArrayList();
         if (id < 0) {
             this.idProperty = new SimpleIntegerProperty();
             this.titleProperty = new SimpleStringProperty();
@@ -43,6 +48,7 @@ public class EditEventViewModel {
             this.roomProperty = new SimpleIntegerProperty();
             this.platformProperty = new SimpleStringProperty();
             this.linkProperty = new SimpleStringProperty();
+            this.employeeList = null;
         } else {
             this.idProperty = new SimpleIntegerProperty(model.getEventByID(id).getEvent_id());
             this.titleProperty = new SimpleStringProperty(model.getEventByID(id).getTitle());
@@ -52,6 +58,9 @@ public class EditEventViewModel {
             this.startMin = new SimpleIntegerProperty(model.getEventByID(id).getMinuteS());
             this.endHour = new SimpleIntegerProperty(model.getEventByID(id).getHourE());
             this.endMin = new SimpleIntegerProperty(model.getEventByID(id).getMinuteE());
+            for (int i = 0;i < model.getEventByID(id).getParticipants().size(); i++) {
+                model.addIDT(model.getEventByID(id).getParticipants().get(i));
+            }
             if (model.getEventByID(id).isOnline()) {
                 this.isOnline = new SimpleBooleanProperty(model.getEventByID(id).isOnline());
                 this.roomProperty = new SimpleIntegerProperty();
@@ -81,6 +90,31 @@ public class EditEventViewModel {
         platformProperty.set(null);
         linkProperty.set(null);
         errorProperty.set(null);
+        employeeList.clear();
+    }
+
+    public ObservableList<EmployeeViewModel> update(){
+        for (int i = 0; i < model.getParticipants().size(); i++){
+            int id = model.getParticipantsT().get(i).getId();
+            String username = model.getParticipantsT().get(i).getName();
+            String name = model.getParticipantsT().get(i).getFullName();
+            String role = model.getParticipantsT().get(i).getRole();
+            employeeList.add(i, new EmployeeViewModel(id, username, name, role));
+        }
+        return employeeList;
+    }
+
+    public void removeParticipant(int id){
+        for (int i = 0; i < employeeList.size(); i++){
+            if (employeeList.get(i).getUserIDProperty().get() == id){
+                employeeList.remove(i);
+                model.removeEmployeeT(id);
+            }
+        }
+    }
+
+    public ArrayList<Integer> getIDs(){
+        return model.getParticipantsIDT();
     }
 
     public StringProperty getTitleProperty() {

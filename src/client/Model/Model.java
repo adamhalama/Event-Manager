@@ -85,6 +85,7 @@ public interface Model {
     void setDate(int y, int m, int d);
     void addParticipants(int id);
     void removeParticipants(int id);
+    void setParticipants(ArrayList<Integer> employees);
     ArrayList<Integer> getParticipants();
     int getCreatorID();
     long getTimestamp();
@@ -131,4 +132,5 @@ public interface Model {
     void addIDT(int id);
     void addEmployeeT(int id);
     void removeEmployeeT(int id);
+    void clearTemporary();
 }

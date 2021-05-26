@@ -27,9 +27,7 @@ public class EventInfoViewController {
     @FXML
     private Label roomLabel;
     @FXML
-    private Label participantLabel;
-    @FXML
-    private Label creatorLabel;
+    private TextArea employeeInfoArea;
     @FXML
     private Label createTimeLabel;
 
@@ -65,9 +63,7 @@ public class EventInfoViewController {
             this.linkLabel.setText("");
             this.roomLabel.setText(String.valueOf(viewModel.getRoom(id)));
         }
-
-        this.participantLabel.setText("");
-        this.creatorLabel.setText("");
+        this.employeeInfoArea.setText(viewModel.getParticipantCreatorInfo(id));
         this.createTimeLabel.setText(viewModel.getCreate(id));
     }
 

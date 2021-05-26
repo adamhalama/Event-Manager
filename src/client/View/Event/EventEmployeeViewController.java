@@ -1,13 +1,18 @@
 package client.View.Event;
 
+import client.View.SelectState;
 import client.View.ViewHandler;
 import client.ViewModel.CreateEventViewModel;
 import client.ViewModel.EmployeeListViewModel;
 import client.ViewModel.EmployeeViewModel;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
+
+import java.util.Optional;
 
 public class EventEmployeeViewController {
     @FXML
@@ -24,14 +29,16 @@ public class EventEmployeeViewController {
     private ViewHandler viewHandler;
     private EmployeeListViewModel viewModel;
     private Region root;
+    private SelectState state;
 
     public EventEmployeeViewController() {
     }
 
-    public void init(ViewHandler viewHandler, EmployeeListViewModel viewModel, Region root) {
+    public void init(ViewHandler viewHandler, EmployeeListViewModel viewModel, Region root, SelectState selectState) {
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         this.root = root;
+        this.state = selectState;
 
         employeeTable.setItems(viewModel.getEmployeeList());
 
@@ -47,13 +54,20 @@ public class EventEmployeeViewController {
 
     @FXML
     private void addPress() {
-        viewModel.addToEvent(employeeTable.getSelectionModel().getSelectedItem().getUserIDProperty().get());
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+        a.setHeaderText("Are you sure to add this employee as participant?");
+        Optional<ButtonType> result = a.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            viewModel.addToEvent(employeeTable.getSelectionModel().getSelectedItem().
+                    getUserIDProperty().get());
+        }
     }
 
     @FXML
     private void backPress() {
-        viewHandler.openView("CreateEvent");
-        //TODO 分两个模式，一个给创建一个给编辑
+        if (state.isAdd()) {
+            viewHandler.openView("CreateEvent");
+        } else viewHandler.openView("EditEvent");
     }
 
     public Region getRoot() {

@@ -62,7 +62,7 @@ public class CreateEventViewModel {
     public ObservableList<EmployeeViewModel> update(){
         for (int i = 0; i < model.getParticipantsIDT().size(); i++){
             int id = model.getParticipantsT().get(i).getId();
-            String username = model.getParticipantsT().get(i).getName(); //should be username
+            String username = model.getParticipantsT().get(i).getName();
             String name = model.getParticipantsT().get(i).getFullName();
             String role = model.getParticipantsT().get(i).getRole();
             employeeList.add(i, new EmployeeViewModel(id, username, name, role));
