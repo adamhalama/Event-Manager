@@ -1,8 +1,12 @@
 package client;
 
 import Shared.API;
+import Shared.Employee.Employee;
+
+import java.io.IOException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.security.GeneralSecurityException;
 import java.sql.SQLException;
 
 public class RmiClient
@@ -21,24 +25,9 @@ public class RmiClient
     }
   }
 
-  public void test()
+  public Employee loginEmployee(String username, String password)
+      throws GeneralSecurityException, IOException, SQLException
   {
-    try
-    {
-      System.out.println(server.getEmployee(1));
-    } catch (SQLException | RemoteException throwables)
-    {
-      throwables.printStackTrace();
-    }
-  }
-
-  public String convert(String text, boolean upper) throws RemoteException
-  {
-    /*if (upper)
-    {
-      return server.toUpperCase(text);
-    }
-    return server.capitalize(text);*/
-    return "";
+    return server.loginEmployee(username, password);
   }
 }

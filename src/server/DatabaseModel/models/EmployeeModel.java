@@ -104,4 +104,11 @@ public class EmployeeModel extends Model
     DBResponse dbResponse = super.modelUpdate(fields, values, where);
     return getEmployeesFromResponse(dbResponse);
   }
+
+  public Employee editByID(String[] fields, String[] values, int employeeID)
+      throws SQLException
+  {
+    DBResponse dbResponse = super.modelUpdate(fields, values, "id = " + employeeID);
+    return getEmployeesFromResponse(dbResponse).get(0);
+  }
 }

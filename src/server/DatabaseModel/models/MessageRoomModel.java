@@ -21,7 +21,8 @@ public class MessageRoomModel extends Model
     for(ResponseRow row : rows) {
       int userID = Integer.parseInt(row.getField("id"));
       String name = row.getField("name");
-      messages.add(new MessageRoom(userID, name));
+      boolean isPrivate = Boolean.parseBoolean(row.getField("is_private"));
+      messages.add(new MessageRoom(userID, name, isPrivate));
     }
     return messages;
   }
@@ -44,12 +45,12 @@ public class MessageRoomModel extends Model
     return getMessageRoomsFromResponse(dbResponse).get(0);
   }
 
-  public MessageRoom create(String name)
+  public MessageRoom create(String name, boolean isPrivate)
       throws SQLException
   {
     DBResponse dbResponse = super.modelInsert(
-        new String[] {"name"},
-        new String[] {"'"+name+"'"}
+        new String[] {"name", "is_private"},
+        new String[] {"'"+name+"'", "" + isPrivate + ""}
     );
     return getMessageRoomsFromResponse(dbResponse).get(0);
   }

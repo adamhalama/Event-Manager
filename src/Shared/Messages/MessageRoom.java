@@ -46,7 +46,7 @@ public class MessageRoom
      * @param firstParticipant an integer containing the ID of one of the users in the private chat.
      * @param secondParticipant an integer containing the ID of the second user in the private chat.
      */
-    public MessageRoom(int id, String name,int firstParticipant, int secondParticipant)
+    public MessageRoom(int id, String name, int firstParticipant, int secondParticipant)
     {
         if (firstParticipant == secondParticipant)
         {
@@ -99,7 +99,16 @@ public class MessageRoom
         this.name = name;
         this.usersIDs = usersIDs;
         this.messages = new ArrayList<>();
-        isPrivate = false;
+        this.isPrivate = false;
+    }
+
+    public MessageRoom(int id, String name, boolean isPrivate)
+    {
+        this.id = id;
+        this.name = name;
+        this.usersIDs = new ArrayList<>();
+        this.messages = new ArrayList<>();
+        this.isPrivate = isPrivate;
     }
 
     public MessageRoom(int id, String name, ArrayList<Integer> usersIDs, ArrayList<Message> messages, boolean isPrivate)
@@ -187,6 +196,6 @@ public class MessageRoom
 
     @Override public String toString()
     {
-        return "{" + "id='" + id + '\'' + ", name=" + name +'}';
+        return "{" + "id='" + id + '\'' + ", name=" + name + ", isPrivate=" + isPrivate +'}';
     }
 }

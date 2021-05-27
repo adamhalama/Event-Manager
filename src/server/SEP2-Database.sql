@@ -42,7 +42,8 @@ CREATE TABLE Permission
 CREATE TABLE Message_Room
 (
     id              serial PRIMARY KEY,
-    name            varchar(30)
+    name            varchar(30),
+    is_private       bool
 );
 
 CREATE TABLE Message

@@ -1,6 +1,7 @@
 package client.ViewModel;
 
 import Shared.API;
+import Shared.Employee.Employee;
 import client.Model.Model;
 import client.RmiClient;
 import javafx.beans.property.SimpleStringProperty;
@@ -27,7 +28,8 @@ public class LoginViewModel {
 
     public void login(String username, String password) {
         try {
-            //modelAPI.loginEmployee(username, password);
+            Employee employee = modelAPI.loginEmployee(username, password);
+            // save employee now somewhere...
         } catch (Exception e) {
             e.getMessage();
         }
