@@ -27,12 +27,6 @@ public class RmiClient
     }
   }
 
-  public Employee loginEmployee(String username, String password)
-      throws GeneralSecurityException, IOException, SQLException
-  {
-    return server.loginEmployee(username, password);
-  }
-
   /**
    * Log in method for gaining access to the server.
    * @param username A string containing the username.
