@@ -4,6 +4,7 @@ import Shared.Event.Event;
 import Shared.Event.EventList;
 import client.Model.Model;
 import client.Model.ModelManager;
+import client.RmiClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -125,7 +126,8 @@ class EventTest {
 
     @Test
     void addParticipant() {
-        Model model = new ModelManager();
+
+        Model model = new ModelManager(new RmiClient());
         ArrayList<Integer> list = new ArrayList<>();
         EventList eventList = new EventList();
         list.add(1);
