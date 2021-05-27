@@ -65,6 +65,9 @@ public class ViewHandler {
     public void openView(String id) {
         Region root = null;
         switch (id) {
+            case "Login":
+                root = loadLoginView("Login/LoginView.fxml");
+                break;
             case "MainMenu":
                 root = loadMainMenuView("MainMenu/MainMenuView.fxml");
                 break;
@@ -115,12 +118,6 @@ public class ViewHandler {
                 root = loadMessageRoomListView("Chat/CreateMessageRoomView.fxml");
                 break;
             //todo make editMessageRoom
-            case "Login":
-                root = loadLoginView("Login/LoginView.fxml");
-                break;
-            case "EventInfo" :
-                root = loadEventInfoView("Event/EventInfoView.fxml");
-                break;
             case "MyAccount":
                 root = loadMyAccountView("Employee/EmployeeView.fxml");
                 break;
@@ -129,6 +126,9 @@ public class ViewHandler {
                 break;
             case "EventEmployee":
                 root = loadEventEmployeeViewController("Event/EventEmployeeView.fxml");
+                break;
+            case "EventInfo" :
+                root = loadEventInfoView("Event/EventInfoView.fxml");
                 break;
             default:
                 System.out.println("Unknown view");
