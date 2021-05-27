@@ -1,24 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox prefHeight="908.0" prefWidth="759.0" stylesheets="@../darkTheme.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.View.Event.EditEventViewController">
+<VBox prefHeight="672.0" prefWidth="759.0" stylesheets="@../darkTheme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.View.Event.EditEventViewController">
     <children>
       <GridPane prefHeight="95.0" prefWidth="866.0">
          <columnConstraints>
@@ -329,56 +317,6 @@
                 <Insets bottom="20.0" />
             </VBox.margin>
         </HBox>
-      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="739.0">
-         <children>
-            <Label text="Participant : ">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <Button mnemonicParsing="false" onAction="#addEmployeePress" prefHeight="29.0" prefWidth="24.0">
-               <graphic>
-                  <ImageView fitHeight="29.0" fitWidth="26.0">
-                     <image>
-                        <Image url="@../Icons/icons8-add-user-male-100.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Label text="   " />
-            <Button layoutX="419.0" layoutY="10.0" mnemonicParsing="false" onAction="#removeEmployeePress" prefHeight="29.0" prefWidth="24.0">
-               <graphic>
-                  <ImageView fitHeight="29.0" fitWidth="26.0">
-                     <image>
-                        <Image url="@../Icons/icons8-denied-100.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Label layoutX="440.0" layoutY="21.0" text="   " />
-            <Button layoutX="446.0" layoutY="10.0" mnemonicParsing="false" onAction="#refreshPress" prefHeight="29.0" prefWidth="24.0">
-               <graphic>
-                  <ImageView fitHeight="29.0" fitWidth="26.0">
-                     <image>
-                        <Image url="@../Icons/icons8-refresh-100.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-         </children>
-      </HBox>
-      <VBox prefHeight="200.0" prefWidth="100.0">
-         <children>
-            <TableView fx:id="participantTable" prefHeight="200.0" prefWidth="200.0">
-               <columns>
-                  <TableColumn fx:id="nameColumn" minWidth="0.0" prefWidth="242.0" text="Name" />
-                  <TableColumn fx:id="surnameColumn" prefWidth="285.0" text="Surname" />
-                  <TableColumn fx:id="idColumn" minWidth="0.0" prefWidth="83.0" text="ID" />
-                  <TableColumn fx:id="roleColumn" minWidth="0.0" prefWidth="125.0" text="Role" />
-               </columns>
-            </TableView>
-         </children>
-      </VBox>
       <Label text=" " />
         <HBox alignment="CENTER_RIGHT">
             <children>

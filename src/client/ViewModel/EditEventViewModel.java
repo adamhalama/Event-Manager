@@ -25,7 +25,6 @@ public class EditEventViewModel {
     private StringProperty platformProperty;
     private StringProperty linkProperty;
     private StringProperty errorProperty;
-    private ObservableList<EmployeeViewModel> employeeList;
     private int id;
     private SelectState state;
 
@@ -47,7 +46,6 @@ public class EditEventViewModel {
             this.roomProperty = new SimpleIntegerProperty();
             this.platformProperty = new SimpleStringProperty();
             this.linkProperty = new SimpleStringProperty();
-            this.employeeList = null;
         } else {
             this.idProperty = new SimpleIntegerProperty(model.getEventByID(id).getEvent_id());
             this.titleProperty = new SimpleStringProperty(model.getEventByID(id).getTitle());
@@ -87,17 +85,6 @@ public class EditEventViewModel {
         platformProperty.set(null);
         linkProperty.set(null);
         errorProperty.set(null);
-        employeeList.clear();
-    }
-
-
-    public void removeParticipant(int id){
-        for (int i = 0; i < employeeList.size(); i++){
-            if (employeeList.get(i).getUserIDProperty().get() == id){
-                employeeList.remove(i);
-                model.removeEmployeeT(id);
-            }
-        }
     }
 
     public ArrayList<Integer> getIDs(){

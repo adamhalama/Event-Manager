@@ -55,16 +55,6 @@ public class EditEventViewController {
     private Label buttonLabel;
     @FXML
     private Label roomInfoLabel;
-    @FXML
-    private TableView<EmployeeViewModel> participantTable;
-    @FXML
-    private TableColumn<EmployeeViewModel, String> surnameColumn;
-    @FXML
-    private TableColumn<EmployeeViewModel, String> nameColumn;
-    @FXML
-    private TableColumn<EmployeeViewModel, Number> idColumn;
-    @FXML
-    private TableColumn<EmployeeViewModel, String> roleColumn;
 
     private int chooseStatus;
     private int id;
@@ -91,16 +81,6 @@ public class EditEventViewController {
         this.titleTextField.textProperty().bindBidirectional(viewModel.getTitleProperty());
         this.descriptionArea.textProperty().bindBidirectional(viewModel.getDescriptionProperty());
         this.errorLabel.setText("Welcome!");
-
-//        this.participantTable.setItems(viewModel.getEmployeeList());
-//        surnameColumn.setCellValueFactory(cellData ->
-//                cellData.getValue().getSurnameProperty());
-//        nameColumn.setCellValueFactory(cellData ->
-//                cellData.getValue().getNameProperty());
-//        idColumn.setCellValueFactory(cellData ->
-//                cellData.getValue().getUserIDProperty());
-//        roleColumn.setCellValueFactory(cellData ->
-//                cellData.getValue().getRoleProperty());
 
         this.hourMenuS.setItems(FXCollections.observableArrayList(9, 10, 11, 12, 13, 14, 15, 16));
         this.minuteMenuS.setItems(FXCollections.observableArrayList("00", "15", "30", "45"));
@@ -337,14 +317,6 @@ public class EditEventViewController {
             viewModel.setDate(yearS, monthS, dayS, id);
         }
 
-        ArrayList<Integer> participantsIDs = new ArrayList<>();
-
-        for (EmployeeViewModel employee:
-                participantTable.getItems())
-        {
-            participantsIDs.add(employee.getUserIDProperty().get());
-        }
-
         try {
             if (hourS != 0 && minuteS != -1 && hourE != 0 && minuteE != -1) {
                 viewModel.setTime(hourS, minuteS, hourE, minuteE, id);
@@ -421,33 +393,6 @@ public class EditEventViewController {
         Tooltip.install(roomInfoLabel, t4);
     }
 
-    @FXML private void addEmployeePress(){
-        selectState.setAdd(false);
-        viewHandler.openView("EventEmployee");
-    }
-    @FXML private void removeEmployeePress(){
-        if (!(participantTable.getSelectionModel().getSelectedItem() == null)) {
-            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-            a.setHeaderText("Remove this participant?");
-            Optional<ButtonType> result = a.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                viewModel.removeParticipant(
-                        participantTable.getSelectionModel().getSelectedItem().getUserIDProperty().get()
-                );
-            }
-
-        } else {
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setHeaderText("Please select a participant first!");
-            Optional<ButtonType> result = a.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                a.close();
-            }
-        }
-    }
-    @FXML private void refreshPress(){
-    }
-
     public Region getRoot() {
         return root;
     }
@@ -457,7 +402,4 @@ public class EditEventViewController {
                 && viewModel.getDay(id) == d;
     }
 
-    public int getChooseStatus() {
-        return chooseStatus;
-    }
 }
