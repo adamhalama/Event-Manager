@@ -12,6 +12,7 @@ import Shared.Room.RoomList;
 import client.RmiClient;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.security.GeneralSecurityException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -76,12 +77,18 @@ public class ModelManager implements Model
 
 //        loggedClientID = 1;
 
+        //loging works, but i dont want to go to the login view every time
+        loggedEmployee = new Employee(7, "admin", "Admin", "Admin", "Admin");
+        employeeList.addEmployee(loggedEmployee);
+
     }
 
     @Override
     public void login(String username, String password) throws SQLException, GeneralSecurityException, IOException
     {
          loggedEmployee = api.loginEmployee(username, password);
+
+         employeeList.addEmployee(loggedEmployee);
     }
 
 
@@ -157,9 +164,9 @@ public class ModelManager implements Model
     }
 
     @Override
-    public MessageRoom getMessageRoomByID(int id)
+    public MessageRoom getMessageRoomByID(int id) throws SQLException, RemoteException
     {
-        return messageRoomList.getMessageRoomByID(id);
+        return api.getMessageRoomByID(id);
     }
 
 
@@ -167,12 +174,13 @@ public class ModelManager implements Model
     public void addEmployee(Employee employee)
     {
         employeeList.addEmployee(employee);
+        //TODO probably delete the whole method
     }
 
     @Override
-    public void addEmployee(String username, String name, String surname, String role)
+    public void addEmployee(String username, String password, String name, String surname, String role) throws SQLException, GeneralSecurityException, IOException
     {
-        employeeList.addEmployee(username, name, surname, role);
+        employeeList.addEmployee(api.registerEmployee(username, password, name, surname, role));
     }
 
     @Override
@@ -180,6 +188,7 @@ public class ModelManager implements Model
                             String role, ArrayList<String> permissions)
     {
         employeeList.addEmployee(username, name, surname, events, messageRooms, role, permissions);
+        // TODO add database write
     }
 
     @Override
@@ -232,15 +241,16 @@ public class ModelManager implements Model
 
 
     @Override
-    public void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor)
+    public void addRoom(String roomNumber, String buildingAddress, int numberOfSeats, int floor) throws SQLException, RemoteException
     {
-        roomList.addRoom(roomCode, buildingAddress, numberOfSeats, floor);
+        roomList.addRoom(api.createRoom(getLoggedClientID(), roomNumber, buildingAddress, numberOfSeats, floor));
     }
 
     @Override
     public void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
     {
         roomList.addRoom(roomCode, buildingAddress, numberOfSeats, floor, equipment);
+        //TODO add adding rooms with equipment
     }
 
     @Override

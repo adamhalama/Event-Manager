@@ -7,6 +7,7 @@ import Shared.Messages.MessageRoom;
 import Shared.Room.Room;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.security.GeneralSecurityException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -32,13 +33,13 @@ public interface Model {
     ArrayList<MessageRoom> getMessageRooms();
     String getSenderAndBody(Message message);
     ArrayList<String> getMessageRoomParticipantNames(MessageRoom messageRoom);
-    MessageRoom getMessageRoomByID(int id);
+    MessageRoom getMessageRoomByID(int id) throws SQLException, RemoteException;
 
 
     //part 3 class employee
 
     void addEmployee(Employee employee);
-    void addEmployee(String username, String name, String surname, String role);
+    void addEmployee(String username, String password, String name, String surname, String role) throws SQLException, GeneralSecurityException, IOException;
     void addEmployee(String username, String name, String surname, ArrayList<Integer> events,
                      ArrayList<Integer> messageRooms, String role, ArrayList<String> permissions);
     void removeEmployee(int employeeID);
@@ -54,7 +55,7 @@ public interface Model {
 
     //part4 class room
 
-    void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor);
+    void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor) throws SQLException, RemoteException;
     void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment);
     void removeRoom(int roomID);
     void removeRoom(Room room);

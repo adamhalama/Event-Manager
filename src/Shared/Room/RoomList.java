@@ -57,6 +57,12 @@ public class RoomList
         roomsCreated++;
     }
 
+    public void addRoom(Room room)
+    {
+        rooms.add(room);
+        roomsCreated++;
+    }
+
     public void removeRoom(int roomID)
     {
         for (int i = 0; i < rooms.size(); i++)

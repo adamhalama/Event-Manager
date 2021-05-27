@@ -9,6 +9,10 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
+import java.rmi.RemoteException;
+import java.security.GeneralSecurityException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class EmployeeViewModel
@@ -126,8 +130,18 @@ public class EmployeeViewModel
             for (Integer messageRoomID :
                     currentEmp.getMessageRooms())
             {
-                if (!model.getMessageRoomByID(messageRoomID).isPrivate())
-                    messageRoomList.add(model.getMessageRoomByID(messageRoomID).getName());
+                try
+                {
+                    if (!model.getMessageRoomByID(messageRoomID).isPrivate())
+                        messageRoomList.add(model.getMessageRoomByID(messageRoomID).getName());
+                } catch (SQLException throwables)
+                {
+                    throwables.printStackTrace();
+                } catch (RemoteException e)
+                {
+                    e.printStackTrace();
+                }
+                //TODO add errorLabel statements
             }
 
             for (String permission :
@@ -173,7 +187,21 @@ public class EmployeeViewModel
         {
             //TODO pass the password to the database
             if (permissionTable.isEmpty())
-                model.addEmployee(username.get(), name.get(), surname.get(), role.get());
+            {
+                try
+                {
+                    model.addEmployee(username.get(), password.get(), name.get(), surname.get(), role.get());
+                } catch (SQLException throwables)
+                {
+                    throwables.printStackTrace();
+                } catch (GeneralSecurityException e)
+                {
+                    e.printStackTrace();
+                } catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            } //TODO add diferent things with different exceptions
             else
             {
                 ArrayList<String> permissions = new ArrayList<>();
@@ -197,6 +225,7 @@ public class EmployeeViewModel
                 }
 
                 model.addEmployee(username.get(), name.get(), surname.get(), new ArrayList<>(), new ArrayList<>(), role.get(), permissions);
+                //TODO Creating employees with permissions
             }
         } else
         {
