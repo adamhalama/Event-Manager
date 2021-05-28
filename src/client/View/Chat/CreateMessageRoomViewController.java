@@ -1,5 +1,6 @@
 package client.View.Chat;
 
+import client.View.Helpers.ConfirmationButton;
 import client.View.ViewHandler;
 import client.ViewModel.CreateMessageRoomViewModel;
 import client.ViewModel.EmployeeViewModel;
@@ -62,6 +63,7 @@ public class CreateMessageRoomViewController
         saveButton.disableProperty().bindBidirectional(viewModel.getSaveButtonProperty());
         groupChatName.disableProperty().bindBidirectional(viewModel.getGroupChatNameDisableProperty());
 
+        checkBox.disableProperty().bind(viewModel.getCheckBoxDisableProperty());
 
 
     }
@@ -93,13 +95,15 @@ public class CreateMessageRoomViewController
     @FXML
     private void removeButton()
     {
-        viewModel.removeButton();
+        viewModel.removeButton(selectedTable.getSelectionModel().getSelectedIndex());
     }
 
     @FXML
     private void saveButton()
     {
-        viewModel.saveButton();
+        if (ConfirmationButton.confirmationView("Do you want to save the changes/nand overwrite the existing data?"))
+            if (viewModel.saveButton())
+                viewHandler.openView("MessageRoomList");
     }
 
     public Region getRoot()

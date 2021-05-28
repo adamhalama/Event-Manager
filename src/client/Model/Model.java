@@ -25,6 +25,9 @@ public interface Model {
     int getLoggedClientID();
 
     void addMessageRoom(String name);
+
+    MessageRoom createPrivateMessageRoom(int employeeID1, int employeeID2) throws SQLException, RemoteException;
+
     void addMessageRoom(String name, ArrayList<Integer> usersIDs);
     void removeMessageRoom(int messageRoomID);
     void removeMessageRoom(MessageRoom room);
@@ -43,6 +46,9 @@ public interface Model {
     void addEmployee(String username, String password, String name, String surname, String role, ArrayList<String> permissions) throws SQLException, GeneralSecurityException, IOException;
     void removeEmployee(int employeeID);
     ArrayList<Employee> getEmployees();
+
+    ArrayList<Employee> getEmployees(ArrayList<Integer> employeesIDs) throws RemoteException;
+
     ArrayList<Employee> getEmployeesByMessageRoom(int messageRoom);
     ArrayList<Employee> getEmployeesByEvent(int eventID);
     ArrayList<Employee> getEmployeesByRole(String role);

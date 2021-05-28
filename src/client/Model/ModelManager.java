@@ -106,6 +106,12 @@ public class ModelManager implements Model
     }
 
     @Override
+    public MessageRoom createPrivateMessageRoom(int employeeID1, int employeeID2) throws SQLException, RemoteException
+    {
+        return api.createPrivateMessageRoom(employeeID1, employeeID2);
+    }
+
+    @Override
     public void addMessageRoom(String name, ArrayList<Integer> usersIDs)
     {
         messageRoomList.addMessageRoom(name, usersIDs);
@@ -206,6 +212,12 @@ public class ModelManager implements Model
     public ArrayList<Employee> getEmployees()
     {
         return employeeList.getEmployees();
+    }
+
+    @Override
+    public ArrayList<Employee> getEmployees(ArrayList<Integer> employeesIDs) throws RemoteException
+    {
+        return api.getEmployees(employeesIDs);
     }
 
     @Override

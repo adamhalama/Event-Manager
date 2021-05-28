@@ -70,6 +70,11 @@ public class RmiClient
         return server.getEmployee(employeeID);
     }
 
+    public ArrayList<Employee> getEmployees(ArrayList<Integer> employeesIDs) throws RemoteException
+    {
+        return server.getEmployees(employeesIDs);
+    }
+
     public Employee employeeSetName(int employeeID1, int employeeID2, String name) throws SQLException, RemoteException
     {
         return server.employeeSetName(employeeID1, employeeID2, name);
@@ -105,6 +110,11 @@ public class RmiClient
     public ArrayList<Room> getRoomsByIDs(ArrayList<Integer> roomIDs) throws RemoteException
     {
         return server.getRooms(roomIDs);
+    }
+
+    public MessageRoom createPrivateMessageRoom(int employeeID1, int employeeID2) throws SQLException, RemoteException
+    {
+        return server.createPrivateMessageRoom(employeeID1, employeeID2);
     }
 
     public MessageRoom getMessageRoomByID(int messageRoomID) throws SQLException, RemoteException

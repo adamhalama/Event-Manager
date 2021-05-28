@@ -76,6 +76,7 @@ public class ViewHandler {
             case "MainMenu":
                 root = loadMainMenuView("MainMenu/MainMenuView.fxml");
                 break;
+
             case "EventList":
                 root = loadEventListView("Event/EventListView.fxml");
                 break;
@@ -85,6 +86,13 @@ public class ViewHandler {
             case "EditEvent":
                 root = loadEditEventView("Event/EditEventView.fxml");
                 break;
+            case "EventEmployee":
+                root = loadEventEmployeeViewController("Event/EventEmployeeView.fxml");
+                break;
+            case "EventInfo" :
+                root = loadEventInfoView("Event/EventInfoView.fxml");
+                break;
+
             case "RoomList":
                 root = loadRoomListView("Room/RoomListView.fxml");
                 break;
@@ -97,6 +105,7 @@ public class ViewHandler {
             case "Room":
                 root = loadRoomView("Room/CreateRoomView.fxml");
                 break;
+
             case "EmployeeList":
                 root = loadEmployeeListView("Employee/EmployeeListView.fxml");
                 break;
@@ -109,6 +118,7 @@ public class ViewHandler {
             case "Employee":
                 root = loadEmployeeView("Employee/EmployeeView.fxml");
                 break;
+
             case "MessageRoomList":
                 root = loadMessageRoomListView("Chat/MessageRoomListView.fxml");
                 break;
@@ -118,23 +128,17 @@ public class ViewHandler {
             case "CreateMessageRoom":
                 root = loadCreateMessageRoomListView("Chat/CreateMessageRoomView.fxml");
                 break;
-            //todo make createMessageRoom
             case "EditMessageRoom":
-                root = loadMessageRoomListView("Chat/CreateMessageRoomView.fxml");
+                root = loadEditMessageRoomListView("Chat/CreateMessageRoomView.fxml");
                 break;
-            //todo make editMessageRoom
+
             case "MyAccount":
                 root = loadMyAccountView("Employee/EmployeeView.fxml");
                 break;
             case "EditMyAccount":
                 root = loadEditMyAccountView("Employee/EmployeeView.fxml");
                 break;
-            case "EventEmployee":
-                root = loadEventEmployeeViewController("Event/EventEmployeeView.fxml");
-                break;
-            case "EventInfo" :
-                root = loadEventInfoView("Event/EventInfoView.fxml");
-                break;
+
             default:
                 System.out.println("Unknown view");
                 return;
@@ -526,6 +530,25 @@ public class ViewHandler {
             }
         }
         viewModelFactory.getCreateMessageRoomViewModel().setMessageRoomID(0);
+
+        createMessageRoomViewController.reset();
+        return createMessageRoomViewController.getRoot();
+    }
+
+    private Region loadEditMessageRoomListView(String fxmlFile)
+    {
+        if (createMessageRoomViewController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                createMessageRoomViewController = loader.getController();
+                createMessageRoomViewController.init(this, viewModelFactory.getCreateMessageRoomViewModel(), root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        viewModelFactory.getCreateMessageRoomViewModel().setMessageRoomID(pickedMessageRoomID);
 
         createMessageRoomViewController.reset();
         return createMessageRoomViewController.getRoot();
