@@ -24,4 +24,14 @@ public class MainMenuViewModel
     {
         return errorLabel;
     }
+
+    public boolean myAccountButton()
+    {
+        if (model.getLoggedClientID() == 0)
+        {
+            errorLabel.set("Client not logged in");
+            return false;
+        }
+        return true;
+    }
 }

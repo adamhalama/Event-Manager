@@ -96,6 +96,8 @@ public class ModelManager implements Model
     @Override
     public int getLoggedClientID()
     {
+        if (loggedEmployee == null)
+            return 0;
         return loggedEmployee.getId();
     }
 
