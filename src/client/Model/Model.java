@@ -40,8 +40,7 @@ public interface Model {
 
     void addEmployee(Employee employee);
     void addEmployee(String username, String password, String name, String surname, String role) throws SQLException, GeneralSecurityException, IOException;
-    void addEmployee(String username, String name, String surname, ArrayList<Integer> events,
-                     ArrayList<Integer> messageRooms, String role, ArrayList<String> permissions);
+    void addEmployee(String username, String password, String name, String surname, String role, ArrayList<String> permissions) throws SQLException, GeneralSecurityException, IOException;
     void removeEmployee(int employeeID);
     ArrayList<Employee> getEmployees();
     ArrayList<Employee> getEmployeesByMessageRoom(int messageRoom);
@@ -49,7 +48,12 @@ public interface Model {
     ArrayList<Employee> getEmployeesByRole(String role);
     ArrayList<Employee> getEmployeesByText(String text);
     ArrayList<Employee> getEmployeesByAnything(String keyword);
-    Employee getEmployeeByID(int ID);
+    Employee getEmployeeByID(int ID) throws SQLException, RemoteException;
+    Employee employeeSetName(int employeeID1, int employeeID2, String name) throws SQLException, RemoteException;
+    Employee employeeSetSurname(int employeeID1, int employeeID2, String surname) throws SQLException, RemoteException;
+    Employee employeeSetRole(int employeeID1, int employeeID2, String role) throws SQLException, RemoteException;
+
+
 
 
 

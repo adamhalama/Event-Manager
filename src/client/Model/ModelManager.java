@@ -56,7 +56,7 @@ public class ModelManager implements Model
 
         //todo REMOVE THIS
 
-        employeeList.addEmployee("Adam123", "Adam", "Halama", "CFO");
+        /*employeeList.addEmployee("Adam123", "Adam", "Halama", "CFO");
         employeeList.addEmployee("Klaudi123", "klaudi", "Var", "CBO");
 
 
@@ -65,7 +65,7 @@ public class ModelManager implements Model
         messageRoomList.getMessageRoomByID(1).addMessage(new Message(1, (System.currentTimeMillis()) , "Helooooo"));
 
 
-        messageRoomList.addPrivateMessageRoom("Private message room t2", 1, 2);
+        messageRoomList.addPrivateMessageRoom("Private message room t2", 1, 2);*/
 
         /*try
         {
@@ -184,11 +184,16 @@ public class ModelManager implements Model
     }
 
     @Override
-    public void addEmployee(String username, String name, String surname, ArrayList<Integer> events, ArrayList<Integer> messageRooms,
-                            String role, ArrayList<String> permissions)
+    public void addEmployee(String username, String password, String name, String surname,
+                            String role, ArrayList<String> permissions) throws SQLException, GeneralSecurityException, IOException
     {
-        employeeList.addEmployee(username, name, surname, events, messageRooms, role, permissions);
-        // TODO add database write
+        Employee employee = api.registerEmployee(username, password, name, surname, role);
+        employeeList.addEmployee(employee);
+        for (String permission:
+             permissions)
+        {
+            api.addPermission(getLoggedClientID(), employee.getId(), permission);
+        }
     }
 
     @Override
@@ -234,16 +239,36 @@ public class ModelManager implements Model
     }
 
     @Override
-    public Employee getEmployeeByID(int ID)
+    public Employee getEmployeeByID(int ID) throws SQLException, RemoteException
     {
-        return employeeList.getEmployeeByID(ID);
+        return api.getEmployeeByID(ID);
+    }
+
+    @Override
+    public Employee employeeSetName(int employeeID1, int employeeID2, String name) throws SQLException, RemoteException
+    {
+        return api.employeeSetName(employeeID1, employeeID2, name);
+    }
+
+    @Override
+    public Employee employeeSetSurname(int employeeID1, int employeeID2, String surname) throws SQLException, RemoteException
+    {
+        return api.employeeSetSurname(employeeID1, employeeID2, surname);
+    }
+
+    @Override
+    public Employee employeeSetRole(int employeeID1, int employeeID2, String role) throws SQLException, RemoteException
+    {
+        return api.employeeSetRole(employeeID1, employeeID2, role);
     }
 
 
     @Override
     public void addRoom(String roomNumber, String buildingAddress, int numberOfSeats, int floor) throws SQLException, RemoteException
     {
-        roomList.addRoom(api.createRoom(getLoggedClientID(), roomNumber, buildingAddress, numberOfSeats, floor));
+        Room room = api.createRoom(getLoggedClientID(), roomNumber, buildingAddress, numberOfSeats, floor);
+        roomList.addRoom(room);
+        System.out.println(roomNumber);
     }
 
     @Override

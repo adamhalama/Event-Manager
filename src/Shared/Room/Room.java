@@ -1,5 +1,6 @@
 package Shared.Room;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -8,7 +9,7 @@ import java.util.ArrayList;
  * @version 1.0 - May 2021
  * @since 1.0
  */
-public class Room
+public class Room implements Serializable
 {
     /**
      * An integer representing an ID used for system purposes, can also be displayed.

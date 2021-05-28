@@ -65,6 +65,33 @@ public class RmiClient
         return server.registerEmployee(username, password, name, surname, role);
     }
 
+    public Employee getEmployeeByID(int employeeID) throws SQLException, RemoteException
+    {
+        return server.getEmployee(employeeID);
+    }
+
+    public Employee employeeSetName(int employeeID1, int employeeID2, String name) throws SQLException, RemoteException
+    {
+        return server.employeeSetName(employeeID1, employeeID2, name);
+    }
+
+    public Employee employeeSetSurname(int employeeID1, int employeeID2, String surname) throws SQLException, RemoteException
+    {
+        return server.employeeSetSurname(employeeID1, employeeID2, surname);
+    }
+
+    public Employee employeeSetRole(int employeeID1, int employeeID2, String role) throws SQLException, RemoteException
+    {
+        return server.employeeSetRole(employeeID1, employeeID2, role);
+    }
+
+
+    public Employee addPermission(int employeeID1, int employeeID2, String permission) throws SQLException, RemoteException
+    {
+        return server.employeePermissionAdd(employeeID1, employeeID2, permission);
+    }
+
+
     public Room createRoom(int employeeID1, String roomNumber, String buildingAddress, int numberOfSeats, int floor) throws SQLException, RemoteException
     {
         return server.roomCreate(employeeID1, roomNumber, buildingAddress, numberOfSeats, floor);

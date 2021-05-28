@@ -2,7 +2,6 @@ DROP SCHEMA If EXISTS sep2database cascade;
 create schema sep2database;
 set schema 'sep2database';
 
-CREATE EXTENSION pgcrypto;
 
 CREATE TABLE Room
 (
@@ -34,7 +33,7 @@ CREATE TABLE Employee
 CREATE TABLE Permission
 (
     employee_ID int,
-    permission  varchar(20),
+    permission  varchar(100),
     PRIMARY KEY (employee_ID, permission),
     FOREIGN KEY (employee_ID) references Employee (id)
 );

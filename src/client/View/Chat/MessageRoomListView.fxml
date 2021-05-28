@@ -28,7 +28,7 @@
           <RowConstraints />
         </rowConstraints>
          <children>
-            <Button fx:id="backButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backButton" prefHeight="46.0" prefWidth="46.0">
+            <Button fx:id="backButton" cancelButton="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backButton" prefHeight="46.0" prefWidth="46.0">
                <graphic>
                   <ImageView fitHeight="58.0" fitWidth="72.0" mouseTransparent="true" preserveRatio="true">
                      <image>

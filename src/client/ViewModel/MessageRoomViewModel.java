@@ -12,6 +12,8 @@ import utility.observer.subject.NamedPropertyChangeSubject;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MessageRoomViewModel implements NamedPropertyChangeSubject
@@ -73,29 +75,47 @@ public class MessageRoomViewModel implements NamedPropertyChangeSubject
             topLabel.setValue("Group chat members:");
 
         }
-        membersList.addAll(model.getMessageRoomParticipantNames(model.getMessageRoomByID(messageRoomID)));
-
-        for (Message message :
-                model.getMessageRoomByID(messageRoomID).getMessages())
+        try
         {
+            membersList.addAll(model.getMessageRoomParticipantNames(model.getMessageRoomByID(messageRoomID)));
+        } catch (SQLException throwables)
+        {
+            throwables.printStackTrace();
+        } catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }//TODO add different errorLabel statements
 
-            String firstCol;
-            String secondCol;
-            if(message.getUserID() == model.getLoggedClientID())
+        try
+        {
+            for (Message message :
+                    model.getMessageRoomByID(messageRoomID).getMessages())
             {
-                firstCol = "";
-                secondCol = message.getMessage();
-            }
-            else
-            {
-                firstCol = model.getSenderAndBody(message);
-                secondCol = "";
 
-            }
+                String firstCol;
+                String secondCol;
+                if(message.getUserID() == model.getLoggedClientID())
+                {
+                    firstCol = "";
+                    secondCol = message.getMessage();
+                }
+                else
+                {
+                    firstCol = model.getSenderAndBody(message);
+                    secondCol = "";
 
-            messageTable.add(new MessageViewModel(firstCol, secondCol));
-            property.firePropertyChange("Scroll down", null, 1);
-        }
+                }
+
+                messageTable.add(new MessageViewModel(firstCol, secondCol));
+                property.firePropertyChange("Scroll down", null, 1);
+            }
+        } catch (SQLException throwables)
+        {
+            throwables.printStackTrace();
+        } catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }//TODO add different errorLabel statements
 
     }
 
@@ -108,7 +128,16 @@ public class MessageRoomViewModel implements NamedPropertyChangeSubject
     {
         if (!message.get().trim().equals(""))
         {
-            model.getMessageRoomByID(messageRoomID).addMessage(new Message(model.getLoggedClientID(), System.currentTimeMillis(), message.get().trim()));
+            try
+            {
+                model.getMessageRoomByID(messageRoomID).addMessage(new Message(model.getLoggedClientID(), System.currentTimeMillis(), message.get().trim()));
+            } catch (SQLException throwables)
+            {
+                throwables.printStackTrace();
+            } catch (RemoteException e)
+            {
+                e.printStackTrace();
+            }//TODO add different errorLabel statements
             messageTable.add(new MessageViewModel("", message.get().trim()));
             message.setValue("");
             property.firePropertyChange("Scroll down", null, 1);

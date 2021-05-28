@@ -4,6 +4,8 @@ import Shared.Employee.Employee;
 import Shared.Event.Platform.PlatformFactory;
 import client.Model.Model;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -397,8 +399,20 @@ public class Event {
         return creatorID;
     }
 
-    public String getCreator(){
-        return model.getEmployeeByID(creatorID).getFullName();
+    public String getCreator()
+    {
+        try
+        {
+            return model.getEmployeeByID(creatorID).getFullName();
+        } catch (SQLException throwables)
+        {
+            throwables.printStackTrace();
+        }
+        catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }//TODO i(adam) added this so the app can run;
+        return null;
     }
 
     public String getTitle() {
@@ -547,7 +561,8 @@ public class Event {
         this.dateString = dateString;
     }
 
-    public String creatorParticipantString(){
+    public String creatorParticipantString() throws RemoteException
+    {
         return "Creator: " + getCreator() + ", Participant(ID): " + getParticipants();
     }
 
@@ -562,9 +577,17 @@ public class Event {
 
     @Override
     public String toString() {
-        return "ID: " + getEvent_id() + " Title: " + getTitle() + ", Time create: " + getTime_create() + ", Start: " + getTime_start() + ", End: " + getTime_end()
-                + ", Description: " + getDescription() + ", isOnline: " + isOnline() + ", (if online)Platform: " + getPlatform() +
-                ", (if online)Link: " + getOnlineLink() + ", (if physical)Room: " + getRoomID() + ", " + creatorParticipantString();
+        try
+        {
+            return "ID: " + getEvent_id() + " Title: " + getTitle() + ", Time create: " + getTime_create() + ", Start: " + getTime_start() + ", End: " + getTime_end()
+                    + ", Description: " + getDescription() + ", isOnline: " + isOnline() + ", (if online)Platform: " + getPlatform() +
+                    ", (if online)Link: " + getOnlineLink() + ", (if physical)Room: " + getRoomID() + ", " + creatorParticipantString();
+        } catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }
+        return "error";
+        //TODO i(adam) added this so the app can run;
     }
 
     public String contentString() {

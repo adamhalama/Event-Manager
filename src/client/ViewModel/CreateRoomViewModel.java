@@ -8,6 +8,8 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CreateRoomViewModel
@@ -101,7 +103,18 @@ public class CreateRoomViewModel
         if (!editing)
         {
             if (equipmentList.isEmpty())
-                model.addRoom(roomNumber.get(), address.get(), seats.get(), floor.get());
+            {
+                try
+                {
+                    model.addRoom(roomNumber.get(), address.get(), seats.get(), floor.get());
+                } catch (SQLException throwables)
+                {
+                    throwables.printStackTrace();
+                } catch (RemoteException e)
+                {
+                    e.printStackTrace();
+                } //TODO add different errorLabel statements
+            }
             else
             {
                 ArrayList<String> equipment = new ArrayList<>();
