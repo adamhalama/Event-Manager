@@ -156,16 +156,16 @@ public class CreateMessageRoomViewModel
 
         if (checkBox.get()) // groupChat - true
         {
-            assert employee != null;
             selectedTable.add(new EmployeeViewModel(Integer.parseInt(id), employee.getName(), employee.getSurname(), employee.getRole()));
             addButtonDisable.set(false);
+            newRecipientField.set("");
         } else // groupChat - false - PRIVATE room
         {
             if ((selectedTable.size() < 1))
             {
-                assert employee != null;
                 selectedTable.add(new EmployeeViewModel(Integer.parseInt(id), employee.getName(), employee.getSurname(), employee.getRole()));
                 addButtonDisable.set(true);
+                newRecipientField.set("");
             }
         }
 
@@ -192,8 +192,12 @@ public class CreateMessageRoomViewModel
             catch (IndexOutOfBoundsException e)
             {
                 errorLabel.setValue("Pick an employee");
-            }
-            catch (SQLException | RemoteException throwables)
+            } catch (SQLException throwables)
+            {
+                throwables.printStackTrace();
+                errorLabel.setValue(throwables.getMessage());
+                return false;
+            } catch (RemoteException throwables)
             {
                 throwables.printStackTrace();
                 errorLabel.setValue("Failed to save");

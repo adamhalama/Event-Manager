@@ -102,7 +102,7 @@ public class CreateMessageRoomViewController
     @FXML
     private void saveButton()
     {
-        if (ConfirmationButton.confirmationView("Do you want to save the changes/nand overwrite the existing data?"))
+        if (ConfirmationButton.confirmationView("Do you want to save the changes \nand overwrite the existing data?"))
             if (viewModel.saveButton())
                 viewHandler.openView("MessageRoomList");
     }

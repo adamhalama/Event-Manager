@@ -80,8 +80,18 @@ public class ModelManager implements Model
         //logging in works, but i dont want to go to the login view every time
 
 
-        loggedEmployee = new Employee(7, "admin", "Admin", "Admin", "Admin");
-        employeeList.addEmployee(loggedEmployee);
+//        loggedEmployee = new Employee(7, "admin", "Admin", "Admin", "Admin");
+//        employeeList.addEmployee(loggedEmployee);
+
+
+
+        /*try
+        {
+            this.login("admin", "admin");
+        } catch (SQLException | GeneralSecurityException | IOException throwables)
+        {
+            throwables.printStackTrace();
+        }*/
 
     }
 
