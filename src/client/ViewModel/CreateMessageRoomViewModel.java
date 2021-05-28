@@ -40,11 +40,14 @@ public class CreateMessageRoomViewModel
         removeButtonDisable = new SimpleBooleanProperty();
         saveButtonDisable = new SimpleBooleanProperty();
         groupChatNameDisable = new SimpleBooleanProperty();
+        chechBoxDisable = new SimpleBooleanProperty();
     }
 
     public void reset()
     {
         errorLabel.setValue("");
+        selectedTable.clear();
+
         if (selectedMessageRoomID == 0) //creating a room
         {
             checkBox.setValue(false);
@@ -119,10 +122,15 @@ public class CreateMessageRoomViewModel
 
     public void addButton()
     {
-        System.out.println(newRecipientField.get());
-
         String employeeID = newRecipientField.getValue().contains("(") ? newRecipientField.getValue().split("[()]")[1] : "no id";
         String id = employeeID.equals("no id") ? employeeID : employeeID.split(" ")[1];
+        //getting just the id number from the whole string
+
+        if (id.equals("no id"))
+        {
+            errorLabel.setValue("Pick an employee from the list");
+            return;
+        }
 
         Employee employee = null;
         try
@@ -132,7 +140,18 @@ public class CreateMessageRoomViewModel
         {
             throwables.printStackTrace();
             errorLabel.setValue("Failed to add an employee");
+            return;
         }
+
+        for (int i = 0; i < selectedTable.size(); i++) // check if the employee is already in the list
+        {
+            if (selectedTable.get(i).getUserIDProperty().get() == Integer.parseInt(id))
+            {
+                errorLabel.setValue("The employee is already added");
+                return;
+            }
+        }
+
 
 
         if (checkBox.get()) // groupChat - true
@@ -148,7 +167,6 @@ public class CreateMessageRoomViewModel
                 selectedTable.add(new EmployeeViewModel(Integer.parseInt(id), employee.getName(), employee.getSurname(), employee.getRole()));
                 addButtonDisable.set(true);
             }
-
         }
 
     }
@@ -170,7 +188,12 @@ public class CreateMessageRoomViewModel
             try
             {
                 model.createPrivateMessageRoom(model.getLoggedClientID(), selectedTable.get(0).getUserIDProperty().get());
-            } catch (SQLException | RemoteException throwables)
+            }
+            catch (IndexOutOfBoundsException e)
+            {
+                errorLabel.setValue("Pick an employee");
+            }
+            catch (SQLException | RemoteException throwables)
             {
                 throwables.printStackTrace();
                 errorLabel.setValue("Failed to save");
@@ -195,7 +218,14 @@ public class CreateMessageRoomViewModel
         if (checkBox.get()) // groupChat true
         {
             groupChatNameDisable.set(false);
-        } else
+            addButtonDisable.set(false);
+        }
+        else if (selectedTable.size() > 1) //if false
+        {
+            errorLabel.setValue("In order to change to a private chat, the list has to have just one person in it");
+            checkBox.set(true);
+        }
+        else //if false
         {
             groupChatNameDisable.set(true);
             groupChatName.setValue("");

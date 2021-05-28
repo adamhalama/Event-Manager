@@ -2,6 +2,7 @@ package client.ViewModel;
 
 import Shared.Employee.Employee;
 import client.Model.Model;
+import client.View.Helpers.ConfirmationButton;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -166,6 +167,7 @@ public class EmployeeViewModel
 
             if (onlyViewing)
             {
+
                 //todo make setDisable
                 // mabybe already done in the controller
             }
@@ -198,9 +200,17 @@ public class EmployeeViewModel
 
     public void confirmButton()
     {
-        if (currentEmployeeID == 0)
+        if (!ConfirmationButton.confirmationView("Do you want to save the changes?"))
+            return;
+
+        if (currentEmployeeID == 0) // Creating an employee
         {
-            //TODO pass the password to the database
+            if (!password.get().equals(repeatPassword.get()))
+            {
+                errorLabel.set("The passwords have to match");
+                return;
+            }
+
             if (permissionTable.isEmpty())
             {
                 try

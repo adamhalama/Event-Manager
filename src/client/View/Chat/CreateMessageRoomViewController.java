@@ -70,6 +70,7 @@ public class CreateMessageRoomViewController
 
     public void reset()
     {
+        TextFields.bindAutoCompletion(newRecipientField, viewModel.getEmployeeList());
         viewModel.reset();
     }
 

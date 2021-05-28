@@ -77,9 +77,11 @@ public class ModelManager implements Model
 
 //        loggedClientID = 1;
 
-        //loging works, but i dont want to go to the login view every time
-       /* loggedEmployee = new Employee(7, "admin", "Admin", "Admin", "Admin");
-        employeeList.addEmployee(loggedEmployee);*/
+        //logging in works, but i dont want to go to the login view every time
+
+
+        loggedEmployee = new Employee(7, "admin", "Admin", "Admin", "Admin");
+        employeeList.addEmployee(loggedEmployee);
 
     }
 

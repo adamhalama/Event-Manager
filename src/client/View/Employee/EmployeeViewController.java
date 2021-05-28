@@ -143,7 +143,7 @@ public class EmployeeViewController
     {
         // cant call a viewModel func, that would be overcomplicated
         if (password.textProperty().get().equals(repeatPassword.textProperty().get()))
-            repeatPassword.setStyle("-fx-text-fill:GREEN");
+            repeatPassword.setStyle("-fx-text-fill:#072d0e");
         else
             repeatPassword.setStyle("-fx-text-fill:RED");
 

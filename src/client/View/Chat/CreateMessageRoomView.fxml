@@ -207,7 +207,7 @@
             </GridPane>
          </children>
       </VBox>
-      <HBox>
+      <HBox alignment="CENTER">
          <children>
             <Label fx:id="errorLabel" text="errorLabel" textFill="RED" />
          </children>
