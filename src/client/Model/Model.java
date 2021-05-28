@@ -55,9 +55,9 @@ public interface Model {
     ArrayList<Employee> getEmployeesByText(String text);
     ArrayList<Employee> getEmployeesByAnything(String keyword);
     Employee getEmployeeByID(int ID) throws SQLException, RemoteException;
-    Employee employeeSetName(int employeeID1, int employeeID2, String name) throws SQLException, RemoteException;
-    Employee employeeSetSurname(int employeeID1, int employeeID2, String surname) throws SQLException, RemoteException;
-    Employee employeeSetRole(int employeeID1, int employeeID2, String role) throws SQLException, RemoteException;
+    Employee employeeSetName(int employeeID2, String name) throws SQLException, RemoteException;
+    Employee employeeSetSurname(int employeeID2, String surname) throws SQLException, RemoteException;
+    Employee employeeSetRole(int employeeID2, String role) throws SQLException, RemoteException;
 
 
 
@@ -74,7 +74,7 @@ public interface Model {
     int getRoomsCreated();
     ArrayList<Room> getRooms();
     ArrayList<Room> getRoomsByAnything(String keyword);
-    Room getRoomByID(int roomID);
+    Room getRoomByID(int roomID) throws SQLException, RemoteException;
 
     void removeEquipment(Room room, String removedEquipment);
     public void addEquipment(Room room, String addedEquipment);

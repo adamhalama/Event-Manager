@@ -271,21 +271,21 @@ public class ModelManager implements Model
     }
 
     @Override
-    public Employee employeeSetName(int employeeID1, int employeeID2, String name) throws SQLException, RemoteException
+    public Employee employeeSetName(int employeeID2, String name) throws SQLException, RemoteException
     {
-        return api.employeeSetName(employeeID1, employeeID2, name);
+        return api.employeeSetName(getLoggedClientID(), employeeID2, name);
     }
 
     @Override
-    public Employee employeeSetSurname(int employeeID1, int employeeID2, String surname) throws SQLException, RemoteException
+    public Employee employeeSetSurname(int employeeID2, String surname) throws SQLException, RemoteException
     {
-        return api.employeeSetSurname(employeeID1, employeeID2, surname);
+        return api.employeeSetSurname(getLoggedClientID(), employeeID2, surname);
     }
 
     @Override
-    public Employee employeeSetRole(int employeeID1, int employeeID2, String role) throws SQLException, RemoteException
+    public Employee employeeSetRole(int employeeID2, String role) throws SQLException, RemoteException
     {
-        return api.employeeSetRole(employeeID1, employeeID2, role);
+        return api.employeeSetRole(getLoggedClientID(), employeeID2, role);
     }
 
 
@@ -344,9 +344,11 @@ public class ModelManager implements Model
     }
 
     @Override
-    public Room getRoomByID(int roomID)
+    public Room getRoomByID(int roomID) throws SQLException, RemoteException
     {
-        return roomList.getRoomByID(roomID);
+        Room room = api.getRoomByID(roomID);
+        roomList.addRoom(room);
+        return room;
     }
 
     @Override
