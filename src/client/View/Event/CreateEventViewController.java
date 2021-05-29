@@ -6,6 +6,9 @@ import client.Model.Model;
 import client.View.ViewHandler;
 import client.ViewModel.CreateEventViewModel;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -19,6 +22,7 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 
@@ -98,8 +102,10 @@ public class CreateEventViewController {
         this.roomMenu.setItems(FXCollections.observableArrayList(1, 2, 3));
         this.platformMenu.setItems(FXCollections.observableArrayList("Discord", "Zoom", "Teams"));
 
+
+
         StringConverter sc = new StringConverter<LocalDate>() {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
             @Override
             public String toString(LocalDate date) {
@@ -120,6 +126,9 @@ public class CreateEventViewController {
             }
         };
         startDate.setConverter(sc);
+
+
+//        long startTime = parseString(startDate.getValue().format(new SimpleDateFormat("dd.MM.yyyy"));
 
         //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
         final Callback<DatePicker, DateCell> dayCellFactory =
@@ -179,7 +188,7 @@ public class CreateEventViewController {
     }
 
     @FXML
-    private void addEmployeePress() {
+    private void addEmployeePress() throws SQLException, RemoteException {
         viewHandler.openView("EventEmployee");
     }
 
@@ -206,7 +215,28 @@ public class CreateEventViewController {
     }
 
     @FXML
-    private void refreshPress() {
+    private void refreshPress()
+    {
+        //TODO testing purposes remove this
+        LocalDate date = this.startDate.getValue();
+        String stringDate = date.getDayOfMonth() + "." + date.getMonthValue() + "." + date.getYear();
+
+        long timestamp = parseString(stringDate);
+
+        long startTimestamp = timestamp + (hourMenuS.getValue().longValue() * 60 * 60 * 1000)
+                + (Long.parseLong(minuteMenuS.getValue()) * 60 * 1000 );
+
+        long endTimestamp = timestamp + (hourMenuE.getValue().longValue() * 60 * 60 * 1000)
+                + (Long.parseLong(minuteMenuE.getValue()) * 60 * 1000);
+
+
+        //TODO jerry start here
+
+//        new Event(titleTextField.getText(), descriptionArea.getText(), startTimestamp, endTimestamp)
+
+        System.out.println(startTimestamp);
+        System.out.println(endTimestamp);
+
         viewModel.clear();
         participantTable.setItems(viewModel.update());
     }
@@ -356,7 +386,9 @@ public class CreateEventViewController {
                 link = linkTextField.getText();
             } else link = "None";
 
-            ArrayList<Integer> participantsID = viewModel.getIDs();
+//TODO there is an error
+//            ArrayList<Integer> participantsID = viewModel.getIDs();
+            ArrayList<Integer> participantsID = new ArrayList<>();
 
             if (viewModel.isOnline()) {
                 if (title != null || yearS != 0 && monthS != 0 && dayS != 0 && hourS != 0 && minuteS != -1 && hourE != 0 && minuteE != -1
@@ -419,11 +451,28 @@ public class CreateEventViewController {
     }
 
     @FXML
-    private void cancelPress() {
+    private void cancelPress() throws SQLException, RemoteException {
         viewHandler.openView("EventList");
     }
 
     public Region getRoot() {
         return root;
     }
+
+    public long parseString(String dateString) //TODO maybe delete
+    {
+        try
+        {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            Date parsedDate = dateFormat.parse(dateString);
+            return parsedDate.getTime();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }
+
+

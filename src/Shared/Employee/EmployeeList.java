@@ -158,7 +158,6 @@ public class EmployeeList
                 }
             }
         }
-
         return picked;
     }
 

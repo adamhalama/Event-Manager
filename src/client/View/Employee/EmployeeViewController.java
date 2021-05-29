@@ -9,6 +9,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+
 
 public class EmployeeViewController
 {
@@ -143,7 +146,7 @@ public class EmployeeViewController
     {
         // cant call a viewModel func, that would be overcomplicated
         if (password.textProperty().get().equals(repeatPassword.textProperty().get()))
-            repeatPassword.setStyle("-fx-text-fill:GREEN");
+            repeatPassword.setStyle("-fx-text-fill:#02722a");
         else
             repeatPassword.setStyle("-fx-text-fill:RED");
 
@@ -163,8 +166,7 @@ public class EmployeeViewController
     }
 
     @FXML
-    private void confirmButton()
-    {
+    private void confirmButton() throws SQLException, RemoteException {
 
         if (viewing)
         {
@@ -173,7 +175,7 @@ public class EmployeeViewController
             else
                 viewHandler.openView("EditEmployee");
         }
-        else
+        else  // creating or editing
         {
             viewModel.confirmButton();
             viewModel.reset();
@@ -185,8 +187,7 @@ public class EmployeeViewController
     }
 
     @FXML
-    private void backButton()
-    {
+    private void backButton() throws SQLException, RemoteException {
         if (openedFromMenu)
             viewHandler.openView("MainMenu");
         else

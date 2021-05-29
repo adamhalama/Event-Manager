@@ -7,6 +7,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.rmi.RemoteException;
+
 public class EventInfoViewModel {
     private StringProperty title;
     private StringProperty description;
@@ -92,14 +94,23 @@ public class EventInfoViewModel {
     }
 
     public String getParticipantCreatorInfo(int id){
-        return model.getEventByID(id).creatorParticipantString();
+        try
+        {
+            return model.getEventByID(id).creatorParticipantString();
+        } catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+        //TODO i(adam) added this so the app can run;
     }
 
     public String getParticipant(int id) {
         return model.getEventByID(id).participantString();
     }
 
-    public String getCreator(int id) {
+    public String getCreator(int id) throws RemoteException
+    {
         return model.getEventByID(id).getCreator();
     }
 

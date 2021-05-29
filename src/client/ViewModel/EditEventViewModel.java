@@ -15,7 +15,6 @@ public class EditEventViewModel {
     private IntegerProperty idProperty;
     private StringProperty titleProperty;
     private StringProperty descriptionProperty;
-    private DatePicker startDate;
     private IntegerProperty startHour;
     private IntegerProperty startMin;
     private IntegerProperty endHour;
@@ -37,7 +36,6 @@ public class EditEventViewModel {
             this.idProperty = new SimpleIntegerProperty();
             this.titleProperty = new SimpleStringProperty();
             this.descriptionProperty = new SimpleStringProperty();
-            this.startDate = new DatePicker(LocalDate.now());
             this.startHour = new SimpleIntegerProperty();
             this.startMin = new SimpleIntegerProperty();
             this.endHour = new SimpleIntegerProperty();
@@ -50,7 +48,6 @@ public class EditEventViewModel {
             this.idProperty = new SimpleIntegerProperty(model.getEventByID(id).getEvent_id());
             this.titleProperty = new SimpleStringProperty(model.getEventByID(id).getTitle());
             this.descriptionProperty = new SimpleStringProperty(model.getEventByID(id).getDescription());
-            this.startDate = new DatePicker(model.getEventByID(id).getDateString());
             this.startHour = new SimpleIntegerProperty(model.getEventByID(id).getHourS());
             this.startMin = new SimpleIntegerProperty(model.getEventByID(id).getMinuteS());
             this.endHour = new SimpleIntegerProperty(model.getEventByID(id).getHourE());
@@ -74,7 +71,6 @@ public class EditEventViewModel {
         titleProperty.set(null);
         descriptionProperty.set(null);
 
-        startDate = new DatePicker(LocalDate.now());
         //not for sure ↑
         startHour.setValue(null);
         startMin.setValue(null);
@@ -141,7 +137,7 @@ public class EditEventViewModel {
     }
 
     public void setDes(String des, int id) {
-        model.getEventByID(id).setDateString(des);
+        model.getEventByID(id).setDescription(des);
     }
 
     public void setDate(int y, int m, int d, int id) {

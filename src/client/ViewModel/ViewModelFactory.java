@@ -1,9 +1,7 @@
 package client.ViewModel;
 
 
-import Shared.API;
 import client.Model.Model;
-import client.RmiClient;
 import client.View.Helpers.SelectState;
 
 
@@ -22,7 +20,8 @@ public class ViewModelFactory
     private MessageRoomViewModel messageRoomViewModel;
     private LoginViewModel loginViewModel;
     private EventInfoViewModel eventInfoViewModel;
-    
+    private CreateMessageRoomViewModel addMessageRoomViewModel;
+
     private SelectState state;
     private final Model model;
 
@@ -44,6 +43,7 @@ public class ViewModelFactory
 //        loginViewModel = new LoginViewModel(api);
 //        eventInfoViewModel = new EventInfoViewModel(model, state);
     }
+
     public EventListViewModel getEventListViewModel()
     {
         if (eventListViewModel == null)
@@ -51,12 +51,12 @@ public class ViewModelFactory
 
         return eventListViewModel;
     }
-    
+
     public CreateEventViewModel getCreateEventViewModel()
     {
         if (createEventViewModel == null)
             createEventViewModel = new CreateEventViewModel(model);
-        
+
         return createEventViewModel;
     }
 
@@ -67,7 +67,7 @@ public class ViewModelFactory
 
         return createRoomViewModel;
     }
-    
+
 
     public MainMenuViewModel getMainMenuViewModel()
     {
@@ -93,7 +93,8 @@ public class ViewModelFactory
         return roomViewModel;
     }
 
-    public EditEventViewModel getEditEventViewModel() {
+    public EditEventViewModel getEditEventViewModel()
+    {
         if (editEventViewModel == null)
             editEventViewModel = new EditEventViewModel(model, state);
 
@@ -132,17 +133,27 @@ public class ViewModelFactory
         return messageRoomViewModel;
     }
 
-    public LoginViewModel getLoginViewModel() {
+    public LoginViewModel getLoginViewModel()
+    {
         if (loginViewModel == null)
             loginViewModel = new LoginViewModel(model);
 
         return loginViewModel;
     }
 
-    public EventInfoViewModel getEventInfoViewModel() {
+    public EventInfoViewModel getEventInfoViewModel()
+    {
         if (eventInfoViewModel == null)
             eventInfoViewModel = new EventInfoViewModel(model, state);
 
         return eventInfoViewModel;
+    }
+
+    public CreateMessageRoomViewModel getCreateMessageRoomViewModel()
+    {
+        if (addMessageRoomViewModel == null)
+            addMessageRoomViewModel = new CreateMessageRoomViewModel(model);
+
+        return addMessageRoomViewModel;
     }
 }

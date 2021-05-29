@@ -24,4 +24,25 @@ public class MainMenuViewModel
     {
         return errorLabel;
     }
+
+    public boolean myAccountButton()
+    {
+        if (model.getLoggedClientID() == 0)
+        {
+            errorLabel.set("Client not logged in");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean logoutButton()
+    {
+        if (model.getLoggedEmployee() == null)
+        {
+            errorLabel.set("Error: employee not logged in, can't log out");
+            return false;
+        }
+        model.logOut();
+        return true;
+    }
 }

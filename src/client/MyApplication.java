@@ -9,10 +9,12 @@ import client.ViewModel.ViewModelFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+
 public class MyApplication extends Application
 {
-    public void start(Stage primaryStage)
-    {
+    public void start(Stage primaryStage) throws SQLException, RemoteException {
         RmiClient client = new RmiClient();
         Model model = new ModelManager(client);
         SelectState state = new SelectState();

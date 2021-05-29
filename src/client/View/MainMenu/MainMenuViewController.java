@@ -9,6 +9,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+
 public class MainMenuViewController
 {
     @FXML
@@ -34,39 +37,38 @@ public class MainMenuViewController
     }
 
     @FXML
-    private void myAccountButton()
-    {
-        viewHandler.openView("MyAccount");
+    private void myAccountButton() throws SQLException, RemoteException {
+        if (viewModel.myAccountButton())
+            viewHandler.openView("MyAccount");
     }
 
     @FXML
     private void logoutButton()
     {
-        ConfirmationButton.confirmationView("Are you sure you want to log out?");
-        //todo log out
+        if (ConfirmationButton.confirmationView("Are you sure you want to log out?"))
+        {
+            if(viewModel.logoutButton())
+                viewHandler.openView("Login");
+        }
     }
 
     @FXML
-    private void roomsButton()
-    {
+    private void roomsButton(){
         viewHandler.openView("RoomList");
     }
 
     @FXML
-    private void eventsButton()
-    {
+    private void eventsButton(){
         viewHandler.openView("EventList");
     }
 
     @FXML
-    private void employeesButton()
-    {
+    private void employeesButton(){
         viewHandler.openView("EmployeeList");
     }
 
     @FXML
-    private void chatButton()
-    {
+    private void chatButton(){
         viewHandler.openView("MessageRoomList");
     }
 

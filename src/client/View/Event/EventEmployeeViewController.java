@@ -11,6 +11,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.Optional;
 
 public class EventEmployeeViewController {
@@ -63,7 +65,7 @@ public class EventEmployeeViewController {
     }
 
     @FXML
-    private void backPress() {
+    private void backPress() throws SQLException, RemoteException {
         if (state.isAdd()) {
             viewHandler.openView("CreateEvent");
         } else viewHandler.openView("EditEvent");

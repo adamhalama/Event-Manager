@@ -2,6 +2,7 @@ package client.View;
 
 
 import client.Model.Model;
+import client.View.Chat.CreateMessageRoomViewController;
 import client.View.Chat.MessageRoomListViewController;
 import client.View.Chat.MessageRoomViewController;
 import client.View.Employee.EmployeeListViewController;
@@ -17,6 +18,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 
 
 public class ViewHandler {
@@ -38,6 +42,7 @@ public class ViewHandler {
     private LoginViewController loginViewController;
     private EventInfoViewController eventInfoViewController;
     private EventEmployeeViewController eventEmployeeViewController;
+    private CreateMessageRoomViewController createMessageRoomViewController;
 
 //    private RoomViewController roomViewController;
 
@@ -53,7 +58,7 @@ public class ViewHandler {
         currentStage = new Scene(new Region());
     }
 
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws SQLException, RemoteException {
         this.primaryStage = primaryStage;
         openView("MainMenu");
     }
@@ -62,7 +67,8 @@ public class ViewHandler {
         primaryStage.close();
     }
 
-    public void openView(String id) {
+    public void openView(String id)
+    {
         Region root = null;
         switch (id) {
             case "Login":
@@ -71,6 +77,7 @@ public class ViewHandler {
             case "MainMenu":
                 root = loadMainMenuView("MainMenu/MainMenuView.fxml");
                 break;
+
             case "EventList":
                 root = loadEventListView("Event/EventListView.fxml");
                 break;
@@ -80,6 +87,13 @@ public class ViewHandler {
             case "EditEvent":
                 root = loadEditEventView("Event/EditEventView.fxml");
                 break;
+            case "EventEmployee":
+                root = loadEventEmployeeViewController("Event/EventEmployeeView.fxml");
+                break;
+            case "EventInfo" :
+                root = loadEventInfoView("Event/EventInfoView.fxml");
+                break;
+
             case "RoomList":
                 root = loadRoomListView("Room/RoomListView.fxml");
                 break;
@@ -92,6 +106,7 @@ public class ViewHandler {
             case "Room":
                 root = loadRoomView("Room/CreateRoomView.fxml");
                 break;
+
             case "EmployeeList":
                 root = loadEmployeeListView("Employee/EmployeeListView.fxml");
                 break;
@@ -104,6 +119,7 @@ public class ViewHandler {
             case "Employee":
                 root = loadEmployeeView("Employee/EmployeeView.fxml");
                 break;
+
             case "MessageRoomList":
                 root = loadMessageRoomListView("Chat/MessageRoomListView.fxml");
                 break;
@@ -111,25 +127,19 @@ public class ViewHandler {
                 root = loadMessageRoomView("Chat/MessageRoomView.fxml");
                 break;
             case "CreateMessageRoom":
-                root = loadMessageRoomListView("Chat/CreateMessageRoomView.fxml");
+                root = loadCreateMessageRoomListView("Chat/CreateMessageRoomView.fxml");
                 break;
-            //todo make createMessageRoom
             case "EditMessageRoom":
-                root = loadMessageRoomListView("Chat/CreateMessageRoomView.fxml");
+                root = loadEditMessageRoomListView("Chat/CreateMessageRoomView.fxml");
                 break;
-            //todo make editMessageRoom
+
             case "MyAccount":
                 root = loadMyAccountView("Employee/EmployeeView.fxml");
                 break;
             case "EditMyAccount":
                 root = loadEditMyAccountView("Employee/EmployeeView.fxml");
                 break;
-            case "EventEmployee":
-                root = loadEventEmployeeViewController("Event/EventEmployeeView.fxml");
-                break;
-            case "EventInfo" :
-                root = loadEventInfoView("Event/EventInfoView.fxml");
-                break;
+
             default:
                 System.out.println("Unknown view");
                 return;
@@ -146,8 +156,6 @@ public class ViewHandler {
         primaryStage.setHeight(root.getPrefHeight());
         primaryStage.show();
     }
-
-
 
 
     private Region loadMainMenuView(String fxmlFile) {
@@ -228,7 +236,7 @@ public class ViewHandler {
         return roomListViewController.getRoot();
     }
 
-    private Region loadCreateRoomView(String fxmlFile) {
+    private Region loadCreateRoomView(String fxmlFile){
         if (createRoomViewController == null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -249,7 +257,7 @@ public class ViewHandler {
         return createRoomViewController.getRoot();
     }
 
-    private Region loadEditRoomView(String fxmlFile) {
+    private Region loadEditRoomView(String fxmlFile){
         if (createRoomViewController == null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -270,7 +278,7 @@ public class ViewHandler {
         return createRoomViewController.getRoot();
     }
 
-    private Region loadRoomView(String fxmlFile) {
+    private Region loadRoomView(String fxmlFile){
         if (createRoomViewController == null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -496,10 +504,55 @@ public class ViewHandler {
             }
         }
         viewModelFactory.getMessageRoomViewModel().setMessageRoomID(pickedMessageRoomID);
-        messageRoomViewController.setPrivate(model.getMessageRoomByID(pickedMessageRoomID).isPrivate());
+        try
+        {
+            messageRoomViewController.setPrivate(model.getMessageRoomByID(pickedMessageRoomID).isPrivate());
+        } catch (SQLException | RemoteException throwables)
+        {
+            throwables.printStackTrace();
+        }
+        //TODO add different errors to the ErrorLabel
 
         messageRoomViewController.reset();
         return messageRoomViewController.getRoot();
+    }
+
+    private Region loadCreateMessageRoomListView(String fxmlFile)
+    {
+        if (createMessageRoomViewController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                createMessageRoomViewController = loader.getController();
+                createMessageRoomViewController.init(this, viewModelFactory.getCreateMessageRoomViewModel(), root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        viewModelFactory.getCreateMessageRoomViewModel().setMessageRoomID(0);
+
+        createMessageRoomViewController.reset();
+        return createMessageRoomViewController.getRoot();
+    }
+
+    private Region loadEditMessageRoomListView(String fxmlFile)
+    {
+        if (createMessageRoomViewController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                createMessageRoomViewController = loader.getController();
+                createMessageRoomViewController.init(this, viewModelFactory.getCreateMessageRoomViewModel(), root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        viewModelFactory.getCreateMessageRoomViewModel().setMessageRoomID(pickedMessageRoomID);
+
+        createMessageRoomViewController.reset();
+        return createMessageRoomViewController.getRoot();
     }
 
 

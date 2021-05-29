@@ -10,6 +10,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+
 
 public class CreateRoomViewController
 {
@@ -32,6 +35,9 @@ public class CreateRoomViewController
 
     @FXML
     private Button addButton, removeButton, confirmEditButton;
+
+    @FXML
+    private Label errorLabel;
 
     private ViewHandler viewHandler;
     private CreateRoomViewModel viewModel;
@@ -63,6 +69,7 @@ public class CreateRoomViewController
         equipmentToAdd.textProperty().bindBidirectional(viewModel.getEquipmentToAddProperty());
 
         topLabel.textProperty().bindBidirectional(viewModel.getTopLabelProperty());
+        errorLabel.textProperty().bind(viewModel.getErrorLabelProperty());
 
         Bindings.bindBidirectional(
                 floor.textProperty(),
@@ -134,8 +141,7 @@ public class CreateRoomViewController
     }
 
     @FXML
-    private void confirmButton()
-    {
+    private void confirmButton() throws SQLException, RemoteException {
         if (!viewing) //editing
         {
             viewModel.confirm(editing, viewHandler.getPickedRoomID());
@@ -146,8 +152,7 @@ public class CreateRoomViewController
     }
 
     @FXML
-    private void backButton()
-    {
+    private void backButton() throws SQLException, RemoteException {
         viewHandler.openView("RoomList");
     }
 

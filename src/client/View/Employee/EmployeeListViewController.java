@@ -11,6 +11,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+
 public class EmployeeListViewController
 {
     @FXML
@@ -116,14 +119,12 @@ public class EmployeeListViewController
     }
 
     @FXML
-    private void backButton()
-    {
+    private void backButton() throws SQLException, RemoteException {
         viewHandler.openView("MainMenu");
     }
 
     @FXML
-    private void addButton()
-    {
+    private void addButton() throws SQLException, RemoteException {
         viewHandler.openView("CreateEmployee");
     }
 

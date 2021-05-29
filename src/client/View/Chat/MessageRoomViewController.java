@@ -11,6 +11,8 @@ import javafx.scene.layout.Region;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 
 public class MessageRoomViewController implements PropertyChangeListener
 {
@@ -70,8 +72,7 @@ public class MessageRoomViewController implements PropertyChangeListener
     }
 
     @FXML
-    private void backButton()
-    {
+    private void backButton() throws SQLException, RemoteException {
         viewHandler.openView("MessageRoomList");
     }
 

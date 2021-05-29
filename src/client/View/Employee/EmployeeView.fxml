@@ -167,13 +167,13 @@
                   <Label text="Add a permission:" />
                   <HBox alignment="CENTER">
                      <children>
-                        <ChoiceBox fx:id="choiceBox" maxWidth="-Infinity" prefHeight="26.0" prefWidth="224.0">
+                        <ChoiceBox fx:id="choiceBox" maxWidth="-Infinity" prefHeight="26.0" prefWidth="237.0">
                            <HBox.margin>
                               <Insets bottom="5.0" />
                            </HBox.margin></ChoiceBox>
-                        <Button fx:id="addButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addButton" prefHeight="26.0" prefWidth="26.0" stylesheets="@../darkTheme.css" textAlignment="CENTER">
+                        <Button fx:id="addButton" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addButton" prefHeight="26.0" prefWidth="26.0" stylesheets="@../darkTheme.css" textAlignment="CENTER">
                            <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" top="2.0" />
+                              <Insets bottom="5.0" top="2.0" />
                            </HBox.margin>
                            <graphic>
                               <ImageView fitHeight="32.0" fitWidth="36.0" mouseTransparent="true" preserveRatio="true">

@@ -2,6 +2,7 @@ package client.ViewModel;
 
 import Shared.Employee.Employee;
 import client.Model.Model;
+import client.View.Helpers.ConfirmationButton;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -33,18 +34,21 @@ public class EmployeeViewModel
 
     private StringProperty confirmEditButton, errorLabel;
 
+    private ArrayList<String> permissions;
+
     private int currentEmployeeID;
     private boolean onlyViewing;
 
     private Model model;
 
-    public EmployeeViewModel(int userID, String name, String surname, String role) // for the data in the EmployeeListView
+    public EmployeeViewModel(int userID, String name, String surname, String role) // for the data in the EmployeeListView, and CreateMessageRoomView
     {
         this.userID = new SimpleIntegerProperty(userID);
         this.name = new SimpleStringProperty(name);
         this.surname = new SimpleStringProperty(surname);
         this.role = new SimpleStringProperty(role);
     }
+
 
     public EmployeeViewModel(Model model)
     {
@@ -109,9 +113,20 @@ public class EmployeeViewModel
 
         } else  // editing or viewing
         {
-            Employee currentEmp = model.getEmployeeByID(currentEmployeeID);
+            Employee currentEmp = null;
+            try
+            {
+                currentEmp = model.getEmployeeByID(currentEmployeeID);
+                topLabel.setValue(model.getEmployeeByID(currentEmployeeID).getName() + " " + model.getEmployeeByID(currentEmployeeID).getSurname());
+            } catch (SQLException throwables)
+            {
+                throwables.printStackTrace();
+            } catch (RemoteException e)
+            {
+                e.printStackTrace();
+            }
 
-            topLabel.setValue(model.getEmployeeByID(currentEmployeeID).getName() + " " + model.getEmployeeByID(currentEmployeeID).getSurname());
+
             employeeIDTextLabel.setValue("Employee ID: " + currentEmployeeID);
 
             username.setValue(currentEmp.getSurname());
@@ -152,7 +167,9 @@ public class EmployeeViewModel
 
             if (onlyViewing)
             {
+
                 //todo make setDisable
+                // mabybe already done in the controller
             }
 
         }
@@ -183,82 +200,83 @@ public class EmployeeViewModel
 
     public void confirmButton()
     {
-        if (currentEmployeeID == 0)
+        if (!ConfirmationButton.confirmationView("Do you want to save the changes?"))
+            return;
+
+        if (currentEmployeeID == 0) // Creating an employee
         {
-            //TODO pass the password to the database
+            if (!password.get().equals(repeatPassword.get()))
+            {
+                errorLabel.set("The passwords have to match");
+                return;
+            }
+
             if (permissionTable.isEmpty())
             {
                 try
                 {
                     model.addEmployee(username.get(), password.get(), name.get(), surname.get(), role.get());
-                } catch (SQLException throwables)
+                } catch (SQLException | GeneralSecurityException | IOException throwables)
                 {
                     throwables.printStackTrace();
-                } catch (GeneralSecurityException e)
-                {
-                    e.printStackTrace();
-                } catch (IOException e)
-                {
-                    e.printStackTrace();
                 }
             } //TODO add diferent things with different exceptions
             else
             {
-                ArrayList<String> permissions = new ArrayList<>();
-                for (PermissionViewModel pers :
-                        permissionTable)
-                {
-                    if (pers.getPermissionProperty().equals("Event join"))
-                        permissions.add("event_join");
-                    if (pers.getPermissionProperty().equals("Event create"))
-                        permissions.add("event_create");
-                    if (pers.getPermissionProperty().equals("Event edit"))
-                        permissions.add("event_edit");
-                    if (pers.getPermissionProperty().equals("Event invite"))
-                        permissions.add("event_invite");
-                    if (pers.getPermissionProperty().equals("Room create/edit"))
-                        permissions.add("room_create_edit");
-                    if (pers.getPermissionProperty().equals("Manage employees"))
-                        permissions.add("employees_create_edit");
-                    if (pers.getPermissionProperty().equals("Manage chat rooms"))
-                        permissions.add("chat_rooms_create_edit");
-                }
+                getPermissionsFromList();
 
-                model.addEmployee(username.get(), name.get(), surname.get(), new ArrayList<>(), new ArrayList<>(), role.get(), permissions);
+                try
+                { // TODO different errorLabels
+                    model.addEmployee(username.get(), password.get(), name.get(), surname.get(), role.get(), permissions);
+                } catch (SQLException | GeneralSecurityException | IOException throwables)
+                {
+                    throwables.printStackTrace();
+                }
                 //TODO Creating employees with permissions
             }
         } else
         {
-
-            Employee e = model.getEmployeeByID(currentEmployeeID);
-            e.setName(name.get());
-            e.setSurname(surname.get());
-            e.setUsername(username.get());
-            e.setRole(role.get());
-
-            if (permissionTable.isEmpty())
+            try
             {
-                ArrayList<String> permissions = new ArrayList<>();
-                for (PermissionViewModel pers :
-                        permissionTable)
+                Employee e = model.getEmployeeByID(currentEmployeeID);
+                e.setName(name.get());
+                e.setSurname(surname.get());
+                e.setUsername(username.get());
+                e.setRole(role.get());
+
+                getPermissionsFromList();
+                if (!e.getPermissions().equals(permissions))
                 {
-                    if (pers.getPermissionProperty().equals("Event join"))
-                        permissions.add("event_join");
-                    if (pers.getPermissionProperty().equals("Event create"))
-                        permissions.add("event_create");
-                    if (pers.getPermissionProperty().equals("Event edit"))
-                        permissions.add("event_edit");
-                    if (pers.getPermissionProperty().equals("Event invite"))
-                        permissions.add("event_invite");
-                    if (pers.getPermissionProperty().equals("Room create/edit"))
-                        permissions.add("room_create_edit");
-                    if (pers.getPermissionProperty().equals("Manage employees"))
-                        permissions.add("employees_create_edit");
-                    if (pers.getPermissionProperty().equals("Manage chat rooms"))
-                        permissions.add("chat_rooms_create_edit");
+                    e.setPermissions(permissions);
                 }
-                e.setPermissions(permissions);
+            } catch (SQLException | RemoteException throwables)
+            {
+                throwables.printStackTrace();
             }
+
+        }
+    }
+
+    private void getPermissionsFromList()
+    {
+        permissions = new ArrayList<>();
+        for (PermissionViewModel pers :
+                permissionTable)
+        {
+            if (pers.getPermissionProperty().equals("Event join"))
+                permissions.add("event_join");
+            if (pers.getPermissionProperty().equals("Event create"))
+                permissions.add("event_create");
+            if (pers.getPermissionProperty().equals("Event edit"))
+                permissions.add("event_edit");
+            if (pers.getPermissionProperty().equals("Event invite"))
+                permissions.add("event_invite");
+            if (pers.getPermissionProperty().equals("Room create/edit"))
+                permissions.add("room_create_edit");
+            if (pers.getPermissionProperty().equals("Manage employees"))
+                permissions.add("employees_create_edit");
+            if (pers.getPermissionProperty().equals("Manage chat rooms"))
+                permissions.add("chat_rooms_create_edit");
         }
     }
 

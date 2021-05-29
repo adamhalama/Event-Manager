@@ -1,13 +1,17 @@
 package client.ViewModel;
 
+import Shared.Room.Room;
 import client.Model.Model;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CreateRoomViewModel
@@ -20,7 +24,7 @@ public class CreateRoomViewModel
     private StringProperty equipmentToAdd;
     private ObservableList<EquipmentViewModel> equipmentList;
 
-    private StringProperty confirmEditButton;
+    private StringProperty confirmEditButton, errorLabel;
 
     private int currentRoomID;
     private boolean onlyViewing;
@@ -38,14 +42,16 @@ public class CreateRoomViewModel
         seats = new SimpleIntegerProperty();
         equipmentToAdd = new SimpleStringProperty();
         confirmEditButton = new SimpleStringProperty();
+        errorLabel = new SimpleStringProperty();
 
         equipmentList = FXCollections.observableArrayList();
     }
 
-    public void reset()
-    {
+    public void reset(){
 
-        if (currentRoomID == 0)
+        equipmentToAdd.setValue(null);
+        errorLabel.setValue(null);
+        if (currentRoomID == 0) // creating
         {
             topLabel.setValue("Add a room");
             roomNumber.setValue(null);
@@ -54,17 +60,33 @@ public class CreateRoomViewModel
             seats.setValue(null);
 
             equipmentList.clear();
-        } else
+        } else //Editing or viewing
         {
+            Room room;
+            try
+            {
+                room = model.getRoomByID(currentRoomID);
+            } catch (SQLException throwables)
+            {
+                errorLabel.setValue(throwables.getMessage());
+                throwables.printStackTrace();
+                return;
+            } catch (RemoteException e)
+            {
+                errorLabel.setValue("Error loading the room");
+                e.printStackTrace();
+                return;
+            }
+
             topLabel.setValue("Editing, roomID: " + currentRoomID);
-            roomNumber.setValue(model.getRoomByID(currentRoomID).getRoomNumber());
-            floor.setValue(model.getRoomByID(currentRoomID).getFloor());
-            address.set(model.getRoomByID(currentRoomID).getBuildingAddress());
-            seats.setValue(model.getRoomByID(currentRoomID).getNumberOfSeats());
+            roomNumber.setValue(room.getRoomNumber());
+            floor.setValue(room.getFloor());
+            address.set(room.getBuildingAddress());
+            seats.setValue(room.getNumberOfSeats());
 
             equipmentList.clear();
             for (String equip:
-                    model.getRoomByID(currentRoomID).getEquipment())
+                    room.getEquipment())
             {
                 equipmentList.add(new EquipmentViewModel(equip));
             }
@@ -75,7 +97,6 @@ public class CreateRoomViewModel
             }
 
         }
-        equipmentToAdd.setValue(null);
     }
 
     public void addEquipment(boolean editing)
@@ -94,14 +115,24 @@ public class CreateRoomViewModel
             equipmentList.remove(selectedIndex);
     }
 
-    public void confirm(boolean editing, int roomID)
-    {
+    public void confirm(boolean editing, int roomID) throws SQLException, RemoteException {
         // todo
         //  some confirmation
         if (!editing)
         {
             if (equipmentList.isEmpty())
-                model.addRoom(roomNumber.get(), address.get(), seats.get(), floor.get());
+            {
+                try
+                {
+                    model.addRoom(roomNumber.get(), address.get(), seats.get(), floor.get());
+                } catch (SQLException throwables)
+                {
+                    throwables.printStackTrace();
+                } catch (RemoteException e)
+                {
+                    e.printStackTrace();
+                } //TODO add different errorLabel statements
+            }
             else
             {
                 ArrayList<String> equipment = new ArrayList<>();
@@ -163,6 +194,11 @@ public class CreateRoomViewModel
 
     public StringProperty getTopLabelProperty(){return topLabel;}
 
+    public StringProperty getErrorLabelProperty()
+    {
+        return errorLabel;
+    }
+
     public void setCurrentRoomID(int currentRoomID)
     {
         this.currentRoomID = currentRoomID;
@@ -182,5 +218,6 @@ public class CreateRoomViewModel
     {
         return onlyViewing;
     }
+
 
 }

@@ -106,44 +106,4 @@ public class EventViewModel {
     public IntegerProperty getSizeProperty() {
         return sizeProperty;
     }
-
-    public IntegerProperty getYearSProperty() {
-        return yearSProperty;
-    }
-
-    public IntegerProperty getYearEProperty() {
-        return yearEProperty;
-    }
-
-    public IntegerProperty getMonthSProperty() {
-        return monthSProperty;
-    }
-
-    public IntegerProperty getMonthEProperty() {
-        return monthEProperty;
-    }
-
-    public IntegerProperty getDaySProperty() {
-        return daySProperty;
-    }
-
-    public IntegerProperty getDayEProperty() {
-        return dayEProperty;
-    }
-
-    public IntegerProperty getHourSProperty() {
-        return hourSProperty;
-    }
-
-    public IntegerProperty getHourEProperty() {
-        return hourEProperty;
-    }
-
-    public IntegerProperty getMinuteSProperty() {
-        return minuteSProperty;
-    }
-
-    public IntegerProperty getMinuteEProperty() {
-        return minuteEProperty;
-    }
 }

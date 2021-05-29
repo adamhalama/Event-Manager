@@ -8,6 +8,9 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+
 public class RoomViewModel
 {
     private IntegerProperty roomID;
@@ -43,8 +46,7 @@ public class RoomViewModel
         equipmentList = FXCollections.observableArrayList();
     }
 
-    public void reset()
-    {
+    public void reset() throws SQLException, RemoteException {
         roomID.setValue(currentRoomID);
         roomNumber.setValue(model.getRoomByID(currentRoomID).getRoomNumber());
         floor.setValue(model.getRoomByID(currentRoomID).getFloor());
