@@ -34,9 +34,9 @@ public interface Model {
 
     void addMessageRoom(String name, ArrayList<Integer> usersIDs);
 
-    void removeMessageRoom(int messageRoomID);
+    void removeMessageRoomFromEmployee(int messageRoomID);
 
-    void removeMessageRoom(MessageRoom room);
+    void removeMessageRoomFromEmployee(MessageRoom room);
 
     ArrayList<MessageRoom> getMessageRoomsByEmployeeID(int employeeID);
 
@@ -85,6 +85,10 @@ public interface Model {
 
 
     //part4 class room
+
+    void removeEventFromEmployee(int employeeID, int eventID) throws SQLException, RemoteException;
+
+    void removeMessageRoomFromEmployee(int employeeID, int messageRoomID)throws SQLException, RemoteException;
 
     void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor) throws SQLException, RemoteException;
 
