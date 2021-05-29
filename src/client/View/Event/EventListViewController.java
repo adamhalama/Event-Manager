@@ -9,6 +9,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.Optional;
 
 public class EventListViewController {
@@ -252,7 +254,7 @@ public class EventListViewController {
     }
 
     @FXML
-    private void addPress() {
+    private void addPress() throws SQLException, RemoteException {
         viewHandler.openView("CreateEvent");
     }
 
@@ -303,7 +305,7 @@ public class EventListViewController {
     }
 
     @FXML
-    private void backPress() {
+    private void backPress() throws SQLException, RemoteException {
         viewHandler.openView("MainMenu");
     }
 

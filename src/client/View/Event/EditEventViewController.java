@@ -13,6 +13,8 @@ import javafx.scene.text.Font;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -174,7 +176,7 @@ public class EditEventViewController {
     }
 
     @FXML
-    private void cancelPress() {
+    private void cancelPress() throws SQLException, RemoteException {
         viewHandler.openView("EventList");
     }
 

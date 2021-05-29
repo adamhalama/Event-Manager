@@ -58,7 +58,7 @@ public class ViewHandler {
         currentStage = new Scene(new Region());
     }
 
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws SQLException, RemoteException {
         this.primaryStage = primaryStage;
         openView("MainMenu");
     }
@@ -67,7 +67,7 @@ public class ViewHandler {
         primaryStage.close();
     }
 
-    public void openView(String id) {
+    public void openView(String id) throws SQLException, RemoteException {
         Region root = null;
         switch (id) {
             case "Login":
@@ -235,7 +235,7 @@ public class ViewHandler {
         return roomListViewController.getRoot();
     }
 
-    private Region loadCreateRoomView(String fxmlFile) {
+    private Region loadCreateRoomView(String fxmlFile) throws SQLException, RemoteException {
         if (createRoomViewController == null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -256,7 +256,7 @@ public class ViewHandler {
         return createRoomViewController.getRoot();
     }
 
-    private Region loadEditRoomView(String fxmlFile) {
+    private Region loadEditRoomView(String fxmlFile) throws SQLException, RemoteException {
         if (createRoomViewController == null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -277,7 +277,7 @@ public class ViewHandler {
         return createRoomViewController.getRoot();
     }
 
-    private Region loadRoomView(String fxmlFile) {
+    private Region loadRoomView(String fxmlFile) throws SQLException, RemoteException {
         if (createRoomViewController == null) {
             try {
                 FXMLLoader loader = new FXMLLoader();

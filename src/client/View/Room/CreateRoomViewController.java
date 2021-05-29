@@ -10,6 +10,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+
 
 public class CreateRoomViewController
 {
@@ -134,8 +137,7 @@ public class CreateRoomViewController
     }
 
     @FXML
-    private void confirmButton()
-    {
+    private void confirmButton() throws SQLException, RemoteException {
         if (!viewing) //editing
         {
             viewModel.confirm(editing, viewHandler.getPickedRoomID());
@@ -146,8 +148,7 @@ public class CreateRoomViewController
     }
 
     @FXML
-    private void backButton()
-    {
+    private void backButton() throws SQLException, RemoteException {
         viewHandler.openView("RoomList");
     }
 

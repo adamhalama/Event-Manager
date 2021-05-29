@@ -9,6 +9,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+
 public class EventInfoViewController {
     @FXML
     private TextField titleTextField;
@@ -72,7 +75,7 @@ public class EventInfoViewController {
     }
 
     @FXML
-    private void backPress() {
+    private void backPress() throws SQLException, RemoteException {
         viewHandler.openView("EventList");
     }
 }

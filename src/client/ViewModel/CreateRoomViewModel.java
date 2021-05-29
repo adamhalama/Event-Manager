@@ -44,8 +44,7 @@ public class CreateRoomViewModel
         equipmentList = FXCollections.observableArrayList();
     }
 
-    public void reset()
-    {
+    public void reset() throws SQLException, RemoteException {
 
         if (currentRoomID == 0)
         {
@@ -96,8 +95,7 @@ public class CreateRoomViewModel
             equipmentList.remove(selectedIndex);
     }
 
-    public void confirm(boolean editing, int roomID)
-    {
+    public void confirm(boolean editing, int roomID) throws SQLException, RemoteException {
         // todo
         //  some confirmation
         if (!editing)

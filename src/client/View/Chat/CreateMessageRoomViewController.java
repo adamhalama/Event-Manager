@@ -9,6 +9,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import org.controlsfx.control.textfield.TextFields;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+
 public class CreateMessageRoomViewController
 {
     @FXML
@@ -81,8 +84,7 @@ public class CreateMessageRoomViewController
     }
 
     @FXML
-    private void backButton()
-    {
+    private void backButton() throws SQLException, RemoteException {
         if (viewModel.backButton())
             viewHandler.openView("MessageRoomList");
     }
@@ -100,8 +102,7 @@ public class CreateMessageRoomViewController
     }
 
     @FXML
-    private void saveButton()
-    {
+    private void saveButton() throws SQLException, RemoteException {
         if (ConfirmationButton.confirmationView("Do you want to save the changes \nand overwrite the existing data?"))
             if (viewModel.saveButton())
                 viewHandler.openView("MessageRoomList");

@@ -9,6 +9,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+
 
 public class EmployeeViewController
 {
@@ -163,8 +166,7 @@ public class EmployeeViewController
     }
 
     @FXML
-    private void confirmButton()
-    {
+    private void confirmButton() throws SQLException, RemoteException {
 
         if (viewing)
         {
@@ -185,8 +187,7 @@ public class EmployeeViewController
     }
 
     @FXML
-    private void backButton()
-    {
+    private void backButton() throws SQLException, RemoteException {
         if (openedFromMenu)
             viewHandler.openView("MainMenu");
         else

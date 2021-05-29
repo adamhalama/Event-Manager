@@ -465,10 +465,6 @@ public class Event {
         return isOnline;
     }
 
-    public int getDayE() {
-        return dayE;
-    }
-
     public int getDayS() {
         return dayS;
     }
@@ -489,16 +485,8 @@ public class Event {
         return minuteS;
     }
 
-    public int getMonthE() {
-        return monthE;
-    }
-
     public int getMonthS() {
         return monthS;
-    }
-
-    public int getYearE() {
-        return yearE;
     }
 
     public int getYearS() {

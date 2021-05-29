@@ -10,6 +10,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+
 public class MessageRoomListViewController
 {
     @FXML
@@ -59,14 +62,12 @@ public class MessageRoomListViewController
     }
 
     @FXML
-    private void newButton()
-    {
+    private void newButton() throws SQLException, RemoteException {
         viewHandler.openView("CreateMessageRoom");
     }
 
     @FXML
-    private void backButton()
-    {
+    private void backButton() throws SQLException, RemoteException {
         viewHandler.openView("MainMenu");
     }
 

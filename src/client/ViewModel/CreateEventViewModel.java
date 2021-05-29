@@ -91,26 +91,6 @@ public class CreateEventViewModel {
         return descriptionProperty;
     }
 
-    public IntegerProperty getStartHour() {
-        return startHour;
-    }
-
-    public IntegerProperty getIdProperty() {
-        return idProperty;
-    }
-
-    public IntegerProperty getStartMin() {
-        return startMin;
-    }
-
-    public IntegerProperty getEndHour() {
-        return endHour;
-    }
-
-    public IntegerProperty getEndMin() {
-        return endMin;
-    }
-
     public BooleanProperty getIsOnline() {
         return isOnline;
     }
@@ -118,23 +98,6 @@ public class CreateEventViewModel {
     public boolean isOnline() {
         return model.isOnline();
     }
-
-    public StringProperty getPlatformProperty() {
-        return platformProperty;
-    }
-
-    public IntegerProperty getRoomProperty() {
-        return roomProperty;
-    }
-
-    public StringProperty getLinkProperty() {
-        return linkProperty;
-    }
-
-    public StringProperty getErrorProperty() {
-        return errorProperty;
-    }
-
     public void setIsOnline(boolean isOnline) {
         model.setOnline(isOnline);
     }
@@ -149,29 +112,5 @@ public class CreateEventViewModel {
 
     public int getID() {
         return model.getEvent_id();
-    }
-
-    public String getWholeMessage() {
-        return model.getEventByIndex(0).toString();
-    }
-
-    public StringProperty getUsernameProperty() {
-        return usernameProperty;
-    }
-
-    public StringProperty getNameProperty() {
-        return nameProperty;
-    }
-
-    public StringProperty getEmployeeIdProperty() {
-        return employeeIdProperty;
-    }
-
-    public StringProperty getRoleProperty() {
-        return roleProperty;
-    }
-
-    public ArrayList<Integer> getIDs(){
-        return model.getParticipantsIDT();
     }
 }

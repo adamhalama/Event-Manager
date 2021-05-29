@@ -124,6 +124,8 @@ class EventTest {
         assertEquals("You cannot choose an online platform if you have physical meeting!", e.getMessage());
     }
 
+    //remove the test methods for old version
+
     @Test
     void addParticipant() {
 

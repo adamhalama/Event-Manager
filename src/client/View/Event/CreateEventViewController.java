@@ -6,6 +6,8 @@ import client.Model.Model;
 import client.View.ViewHandler;
 import client.ViewModel.CreateEventViewModel;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -179,7 +181,7 @@ public class CreateEventViewController {
     }
 
     @FXML
-    private void addEmployeePress() {
+    private void addEmployeePress() throws SQLException, RemoteException {
         viewHandler.openView("EventEmployee");
     }
 
@@ -419,7 +421,7 @@ public class CreateEventViewController {
     }
 
     @FXML
-    private void cancelPress() {
+    private void cancelPress() throws SQLException, RemoteException {
         viewHandler.openView("EventList");
     }
 
