@@ -424,6 +424,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public long getCreateTime() {
+        return event.getCreateTime();
+    }
+
+    @Override
     public void add(Event event) throws IllegalArgumentException {
         eventList.add(event);
     }

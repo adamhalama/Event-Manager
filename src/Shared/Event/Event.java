@@ -551,6 +551,10 @@ public class Event {
         return endTime;
     }
 
+    public long getCreateTime() {
+        return createTime;
+    }
+
     public String getDescription() {
         return description;
     }

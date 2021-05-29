@@ -148,6 +148,8 @@ public interface Model {
 
     long getEndTime();
 
+    long getCreateTime();
+
     //part2 class eventList
 
     void add(Event event) throws IllegalArgumentException;
