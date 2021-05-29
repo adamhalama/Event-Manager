@@ -34,4 +34,15 @@ public class MainMenuViewModel
         }
         return true;
     }
+
+    public boolean logoutButton()
+    {
+        if (model.getLoggedEmployee() == null)
+        {
+            errorLabel.set("Error: employee not logged in, can't log out");
+            return false;
+        }
+        model.logOut();
+        return true;
+    }
 }

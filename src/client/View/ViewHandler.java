@@ -67,7 +67,8 @@ public class ViewHandler {
         primaryStage.close();
     }
 
-    public void openView(String id) throws SQLException, RemoteException {
+    public void openView(String id)
+    {
         Region root = null;
         switch (id) {
             case "Login":
@@ -235,7 +236,7 @@ public class ViewHandler {
         return roomListViewController.getRoot();
     }
 
-    private Region loadCreateRoomView(String fxmlFile) throws SQLException, RemoteException {
+    private Region loadCreateRoomView(String fxmlFile){
         if (createRoomViewController == null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -256,7 +257,7 @@ public class ViewHandler {
         return createRoomViewController.getRoot();
     }
 
-    private Region loadEditRoomView(String fxmlFile) throws SQLException, RemoteException {
+    private Region loadEditRoomView(String fxmlFile){
         if (createRoomViewController == null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -277,7 +278,7 @@ public class ViewHandler {
         return createRoomViewController.getRoot();
     }
 
-    private Region loadRoomView(String fxmlFile) throws SQLException, RemoteException {
+    private Region loadRoomView(String fxmlFile){
         if (createRoomViewController == null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
