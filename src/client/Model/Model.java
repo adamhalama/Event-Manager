@@ -148,6 +148,12 @@ public interface Model {
 
     boolean isOnline();
 
+    long getStartTime();
+
+    long getEndTime();
+
+    long getCreateTime();
+
     //part2 class eventList
 
     void add(Event event) throws IllegalArgumentException;
