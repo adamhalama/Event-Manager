@@ -113,4 +113,7 @@ public class CreateEventViewModel {
     public int getID() {
         return model.getEvent_id();
     }
+
+    // the codes for database
+
 }

@@ -402,6 +402,16 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public long getStartTime() {
+        return event.getStartTime();
+    }
+
+    @Override
+    public long getEndTime() {
+        return event.getEndTime();
+    }
+
+    @Override
     public void add(Event event) throws IllegalArgumentException {
         eventList.add(event);
     }
