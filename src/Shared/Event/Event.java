@@ -34,6 +34,11 @@ public class Event {
     private long timestamp;
     private Calendar calendarS;
 
+    private long startTime;
+    private long endTime;
+
+
+
     private String title; //the title of the event
     private String description;
     private boolean isOnline;
@@ -44,6 +49,22 @@ public class Event {
     private int creatorID;
     private ArrayList<Integer> participants;
     private Model model;
+
+
+    public Event(String title, String description, long startTime, long endTime, String platform, String onlineLink, int creatorID,
+                 ArrayList<Integer> participants, Model model)
+    {
+        isOnline = true;
+    }
+
+    public Event(String title, String description, long startTime, long endTime, int roomID, int creatorID,
+                 ArrayList<Integer> participants, Model model)
+    {
+        isOnline = false;
+    }
+
+
+
 
     public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
                  int hourE, int minuteE, boolean isOnline, String platform, String link, Model model,

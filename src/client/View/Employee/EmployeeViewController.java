@@ -175,7 +175,7 @@ public class EmployeeViewController
             else
                 viewHandler.openView("EditEmployee");
         }
-        else
+        else  // creating or editing
         {
             viewModel.confirmButton();
             viewModel.reset();
