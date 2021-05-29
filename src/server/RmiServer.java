@@ -74,6 +74,19 @@ public class RmiServer implements API
     }
 
     @Override
+    public ArrayList<Employee> getAllEmployees() {
+        ArrayList<Employee> employees = this.databaseHandler.employee.getAll();
+        try {
+            for(Employee employee : employees) {
+                ObjectInfo.getFullEmployee(employee, this.databaseHandler);
+            }
+        } catch (Error e) {
+            e.printStackTrace();
+        }
+        return employees;
+    }
+
+    @Override
     public Employee employeeSetName(int employeeID1, int employeeID2, String name) throws SQLException
     {
         if(employeeID1 != employeeID2) {

@@ -23,6 +23,8 @@ public interface API extends Remote
 
     ArrayList<Employee> getEmployees(ArrayList<Integer> employeesIDs) throws RemoteException;
 
+    ArrayList<Employee> getAllEmployees() throws RemoteException;
+
     Employee employeeSetName(int employeeID1, int employeeID2, String name) throws SQLException, RemoteException;
 
     Employee employeeSetSurname(int employeeID1, int employeeID2, String surname) throws SQLException, RemoteException;
