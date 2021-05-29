@@ -45,27 +45,30 @@ public class MainMenuViewController
     @FXML
     private void logoutButton()
     {
-        ConfirmationButton.confirmationView("Are you sure you want to log out?");
-        //todo log out
+        if (ConfirmationButton.confirmationView("Are you sure you want to log out?"))
+        {
+            if(viewModel.logoutButton())
+                viewHandler.openView("Login");
+        }
     }
 
     @FXML
-    private void roomsButton() throws SQLException, RemoteException {
+    private void roomsButton(){
         viewHandler.openView("RoomList");
     }
 
     @FXML
-    private void eventsButton() throws SQLException, RemoteException {
+    private void eventsButton(){
         viewHandler.openView("EventList");
     }
 
     @FXML
-    private void employeesButton() throws SQLException, RemoteException {
+    private void employeesButton(){
         viewHandler.openView("EmployeeList");
     }
 
     @FXML
-    private void chatButton() throws SQLException, RemoteException {
+    private void chatButton(){
         viewHandler.openView("MessageRoomList");
     }
 

@@ -22,7 +22,11 @@ public interface Model {
 
     void login(String username, String password) throws SQLException, GeneralSecurityException, IOException;
 
+    void logOut();
+
     int getLoggedClientID();
+
+    Employee getLoggedEmployee();
 
     void addMessageRoom(String name);
 

@@ -36,6 +36,9 @@ public class CreateRoomViewController
     @FXML
     private Button addButton, removeButton, confirmEditButton;
 
+    @FXML
+    private Label errorLabel;
+
     private ViewHandler viewHandler;
     private CreateRoomViewModel viewModel;
     private Region root;
@@ -66,6 +69,7 @@ public class CreateRoomViewController
         equipmentToAdd.textProperty().bindBidirectional(viewModel.getEquipmentToAddProperty());
 
         topLabel.textProperty().bindBidirectional(viewModel.getTopLabelProperty());
+        errorLabel.textProperty().bind(viewModel.getErrorLabelProperty());
 
         Bindings.bindBidirectional(
                 floor.textProperty(),

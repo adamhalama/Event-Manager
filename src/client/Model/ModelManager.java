@@ -83,13 +83,13 @@ public class ModelManager implements Model {
 
 
 
-        /*try
+        try
         {
             this.login("admin", "admin");
         } catch (SQLException | GeneralSecurityException | IOException throwables)
         {
             throwables.printStackTrace();
-        }*/
+        }
 
     }
 
@@ -100,12 +100,24 @@ public class ModelManager implements Model {
         employeeList.addEmployee(loggedEmployee);
     }
 
+    @Override
+    public void logOut()
+    {
+        loggedEmployee = null;
+    }
+
 
     @Override
     public int getLoggedClientID() {
         if (loggedEmployee == null)
             return 0;
         return loggedEmployee.getId();
+    }
+
+    @Override
+    public Employee getLoggedEmployee()
+    {
+        return loggedEmployee;
     }
 
     @Override
