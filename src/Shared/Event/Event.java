@@ -8,9 +8,7 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,7 +32,7 @@ public class Event {
     private long startTime;
     private long endTime;
     private long createTime;
-
+    private int mesasageRoomId;
 
     private String title; //the title of the event
     private String description;
@@ -45,9 +43,6 @@ public class Event {
     private int roomID; //if physical, choose a room (it could be another type, let's see in the future)
     private int creatorID;
     private ArrayList<Integer> participants;
-
-    private int messageRoomID;
-
     private Model model;
 
     //online
@@ -63,8 +58,7 @@ public class Event {
     }
 
     public Event(String title, String description, long startTime, long endTime, String platform, String onlineLink,
-                 ArrayList<Integer> participants, Model model)
-    {  // constructor for online meetings
+                 ArrayList<Integer> participants, Model model) {  // constructor for online meetings
         this.event_id = 0;
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
@@ -73,26 +67,29 @@ public class Event {
         try {
             date = sdf.parse(time_create);
             createTime = date.getTime(); // transfer crate time from date to timestamp
-        } catch (ParseException e){
+        } catch (ParseException e) {
             e.getMessage();
         }
         if (title != null) {
             this.title = title;
         } else throw new IllegalArgumentException("The title of the event cannot be null!");
 
-        LocalDateTime start = LocalDateTime.ofEpochSecond(startTime, 0, ZoneOffset.ofHours(1));
+        Instant instantS = Instant.ofEpochMilli(startTime);
+        LocalDateTime start = LocalDateTime.ofInstant(instantS, ZoneId.systemDefault());
         this.calendarS = Calendar.getInstance();
         calendarS.set(start.getYear(), start.getMonthValue() - 1, start.getDayOfMonth(), start.getHour(), start.getMinute());
+        System.out.println(start.getYear() + " " + (start.getMonthValue() - 1) + " " + start.getDayOfMonth() + " " + start.getHour() + " " + start.getMinute());
         if (start.getHour() >= 9 && start.getHour() < 17 &&
-                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6)){
+                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6)) {
             this.time_start = sdf.format(new Date(startTime));  // transfer start time from timestamp to date
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
-        LocalDateTime end = LocalDateTime.ofEpochSecond(endTime, 0, ZoneOffset.ofHours(1));
+        Instant instantE = Instant.ofEpochMilli(endTime);
+        LocalDateTime end = LocalDateTime.ofInstant(instantE, ZoneId.systemDefault());
         this.calendarS = Calendar.getInstance();
         calendarS.set(end.getYear(), end.getMonthValue() - 1, end.getDayOfMonth(), end.getHour(), end.getMinute());
         if (end.getHour() >= 9 && end.getHour() < 17 &&
-                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6) && start.isBefore(end)){
+                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6) && start.isBefore(end)) {
             this.time_end = sdf.format(new Date(startTime));  // transfer end time from timestamp to date
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
@@ -102,8 +99,8 @@ public class Event {
         this.roomID = 0;
 
         this.platformFactory = new PlatformFactory();
-            this.platformString = platformFactory.getPlatform(platform).type(); // here i would use factory design pattern
-            this.onlineLink = platformFactory.getPlatform(platform).meetingLink(onlineLink);
+        this.platformString = platformFactory.getPlatform(platform).type(); // here i would use factory design pattern
+        this.onlineLink = platformFactory.getPlatform(platform).meetingLink(onlineLink);
 
         this.model = model;
         this.creatorID = model.getLoggedClientID();
@@ -111,8 +108,7 @@ public class Event {
     }
 
     public Event(String title, String description, long startTime, long endTime, int roomID,
-                 ArrayList<Integer> participants, Model model)
-    {       // constructor for physical meetings
+                 ArrayList<Integer> participants, Model model) {       // constructor for physical meetings
         this.event_id = 0;
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
@@ -121,7 +117,7 @@ public class Event {
         try {
             date = sdf.parse(time_create);
             createTime = date.getTime(); // transfer crate time from date to timestamp
-        } catch (ParseException e){
+        } catch (ParseException e) {
             e.getMessage();
         }
         if (title != null) {
@@ -132,7 +128,7 @@ public class Event {
         this.calendarS = Calendar.getInstance();
         calendarS.set(start.getYear(), start.getMonthValue() - 1, start.getDayOfMonth(), start.getHour(), start.getMinute());
         if (start.getHour() >= 9 && start.getHour() < 17 &&
-                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6)){
+                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6)) {
             this.time_start = sdf.format(new Date(startTime));  // transfer start time from timestamp to date
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
@@ -140,7 +136,7 @@ public class Event {
         this.calendarS = Calendar.getInstance();
         calendarS.set(end.getYear(), end.getMonthValue() - 1, end.getDayOfMonth(), end.getHour(), end.getMinute());
         if (end.getHour() >= 9 && end.getHour() < 17 &&
-                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6) && start.isBefore(end)){
+                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6) && start.isBefore(end)) {
             this.time_end = sdf.format(new Date(startTime));  // transfer end time from timestamp to date
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
@@ -151,6 +147,136 @@ public class Event {
 
         this.model = model;
         this.creatorID = model.getLoggedClientID();
+        this.participants = participants;
+    }
+
+    public Event(int id, String title, String description, int creatorID, int roomID, int messageRoomID, long createTime, long startTime, long endTime)
+    {       // constructor for physical meetings
+        this.event_id = 0;
+        this.event_id = id;
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        this.time_create = sdf.format(date);
+        try
+        {
+            date = sdf.parse(time_create);
+            createTime = date.getTime(); // transfer crate time from date to timestamp
+        } catch (ParseException e)
+        {
+            e.getMessage();
+        }
+        this.time_create = sdf.format(new Date(createTime));
+        if (title != null)
+        {
+            this.title = title;
+        } else throw new IllegalArgumentException("The title of the event cannot be null!");
+
+        LocalDateTime start = LocalDateTime.ofEpochSecond(startTime, 0, ZoneOffset.ofHours(1));
+        this.calendarS = Calendar.getInstance();
+        calendarS.set(start.getYear(), start.getMonthValue() - 1, start.getDayOfMonth(), start.getHour(), start.getMinute());
+        if (start.getHour() >= 9 && start.getHour() < 17 &&
+                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6))
+        {
+            this.time_start = sdf.format(new Date(startTime));  // transfer start time from timestamp to date
+        } else throw new IllegalArgumentException("You should set time at work hours!");
+
+        LocalDateTime end = LocalDateTime.ofEpochSecond(endTime, 0, ZoneOffset.ofHours(1));
+        this.calendarS = Calendar.getInstance();
+        calendarS.set(end.getYear(), end.getMonthValue() - 1, end.getDayOfMonth(), end.getHour(), end.getMinute());
+        if (end.getHour() >= 9 && end.getHour() < 17 &&
+                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6))
+        {
+            this.time_end = sdf.format(new Date(startTime));  // transfer end time from timestamp to date
+        } else throw new IllegalArgumentException("You should set time at work hours!");
+
+        isOnline = false;
+        this.roomID = roomID;
+
+        this.model = model;
+        this.creatorID = model.getLoggedClientID();
+        this.participants = participants;
+        this.mesasageRoomId = messageRoomID;
+        this.creatorID = creatorID;
+        this.participants = new ArrayList<>();
+    }
+
+    public Event(int id, String title, String description, String platform, String onlineLink, int creatorID, int roomID, int messageRoomID, long createTime, long startTime, long endTime)
+    {  // constructor for online meetings
+        this(id, title, description, creatorID, roomID, messageRoomID, createTime, startTime, endTime);
+
+        this.setOnline(true);
+        PlatformFactory platformFactory = new PlatformFactory();
+        this.platformString = platformFactory.getPlatform(platform).type(); // here i would use factory design pattern
+        this.onlineLink = platformFactory.getPlatform(platform).meetingLink(onlineLink);
+    }
+
+    public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
+                 int hourE, int minuteE, boolean isOnline, int roomID,
+                 Model model, ArrayList<Integer> participants) {
+        this.event_id = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+
+        this.time_create = sdf.format(date);
+        if (title != null) {
+            this.title = title;
+        } else throw new IllegalArgumentException("The title of the event cannot be null!");
+
+        // i set a limit for time here, the meeting should only be held from 9 - 17 on workdays
+        String timeFormat = "";
+        dateString = "";
+        timeFormat += String.valueOf(yearS);
+        dateString += String.valueOf(yearS);
+        timeFormat += "-";
+        dateString += "-";
+        timeFormat += setMonthSFull(monthS);
+        dateString += setMonthSFull(monthS);
+        timeFormat += "-";
+        dateString += "-";
+        timeFormat += setDaySFull(dayS);
+        dateString += setDaySFull(dayS);
+        timeFormat += "  ";
+        timeFormat += setHourFull(hourS);
+        timeFormat += ":";
+        timeFormat += setMinuteFull(minuteS);
+        this.calendarS = Calendar.getInstance();
+        calendarS.set(yearS, monthS - 1, dayS, hourS, minuteS);
+        LocalDateTime startDate = LocalDateTime.of(yearS, monthS, dayS, hourS, minuteS);
+        if ((hourS >= 9 && hourS < 17) &&
+                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6)) {
+            this.time_start = timeFormat;
+            this.dayS = dayS;
+            this.monthS = monthS;
+            this.yearS = yearS;
+            this.hourS = hourS;
+            this.minuteS = minuteS;
+        } else throw new IllegalArgumentException("You should set time at work hours!");
+
+        String timeFormat1 = "";
+        timeFormat1 += setHourFull(hourE);
+        timeFormat1 += ":";
+        timeFormat1 += setMinuteFull(minuteE);
+        LocalDateTime endDate = LocalDateTime.of(yearS, monthS, dayS, hourE, minuteE);
+        if ((hourE >= 9 && hourE < 17) && startDate.isBefore(endDate)) {
+            if (hourE > hourS) {
+                this.time_end = timeFormat1;
+                this.hourE = hourE;
+                this.minuteE = minuteE;
+            }
+        } else throw new IllegalArgumentException("You should set time at work hours!");
+
+        this.description = description;
+        this.isOnline = isOnline;
+        this.onlineLink = "None";
+
+        if (!isOnline) {
+            this.roomID = roomID;
+        }
+
+        this.model = model;
+        this.creatorID = 0;
         this.participants = participants;
     }
 
@@ -227,75 +353,6 @@ public class Event {
         this.participants = participants;
     }
 
-    public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
-                 int hourE, int minuteE, boolean isOnline, int roomID,
-                 Model model, ArrayList<Integer> participants) {
-        this.event_id = 0;
-        SimpleDateFormat sdf = new SimpleDateFormat();
-        sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date();
-
-        this.time_create = sdf.format(date);
-        if (title != null) {
-            this.title = title;
-        } else throw new IllegalArgumentException("The title of the event cannot be null!");
-
-        // i set a limit for time here, the meeting should only be held from 9 - 17 on workdays
-        String timeFormat = "";
-        dateString = "";
-        timeFormat += String.valueOf(yearS);
-        dateString += String.valueOf(yearS);
-        timeFormat += "-";
-        dateString += "-";
-        timeFormat += setMonthSFull(monthS);
-        dateString += setMonthSFull(monthS);
-        timeFormat += "-";
-        dateString += "-";
-        timeFormat += setDaySFull(dayS);
-        dateString += setDaySFull(dayS);
-        timeFormat += "  ";
-        timeFormat += setHourFull(hourS);
-        timeFormat += ":";
-        timeFormat += setMinuteFull(minuteS);
-        this.calendarS = Calendar.getInstance();
-        calendarS.set(yearS, monthS - 1, dayS, hourS, minuteS);
-        LocalDateTime startDate = LocalDateTime.of(yearS, monthS, dayS, hourS, minuteS);
-        if ((hourS >= 9 && hourS < 17) &&
-                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6)) {
-            this.time_start = timeFormat;
-            this.dayS = dayS;
-            this.monthS = monthS;
-            this.yearS = yearS;
-            this.hourS = hourS;
-            this.minuteS = minuteS;
-        } else throw new IllegalArgumentException("You should set time at work hours!");
-
-        String timeFormat1 = "";
-        timeFormat1 += setHourFull(hourE);
-        timeFormat1 += ":";
-        timeFormat1 += setMinuteFull(minuteE);
-        LocalDateTime endDate = LocalDateTime.of(yearS, monthS, dayS, hourE, minuteE);
-        if ((hourE >= 9 && hourE < 17) && startDate.isBefore(endDate)) {
-            if (hourE > hourS) {
-                this.time_end = timeFormat1;
-                this.hourE = hourE;
-                this.minuteE = minuteE;
-            }
-        } else throw new IllegalArgumentException("You should set time at work hours!");
-
-        this.description = description;
-        this.isOnline = isOnline;
-        this.onlineLink = "None";
-
-        if (!isOnline) {
-            this.roomID = roomID;
-        }
-
-        this.model = model;
-        this.creatorID = 0;
-        this.participants = participants;
-    }
-
     public Event() {
         this.event_id = -1;
         this.time_create = null;
@@ -315,7 +372,6 @@ public class Event {
         this.creatorID = -1;
         this.participants = null;
     }
-
 
     public long dateToStamp(String date) {
         try {
@@ -380,6 +436,10 @@ public class Event {
             this.minuteE = minute;
             this.endTime = dateToStamp(timeFormat1);
         } else throw new IllegalArgumentException("You should set time at work hours!");
+    }
+
+    public void setMesasageRoomId(int mesasageRoomId) {
+        this.mesasageRoomId = mesasageRoomId;
     }
 
     public void setDescription(String des) {
@@ -717,8 +777,7 @@ public class Event {
         return getTime_start() + " " + getTime_end();
     }
 
-    public int getMessageRoomID()
-    {
-        return messageRoomID;
+    public int getMessageRoomID() {
+        return mesasageRoomId;
     }
 }
