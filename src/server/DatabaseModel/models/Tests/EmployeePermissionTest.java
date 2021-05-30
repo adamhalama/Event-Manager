@@ -17,7 +17,11 @@ public class EmployeePermissionTest
     System.out.println(permissionExists);*/
 
     /*--GET ALL--*/
-    String[] employeePermissions = databaseHandler.employeePermission.getAllByID(1); // Get room equipment
-    System.out.println("[ " + String.join(", ", employeePermissions) + " ]");
+    /*String[] employeePermissions = databaseHandler.employeePermission.getAllByID(1); // Get room equipment
+    System.out.println("[ " + String.join(", ", employeePermissions) + " ]");*/
+
+    /*--DELETE--*/
+    boolean deletePermission = databaseHandler.employeePermission.delete("room_create", 1); // Delete permission
+    System.out.println(deletePermission);
   }
 }

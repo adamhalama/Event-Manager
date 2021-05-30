@@ -21,7 +21,7 @@ public class MessageRoomModel extends Model
     for(ResponseRow row : rows) {
       int userID = Integer.parseInt(row.getField("id"));
       String name = row.getField("name");
-      boolean isPrivate = Boolean.parseBoolean(row.getField("is_private"));
+      boolean isPrivate = Boolean.parseBoolean(row.getField("is_private")) || row.getField("is_private").equals("t");
       messages.add(new MessageRoom(userID, name, isPrivate));
     }
     return messages;
@@ -32,6 +32,13 @@ public class MessageRoomModel extends Model
   {
     DBResponse dbResponse = super.modelGetOne("id = " + id, null);
     return getMessageRoomsFromResponse(dbResponse).get(0);
+  }
+
+  public ArrayList<MessageRoom> getAll(String where)
+      throws SQLException
+  {
+    DBResponse dbResponse = super.modelGetAllWhere(where);
+    return getMessageRoomsFromResponse(dbResponse);
   }
 
   public MessageRoom editName(String name, int id)
@@ -53,5 +60,18 @@ public class MessageRoomModel extends Model
         new String[] {"'"+name+"'", "" + isPrivate + ""}
     );
     return getMessageRoomsFromResponse(dbResponse).get(0);
+  }
+
+  public boolean deleteByID(int messageRoomID)
+  {
+    try
+    {
+      return super.modelDelete("id = " + messageRoomID);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
   }
 }

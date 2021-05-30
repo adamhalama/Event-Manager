@@ -1,6 +1,8 @@
 package Shared;
 
 import Shared.Employee.Employee;
+import Shared.Event.Event;
+import Shared.Messages.Message;
 import Shared.Messages.MessageRoom;
 import Shared.Room.Room;
 
@@ -13,15 +15,21 @@ import java.util.ArrayList;
 
 public interface API extends Remote
 {
-    Employee registerEmployee(String username, String password, String name, String surname, String role)
+    Employee employeeRegister(String username, String password, String name, String surname, String role)
             throws IOException, GeneralSecurityException, SQLException, RemoteException;
 
-    Employee loginEmployee(String username, String password)
+    Employee employeeLogin(String username, String password)
             throws IOException, GeneralSecurityException, SQLException, RemoteException;
 
-    Employee getEmployee(int employeeID) throws SQLException, RemoteException;
+    Employee employeeDelete(int employeeID1, int employeeID2) throws SQLException, RemoteException;
 
-    ArrayList<Employee> getEmployees(ArrayList<Integer> employeesIDs) throws RemoteException;
+    Employee employeeRestore(int employeeID1, int employeeID2) throws SQLException, RemoteException;
+
+    Employee employeeGetByID(int employeeID) throws SQLException, RemoteException;
+
+    ArrayList<Employee> employeeGetByIDs(ArrayList<Integer> employeesIDs) throws RemoteException;
+
+    ArrayList<Employee> employeeGetAll() throws RemoteException;
 
     Employee employeeSetName(int employeeID1, int employeeID2, String name) throws SQLException, RemoteException;
 
@@ -31,15 +39,69 @@ public interface API extends Remote
 
     Employee employeePermissionAdd(int employeeID1, int employeeID2, String permission) throws SQLException, RemoteException;
 
-    Room getRoom(int roomID) throws SQLException, RemoteException;
+    Room roomGetByID(int roomID) throws SQLException, RemoteException;
 
-    ArrayList<Room> getRooms(ArrayList<Integer> roomIDs) throws RemoteException;
+    ArrayList<Room> roomGetByIDs(ArrayList<Integer> roomIDs) throws RemoteException;
+
+    ArrayList<Room> roomGetAll() throws RemoteException;
 
     Room roomCreate(int employeeID1, String roomNumber, String buildingAddress, int numberOfSeats, int floor) throws SQLException, RemoteException;
 
-    MessageRoom getMessageRoom(int messageRoomID) throws SQLException, RemoteException;
+    boolean roomDeleteByID(int employeeID1, int roomID) throws RemoteException;
 
-    ArrayList<MessageRoom> getMessageRooms(ArrayList<Integer> messageRoomIDs) throws RemoteException;
+    Room roomSetFloor(int employeeID1, int roomID, int floor) throws SQLException, RemoteException;
 
-    MessageRoom createPrivateMessageRoom(int employeeID1, int employeeID2) throws SQLException, RemoteException;
+    Room roomSetNumberOfSeats(int employeeID1, int roomID, int numberOfSeats) throws SQLException, RemoteException;
+
+    Room roomSetRoomNumber(int employeeID1, int roomID, String roomNumber) throws SQLException, RemoteException;
+
+    Room roomSetBuildingAddress(int employeeID1, int roomID, String buildingAddress) throws SQLException, RemoteException;
+
+    String[] roomEquipmentGet(int roomID) throws RemoteException;
+
+    boolean roomEquipmentAdd(int roomID, String equipment) throws RemoteException;
+
+    boolean roomEquipmentRemove(int roomID, String equipment) throws RemoteException;
+
+    MessageRoom messageRoomGetByID(int messageRoomID) throws SQLException, RemoteException;
+
+    ArrayList<MessageRoom> messageRoomGetByIDs(ArrayList<Integer> messageRoomIDs) throws RemoteException;
+
+    ArrayList<MessageRoom> messageRoomGetPrivate(int employeeID1) throws RemoteException;
+
+    MessageRoom messageRoomCreatePrivate(int employeeID1, int employeeID2) throws SQLException, RemoteException;
+
+    MessageRoom messageRoomSetName(int employeeID1, int messageRoomID, String name) throws SQLException, RemoteException;
+
+    ArrayList<Message> messagesGet(int employeeID1, int messageRoomID, int offset) throws RemoteException;
+
+    Message messagePost(int employeeID1, int messageRoomID, String message) throws SQLException, RemoteException;
+
+    Event eventGetByID(int eventID) throws SQLException, RemoteException;
+
+    ArrayList<Event> eventGetByIDs(ArrayList<Integer> eventIDs) throws RemoteException;
+
+    ArrayList<Event> eventGetAll() throws RemoteException;
+
+    Event eventCreateOffline(int employeeID1, String title, String description, int roomID, long startTime, long endTime) throws SQLException, RemoteException;
+
+    Event eventCreateOnline(int employeeID1,String title, String description, String platform, String url, long startTime, long endTime) throws SQLException, RemoteException;
+
+    boolean eventDeleteByID(int employeeID1, int eventID) throws RemoteException;
+
+    Event eventSetTitle(int employeeID1, int eventID, String title) throws SQLException, RemoteException;
+
+    Event eventSetDescription(int employeeID1, int eventID, String description) throws SQLException, RemoteException;
+
+    Event eventSetOnlineURL(int employeeID1, int eventID, String url) throws SQLException, RemoteException;
+
+    Event eventSetPlatform(int employeeID1, int eventID, String platform) throws SQLException, RemoteException;
+
+    Event eventSetOnlineState(int employeeID1, int eventID, boolean isOnline) throws SQLException, RemoteException;
+
+    Event eventSetTime(int employeeID1, int eventID, long startTime, long endTime) throws SQLException, RemoteException;
+
+    boolean eventJoin(int employeeID1, int eventID) throws SQLException, RemoteException;
+
+    boolean eventLeave(int employeeID1, int eventID) throws SQLException, RemoteException;
 }

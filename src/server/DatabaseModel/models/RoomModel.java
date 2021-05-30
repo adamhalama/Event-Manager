@@ -103,9 +103,27 @@ public class RoomModel extends Model
     return getRoomsFromResponse(dbResponse).get(0);
   }
 
+  public Room editByID(String[] fields, String[] values, int roomID) throws SQLException
+  {
+    ArrayList<Room> rooms = this.edit(fields, values, "id = " + roomID);
+    return rooms.get(0);
+  }
+
   public ArrayList<Room> edit(String[] fields, String[] values, String where) throws SQLException
   {
     DBResponse dbResponse = super.modelUpdate(fields, values, where);
     return getRoomsFromResponse(dbResponse);
+  }
+
+  public boolean deleteByID(int roomID)
+  {
+    try
+    {
+      return super.modelDelete("id = " + roomID);
+    } catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
   }
 }

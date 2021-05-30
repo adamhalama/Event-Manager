@@ -104,4 +104,13 @@ public class Model
     statement.close();
     return dbResponse;
   }
+
+  public boolean modelDelete(String where) throws SQLException
+  {
+    String sql = (new SQLBuilder(DELETE, this.table).where(where).build());
+    PreparedStatement statement = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+    int changes = statement.executeUpdate();
+    statement.close();
+    return changes>=1;
+  }
 }

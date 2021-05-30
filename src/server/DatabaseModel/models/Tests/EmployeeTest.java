@@ -14,8 +14,8 @@ public class EmployeeTest
     DatabaseHandler databaseHandler = new DatabaseHandler();
 
     /*--CREATE--*/
-    /*Employee employee = databaseHandler.employee.create("JackHamer", "123qweasd", "Jack", "Hamer", "Admin");
-    System.out.println(employee);*/
+    Employee employee = databaseHandler.employee.create("JackHamer", "123qweasd", "Jack", "Hamer", "Admin");
+    System.out.println(employee);
 
     /*--GET ONE--*/
     //Employee employee = databaseHandler.employee.getByID(1); // Get by id
@@ -33,7 +33,7 @@ public class EmployeeTest
     //ArrayList<Employee> employees = databaseHandler.employee.getAll("id DESC", "name = 'Jack'", 3, 0); // Get max 3 where and sorted in descending order
 
     /*--EDIT--*/
-    ArrayList<Employee> employees = databaseHandler.employee.edit(
+    /*ArrayList<Employee> employees = databaseHandler.employee.edit(
       new String[] {"name", "surname"},
       Model.formatStringValues(new String[] {"Jason","Statham"}),
       "id = 1"
@@ -41,6 +41,11 @@ public class EmployeeTest
 
     for (Employee employee : employees) {
       System.out.println(employee);
-    }
+    }*/
+
+    /*--DELETE--*/
+    //Employee employee = databaseHandler.employee.deleteByID(1); // Set deleted state to true for an employee
+    /*Employee employee = databaseHandler.employee.restoreByID(1); // Set deleted state to false for an employee
+    System.out.println(employee);*/
   }
 }

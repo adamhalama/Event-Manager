@@ -7,7 +7,7 @@ import client.ViewModel.EmployeeViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
-import org.controlsfx.control.textfield.TextFields;
+/*import org.controlsfx.control.textfield.TextFields;*/
 
 import java.rmi.RemoteException;
 import java.sql.SQLException;
@@ -46,7 +46,7 @@ public class CreateMessageRoomViewController
         checkBox.selectedProperty().bindBidirectional(viewModel.getCheckBoxProperty());
         groupChatName.textProperty().bindBidirectional(viewModel.getGroupChatNameProperty());
         newRecipientField.textProperty().bindBidirectional(viewModel.getNewRecipientFieldProperty());
-        TextFields.bindAutoCompletion(newRecipientField, viewModel.getEmployeeList());
+        /*TextFields.bindAutoCompletion(newRecipientField, viewModel.getEmployeeList());*/
         errorLabel.textProperty().bind(viewModel.getErrorLabelProperty());
 
         selectedTable.setItems(viewModel.getSelectedTable());
@@ -73,7 +73,7 @@ public class CreateMessageRoomViewController
 
     public void reset()
     {
-        TextFields.bindAutoCompletion(newRecipientField, viewModel.getEmployeeList());
+        /*TextFields.bindAutoCompletion(newRecipientField, viewModel.getEmployeeList());*/
         viewModel.reset();
     }
 

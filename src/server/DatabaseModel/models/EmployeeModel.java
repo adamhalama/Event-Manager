@@ -7,6 +7,7 @@ import server.DatabaseModel.Utils.ResponseRow;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class EmployeeModel extends Model
 {
@@ -24,7 +25,8 @@ public class EmployeeModel extends Model
       String name = row.getField("name");
       String surname = row.getField("surname");
       String role = row.getField("role");
-      employees.add(new Employee(id, username, name, surname, role));
+      boolean deleted = row.getField("deleted").equals("t");
+      employees.add(new Employee(id, username, name, surname, role, deleted));
     }
     return employees;
   }
@@ -87,13 +89,20 @@ public class EmployeeModel extends Model
   public Employee create(String username, String password, String name, String surname, String role)
       throws SQLException
   {
+    String[] stringValues = formatStringValues(new String[] {
+        username, password, name, surname, role
+    });
+    ArrayList<String> values = new ArrayList<>(Arrays.asList(stringValues));
+    values.add("false");
+    String finalValues[] = new String[values.size()];
+    for (int j = 0; j < values.size(); j++) {
+      finalValues[j] = values.get(j);
+    }
     DBResponse dbResponse = super.modelInsert(
         new String[] {
-            "username", "password", "name", "surname", "role"
+            "username", "password", "name", "surname", "role", "deleted"
         },
-        formatStringValues(new String[] {
-            username, password, name, surname, role
-        })
+        finalValues
     );
     return getEmployeesFromResponse(dbResponse).get(0);
   }
@@ -110,5 +119,16 @@ public class EmployeeModel extends Model
   {
     DBResponse dbResponse = super.modelUpdate(fields, values, "id = " + employeeID);
     return getEmployeesFromResponse(dbResponse).get(0);
+  }
+
+  public Employee deleteByID(int employeeID)
+      throws SQLException
+  {
+    return this.editByID(new String[] {"deleted"}, new String[] {"true"}, employeeID);
+  }
+  public Employee restoreByID(int employeeID)
+      throws SQLException
+  {
+    return this.editByID(new String[] {"deleted"}, new String[] {"false"}, employeeID);
   }
 }

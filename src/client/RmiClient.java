@@ -38,9 +38,9 @@ public class RmiClient
      * @throws IOException
      */
     //TODO finish the javadoc
-    public Employee loginEmployee(String username, String password) throws SQLException, GeneralSecurityException, IOException
+    public Employee employeeLogin(String username, String password) throws SQLException, GeneralSecurityException, IOException
     {
-        return server.loginEmployee(username, password);
+        return server.employeeLogin(username, password);
     }
 //TODO finish the javadoc
 
@@ -59,20 +59,20 @@ public class RmiClient
      */
 
     //TODO implement this in the model manager
-    public Employee registerEmployee(String username, String password, String name, String surname, String role)
+    public Employee employeeRegister(String username, String password, String name, String surname, String role)
             throws GeneralSecurityException, IOException, SQLException
     {
-        return server.registerEmployee(username, password, name, surname, role);
+        return server.employeeRegister(username, password, name, surname, role);
     }
 
     public Employee getEmployeeByID(int employeeID) throws SQLException, RemoteException
     {
-        return server.getEmployee(employeeID);
+        return server.employeeGetByID(employeeID);
     }
 
-    public ArrayList<Employee> getEmployees(ArrayList<Integer> employeesIDs) throws RemoteException
+    public ArrayList<Employee> employeeGetByIDs(ArrayList<Integer> employeesIDs) throws RemoteException
     {
-        return server.getEmployees(employeesIDs);
+        return server.employeeGetByIDs(employeesIDs);
     }
 
     public Employee employeeSetName(int employeeID1, int employeeID2, String name) throws SQLException, RemoteException
@@ -104,22 +104,22 @@ public class RmiClient
 
     public Room getRoomByID(int roomID) throws SQLException, RemoteException
     {
-        return server.getRoom(roomID);
+        return server.roomGetByID(roomID);
     }
 
     public ArrayList<Room> getRoomsByIDs(ArrayList<Integer> roomIDs) throws RemoteException
     {
-        return server.getRooms(roomIDs);
+        return server.roomGetByIDs(roomIDs);
     }
 
-    public MessageRoom createPrivateMessageRoom(int employeeID1, int employeeID2) throws SQLException, RemoteException
+    public MessageRoom messageRoomCreatePrivate(int employeeID1, int employeeID2) throws SQLException, RemoteException
     {
-        return server.createPrivateMessageRoom(employeeID1, employeeID2);
+        return server.messageRoomCreatePrivate(employeeID1, employeeID2);
     }
 
     public MessageRoom getMessageRoomByID(int messageRoomID) throws SQLException, RemoteException
     {
-        return server.getMessageRoom(messageRoomID);
+        return server.messageRoomGetByID(messageRoomID);
     }
 
 

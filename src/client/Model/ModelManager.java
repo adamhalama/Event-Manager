@@ -21,7 +21,8 @@ import java.util.ArrayList;
 
 //TODO Add database updating
 
-public class ModelManager implements Model {
+public class ModelManager implements Model
+{
 
     private EmployeeList employeeList;
     private Event event;
@@ -36,7 +37,8 @@ public class ModelManager implements Model {
 
     private RmiClient api;
 
-    public ModelManager(RmiClient client) {
+    public ModelManager(RmiClient client)
+    {
         this.api = client;
 
         this.event = new Event();
@@ -67,7 +69,7 @@ public class ModelManager implements Model {
 
         /*try
         {
-            System.out.println(api.registerEmployee("admin", "admin", "Admin", "Admin", "Admin"));
+            System.out.println(api.employeeRegister("admin", "admin", "Admin", "Admin", "Admin"));
         } catch (GeneralSecurityException | IOException | SQLException e)
         {
             e.printStackTrace();
@@ -78,9 +80,8 @@ public class ModelManager implements Model {
         //logging in works, but i dont want to go to the login view every time
 
 
-//        loggedEmployee = new Employee(7, "admin", "Admin", "Admin", "Admin");
+//        loggedEmployee = new Employee(7, "admin", "Admin", "Admin", "Admin", false);
 //        employeeList.addEmployee(loggedEmployee);
-
 
 
         try
@@ -94,8 +95,9 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void login(String username, String password) throws SQLException, GeneralSecurityException, IOException {
-        loggedEmployee = api.loginEmployee(username, password);
+    public void login(String username, String password) throws SQLException, GeneralSecurityException, IOException
+    {
+        loggedEmployee = api.employeeLogin(username, password);
 
         employeeList.addEmployee(loggedEmployee);
     }
@@ -108,7 +110,8 @@ public class ModelManager implements Model {
 
 
     @Override
-    public int getLoggedClientID() {
+    public int getLoggedClientID()
+    {
         if (loggedEmployee == null)
             return 0;
         return loggedEmployee.getId();
@@ -121,58 +124,69 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addMessageRoom(String name) {
+    public void addMessageRoom(String name)
+    {
         messageRoomList.addMessageRoom(name);
     }
 
     @Override
-    public MessageRoom createPrivateMessageRoom(int employeeID1, int employeeID2) throws SQLException, RemoteException {
-        return api.createPrivateMessageRoom(employeeID1, employeeID2);
+    public MessageRoom messageRoomCreatePrivate(int employeeID1, int employeeID2) throws SQLException, RemoteException
+    {
+        return api.messageRoomCreatePrivate(employeeID1, employeeID2);
     }
 
     @Override
-    public void addMessageRoom(String name, ArrayList<Integer> usersIDs) {
+    public void addMessageRoom(String name, ArrayList<Integer> usersIDs)
+    {
         messageRoomList.addMessageRoom(name, usersIDs);
     }
 
     @Override
-    public void removeMessageRoom(int messageRoomID) {
+    public void removeMessageRoomFromEmployee(int messageRoomID)
+    {
         messageRoomList.removeMessageRoom(messageRoomID);
     }
 
     @Override
-    public void removeMessageRoom(MessageRoom room) {
+    public void removeMessageRoomFromEmployee(MessageRoom room)
+    {
         messageRoomList.removeMessageRoom(room);
     }
 
     @Override
-    public ArrayList<MessageRoom> getMessageRoomsByEmployeeID(int employeeID) {
+    public ArrayList<MessageRoom> getMessageRoomsByEmployeeID(int employeeID)
+    {
         return messageRoomList.getMessageRoomsByEmployeeID(employeeID);
     }
 
     @Override
-    public ArrayList<MessageRoom> getMessageRoomsByAnything(String keyword) {
+    public ArrayList<MessageRoom> getMessageRoomsByAnything(String keyword)
+    {
         return messageRoomList.getMessageRoomsByAnything(keyword);
     }
 
     @Override
-    public ArrayList<MessageRoom> getMessageRooms() {
+    public ArrayList<MessageRoom> getMessageRooms()
+    {
         return messageRoomList.getMessageRooms();
     }
 
     @Override
-    public String getSenderAndBody(Message message) {
+    public String getSenderAndBody(Message message)
+    {
         if (message == null)
             return "";
         return employeeList.getEmployeeByID(message.getUserID()).getFullName() + ": " + message.getMessage();
     }
 
     @Override
-    public ArrayList<String> getMessageRoomParticipantNames(MessageRoom messageRoom) {
+    public ArrayList<String> getMessageRoomParticipantNames(MessageRoom messageRoom)
+    {
         ArrayList<String> participants = new ArrayList<>();
 
         for (int userID :
-                messageRoom.getUsersIDs()) {
+                messageRoom.getUsersIDs())
+        {
             participants.add(employeeList.getEmployeeByID(userID).getName());
         }
 
@@ -180,236 +194,324 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public MessageRoom getMessageRoomByID(int id) throws SQLException, RemoteException {
+    public MessageRoom getMessageRoomByID(int id) throws SQLException, RemoteException
+    {
         return api.getMessageRoomByID(id);
     }
 
 
     @Override
-    public void addEmployee(Employee employee) {
+    public void addEmployee(Employee employee)
+    {
         employeeList.addEmployee(employee);
         //TODO probably delete the whole method
     }
 
     @Override
-    public void addEmployee(String username, String password, String name, String surname, String role) throws SQLException, GeneralSecurityException, IOException {
-        employeeList.addEmployee(api.registerEmployee(username, password, name, surname, role));
+    public void addEmployee(String username, String password, String name, String surname, String role) throws SQLException, GeneralSecurityException, IOException
+    {
+        employeeList.addEmployee(api.employeeRegister(username, password, name, surname, role));
     }
 
     @Override
     public void addEmployee(String username, String password, String name, String surname,
-                            String role, ArrayList<String> permissions) throws SQLException, GeneralSecurityException, IOException {
-        Employee employee = api.registerEmployee(username, password, name, surname, role);
+                            String role, ArrayList<String> permissions) throws SQLException, GeneralSecurityException, IOException
+    {
+        Employee employee = api.employeeRegister(username, password, name, surname, role);
         employeeList.addEmployee(employee);
         for (String permission :
-                permissions) {
+                permissions)
+        {
             api.addPermission(getLoggedClientID(), employee.getId(), permission);
         }
     }
 
     @Override
-    public void removeEmployee(int employeeID) {
+    public void removeEmployee(int employeeID)
+    {
         employeeList.removeEmployee(employeeID);
     }
 
     @Override
-    public ArrayList<Employee> getEmployees() {
+    public ArrayList<Employee> getEmployees()
+    {
         return employeeList.getEmployees();
     }
 
     @Override
-    public ArrayList<Employee> getEmployees(ArrayList<Integer> employeesIDs) throws RemoteException {
-        return api.getEmployees(employeesIDs);
+    public ArrayList<Employee> getEmployees(ArrayList<Integer> employeesIDs) throws RemoteException
+    {
+        return api.employeeGetByIDs(employeesIDs);
     }
 
     @Override
-    public ArrayList<Employee> getEmployeesByMessageRoom(int messageRoom) {
+    public ArrayList<Employee> getEmployeesByMessageRoom(int messageRoom)
+    {
         return employeeList.getEmployeesByMessageRoom(messageRoom);
     }
 
     @Override
-    public ArrayList<Employee> getEmployeesByEvent(int eventID) {
+    public ArrayList<Employee> getEmployeesByEvent(int eventID)
+    {
         return employeeList.getEmployeesByEvent(eventID);
     }
 
     @Override
-    public ArrayList<Employee> getEmployeesByRole(String role) {
+    public ArrayList<Employee> getEmployeesByRole(String role)
+    {
         return employeeList.getEmployeesByRole(role);
     }
 
     @Override
-    public ArrayList<Employee> getEmployeesByText(String text) {
+    public ArrayList<Employee> getEmployeesByText(String text)
+    {
         return employeeList.getEmployeesByText(text);
     }
 
     @Override
-    public ArrayList<Employee> getEmployeesByAnything(String keyword) {
+    public ArrayList<Employee> getEmployeesByAnything(String keyword)
+    {
         return employeeList.getEmployeesByAnything(keyword);
     }
 
     @Override
-    public Employee getEmployeeByID(int ID) throws SQLException, RemoteException {
+    public Employee getEmployeeByID(int ID) throws SQLException, RemoteException
+    {
         return api.getEmployeeByID(ID);
     }
 
     @Override
-    public Employee employeeSetName(int employeeID2, String name) throws SQLException, RemoteException {
+    public Employee employeeSetName(int employeeID2, String name) throws SQLException, RemoteException
+    {
         return api.employeeSetName(getLoggedClientID(), employeeID2, name);
     }
 
     @Override
-    public Employee employeeSetSurname(int employeeID2, String surname) throws SQLException, RemoteException {
+    public Employee employeeSetSurname(int employeeID2, String surname) throws SQLException, RemoteException
+    {
         return api.employeeSetSurname(getLoggedClientID(), employeeID2, surname);
     }
 
     @Override
-    public Employee employeeSetRole(int employeeID2, String role) throws SQLException, RemoteException {
+    public Employee employeeSetRole(int employeeID2, String role) throws SQLException, RemoteException
+    {
         return api.employeeSetRole(getLoggedClientID(), employeeID2, role);
     }
 
+    /**
+     * Removes the employee from an event.
+     * @param employeeID An integer containing the Employee's ID
+     * @param eventID An integer containing the event ID.
+     */
+    @Override
+    public void removeEventFromEmployee(int employeeID, int eventID) throws SQLException, RemoteException
+    {
+        Employee employeeByID = getEmployeeByID(employeeID);
+        ArrayList<Integer> eventIDs = employeeByID.getEvents();
+
+        for (int i = 0; i < eventIDs.size(); i++)
+        {
+            if (eventIDs.get(i) == eventID)
+            {
+                employeeByID.removeEvent(i);
+                return;
+            }
+        }
+
+    }
+
+    /**
+     * Removes the employee from a message room.
+     * @param employeeID An integer containing the Employee's ID
+     * @param messageRoomID An integer containing the message room's ID.
+     */
+    @Override
+    public void removeMessageRoomFromEmployee(int employeeID, int messageRoomID) throws SQLException, RemoteException
+    {
+        Employee employeeByID = getEmployeeByID(employeeID);
+        ArrayList<Integer> messageRoomIDs = employeeByID.getMessageRooms();
+
+        for (int i = 0; i < messageRoomIDs.size(); i++)
+        {
+            if (messageRoomIDs.get(i) == messageRoomID)
+            {
+                employeeByID.removeMessageRoom(i);
+                return;
+            }
+        }
+
+    }
 
     @Override
-    public void addRoom(String roomNumber, String buildingAddress, int numberOfSeats, int floor) throws SQLException, RemoteException {
+    public void addRoom(String roomNumber, String buildingAddress, int numberOfSeats, int floor) throws SQLException, RemoteException
+    {
         Room room = api.createRoom(getLoggedClientID(), roomNumber, buildingAddress, numberOfSeats, floor);
         roomList.addRoom(room);
         System.out.println(roomNumber);
     }
 
     @Override
-    public void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment) {
+    public void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
+    {
         roomList.addRoom(roomCode, buildingAddress, numberOfSeats, floor, equipment);
         //TODO add adding rooms with equipment
     }
 
     @Override
-    public void removeRoom(int roomID) {
+    public void removeRoom(int roomID)
+    {
         roomList.removeRoom(roomID);
     }
 
     @Override
-    public void removeRoom(Room room) {
+    public void removeRoom(Room room)
+    {
         roomList.removeRoom(room);
     }
 
     @Override
-    public void modifyRoom(String roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment) {
+    public void modifyRoom(String roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
+    {
         roomList.modifyRoom(roomID, roomCode, buildingAddress, numberOfSeats, floor, equipment);
     }
 
     @Override
-    public void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment) {
+    public void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
+    {
         roomList.modifyRoom(room, roomCode, buildingAddress, numberOfSeats, floor, equipment);
     }
 
     @Override
-    public int getRoomsCreated() {
+    public int getRoomsCreated()
+    {
         return RoomList.getRoomsCreated();
     }
 
     @Override
-    public ArrayList<Room> getRooms() {
+    public ArrayList<Room> getRooms()
+    {
         return roomList.getRooms();
     }
 
     @Override
-    public ArrayList<Room> getRoomsByAnything(String keyword) {
+    public ArrayList<Room> getRoomsByAnything(String keyword)
+    {
         return roomList.getRoomsByAnything(keyword);
     }
 
     @Override
-    public Room getRoomByID(int roomID) throws SQLException, RemoteException {
+    public Room getRoomByID(int roomID) throws SQLException, RemoteException
+    {
         Room room = api.getRoomByID(roomID);
         roomList.addRoom(room);
         return room;
     }
 
     @Override
-    public void removeEquipment(Room room, String removedEquipment) {
+    public void removeEquipment(Room room, String removedEquipment)
+    {
         room.removeEquipment(removedEquipment);
     }
 
     @Override
-    public void addEquipment(Room room, String addedEquipment) {
+    public void addEquipment(Room room, String addedEquipment)
+    {
         room.addEquipment(addedEquipment);
     }
 
     @Override
-    public void setBuildingAddress(Room room, String buildingAddress) {
+    public void setBuildingAddress(Room room, String buildingAddress)
+    {
         room.setBuildingAddress(buildingAddress);
     }
 
     @Override
-    public void setEquipment(Room room, ArrayList<String> equipment) {
+    public void setEquipment(Room room, ArrayList<String> equipment)
+    {
         room.setEquipment(equipment);
     }
 
     @Override
-    public void setFloor(Room room, int floor) {
+    public void setFloor(Room room, int floor)
+    {
         room.setFloor(floor);
     }
 
     @Override
-    public void setNumberOfSeats(Room room, int numberOfSeats) {
+    public void setNumberOfSeats(Room room, int numberOfSeats)
+    {
         room.setNumberOfSeats(numberOfSeats);
     }
 
     @Override
-    public void setRoomNumber(Room room, String roomNumber) {
+    public void setRoomNumber(Room room, String roomNumber)
+    {
         room.setRoomNumber(roomNumber);
     }
 
     @Override
-    public void setTitle(String title) {
+    public void setTitle(String title)
+    {
         event.setTitle(title);
     }
 
     @Override
-    public void setParticipants(ArrayList<Integer> employees) {
+    public void setParticipants(ArrayList<Integer> employees)
+    {
         event.setParticipants(employees);
     }
 
     @Override
-    public ArrayList<Integer> getParticipants() {
+    public ArrayList<Integer> getParticipants()
+    {
         return event.getParticipants();
     }
 
     @Override
-    public void setOnline(boolean isOnline) {
+    public void setOnline(boolean isOnline)
+    {
         event.setOnline(isOnline);
     }
 
     @Override
-    public void setRoom(int room) {
+    public void setRoom(int room)
+    {
         event.setRoom(room);
     }
 
     @Override
-    public void setPlatform(String platform) {
+    public void setPlatform(String platform)
+    {
         event.setPlatform(platform);
     }
 
     @Override
-    public int getEvent_id() {
+    public int getEvent_id()
+    {
         return event.getEvent_id();
     }
 
     @Override
-    public String getTitle() {
+    public String getTitle()
+    {
         return event.getTitle();
     }
 
     @Override
-    public String getPlatform() {
+    public String getPlatform()
+    {
         return event.getPlatform();
     }
 
     @Override
-    public int getRoomID() {
+    public int getRoomID()
+    {
         return event.getRoomID();
     }
 
     @Override
-    public boolean isOnline() {
+    public boolean isOnline()
+    {
         return event.isOnline();
     }
 
@@ -429,92 +531,111 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void add(Event event) throws IllegalArgumentException {
+    public void add(Event event) throws IllegalArgumentException
+    {
         eventList.add(event);
     }
 
     @Override
-    public ArrayList<Event> getEvents() {
+    public ArrayList<Event> getEvents()
+    {
         return eventList.getEvents();
     }
 
     @Override
-    public ArrayList<Event> getEventByAnything(String s, String d) {
+    public ArrayList<Event> getEventByAnything(String s, String d)
+    {
         return eventList.getEventByAnything(s, d);
     }
 
     @Override
-    public ArrayList<Event> getEventExceptDate(String s) {
+    public ArrayList<Event> getEventExceptDate(String s)
+    {
         return eventList.getEventExceptDate(s);
     }
 
     @Override
-    public ArrayList<Event> getEventOnlyDate(String date) {
+    public ArrayList<Event> getEventOnlyDate(String date)
+    {
         return eventList.getEventOnlyDate(date);
     }
 
     @Override
-    public Event getEventByIndex(int index) {
+    public Event getEventByIndex(int index)
+    {
         return eventList.getEventByIndex(index);
     }
 
     @Override
-    public Event getEventByID(int id) {
+    public Event getEventByID(int id)
+    {
         return eventList.getEventByID(id);
     }
 
     @Override
-    public void remove(int index) {
+    public void remove(int index)
+    {
         eventList.remove(index);
     }
 
     @Override
-    public void removeByEventID(int id) {
+    public void removeByEventID(int id)
+    {
         eventList.removeByEventID(id);
     }
 
     @Override
-    public void removeAllEvents() {
+    public void removeAllEvents()
+    {
         eventList.removeAll();
     }
 
     @Override
-    public int getSize() {
+    public int getSize()
+    {
         return eventList.getSize();
     }
 
     @Override
-    public ArrayList<Integer> getParticipantsIDT() {
+    public ArrayList<Integer> getParticipantsIDT()
+    {
         return idT;
     }
 
     @Override
-    public ArrayList<Employee> getParticipantsT() {
+    public ArrayList<Employee> getParticipantsT()
+    {
         return employeesT;
     }
 
     @Override
-    public void addIDT(int id) {
+    public void addIDT(int id)
+    {
         idT.add(id);
         addEmployeeT(id);
     }
 
     @Override
-    public void addEmployeeT(int id) {
+    public void addEmployeeT(int id)
+    {
         employeesT.add(employeeList.getEmployeeByID(id));
     }
 
     @Override
-    public void removeEmployeeT(int id) {
-        for (int i = 0; i < employeesT.size(); i++) {
-            if (employeesT.get(i).getId() == id) {
+    public void removeEmployeeT(int id)
+    {
+        for (int i = 0; i < employeesT.size(); i++)
+        {
+            if (employeesT.get(i).getId() == id)
+            {
                 employeesT.remove(i);
             }
         }
     }
 
     @Override
-    public void clearTemporary() {
+    public void clearTemporary()
+    {
         employeesT.clear();
         idT.clear();
     }

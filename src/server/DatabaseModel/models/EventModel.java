@@ -7,6 +7,7 @@ import server.DatabaseModel.Utils.ResponseRow;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class EventModel extends Model
 {
@@ -15,24 +16,27 @@ public class EventModel extends Model
     super(connection, "event");
   }
 
-  private ArrayList<Event> getEmployeesFromResponse(DBResponse dbResponse) {
+  private ArrayList<Event> getEventsFromResponse(DBResponse dbResponse) {
     ArrayList<ResponseRow> rows = dbResponse.getRows();
     ArrayList<Event> events = new ArrayList<>();
     for(ResponseRow row : rows) {
       int id = Integer.parseInt(row.getField("id"));
-      int roomID = Integer.parseInt(row.getField("room_id"));
-      int creatorID = Integer.parseInt(row.getField("creator"));
-      int messageRoomID = Integer.parseInt(row.getField("message_room_id"));
-      long createTime = Integer.parseInt(row.getField("create_time"));
-      long startTime = Integer.parseInt(row.getField("start_time"));
-      long endTime = Integer.parseInt(row.getField("end_time"));
       String title = row.getField("title");
       String description = row.getField("description");
-      boolean isOnline = Boolean.parseBoolean(row.getField("is_online"));
       String platform = row.getField("platform");
       String url = row.getField("url");
-      // TODO: 5/21/2021 Fill correct values after event class is refactored
-      events.add(new Event());
+      int roomID = row.getField("room_id") == null ? -1 : Integer.parseInt(row.getField("room_id"));
+      int creatorID = Integer.parseInt(row.getField("creator"));
+      int messageRoomID = Integer.parseInt(row.getField("message_room_id"));
+      long createTime = Long.parseLong(row.getField("create_time"));
+      long startTime = Long.parseLong(row.getField("start_time"));
+      long endTime = Long.parseLong(row.getField("end_time"));
+      boolean isOnline = Boolean.parseBoolean(row.getField("is_online")) || row.getField("is_online").equals("t");
+      if(isOnline) { // online
+        events.add(new Event(id, title, description, platform, url, creatorID, roomID, messageRoomID, createTime, startTime, endTime));
+      } else { //offline
+        events.add(new Event(id, title, description, creatorID, roomID, messageRoomID, createTime, startTime, endTime));
+      }
     }
     return events;
   }
@@ -63,7 +67,7 @@ public class EventModel extends Model
     try
     {
       DBResponse dbResponse = super.modelGetAll(order, where, limit, offset);
-      events = getEmployeesFromResponse(dbResponse);
+      events = getEventsFromResponse(dbResponse);
     }
     catch (SQLException e)
     {
@@ -85,28 +89,79 @@ public class EventModel extends Model
       throws SQLException
   {
     DBResponse dbResponse = super.modelGetOne(where, order);
-    return getEmployeesFromResponse(dbResponse).get(0);
+    return getEventsFromResponse(dbResponse).get(0);
   }
 
-  public Event create()
+  public Event create(String title, String description, int roomID, int creator, int messageRoomID, long startTime, long endTime)
       throws SQLException
   {
-    // TODO: 5/21/2021 Fill correct fields and values after event class is refactored
+    return this.create(title, description, null, null, false, roomID, creator, messageRoomID, startTime, endTime);
+  }
+  public Event create(String title, String description, String platform, String url, int creator, int messageRoomID, long startTime, long endTime)
+      throws SQLException
+  {
+    return this.create(title, description, platform, url, true, -1, creator, messageRoomID, startTime, endTime);
+  }
+  public Event create(String title, String description, String platform, String url, boolean isOnline, int roomID, int creator, int messageRoomID, long startTime, long endTime)
+      throws SQLException
+  {
+    String[] stringValues = formatStringValues(new String[] {
+        title, description
+    });
+    ArrayList<String> values = new ArrayList<>(Arrays.asList(stringValues));
+    if(platform != null) {
+      values.add("'" + platform + "'");
+    } else {
+      values.add(null);
+    }
+    if(url != null) {
+      values.add("'" + url + "'");
+    } else {
+      values.add(null);
+    }
+    values.add(String.valueOf(isOnline));
+    values.add(String.valueOf(roomID == -1 ? null : roomID));
+    values.add(String.valueOf(creator));
+    values.add(String.valueOf(messageRoomID));
+    values.add(String.valueOf(System.currentTimeMillis()));
+    values.add(String.valueOf(startTime));
+    values.add(String.valueOf(endTime));
+    String finalValues[] = new String[values.size()];
+    for (int j = 0; j < values.size(); j++) {
+      finalValues[j] = values.get(j);
+    }
     DBResponse dbResponse = super.modelInsert(
         new String[] {
-            /*"username", "password", "name", "surname", "role"*/
+            "title", "description", "platform", "url", "is_online", "room_id", "creator", "message_room_id", "create_time", "start_time", "end_time"
         },
-        formatStringValues(new String[] {
-            /*username, password, name, surname, role*/
-        })
+        finalValues
     );
-    return getEmployeesFromResponse(dbResponse).get(0);
+    return getEventsFromResponse(dbResponse).get(0);
   }
 
   public ArrayList<Event> edit(String[] fields, String[] values, String where)
       throws SQLException
   {
     DBResponse dbResponse = super.modelUpdate(fields, values, where);
-    return getEmployeesFromResponse(dbResponse);
+    return getEventsFromResponse(dbResponse);
+  }
+
+  public Event editByID(String[] fields, String[] values, int eventID)
+      throws SQLException
+  {
+    DBResponse dbResponse = super.modelUpdate(fields, values, "id = " + eventID);
+    return getEventsFromResponse(dbResponse).get(0);
+  }
+
+  public boolean deleteByID(int eventID)
+  {
+    try
+    {
+      return super.modelDelete("id = " + eventID);
+    } catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
   }
 }
