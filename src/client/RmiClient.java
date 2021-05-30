@@ -2,6 +2,7 @@ package client;
 
 import Shared.API;
 import Shared.Employee.Employee;
+import Shared.Event.Event;
 import Shared.Messages.Message;
 import Shared.Messages.MessageRoom;
 import Shared.Room.Room;
@@ -212,5 +213,59 @@ public class RmiClient
 
     //EVENT
 
+    public Event eventCreateOffline(int employeeID1, String title, String description, int roomID, long startTime, long endTime) throws SQLException, RemoteException
+    {
+        return server.eventCreateOffline(employeeID1, title, description, roomID, startTime, endTime);
+    }
+
+    public Event eventCreateOnline(int employeeID1, String title, String description, String platform, String url, long startTime, long endTime) throws SQLException, RemoteException
+    {
+        return server.eventCreateOnline(employeeID1, title, description, platform, url, startTime, endTime);
+    }
+
+    public boolean eventDeleteByID(int employeeID1, int eventID) throws RemoteException
+    {
+        return server.eventDeleteByID(employeeID1, eventID);
+    }
+
+    public Event eventSetTitle(int employeeID1, int eventID, String title) throws SQLException, RemoteException
+    {
+        return server.eventSetTitle(employeeID1, eventID, title);
+    }
+
+    public Event eventSetDescription(int employeeID1, int eventID, String description) throws SQLException, RemoteException
+    {
+        return server.eventSetDescription(employeeID1, eventID, description);
+    }
+
+    public Event eventSetOnlineURL(int employeeID1, int eventID, String url) throws SQLException, RemoteException
+    {
+        return server.eventSetOnlineURL(employeeID1, eventID, url);
+    }
+
+    public Event eventSetPlatform(int employeeID1, int eventID, String platform) throws SQLException, RemoteException
+    {
+        return server.eventSetPlatform(employeeID1, eventID, platform);
+    }
+
+    public Event eventSetOnlineState(int employeeID1, int eventID, boolean isOnline) throws SQLException, RemoteException
+    {
+        return server.eventSetOnlineState(employeeID1, eventID, isOnline);
+    }
+
+    public Event eventSetTime(int employeeID1, int eventID, long startTime, long endTime) throws SQLException, RemoteException
+    {
+        return server.eventSetTime(employeeID1, eventID, startTime, endTime);
+    }
+
+    public boolean eventJoin(int employeeID1, int eventID) throws SQLException, RemoteException
+    {
+        return server.eventJoin(employeeID1, eventID);
+    }
+
+    public boolean eventLeave(int employeeID1, int eventID) throws SQLException, RemoteException
+    {
+        return server.eventLeave(employeeID1, eventID);
+    }
 
 }

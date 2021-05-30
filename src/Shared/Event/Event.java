@@ -45,17 +45,6 @@ public class Event {
     private ArrayList<Integer> participants;
     private Model model;
 
-    //online
-    public Event(int id, String title, String description, String platform, String url, int creatorID, int roomID, int messageRoomID, long createTime, long startTime, long endTime)
-    {
-        //todo make constructors for EventModel 36
-    }
-
-    //offline
-    public Event(int id, String title, String description, int creatorID, int roomID, int messageRoomID, long createTime, long startTime, long endTime)
-    {
-        //todo make constructors for EventModel 38
-    }
 
     public Event(String title, String description, long startTime, long endTime, String platform, String onlineLink,
                  ArrayList<Integer> participants, Model model) {  // constructor for online meetings
