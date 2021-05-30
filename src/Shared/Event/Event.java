@@ -245,6 +245,7 @@ public class Event {
         timeFormat += setMinuteFull(minuteS);
         this.calendarS = Calendar.getInstance();
         calendarS.set(yearS, monthS - 1, dayS, hourS, minuteS);
+        LocalDateTime startDate = LocalDateTime.of(yearS, monthS, dayS, hourS, minuteS);
         if ((hourS >= 9 && hourS < 17) &&
                 (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6)) {
             this.time_start = timeFormat;
@@ -256,16 +257,11 @@ public class Event {
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
         String timeFormat1 = "";
-        timeFormat1 += String.valueOf(yearS);
-        timeFormat1 += "-";
-        timeFormat1 += setMonthSFull(monthS);
-        timeFormat1 += "-";
-        timeFormat1 += setDaySFull(dayS);
-        timeFormat1 += "  ";
         timeFormat1 += setHourFull(hourE);
         timeFormat1 += ":";
         timeFormat1 += setMinuteFull(minuteE);
-        if (hourE >= 9 && hourE < 17) {
+        LocalDateTime endDate = LocalDateTime.of(yearS, monthS, dayS, hourE, minuteE);
+        if ((hourE >= 9 && hourE < 17) && startDate.isBefore(endDate)) {
             if (hourE > hourS) {
                 this.time_end = timeFormat1;
                 this.hourE = hourE;
