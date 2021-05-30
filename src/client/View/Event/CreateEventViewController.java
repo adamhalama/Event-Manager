@@ -249,11 +249,8 @@ public class CreateEventViewController {
 
             LocalDate date = this.startDate.getValue();
             int dayS = date.getDayOfMonth();
-            int dayE = dayS;
             int monthS = date.getMonthValue();
-            int monthE = monthS;
             int yearS = date.getYear();
-            int yearE = yearS;
 
             int hourS;
             switch (hourMenuS.getSelectionModel().getSelectedIndex()) {
@@ -387,17 +384,25 @@ public class CreateEventViewController {
             //ArrayList<Integer> participantsID = viewModel.getIDs();
             ArrayList<Integer> participantsID = new ArrayList<>();
 
+            String stringDate = date.getDayOfMonth() + "." + date.getMonthValue() + "." + date.getYear();
+
+            long timestamp = parseString(stringDate);
+
+            long startTimestamp = timestamp + (hourMenuS.getValue().longValue() * 60 * 60 * 1000)
+                    + (Long.parseLong(minuteMenuS.getValue()) * 60 * 1000 );
+
+            long endTimestamp = timestamp + (hourMenuE.getValue().longValue() * 60 * 60 * 1000)
+                    + (Long.parseLong(minuteMenuE.getValue()) * 60 * 1000);
+
+            System.out.println(startTimestamp);
             if (viewModel.isOnline()) {
                 if (title != null || yearS != 0 && monthS != 0 && dayS != 0 && hourS != 0 && minuteS != -1 && hourE != 0 && minuteE != -1
                         && platform != null && getChooseStatus() != -1) {
-                    Event e = new Event(title, des, yearS, monthS, dayS, hourS, minuteS, hourE, minuteE,
-                            true, platform, link, model, participantsID);
-                    viewModel.addEvent(e);
-                    viewModel.setIdProperty(e.getEvent_id());
+                    viewModel.add(title, des, yearS, monthS, dayS, hourS, minuteS, hourE, minuteE, startTimestamp, endTimestamp,
+                            platform, link, model, participantsID);
                     Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                     a.setTitle("Event added." + " Type: online room.");
                     a.setHeaderText("Event has been added.");
-                    a.setContentText(e.toString());
                     Optional<ButtonType> result = a.showAndWait();
                     if (result.get() == ButtonType.OK) {
                         a.close();
@@ -406,14 +411,11 @@ public class CreateEventViewController {
             } else {
                 if (title != null && yearS != 0 && monthS != 0 && dayS != 0 && hourS != 0 && minuteS != -1
                         && hourE != 0 && minuteE != -1 && room != 0 && getChooseStatus() != -1) {
-                    Event e = new Event(title, des, yearS, monthS, dayS, hourS, minuteS, hourE, minuteE,
-                            false, room, model, participantsID);
-                    viewModel.addEvent(e);
-                    viewModel.setIdProperty(e.getEvent_id());
+                    viewModel.add(title, des, yearS, monthS, dayS, hourS, minuteS, hourE, minuteE, startTimestamp, endTimestamp,
+                            room, model, participantsID);
                     Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                     a.setTitle("Event added." + " Type: physical room.");
                     a.setHeaderText("Event has been added.");
-                    a.setContentText(e.toString());
                     Optional<ButtonType> result = a.showAndWait();
                     if (result.get() == ButtonType.OK) {
                         a.close();

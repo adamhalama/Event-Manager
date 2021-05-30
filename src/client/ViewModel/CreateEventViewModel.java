@@ -1,6 +1,7 @@
 package client.ViewModel;
 
 import Shared.Event.Event;
+import Shared.Room.Room;
 import client.Model.Model;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -114,5 +115,23 @@ public class CreateEventViewModel {
         return model.getEvent_id();
     }
 
-    public void add()
+    public void add(String title, String des, int year, int month, int day, int hourS, int minuteS,
+                    int hourE, int minuteE, long startTime, long endTime, String platform, String link,
+                    Model model, ArrayList<Integer> paticipants){
+        Event e1 = new Event(title, des, year, month, day, hourS, minuteS, hourE, minuteE,
+                true, platform, link, model, paticipants); // for local constructor
+        Event e2 = new Event(title, des, startTime, endTime, platform, link, paticipants, model);
+        addEvent(e1);
+        setIdProperty(e1.getEvent_id());
+    }
+
+    public void add(String title, String des, int year, int month, int day, int hourS, int minuteS,
+                    int hourE, int minuteE, long startTime, long endTime, int id,
+                    Model model, ArrayList<Integer> paticipants){
+        Event e1 = new Event(title, des, year, month, day, hourS, minuteS, hourE, minuteE,
+                false, id, model, paticipants); // for local constructor
+        Event e2 = new Event(title, des, startTime, endTime, id, paticipants, model);
+        addEvent(e1);
+        setIdProperty(e1.getEvent_id());
+    }
 }
