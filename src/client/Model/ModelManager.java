@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.security.GeneralSecurityException;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -80,12 +80,13 @@ public class ModelManager implements Model
         //logging in works, but i dont want to go to the login view every time
 
 
-//        loggedEmployee = new Employee(7, "admin", "Admin", "Admin", "Admin", false);
+//       loggedEmployee = new Employee(7, "admin", "Admin", "Admin", "Admin", false);
 //        employeeList.addEmployee(loggedEmployee);
 
 
         try
         {
+//            addEmployee("admin", "admin", "Admin", "Admin" , "test admin");
             this.login("admin", "admin");
         } catch (SQLException | GeneralSecurityException | IOException throwables)
         {
@@ -130,9 +131,9 @@ public class ModelManager implements Model
     }
 
     @Override
-    public MessageRoom messageRoomCreatePrivate(int employeeID1, int employeeID2) throws SQLException, RemoteException
+    public MessageRoom messageRoomCreatePrivate(int employeeID2) throws SQLException, RemoteException
     {
-        return api.messageRoomCreatePrivate(employeeID1, employeeID2);
+        return api.messageRoomCreatePrivate(getLoggedClientID(), employeeID2);
     }
 
     @Override
@@ -140,6 +141,25 @@ public class ModelManager implements Model
     {
         messageRoomList.addMessageRoom(name, usersIDs);
     }
+
+    @Override
+    public MessageRoom messageRoomSetName(int messageRoomID, String name) throws SQLException, RemoteException
+    {
+        return api.messageRoomSetName(getLoggedClientID(), messageRoomID, name);
+    }
+
+    @Override
+    public ArrayList<Message> messagesGet(int messageRoomID, int offset) throws RemoteException
+    {
+        return api.messagesGet(getLoggedClientID(), messageRoomID, offset);
+    }
+
+    @Override
+    public Message sendMessage(int messageRoomID, String message) throws SQLException, RemoteException
+    {
+        return api.messagePost(getLoggedClientID(), messageRoomID, message);
+    }
+
 
     @Override
     public void removeMessageRoomFromEmployee(int messageRoomID)
@@ -157,6 +177,12 @@ public class ModelManager implements Model
     public ArrayList<MessageRoom> getMessageRoomsByEmployeeID(int employeeID)
     {
         return messageRoomList.getMessageRoomsByEmployeeID(employeeID);
+    }
+
+    @Override
+    public ArrayList<MessageRoom> messageRoomGetPrivate(int employeeID1) throws RemoteException
+    {
+        return api.messageRoomGetPrivate(employeeID1);
     }
 
     @Override
@@ -226,15 +252,29 @@ public class ModelManager implements Model
         }
     }
 
+
     @Override
-    public void removeEmployee(int employeeID)
+    public Employee removeEmployee(int employeeID) throws SQLException, RemoteException
     {
         employeeList.removeEmployee(employeeID);
+        return api.employeeDelete(getLoggedClientID(), employeeID);
     }
 
     @Override
-    public ArrayList<Employee> getEmployees()
+    public Employee employeeRestore(int employeeID) throws SQLException, RemoteException
     {
+        if (!employeeList.restoreEmployee(employeeID))
+        {
+            getEmployeeByID(employeeID); // getting the emp from the server, if he is not in the list
+            employeeList.restoreEmployee(employeeID);
+        }
+        return api.employeeRestore(getLoggedClientID(), employeeID);
+    }
+
+    @Override
+    public ArrayList<Employee> getEmployees() throws RemoteException
+    {
+        employeeList.addAllEmployees(api.getAllEmployees());
         return employeeList.getEmployees();
     }
 
@@ -277,7 +317,10 @@ public class ModelManager implements Model
     @Override
     public Employee getEmployeeByID(int ID) throws SQLException, RemoteException
     {
-        return api.getEmployeeByID(ID);
+        if (employeeList.getEmployeeByID(ID) == null)
+            employeeList.addEmployee(api.getEmployeeByID(ID));
+
+        return employeeList.getEmployeeByID(ID);
     }
 
     @Override
@@ -300,8 +343,9 @@ public class ModelManager implements Model
 
     /**
      * Removes the employee from an event.
+     *
      * @param employeeID An integer containing the Employee's ID
-     * @param eventID An integer containing the event ID.
+     * @param eventID    An integer containing the event ID.
      */
     @Override
     public void removeEventFromEmployee(int employeeID, int eventID) throws SQLException, RemoteException
@@ -322,7 +366,8 @@ public class ModelManager implements Model
 
     /**
      * Removes the employee from a message room.
-     * @param employeeID An integer containing the Employee's ID
+     *
+     * @param employeeID    An integer containing the Employee's ID
      * @param messageRoomID An integer containing the message room's ID.
      */
     @Override
@@ -357,28 +402,50 @@ public class ModelManager implements Model
         //TODO add adding rooms with equipment
     }
 
+
     @Override
-    public void removeRoom(int roomID)
+    public void removeRoom(int roomID) throws RemoteException
     {
         roomList.removeRoom(roomID);
+        api.roomDeleteByID(getLoggedClientID(), roomID);
     }
 
     @Override
-    public void removeRoom(Room room)
+    public void removeRoom(Room room) throws RemoteException
     {
-        roomList.removeRoom(room);
+        int roomID = room.getRoomID();
+        roomList.removeRoom(roomID);
+        api.roomDeleteByID(getLoggedClientID(), roomID);
     }
 
     @Override
-    public void modifyRoom(String roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
+    public void modifyRoom(int roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor) throws SQLException, RemoteException
     {
-        roomList.modifyRoom(roomID, roomCode, buildingAddress, numberOfSeats, floor, equipment);
+        roomList.modifyRoom(roomID, roomCode, buildingAddress, numberOfSeats, floor);
+        api.roomSetFloor(getLoggedClientID(), roomID, floor);
+        api.roomSetNumberOfSeats(getLoggedClientID(), roomID, numberOfSeats);
+        api.roomSetRoomNumber(getLoggedClientID(), roomID, roomCode);
+        api.roomSetBuildingAddress(getLoggedClientID(), roomID, buildingAddress);
     }
 
     @Override
-    public void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
+    public boolean roomEquipmentAdd(int roomID, String equipment) throws RemoteException, SQLException
     {
-        roomList.modifyRoom(room, roomCode, buildingAddress, numberOfSeats, floor, equipment);
+        getRoomByID(roomID).addEquipment(equipment);
+        return api.roomEquipmentAdd(roomID, equipment);
+    }
+
+    @Override
+    public boolean roomEquipmentRemove(int roomID, String equipment) throws RemoteException, SQLException
+    {
+        getRoomByID(roomID).removeEquipment(equipment);
+        return api.roomEquipmentRemove(roomID, equipment);
+    }
+
+    @Override
+    public void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor)
+    {
+        roomList.modifyRoom(room, roomCode, buildingAddress, numberOfSeats, floor);
     }
 
     @Override
@@ -388,14 +455,16 @@ public class ModelManager implements Model
     }
 
     @Override
-    public ArrayList<Room> getRooms()
+    public ArrayList<Room> getRooms() throws RemoteException
     {
+        roomList.addAllRooms(api.getAllRooms());
         return roomList.getRooms();
     }
 
     @Override
-    public ArrayList<Room> getRoomsByAnything(String keyword)
+    public ArrayList<Room> getRoomsByAnything(String keyword) throws RemoteException
     {
+        getRooms();
         return roomList.getRoomsByAnything(keyword);
     }
 
@@ -450,9 +519,9 @@ public class ModelManager implements Model
     }
 
     @Override
-    public void setTitle(String title)
+    public ArrayList<Integer> getParticipants()
     {
-        event.setTitle(title);
+        return event.getParticipants();
     }
 
     @Override
@@ -462,27 +531,9 @@ public class ModelManager implements Model
     }
 
     @Override
-    public ArrayList<Integer> getParticipants()
-    {
-        return event.getParticipants();
-    }
-
-    @Override
-    public void setOnline(boolean isOnline)
-    {
-        event.setOnline(isOnline);
-    }
-
-    @Override
     public void setRoom(int room)
     {
         event.setRoom(room);
-    }
-
-    @Override
-    public void setPlatform(String platform)
-    {
-        event.setPlatform(platform);
     }
 
     @Override
@@ -498,9 +549,21 @@ public class ModelManager implements Model
     }
 
     @Override
+    public void setTitle(String title)
+    {
+        event.setTitle(title);
+    }
+
+    @Override
     public String getPlatform()
     {
         return event.getPlatform();
+    }
+
+    @Override
+    public void setPlatform(String platform)
+    {
+        event.setPlatform(platform);
     }
 
     @Override
@@ -516,17 +579,26 @@ public class ModelManager implements Model
     }
 
     @Override
-    public long getStartTime() {
+    public void setOnline(boolean isOnline)
+    {
+        event.setOnline(isOnline);
+    }
+
+    @Override
+    public long getStartTime()
+    {
         return event.getStartTime();
     }
 
     @Override
-    public long getEndTime() {
+    public long getEndTime()
+    {
         return event.getEndTime();
     }
 
     @Override
-    public long getCreateTime() {
+    public long getCreateTime()
+    {
         return event.getCreateTime();
     }
 
@@ -558,6 +630,18 @@ public class ModelManager implements Model
     public ArrayList<Event> getEventOnlyDate(String date)
     {
         return eventList.getEventOnlyDate(date);
+    }
+
+    @Override
+    public String getFormattedDateTime(long timestamp)
+    {
+        return new SimpleDateFormat("HH:mm:ss MM.dd.yyyy").format(timestamp);
+    }
+
+    @Override
+    public ArrayList<Event> getEventsByRoom(int roomID)
+    {
+        return eventList.getEventsByRoom(roomID);
     }
 
     @Override

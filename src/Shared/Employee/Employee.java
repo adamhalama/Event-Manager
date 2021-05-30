@@ -19,6 +19,9 @@ public class Employee implements Serializable
     private String username;
     private String name;
     private String surname;
+    /**
+     * Boolean saying if the employee has been deleted from the system, not showing in any new lists.
+     */
     private boolean deleted;
     /**
      * ArrayList of integers representing eventID's
@@ -292,7 +295,7 @@ public class Employee implements Serializable
      * Gets the deleted state of the employee.
      * @return A boolean of employee deleted state.
      */
-    public boolean getDeleted()
+    public boolean isDeleted()
     {
         return deleted;
     }

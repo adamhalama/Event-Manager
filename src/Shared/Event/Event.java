@@ -45,8 +45,22 @@ public class Event {
     private int roomID; //if physical, choose a room (it could be another type, let's see in the future)
     private int creatorID;
     private ArrayList<Integer> participants;
+
+    private int messageRoomID;
+
     private Model model;
 
+    //online
+    public Event(int id, String title, String description, String platform, String url, int creatorID, int roomID, int messageRoomID, long createTime, long startTime, long endTime)
+    {
+        //todo make constructors for EventModel 36
+    }
+
+    //offline
+    public Event(int id, String title, String description, int creatorID, int roomID, int messageRoomID, long createTime, long startTime, long endTime)
+    {
+        //todo make constructors for EventModel 38
+    }
 
     public Event(String title, String description, long startTime, long endTime, String platform, String onlineLink,
                  ArrayList<Integer> participants, Model model)
@@ -301,6 +315,7 @@ public class Event {
         this.creatorID = -1;
         this.participants = null;
     }
+
 
     public long dateToStamp(String date) {
         try {
@@ -652,6 +667,17 @@ public class Event {
         return mf;
     }
 
+    public String getTitleTimeString()
+    {
+        String s = title;
+        s += " ";
+        s += new SimpleDateFormat("dd.MM.yyyy HH:mm").format(startTime);
+        s += " - ";
+        s += new SimpleDateFormat("HH:mm").format(endTime);
+
+        return s;
+    }
+
     public void setDateString(String dateString) {
         this.dateString = dateString;
     }
@@ -689,5 +715,10 @@ public class Event {
 
     public String dateString() {
         return getTime_start() + " " + getTime_end();
+    }
+
+    public int getMessageRoomID()
+    {
+        return messageRoomID;
     }
 }

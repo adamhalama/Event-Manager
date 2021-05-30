@@ -55,6 +55,17 @@ public class EventViewModel {
         this.sizeProperty = new SimpleIntegerProperty(event.participantsSize());
     }
 
+    public EventViewModel(int id, String title, String date, String endTime, String creator, int numberOfParticipants) // made for roomEventsView
+    {
+        this.idProperty = new SimpleIntegerProperty(id);
+        this.titleProperty = new SimpleStringProperty(title);
+        this.startDate = new SimpleStringProperty(date);
+        this.endTime = new SimpleStringProperty(endTime);
+        this.creatorProperty = new SimpleStringProperty(creator);
+        this.sizeProperty = new SimpleIntegerProperty(numberOfParticipants);
+    }
+
+
     public IntegerProperty getIdProperty() {
         return idProperty;
     }

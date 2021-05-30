@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.security.GeneralSecurityException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface Model {
@@ -30,15 +29,23 @@ public interface Model {
 
     void addMessageRoom(String name);
 
-    MessageRoom messageRoomCreatePrivate(int employeeID1, int employeeID2) throws SQLException, RemoteException;
+    MessageRoom messageRoomCreatePrivate(int employeeID2) throws SQLException, RemoteException;
 
     void addMessageRoom(String name, ArrayList<Integer> usersIDs);
+
+    Message sendMessage(int messageRoomID, String message) throws SQLException, RemoteException;
+
+    MessageRoom messageRoomSetName(int messageRoomID, String name) throws SQLException, RemoteException;
+
+    ArrayList<Message> messagesGet(int messageRoomID, int offset) throws RemoteException;
 
     void removeMessageRoomFromEmployee(int messageRoomID);
 
     void removeMessageRoomFromEmployee(MessageRoom room);
 
     ArrayList<MessageRoom> getMessageRoomsByEmployeeID(int employeeID);
+
+    ArrayList<MessageRoom> messageRoomGetPrivate(int employeeID1) throws RemoteException;
 
     ArrayList<MessageRoom> getMessageRoomsByAnything(String keyword);
 
@@ -59,9 +66,11 @@ public interface Model {
 
     void addEmployee(String username, String password, String name, String surname, String role, ArrayList<String> permissions) throws SQLException, GeneralSecurityException, IOException;
 
-    void removeEmployee(int employeeID);
+    Employee removeEmployee(int employeeID) throws SQLException, RemoteException;
 
-    ArrayList<Employee> getEmployees();
+    Employee employeeRestore(int employeeID) throws SQLException, RemoteException;
+
+    ArrayList<Employee> getEmployees() throws RemoteException;
 
     ArrayList<Employee> getEmployees(ArrayList<Integer> employeesIDs) throws RemoteException;
 
@@ -94,19 +103,23 @@ public interface Model {
 
     void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment);
 
-    void removeRoom(int roomID);
+    void removeRoom(int roomID) throws RemoteException;
 
-    void removeRoom(Room room);
+    void removeRoom(Room room) throws RemoteException;
 
-    void modifyRoom(String roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment);
+    void modifyRoom(int roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor) throws SQLException, RemoteException;
 
-    void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment);
+    boolean roomEquipmentAdd(int roomID, String equipment) throws RemoteException, SQLException;
+
+    boolean roomEquipmentRemove(int roomID, String equipment) throws RemoteException, SQLException;
+
+    void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor);
 
     int getRoomsCreated();
 
-    ArrayList<Room> getRooms();
+    ArrayList<Room> getRooms() throws RemoteException;
 
-    ArrayList<Room> getRoomsByAnything(String keyword);
+    ArrayList<Room> getRoomsByAnything(String keyword) throws RemoteException;
 
     Room getRoomByID(int roomID) throws SQLException, RemoteException;
 
@@ -165,6 +178,10 @@ public interface Model {
     ArrayList<Event> getEventExceptDate(String s);
 
     ArrayList<Event> getEventOnlyDate(String date);
+
+    String getFormattedDateTime(long timestamp);
+
+    ArrayList<Event> getEventsByRoom(int roomID);
 
     Event getEventByIndex(int index);
 

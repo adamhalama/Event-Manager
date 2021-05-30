@@ -12,6 +12,7 @@ import client.View.Helpers.SelectState;
 import client.View.Login.LoginViewController;
 import client.View.MainMenu.MainMenuViewController;
 import client.View.Room.CreateRoomViewController;
+import client.View.Room.RoomEventsViewController;
 import client.View.Room.RoomListViewController;
 import client.ViewModel.ViewModelFactory;
 import javafx.fxml.FXMLLoader;
@@ -43,12 +44,15 @@ public class ViewHandler {
     private EventInfoViewController eventInfoViewController;
     private EventEmployeeViewController eventEmployeeViewController;
     private CreateMessageRoomViewController createMessageRoomViewController;
+    private RoomEventsViewController roomEventsViewController;
+
 
 //    private RoomViewController roomViewController;
 
     private int pickedRoomID;
     private int pickedEmployeeID;
     private int pickedMessageRoomID;
+
 
 
     public ViewHandler(ViewModelFactory viewModelFactory, Model model, SelectState selectState) {
@@ -105,6 +109,9 @@ public class ViewHandler {
                 break;
             case "Room":
                 root = loadRoomView("Room/CreateRoomView.fxml");
+                break;
+            case "RoomEvents":
+                root = loadRoomScheduleView("Room/RoomEventsView.fxml");
                 break;
 
             case "EmployeeList":
@@ -299,6 +306,24 @@ public class ViewHandler {
         return createRoomViewController.getRoot();
     }
 
+    private Region loadRoomScheduleView(String fxmlFile)
+    {
+        if (roomEventsViewController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                roomEventsViewController = loader.getController();
+                roomEventsViewController.init(this, viewModelFactory.getRoomEventsViewModel(), root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        viewModelFactory.getCreateRoomViewModel().setCurrentRoomID(pickedRoomID);
+        viewModelFactory.getCreateRoomViewModel().reset();
+        return roomEventsViewController.getRoot();
+    }
+
 
     private Region loadCreateEventView(String fxmlFile) {
         if (createEventViewController == null) {
@@ -312,6 +337,7 @@ public class ViewHandler {
                 e.printStackTrace();
             }
         }
+        createEventViewController.reset();
         return createEventViewController.getRoot();
     }
 

@@ -139,7 +139,7 @@ public class EmployeeViewModel
             for (Integer eventID :
                     currentEmp.getEvents())
             {
-                eventsList.add(model.getEventByID(eventID).getTitle());
+                eventsList.add(model.getEventByID(eventID).getTitleTimeString());
             }
 
             for (Integer messageRoomID :

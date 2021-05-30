@@ -2,6 +2,7 @@ package client.View.Event;
 
 import Shared.Employee.Employee;
 import Shared.Event.Event;
+import Shared.Room.Room;
 import client.Model.Model;
 import client.View.ViewHandler;
 import client.ViewModel.CreateEventViewModel;
@@ -15,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import client.ViewModel.EmployeeViewModel;
 import client.ViewModel.EventViewModel;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
@@ -64,6 +66,7 @@ public class CreateEventViewController {
     @FXML
     private Label errorLabel;
     private int chooseStatus;
+    private ObservableList<Integer> roomList;
 
     private ViewHandler viewHandler;
     private CreateEventViewModel viewModel;
@@ -99,7 +102,10 @@ public class CreateEventViewController {
         this.minuteMenuS.setItems(FXCollections.observableArrayList("00", "15", "30", "45"));
         this.hourMenuE.setItems(FXCollections.observableArrayList(9, 10, 11, 12, 13, 14, 15, 16));
         this.minuteMenuE.setItems(FXCollections.observableArrayList("00", "15", "30", "45"));
-        this.roomMenu.setItems(FXCollections.observableArrayList(1, 2, 3));
+
+        roomList = FXCollections.observableArrayList();
+
+        this.roomMenu.setItems(roomList);
         this.platformMenu.setItems(FXCollections.observableArrayList("Discord", "Zoom", "Teams"));
 
 
@@ -155,6 +161,20 @@ public class CreateEventViewController {
         linkTextField.setText(null);
         resetPress();
         model.clearTemporary();
+
+        roomList.clear();
+        try
+        {
+            for (Room r:
+                 model.getRooms())
+            {
+                roomList.add(r.getRoomID());
+            }
+        } catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
@@ -363,20 +383,7 @@ public class CreateEventViewController {
                     platform = null;
             }
 
-            int room;
-            switch (roomMenu.getSelectionModel().getSelectedIndex()) {
-                case 0:
-                    room = 1;
-                    break;
-                case 1:
-                    room = 2;
-                    break;
-                case 2:
-                    room = 3;
-                    break;
-                default:
-                    room = 0;
-            }
+            int room = roomMenu.getSelectionModel().getSelectedItem();
 
             String link;
             if (linkTextField.getText() != null) {
@@ -413,7 +420,7 @@ public class CreateEventViewController {
                     Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                     a.setTitle("Event added." + " Type: physical room.");
                     a.setHeaderText("Event has been added.");
-                    a.setContentText(e.toString());
+//                    a.setContentText(e.toString());
                     Optional<ButtonType> result = a.showAndWait();
                     if (result.get() == ButtonType.OK) {
                         a.close();
@@ -438,6 +445,7 @@ public class CreateEventViewController {
                     b.close();
                 }
                 errorLabel.setText(e.getMessage());
+                e.printStackTrace();
             } else errorLabel.setText("You are missing something!");
 //            error :  Label.text : A bound value cannot be set.
         }

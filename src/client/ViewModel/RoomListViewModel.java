@@ -7,6 +7,8 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.rmi.RemoteException;
+
 public class RoomListViewModel
 {
     private StringProperty searchBox;
@@ -34,11 +36,16 @@ public class RoomListViewModel
 
         roomList.clear();
 
-        Room[] rooms = model.getRooms().toArray(new Room[0]);
 
-        for (Room r : rooms)
+        try
         {
-            roomList.add(new RoomViewModel(r.getRoomID(), r.getRoomNumber(), r.getFloor(), r.getBuildingAddress(), r.getNumberOfSeats()));
+            for (Room r : model.getRooms())
+            {
+                roomList.add(new RoomViewModel(r.getRoomID(), r.getRoomNumber(), r.getFloor(), r.getBuildingAddress(), r.getNumberOfSeats()));
+            }
+        } catch (RemoteException e)
+        {
+            e.printStackTrace();
         }
     }
 
@@ -71,17 +78,28 @@ public class RoomListViewModel
         else
         roomList.clear();
 
-        Room[] rooms = model.getRoomsByAnything(searchBox.get()).toArray(new Room[0]);
 
-        for (Room r : rooms)
+        try
         {
-            roomList.add(new RoomViewModel(r.getRoomID(), r.getRoomNumber(), r.getFloor(), r.getBuildingAddress(), r.getNumberOfSeats()));
+            for (Room r : model.getRoomsByAnything(searchBox.get()))
+            {
+                roomList.add(new RoomViewModel(r.getRoomID(), r.getRoomNumber(), r.getFloor(), r.getBuildingAddress(), r.getNumberOfSeats()));
+            }
+        } catch (RemoteException e)
+        {
+            e.printStackTrace();
         }
     }
 
     public void removeRoom(int selectedIndex, int roomID)
     {
-        roomList.remove(selectedIndex);
-        model.removeRoom(roomID);
+        try
+        {
+            model.removeRoom(roomID);
+            roomList.remove(selectedIndex);
+        } catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

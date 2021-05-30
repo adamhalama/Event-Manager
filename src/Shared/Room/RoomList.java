@@ -37,6 +37,11 @@ public class RoomList
         roomsCreated = rooms.size();
     }
 
+    public void addAllRooms(ArrayList<Room> newRoomList)
+    {
+        this.rooms = newRoomList;
+    }
+
     /**
      * Creates a new Room in the arrayList of rooms.
      * @param roomCode
@@ -63,16 +68,17 @@ public class RoomList
         roomsCreated++;
     }
 
-    public void removeRoom(int roomID)
+    public boolean removeRoom(int roomID)
     {
         for (int i = 0; i < rooms.size(); i++)
         {
             if (roomID == rooms.get(i).getRoomID())
             {
                 rooms.remove(i);
-                break;
+                return true;
             }
         }
+        return false;
     }
 
     public void removeRoom(Room room)
@@ -80,13 +86,13 @@ public class RoomList
         rooms.remove(room);
     }
 
-    public void modifyRoom(String roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
+    public void modifyRoom(int roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor)
     {
         for (int i = 0; i < rooms.size(); i++)
         {
-            if (roomID.equals(rooms.get(i).getRoomID()))
+            if (roomID == rooms.get(i).getRoomID())
             {
-                rooms.get(i).modifyRoom(roomCode, buildingAddress, numberOfSeats, floor, equipment);
+                rooms.get(i).modifyRoom(roomCode, buildingAddress, numberOfSeats, floor);
                 break;
             }
         }
@@ -94,10 +100,11 @@ public class RoomList
 
     }
 
-    public void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
+    public void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor)
     {
-        room.modifyRoom(roomCode, buildingAddress, numberOfSeats, floor, equipment);
+        room.modifyRoom(roomCode, buildingAddress, numberOfSeats, floor);
     }
+
 
     public static int getRoomsCreated()
     {

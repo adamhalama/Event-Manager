@@ -34,7 +34,7 @@ public class CreateRoomViewController
     private TableColumn<EquipmentViewModel, String> equipmentColumn;
 
     @FXML
-    private Button addButton, removeButton, confirmEditButton;
+    private Button addButton, removeButton, confirmEditButton, eventsButton;
 
     @FXML
     private Label errorLabel;
@@ -92,7 +92,7 @@ public class CreateRoomViewController
         numberOfSeats.setText(null);
     }
 
-    private void enableEditing()
+    private void enableEditing() //editing or creating
     {
         roomNumber.setDisable(false);
         address.setDisable(false);
@@ -103,9 +103,12 @@ public class CreateRoomViewController
         addButton.setDisable(false);
         removeButton.setDisable(false);
         confirmEditButton.setText("Confirm");
+
+        eventsButton.setDisable(true);
+        eventsButton.setVisible(false);
     }
 
-    private void disableEditing()
+    private void disableEditing() // viewing
     {
         roomNumber.setDisable(true);
         address.setDisable(true);
@@ -116,6 +119,9 @@ public class CreateRoomViewController
         addButton.setDisable(true);
         removeButton.setDisable(true);
         confirmEditButton.setText("Edit");
+
+        eventsButton.setDisable(false);
+        eventsButton.setVisible(true);
     }
 
     public boolean isEditing()
@@ -141,19 +147,26 @@ public class CreateRoomViewController
     }
 
     @FXML
-    private void confirmButton() throws SQLException, RemoteException {
+    private void confirmButton(){
         if (!viewing) //editing
         {
-            viewModel.confirm(editing, viewHandler.getPickedRoomID());
-            viewHandler.openView("RoomList");
+            if(viewModel.confirm(editing, viewHandler.getPickedRoomID()))
+                viewHandler.openView("RoomList");
         }
         else
             viewHandler.openView("EditRoom");
     }
 
     @FXML
-    private void backButton() throws SQLException, RemoteException {
+    private void backButton() {
         viewHandler.openView("RoomList");
+    }
+
+
+
+    @FXML
+    private void eventsButton() {
+        viewHandler.openView("RoomEvents");
     }
 
     public Region getRoot()

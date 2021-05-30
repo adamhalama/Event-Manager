@@ -75,9 +75,8 @@ public class Room implements Serializable
      * @param buildingAddress a String containing the physical address of the building the room is located in.
      * @param numberOfSeats an Integer containing the number of seats in the room.
      * @param floor an Integer containing the physical floor in the building the room is located in.
-     * @param equipment an ArrayList of Strings containing the equipment in the room.
      */
-    public void modifyRoom(String roomNumber, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
+    public void modifyRoom(String roomNumber, String buildingAddress, int numberOfSeats, int floor)
     {
         this.roomNumber = roomNumber;
         this.floor = floor;

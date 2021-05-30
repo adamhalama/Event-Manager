@@ -130,7 +130,10 @@ public class MessageRoomViewModel implements NamedPropertyChangeSubject
         {
             try
             {
-                model.getMessageRoomByID(messageRoomID).addMessage(new Message(model.getLoggedClientID(), System.currentTimeMillis(), message.get().trim()));
+                model.sendMessage(messageRoomID, message.get().trim());
+                messageTable.add(new MessageViewModel("", message.get().trim()));
+                message.setValue("");
+                property.firePropertyChange("Scroll down", null, 1);
             } catch (SQLException throwables)
             {
                 throwables.printStackTrace();
@@ -138,9 +141,6 @@ public class MessageRoomViewModel implements NamedPropertyChangeSubject
             {
                 e.printStackTrace();
             }//TODO add different errorLabel statements
-            messageTable.add(new MessageViewModel("", message.get().trim()));
-            message.setValue("");
-            property.firePropertyChange("Scroll down", null, 1);
         }
     }
 

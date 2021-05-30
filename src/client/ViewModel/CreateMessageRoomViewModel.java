@@ -109,7 +109,14 @@ public class CreateMessageRoomViewModel
 
     public ArrayList<String> getEmployeeList()
     {
-        ArrayList<Employee> employees = model.getEmployees();
+        ArrayList<Employee> employees = null;
+        try
+        {
+            employees = model.getEmployees();
+        } catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }
         ArrayList<String> returnStrings = new ArrayList<>();
 
         for (Employee employee :
@@ -187,11 +194,12 @@ public class CreateMessageRoomViewModel
             //TODO add check if the room is already created
             try
             {
-                model.messageRoomCreatePrivate(model.getLoggedClientID(), selectedTable.get(0).getUserIDProperty().get());
+                model.messageRoomCreatePrivate(selectedTable.get(0).getUserIDProperty().get());
             }
             catch (IndexOutOfBoundsException e)
             {
                 errorLabel.setValue("Pick an employee");
+                return false;
             } catch (SQLException throwables)
             {
                 throwables.printStackTrace();

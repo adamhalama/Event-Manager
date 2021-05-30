@@ -21,6 +21,7 @@ public class ViewModelFactory
     private LoginViewModel loginViewModel;
     private EventInfoViewModel eventInfoViewModel;
     private CreateMessageRoomViewModel addMessageRoomViewModel;
+    private RoomEventsViewModel roomEventsViewModel;
 
     private SelectState state;
     private final Model model;
@@ -155,5 +156,13 @@ public class ViewModelFactory
             addMessageRoomViewModel = new CreateMessageRoomViewModel(model);
 
         return addMessageRoomViewModel;
+    }
+
+    public RoomEventsViewModel getRoomEventsViewModel()
+    {
+        if (roomEventsViewModel == null)
+            roomEventsViewModel = new RoomEventsViewModel(model);
+
+        return roomEventsViewModel;
     }
 }

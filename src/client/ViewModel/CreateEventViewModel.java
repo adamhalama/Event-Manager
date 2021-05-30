@@ -114,5 +114,5 @@ public class CreateEventViewModel {
         return model.getEvent_id();
     }
 
-    public void add()
+//    public void add()
 }

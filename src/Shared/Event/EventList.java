@@ -105,6 +105,20 @@ public class EventList {
         }
     }
 
+    public ArrayList<Event> getEventsByRoom(int roomID)
+    {
+        ArrayList<Event> eventsByRoom = new ArrayList<>();
+
+        for (Event e:
+             events)
+        {
+            if (e.getRoomID() == roomID)
+                eventsByRoom.add(e);
+        }
+        return eventsByRoom;
+    }
+
+
     public Event getEventByIndex(int index) {
         return events.get(index);
     }
@@ -132,6 +146,9 @@ public class EventList {
             }
         }
     }
+
+
+
 
     public void removeByEventID(int id) {
         for (int i = 0; i < events.size(); i++) {

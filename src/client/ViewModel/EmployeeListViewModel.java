@@ -8,6 +8,9 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+
 public class EmployeeListViewModel {
     private StringProperty searchBox;
     private ObservableList<EmployeeViewModel> employeeList;
@@ -32,8 +35,14 @@ public class EmployeeListViewModel {
 
         employeeList.clear();
 
-        for (Employee e : model.getEmployees()) {
-            employeeList.add(new EmployeeViewModel(e.getId(), e.getName(), e.getSurname(), e.getRole()));
+        try
+        {
+            for (Employee e : model.getEmployees()) {
+                employeeList.add(new EmployeeViewModel(e.getId(), e.getName(), e.getSurname(), e.getRole()));
+            }
+        } catch (RemoteException e)
+        {
+            e.printStackTrace();
         }
     }
 
@@ -70,8 +79,14 @@ public class EmployeeListViewModel {
     }
 
     public void removeEmployee(int selectedIndex, int employeeID) {
-        employeeList.remove(selectedIndex);
-        model.removeEmployee(employeeID);
+        try
+        {
+            model.removeEmployee(employeeID);
+            employeeList.remove(selectedIndex);
+        } catch (SQLException | RemoteException throwables)
+        {
+            throwables.printStackTrace();
+        }
     }
 
     public void addToEvent(int id) {

@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="633.0" stylesheets="@../darkTheme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.View.Room.CreateRoomViewController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="527.0" prefWidth="633.0" stylesheets="@../darkTheme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.View.Room.CreateRoomViewController">
    <children>
       <GridPane>
         <columnConstraints>
@@ -101,25 +101,6 @@
                <GridPane.margin>
                   <Insets bottom="2.0" />
                </GridPane.margin></TextField>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-               <children>
-                  <TextField fx:id="equipmentToAdd" prefHeight="26.0" prefWidth="252.0" promptText="Example: Projector BENQ FullHD">
-                     <HBox.margin>
-                        <Insets top="2.0" />
-                     </HBox.margin></TextField>
-                  <Button fx:id="addButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addButton" prefHeight="26.0" prefWidth="26.0" stylesheets="@../darkTheme.css" textAlignment="CENTER">
-                     <HBox.margin>
-                        <Insets left="5.0" top="2.0" />
-                     </HBox.margin>
-                     <graphic>
-                        <ImageView fitHeight="33.0" fitWidth="35.0" mouseTransparent="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Icons/addGenericIcon.png" />
-                           </image>
-                        </ImageView>
-                     </graphic></Button>
-               </children>
-            </HBox>
             <TextField fx:id="floor" maxWidth="1.7976931348623157E308" prefHeight="26.0" promptText="Example: 2" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="2.0" top="2.0" />
@@ -132,6 +113,27 @@
                <GridPane.margin>
                   <Insets bottom="2.0" />
                </GridPane.margin></TextField>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <children>
+                  <TextField fx:id="equipmentToAdd" prefHeight="26.0" prefWidth="252.0" promptText="Example: Projector BENQ FullHD">
+                     <HBox.margin>
+                        <Insets top="2.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="addButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addButton" prefHeight="26.0" prefWidth="26.0" stylesheets="@../darkTheme.css" textAlignment="CENTER">
+                     <HBox.margin>
+                        <Insets left="5.0" top="2.0" />
+                     </HBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="33.0" fitWidth="35.0" mouseTransparent="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Icons/addGenericIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
          </children>
          <VBox.margin>
             <Insets left="30.0" right="30.0" />
@@ -160,22 +162,49 @@
             </Button>
          </children>
       </VBox>
-      <HBox alignment="CENTER_RIGHT">
+      <GridPane>
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <Button fx:id="confirmEditButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmButton" prefHeight="31.0" prefWidth="108.0" text="Confirm">
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="38.0" fitWidth="30.0" mouseTransparent="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Icons/saveIcon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+            <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="1">
+               <children>
+                  <Button fx:id="confirmEditButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmButton" prefHeight="31.0" prefWidth="108.0" text="Confirm">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="38.0" fitWidth="30.0" mouseTransparent="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Icons/saveIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <Button fx:id="eventsButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#eventsButton" prefHeight="31.0" prefWidth="108.0" text="Events">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="38.0" fitWidth="30.0" mouseTransparent="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Icons/eventsIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
          </children>
-      </HBox>
+      </GridPane>
       <HBox alignment="CENTER">
          <children>
             <Label fx:id="errorLabel" text="errorLabel" textFill="RED" />

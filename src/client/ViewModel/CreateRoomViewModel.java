@@ -6,7 +6,6 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -103,8 +102,26 @@ public class CreateRoomViewModel
     {
         if (equipmentToAdd.getValue() != null && !equipmentToAdd.get().equals(""))
         {
-            equipmentList.add(new EquipmentViewModel(equipmentToAdd.get()));
-            equipmentToAdd.setValue(null);
+            if (editing)
+            {
+                try
+                {
+                    model.roomEquipmentAdd(currentRoomID, equipmentToAdd.get());
+                    equipmentList.add(new EquipmentViewModel(equipmentToAdd.get()));
+                    equipmentToAdd.setValue(null);
+                } catch (RemoteException e)
+                {
+                    errorLabel.set("Failed to add equipment");
+                } catch (SQLException throwables)
+                {
+                    errorLabel.set(throwables.getMessage());
+                }
+            }
+            else //creating
+            {
+                equipmentList.add(new EquipmentViewModel(equipmentToAdd.get()));
+                equipmentToAdd.setValue(null);
+            }
         }
 
     }
@@ -112,13 +129,33 @@ public class CreateRoomViewModel
     public void removeEquipment(int selectedIndex, boolean editing)
     {
         if (equipmentList.size() != 0 && equipmentList.size() - 1 >= selectedIndex && selectedIndex >= 0)
-            equipmentList.remove(selectedIndex);
+        {
+            if (editing)
+            {
+                try
+                {
+                    model.roomEquipmentRemove(currentRoomID, equipmentList.get(selectedIndex).getEquipmentProperty().get());
+                    equipmentList.remove(selectedIndex);
+                } catch (RemoteException e)
+                {
+                    errorLabel.set("error while removing the equipment from the server");
+                } catch (SQLException throwables)
+                {
+                    errorLabel.set(throwables.getMessage());
+                }
+            }
+            else //creating
+            {
+                equipmentList.remove(selectedIndex);
+            }
+        }
     }
 
-    public void confirm(boolean editing, int roomID) throws SQLException, RemoteException {
+    public boolean confirm(boolean editing, int roomID)
+    {
         // todo
         //  some confirmation
-        if (!editing)
+        if (!editing) //not editing - creating
         {
             if (equipmentList.isEmpty())
             {
@@ -127,11 +164,13 @@ public class CreateRoomViewModel
                     model.addRoom(roomNumber.get(), address.get(), seats.get(), floor.get());
                 } catch (SQLException throwables)
                 {
-                    throwables.printStackTrace();
+                    errorLabel.set(throwables.getMessage());
+                    return false;
                 } catch (RemoteException e)
                 {
-                    e.printStackTrace();
-                } //TODO add different errorLabel statements
+                    errorLabel.set("Error while communicating with the server.");
+                    return false;
+                }
             }
             else
             {
@@ -145,21 +184,24 @@ public class CreateRoomViewModel
 
                 model.addRoom(roomNumber.get(), address.get(), seats.get(), floor.get(), equipment);
             }
-        } else
+        } else //editing
         {
-            ArrayList<String> equipment = new ArrayList<>();
-
-            for (EquipmentViewModel e :
-                    equipmentList)
+            try
             {
-                equipment.add(e.getEquipmentProperty().get());
+                model.modifyRoom(roomID, roomNumber.get(), address.get(), seats.get(), floor.get());
+            } catch (SQLException throwables)
+            {
+                errorLabel.set(throwables.getMessage());
+                return false;
+            } catch (RemoteException e)
+            {
+                errorLabel.set("Server error");
+                return false;
             }
-
-            model.getRoomByID(roomID).modifyRoom(roomNumber.get(), address.get(), seats.get(), floor.get(), equipment);
-
         }
 
         // something like room.modify();
+        return true;
     }
 
     public ObservableList<EquipmentViewModel> getEquipmentList()
