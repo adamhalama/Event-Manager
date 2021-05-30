@@ -187,7 +187,7 @@ public class CreateMessageRoomViewModel
             //TODO add check if the room is already created
             try
             {
-                model.createPrivateMessageRoom(model.getLoggedClientID(), selectedTable.get(0).getUserIDProperty().get());
+                model.messageRoomCreatePrivate(model.getLoggedClientID(), selectedTable.get(0).getUserIDProperty().get());
             }
             catch (IndexOutOfBoundsException e)
             {

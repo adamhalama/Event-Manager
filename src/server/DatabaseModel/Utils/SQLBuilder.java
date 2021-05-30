@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class SQLBuilder
 {
   public static enum Operations {
-    SELECT, INSERT, UPDATE
+    SELECT, INSERT, UPDATE, DELETE
   }
   private String table, sql_where, sql_order;
   private ArrayList<String> fields = new ArrayList<>();
@@ -66,11 +66,13 @@ public class SQLBuilder
   public String build() {
     String sql = "";
     if(this.operation == Operations.SELECT) {
-      sql += " SELECT * FROM";
+      sql += "SELECT * FROM";
     } else if(this.operation == Operations.INSERT) {
-      sql += " INSERT INTO";
+      sql += "INSERT INTO";
     } else if(this.operation == Operations.UPDATE) {
-      sql += " UPDATE";
+      sql += "UPDATE";
+    } else if(this.operation == Operations.DELETE) {
+      sql += "DELETE FROM";
     }
     sql += " " + DatabaseCredentials.SCHEMA_NAME + "." + this.table;
     if(this.operation == Operations.INSERT) {

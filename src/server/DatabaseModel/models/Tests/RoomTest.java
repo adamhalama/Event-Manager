@@ -14,8 +14,8 @@ public class RoomTest
     DatabaseHandler databaseHandler = new DatabaseHandler();
 
     /*--CREATE--*/
-    /*Room room = databaseHandler.room.create("B2", "Horsens", 3, 1);
-    System.out.println(room);*/
+    Room room = databaseHandler.room.create("B2", "Horsens", 3, 1);
+    System.out.println(room);
 
     /*--GET ONE--*/
     //Room room = databaseHandler.room.getByID(1); // Get by id
@@ -32,7 +32,7 @@ public class RoomTest
     //ArrayList<Room> rooms = databaseHandler.room.getAll("id DESC", "floor = 1", 3, 0); // Get max 3 where and sorted in descending order
 
     /*--EDIT--*/
-    ArrayList<Room> rooms = databaseHandler.room.edit(
+    /*ArrayList<Room> rooms = databaseHandler.room.edit(
       new String[] {"building_address"},
       Model.formatStringValues(new String[] {"New address"}),
       "id = 1"
@@ -40,6 +40,10 @@ public class RoomTest
 
     for (Room room : rooms) {
       System.out.println(room);
-    }
+    }*/
+
+    /*--DELETE--*/
+    /*boolean deleted = databaseHandler.room.deleteByID(1); // Delete room by ID
+    System.out.println(deleted);*/
   }
 }

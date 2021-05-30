@@ -37,6 +37,19 @@ public class MessageRoomParticipantModel extends Model
     return false;
   }
 
+  public boolean delete(int messageRoomID, int userID)
+  {
+    try
+    {
+      return super.modelDelete("message_room_id = " + messageRoomID + " AND employee_id = " + userID);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
   public int[] getParticipants(int messageRoomID)
   {
     ArrayList<Integer> participants = new ArrayList<>();

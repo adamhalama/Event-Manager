@@ -5,8 +5,8 @@ set schema 'sep2database';
 
 CREATE TABLE Room
 (
-    id          serial PRIMARY KEY,
-    room_no           varchar(10),
+    id               serial PRIMARY KEY,
+    room_no          varchar(10),
     floor            int,
     building_address varchar(70),
     number_of_seats  int
@@ -17,7 +17,7 @@ CREATE TABLE Room_Equipment
     room_ID   int,
     equipment varchar(50),
     PRIMARY KEY (room_ID, equipment),
-    FOREIGN KEY (room_ID) references sep2database.Room (id)
+    FOREIGN KEY (room_ID) references sep2database.Room (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Employee
@@ -27,7 +27,8 @@ CREATE TABLE Employee
     surname     varchar(30),
     name        varchar(30),
     password    varchar(64),
-    role        varchar(20)
+    role        varchar(20),
+    deleted     bool
 );
 
 CREATE TABLE Permission
@@ -35,7 +36,7 @@ CREATE TABLE Permission
     employee_ID int,
     permission  varchar(100),
     PRIMARY KEY (employee_ID, permission),
-    FOREIGN KEY (employee_ID) references Employee (id)
+    FOREIGN KEY (employee_ID) references Employee (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Message_Room
@@ -51,8 +52,8 @@ CREATE TABLE Message
     user_ID         int,
     timestamp       bigint,
     message         varchar(1000),
-    FOREIGN KEY (message_room_ID) references Message_Room (id),
-    FOREIGN KEY (user_ID) references Employee (id)
+    FOREIGN KEY (message_room_ID) references Message_Room (id) ON DELETE CASCADE,
+    FOREIGN KEY (user_ID) references Employee (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Message_Room_Participant
@@ -60,8 +61,8 @@ CREATE TABLE Message_Room_Participant
     message_room_ID int,
     employee_ID     int,
     PRIMARY KEY (message_room_ID, employee_ID),
-    FOREIGN KEY (message_room_ID) references Message_Room (id),
-    FOREIGN KEY (employee_ID) references Employee (id)
+    FOREIGN KEY (message_room_ID) references Message_Room (id) ON DELETE CASCADE,
+    FOREIGN KEY (employee_ID) references Employee (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Event
@@ -78,9 +79,9 @@ CREATE TABLE Event
     is_online       bool,
     platform        varchar(15),
     url             varchar(200),
-    FOREIGN KEY (room_ID) references Room (id),
-    FOREIGN KEY (creator) references Employee (id),
-    FOREIGN KEY (message_room_ID) references Message_Room (id)
+    FOREIGN KEY (room_ID) references Room (id) ON DELETE CASCADE,
+    FOREIGN KEY (creator) references Employee (id) ON DELETE CASCADE,
+    FOREIGN KEY (message_room_ID) references Message_Room (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Event_Participant
@@ -88,7 +89,7 @@ CREATE TABLE Event_Participant
     event_ID    int,
     employee_ID int,
     PRIMARY KEY (event_ID, employee_ID),
-    FOREIGN KEY (event_ID) references Event (id),
-    FOREIGN KEY (employee_ID) references Employee (id)
+    FOREIGN KEY (event_ID) references Event (id) ON DELETE CASCADE,
+    FOREIGN KEY (employee_ID) references Employee (id) ON DELETE CASCADE
 );
 

@@ -19,6 +19,7 @@ public class Employee implements Serializable
     private String username;
     private String name;
     private String surname;
+    private boolean deleted;
     /**
      * ArrayList of integers representing eventID's
      */
@@ -47,7 +48,7 @@ public class Employee implements Serializable
      * @param permissions  An ArrayList of predefined strings that are used for permission verification.
      */
     public Employee(int id, String username, String name, String surname, ArrayList<Integer> events,
-                    ArrayList<Integer> messageRooms, String role, ArrayList<String> permissions)
+                    ArrayList<Integer> messageRooms, String role, ArrayList<String> permissions, boolean deleted)
     {
         this.id = id;
         this.name = name;
@@ -57,6 +58,7 @@ public class Employee implements Serializable
         this.messageRooms = messageRooms;
         this.role = role;
         this.permissions = permissions;
+        this.deleted = deleted;
     }
 
     /**
@@ -69,7 +71,7 @@ public class Employee implements Serializable
      * @param surname  A string containing the surname of the employee.
      * @param role     A string containing the role of the employee, in a firm or a team.
      */
-    public Employee(int id, String username, String name, String surname, String role)
+    public Employee(int id, String username, String name, String surname, String role, boolean deleted)
     {
         this.id = id;
         this.username = username;
@@ -79,6 +81,7 @@ public class Employee implements Serializable
         this.messageRooms = new ArrayList<>();
         this.role = role;
         this.permissions = new ArrayList<>();
+        this.deleted = deleted;
     }
 
     /**
@@ -205,6 +208,15 @@ public class Employee implements Serializable
     }
 
     /**
+     * Sets the deleted state of the employee.
+     * @param deleted A boolean if the employee is deleted.
+     */
+    public void setDeleted(boolean deleted)
+    {
+        this.deleted = deleted;
+    }
+
+    /**
      * Gets the id.
      * @return an integer representing the ID.
      */
@@ -277,6 +289,15 @@ public class Employee implements Serializable
     }
 
     /**
+     * Gets the deleted state of the employee.
+     * @return A boolean of employee deleted state.
+     */
+    public boolean getDeleted()
+    {
+        return deleted;
+    }
+
+    /**
      * toString method containing all the non arraylist variables in one string.
      * @return A string representing the data.
      */
@@ -285,6 +306,6 @@ public class Employee implements Serializable
     {
         return "{" + "id=" + id + ", username='" + username + '\''
                 + ", name='" + name + '\'' + ", surname='" + surname + '\''
-                + ", role='" + role + '\'' + "}";
+                + ", role='" + role + ", deleted=" + deleted + "}";
     }
 }

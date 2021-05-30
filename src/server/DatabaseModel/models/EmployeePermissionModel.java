@@ -47,6 +47,19 @@ public class EmployeePermissionModel extends Model
     return equipment.toArray(new String[0]);
   }
 
+  public boolean delete(String permission, int userID)
+  {
+    try
+    {
+      return super.modelDelete("permission = '" + permission + "' AND employee_id = " + userID);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
   public boolean create(String permission, int userID)
   {
     try

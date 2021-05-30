@@ -30,7 +30,7 @@ public interface Model {
 
     void addMessageRoom(String name);
 
-    MessageRoom createPrivateMessageRoom(int employeeID1, int employeeID2) throws SQLException, RemoteException;
+    MessageRoom messageRoomCreatePrivate(int employeeID1, int employeeID2) throws SQLException, RemoteException;
 
     void addMessageRoom(String name, ArrayList<Integer> usersIDs);
 

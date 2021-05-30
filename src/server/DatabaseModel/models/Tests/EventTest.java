@@ -14,9 +14,9 @@ public class EventTest
     DatabaseHandler databaseHandler = new DatabaseHandler();
 
     /*--CREATE--*/
-    // TODO: 5/21/2021 Fill correct fields and values after event class is refactored
-    /*Event event = databaseHandler.event.create("JackHamer", "123qweasd", "Jack", "Hamer", "Admin");
-    System.out.println(event);*/
+    Event event = databaseHandler.event.create("Title", "Description", 2, 1, 1, 1622548899, 1622558899); // Create offline event
+    //Event event = databaseHandler.event.create("Title", "Description", "DISCORD", "123qweasd", 1, 1, 1622548899, 1622558899); // Create online event
+    System.out.println(event);
 
     /*--GET ONE--*/
     //Event event = databaseHandler.event.getByID(1); // Get by id
@@ -33,10 +33,9 @@ public class EventTest
     //ArrayList<Event> events = databaseHandler.event.getAll("id DESC", "creator = 1", 3, 0); // Get max 3 where and sorted in descending order
 
     /*--EDIT--*/
-    // TODO: 5/21/2021 Fill correct fields and values after event class is refactored
     /*ArrayList<Event> events = databaseHandler.event.edit(
-      new String[] {"name", "surname"},
-      Model.formatStringValues(new String[] {"Jason","Statham"}),
+      new String[] {"title", "description"},
+      Model.formatStringValues(new String[] {"New title","New Description"}),
       "id = 1"
     );*/
 

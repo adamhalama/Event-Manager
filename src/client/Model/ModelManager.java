@@ -69,7 +69,7 @@ public class ModelManager implements Model
 
         /*try
         {
-            System.out.println(api.registerEmployee("admin", "admin", "Admin", "Admin", "Admin"));
+            System.out.println(api.employeeRegister("admin", "admin", "Admin", "Admin", "Admin"));
         } catch (GeneralSecurityException | IOException | SQLException e)
         {
             e.printStackTrace();
@@ -80,7 +80,7 @@ public class ModelManager implements Model
         //logging in works, but i dont want to go to the login view every time
 
 
-//        loggedEmployee = new Employee(7, "admin", "Admin", "Admin", "Admin");
+//        loggedEmployee = new Employee(7, "admin", "Admin", "Admin", "Admin", false);
 //        employeeList.addEmployee(loggedEmployee);
 
 
@@ -97,7 +97,7 @@ public class ModelManager implements Model
     @Override
     public void login(String username, String password) throws SQLException, GeneralSecurityException, IOException
     {
-        loggedEmployee = api.loginEmployee(username, password);
+        loggedEmployee = api.employeeLogin(username, password);
 
         employeeList.addEmployee(loggedEmployee);
     }
@@ -130,9 +130,9 @@ public class ModelManager implements Model
     }
 
     @Override
-    public MessageRoom createPrivateMessageRoom(int employeeID1, int employeeID2) throws SQLException, RemoteException
+    public MessageRoom messageRoomCreatePrivate(int employeeID1, int employeeID2) throws SQLException, RemoteException
     {
-        return api.createPrivateMessageRoom(employeeID1, employeeID2);
+        return api.messageRoomCreatePrivate(employeeID1, employeeID2);
     }
 
     @Override
@@ -210,14 +210,14 @@ public class ModelManager implements Model
     @Override
     public void addEmployee(String username, String password, String name, String surname, String role) throws SQLException, GeneralSecurityException, IOException
     {
-        employeeList.addEmployee(api.registerEmployee(username, password, name, surname, role));
+        employeeList.addEmployee(api.employeeRegister(username, password, name, surname, role));
     }
 
     @Override
     public void addEmployee(String username, String password, String name, String surname,
                             String role, ArrayList<String> permissions) throws SQLException, GeneralSecurityException, IOException
     {
-        Employee employee = api.registerEmployee(username, password, name, surname, role);
+        Employee employee = api.employeeRegister(username, password, name, surname, role);
         employeeList.addEmployee(employee);
         for (String permission :
                 permissions)
@@ -241,7 +241,7 @@ public class ModelManager implements Model
     @Override
     public ArrayList<Employee> getEmployees(ArrayList<Integer> employeesIDs) throws RemoteException
     {
-        return api.getEmployees(employeesIDs);
+        return api.employeeGetByIDs(employeesIDs);
     }
 
     @Override

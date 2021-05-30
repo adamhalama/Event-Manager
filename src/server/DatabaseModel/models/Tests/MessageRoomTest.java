@@ -12,7 +12,7 @@ public class MessageRoomTest
     DatabaseHandler databaseHandler = new DatabaseHandler();
 
     /*--CREATE--*/
-    MessageRoom messageRoom = databaseHandler.messageRoom.create("New message room", true);
+    MessageRoom messageRoom = databaseHandler.messageRoom.create("New message room", false);
 
     /*--GET ONE--*/
     //MessageRoom messageRoom = databaseHandler.messageRoom.getByID(1); // Get by message room id

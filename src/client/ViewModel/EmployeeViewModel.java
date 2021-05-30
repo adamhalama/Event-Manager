@@ -269,8 +269,8 @@ public class EmployeeViewModel
                 permissions.add("event_create");
             if (pers.getPermissionProperty().equals("Event edit"))
                 permissions.add("event_edit");
-            if (pers.getPermissionProperty().equals("Event invite"))
-                permissions.add("event_invite");
+            /*if (pers.getPermissionProperty().equals("Event invite"))
+                permissions.add("event_invite");*/
             if (pers.getPermissionProperty().equals("Room create/edit"))
                 permissions.add("room_create_edit");
             if (pers.getPermissionProperty().equals("Manage employees"))

@@ -29,6 +29,19 @@ public class RoomEquipmentModel extends Model
     return false;
   }
 
+  public boolean delete(String equipment, int roomID)
+  {
+    try
+    {
+      return super.modelDelete("equipment = '" + equipment + "' AND room_id = " + roomID);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
   public String[] getAllByID(int roomID)
   {
     ArrayList<String> equipment = new ArrayList<>();
