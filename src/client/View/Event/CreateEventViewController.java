@@ -127,9 +127,6 @@ public class CreateEventViewController {
         };
         startDate.setConverter(sc);
 
-
-//        long startTime = parseString(startDate.getValue().format(new SimpleDateFormat("dd.MM.yyyy"));
-
         //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
         final Callback<DatePicker, DateCell> dayCellFactory =
                 new Callback<DatePicker, DateCell>() {
@@ -387,7 +384,7 @@ public class CreateEventViewController {
             } else link = "None";
 
 //TODO there is an error
-//            ArrayList<Integer> participantsID = viewModel.getIDs();
+            //ArrayList<Integer> participantsID = viewModel.getIDs();
             ArrayList<Integer> participantsID = new ArrayList<>();
 
             if (viewModel.isOnline()) {

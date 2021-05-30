@@ -25,9 +25,6 @@ public class Event {
     private int dayS;
     private int monthS;
     private int yearS;
-    private int dayE;
-    private int monthE;
-    private int yearE;
     private int hourS;
     private int minuteS;
     private int hourE;
@@ -81,7 +78,7 @@ public class Event {
         this.calendarS = Calendar.getInstance();
         calendarS.set(end.getYear(), end.getMonthValue() - 1, end.getDayOfMonth(), end.getHour(), end.getMinute());
         if (end.getHour() >= 9 && end.getHour() < 17 &&
-                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6)){
+                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6) && start.isBefore(end)){
             this.time_end = sdf.format(new Date(startTime));  // transfer end time from timestamp to date
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
@@ -129,7 +126,7 @@ public class Event {
         this.calendarS = Calendar.getInstance();
         calendarS.set(end.getYear(), end.getMonthValue() - 1, end.getDayOfMonth(), end.getHour(), end.getMinute());
         if (end.getHour() >= 9 && end.getHour() < 17 &&
-                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6)){
+                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6) && start.isBefore(end)){
             this.time_end = sdf.format(new Date(startTime));  // transfer end time from timestamp to date
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
@@ -142,9 +139,6 @@ public class Event {
         this.creatorID = model.getLoggedClientID();
         this.participants = participants;
     }
-
-
-
 
     public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
                  int hourE, int minuteE, boolean isOnline, String platform, String link, Model model,
@@ -177,7 +171,8 @@ public class Event {
         timeFormat += ":";
         timeFormat += setMinuteFull(minuteS);
         this.calendarS = Calendar.getInstance();
-        calendarS.set(yearS, monthS - 1, dayS, hourS, minuteS);
+        calendarS.set(yearS, monthS - 1, dayS, hourS, minuteS); // this is for checking whether is the work days
+        LocalDateTime startDate = LocalDateTime.of(yearS, monthS, dayS, hourS, minuteS);
         if ((hourS >= 9 && hourS < 17) &&
                 (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6)) {
             this.time_start = timeFormat;
@@ -186,24 +181,17 @@ public class Event {
             this.yearS = yearS;
             this.hourS = hourS;
             this.minuteS = minuteS;
-            this.startTime = dateToStamp(timeFormat);
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
         String timeFormat1 = "";
-        timeFormat1 += String.valueOf(yearS);
-        timeFormat1 += "-";
-        timeFormat1 += setMonthSFull(monthS);
-        timeFormat1 += "-";
-        timeFormat1 += setDaySFull(dayS);
-        timeFormat1 += "  ";
         timeFormat1 += setHourFull(hourE);
         timeFormat1 += ":";
         timeFormat1 += setMinuteFull(minuteE);
-        if (hourE >= 9 && hourE < 17) {
+        LocalDateTime endDate = LocalDateTime.of(yearS, monthS, dayS, hourE, minuteE);
+        if ((hourE >= 9 && hourE < 17) && startDate.isBefore(endDate)) {
             this.time_end = timeFormat1;
             this.hourE = hourE;
             this.minuteE = minuteE;
-            this.endTime = dateToStamp(timeFormat1);
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
         this.description = description;
@@ -265,7 +253,6 @@ public class Event {
             this.yearS = yearS;
             this.hourS = hourS;
             this.minuteS = minuteS;
-            this.startTime = dateToStamp(timeFormat);
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
         String timeFormat1 = "";
@@ -279,10 +266,11 @@ public class Event {
         timeFormat1 += ":";
         timeFormat1 += setMinuteFull(minuteE);
         if (hourE >= 9 && hourE < 17) {
-            this.time_end = timeFormat1;
-            this.hourE = hourE;
-            this.minuteE = minuteE;
-            this.endTime = dateToStamp(timeFormat1);
+            if (hourE > hourS) {
+                this.time_end = timeFormat1;
+                this.hourE = hourE;
+                this.minuteE = minuteE;
+            }
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
         this.description = description;
@@ -307,9 +295,6 @@ public class Event {
         this.dayS = 0;
         this.monthS = 0;
         this.yearS = 0;
-        this.dayE = 0;
-        this.monthE = 0;
-        this.yearE = 0;
         this.hourS = 0;
         this.minuteS = 0;
         this.hourE = 0;
