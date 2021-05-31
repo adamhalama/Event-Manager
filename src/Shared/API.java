@@ -39,6 +39,8 @@ public interface API extends Remote
 
     Employee employeeSetPassword(int employeeID1, int employeeID2, String password) throws GeneralSecurityException, SQLException, IOException, RemoteException;
 
+    Employee employeeSetUsername(int employeeID1, int employeeID2, String username) throws SQLException, RemoteException;
+
     Employee employeePermissionAdd(int employeeID1, int employeeID2, String permission) throws SQLException, RemoteException;
 
     Employee employeePermissionRemove(int employeeID1, int employeeID2, String permission) throws SQLException, RemoteException;
