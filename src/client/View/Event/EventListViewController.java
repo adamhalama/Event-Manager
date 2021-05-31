@@ -62,6 +62,8 @@ public class EventListViewController {
     private Button refreshButton;
     @FXML
     private Button searchButton;
+    @FXML
+    private Button infoButton;
     private int selected;
 
     private ViewHandler viewHandler;
@@ -164,6 +166,12 @@ public class EventListViewController {
         t9.setText("Search the events");
         t9.setFont(new Font("Arial", 12));
         Tooltip.install(searchButton, t9);
+        reset();
+
+        final Tooltip t10 = new Tooltip();
+        t10.setText("See the event details");
+        t10.setFont(new Font("Arial", 12));
+        Tooltip.install(infoButton, t10);
         reset();
     }
 

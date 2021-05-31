@@ -114,15 +114,18 @@ public class Event implements Serializable
             this.title = title;
         } else throw new IllegalArgumentException("The title of the event cannot be null!");
 
-        LocalDateTime start = LocalDateTime.ofEpochSecond(startTime, 0, ZoneOffset.ofHours(1));
+        Instant instantS = Instant.ofEpochMilli(startTime);
+        LocalDateTime start = LocalDateTime.ofInstant(instantS, ZoneId.systemDefault());
         this.calendarS = Calendar.getInstance();
         calendarS.set(start.getYear(), start.getMonthValue() - 1, start.getDayOfMonth(), start.getHour(), start.getMinute());
+        System.out.println(start.getYear() + " " + (start.getMonthValue() - 1) + " " + start.getDayOfMonth() + " " + start.getHour() + " " + start.getMinute());
         if (start.getHour() >= 9 && start.getHour() < 17 &&
                 (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6)) {
             this.time_start = sdf.format(new Date(startTime));  // transfer start time from timestamp to date
         } else throw new IllegalArgumentException("You should set time at work hours!");
 
-        LocalDateTime end = LocalDateTime.ofEpochSecond(endTime, 0, ZoneOffset.ofHours(1));
+        Instant instantE = Instant.ofEpochMilli(endTime);
+        LocalDateTime end = LocalDateTime.ofInstant(instantE, ZoneId.systemDefault());
         this.calendarS = Calendar.getInstance();
         calendarS.set(end.getYear(), end.getMonthValue() - 1, end.getDayOfMonth(), end.getHour(), end.getMinute());
         if (end.getHour() >= 9 && end.getHour() < 17 &&
