@@ -105,7 +105,9 @@ public class CreateEventViewController {
 
         roomList = FXCollections.observableArrayList();
 
-        this.roomMenu.setItems(roomList);
+        if (roomList.size() != 0) {
+            this.roomMenu.setItems(roomList);
+        } else this.roomMenu.setItems(FXCollections.observableArrayList(0));
         this.platformMenu.setItems(FXCollections.observableArrayList("Discord", "Zoom", "Teams"));
 
 
@@ -235,26 +237,6 @@ public class CreateEventViewController {
     @FXML
     private void refreshPress()
     {
-        //TODO testing purposes remove this
-        LocalDate date = this.startDate.getValue();
-        String stringDate = date.getDayOfMonth() + "." + date.getMonthValue() + "." + date.getYear();
-
-        long timestamp = parseString(stringDate);
-
-        long startTimestamp = timestamp + (hourMenuS.getValue().longValue() * 60 * 60 * 1000)
-                + (Long.parseLong(minuteMenuS.getValue()) * 60 * 1000 );
-
-        long endTimestamp = timestamp + (hourMenuE.getValue().longValue() * 60 * 60 * 1000)
-                + (Long.parseLong(minuteMenuE.getValue()) * 60 * 1000);
-
-
-        //TODO jerry start here
-
-//        new Event(titleTextField.getText(), descriptionArea.getText(), startTimestamp, endTimestamp)
-
-        System.out.println(startTimestamp);
-        System.out.println(endTimestamp);
-
         viewModel.clear();
         participantTable.setItems(viewModel.update());
     }
@@ -381,8 +363,6 @@ public class CreateEventViewController {
                     platform = null;
             }
 
-            int room = roomMenu.getSelectionModel().getSelectedItem();
-
             String link;
             if (linkTextField.getText() != null) {
                 link = linkTextField.getText();
@@ -402,7 +382,6 @@ public class CreateEventViewController {
             long endTimestamp = timestamp + (hourMenuE.getValue().longValue() * 60 * 60 * 1000)
                     + (Long.parseLong(minuteMenuE.getValue()) * 60 * 1000);
 
-            System.out.println(startTimestamp);
             if (viewModel.isOnline()) {
                 if (title != null || yearS != 0 && monthS != 0 && dayS != 0 && hourS != 0 && minuteS != -1 && hourE != 0 && minuteE != -1
                         && platform != null && getChooseStatus() != -1) {
@@ -417,6 +396,7 @@ public class CreateEventViewController {
                     }
                 }
             } else {
+                int room = roomMenu.getSelectionModel().getSelectedItem();
                 if (title != null && yearS != 0 && monthS != 0 && dayS != 0 && hourS != 0 && minuteS != -1
                         && hourE != 0 && minuteE != -1 && room != 0 && getChooseStatus() != -1) {
                     viewModel.add(title, des, yearS, monthS, dayS, hourS, minuteS, hourE, minuteE, startTimestamp, endTimestamp,
@@ -438,6 +418,7 @@ public class CreateEventViewController {
             reset();
 
         } catch (Exception e) {
+            e.printStackTrace();
             viewModel.setErrorProperty(e.getMessage());
             if (e.getMessage() != null) {
                 Alert b = new Alert(Alert.AlertType.CONFIRMATION);
@@ -449,8 +430,7 @@ public class CreateEventViewController {
                 }
                 errorLabel.setText(e.getMessage());
                 e.printStackTrace();
-            } else errorLabel.setText("You are missing something!");
-//            error :  Label.text : A bound value cannot be set.
+            } else errorLabel.setText("Incomplete information for creating this event!");
         }
     }
 
