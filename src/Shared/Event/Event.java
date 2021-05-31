@@ -3,6 +3,7 @@ package Shared.Event;
 import Shared.Event.Platform.PlatformFactory;
 import client.Model.Model;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -12,7 +13,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Event {
+public class Event implements Serializable
+{
     private int event_id;
     private String time_create; //when creating this event
     private String time_start; //when the event starts

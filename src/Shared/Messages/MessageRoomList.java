@@ -143,4 +143,26 @@ public class MessageRoomList
         this.employeeList = employeeList;
     }
 
+    public void addRoomList(ArrayList<MessageRoom> messageRooms)
+    {
+        if (messageRooms == null)
+            return;
+
+        if (!this.messageRooms.containsAll(messageRooms))
+        {
+            for (MessageRoom room:
+                 messageRooms)
+            {
+                if (!this.messageRooms.contains(room))
+                    this.messageRooms.add(room);
+            }
+        }
+
+    }
+
+    public void addMessageRoom(MessageRoom messageRoom)
+    {
+        if (!messageRooms.contains(messageRoom))
+            messageRooms.add(messageRoom);
+    }
 }

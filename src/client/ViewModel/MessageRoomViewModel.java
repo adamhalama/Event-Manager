@@ -6,6 +6,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import utility.observer.subject.NamedPropertyChangeSubject;
@@ -23,6 +24,7 @@ public class MessageRoomViewModel implements NamedPropertyChangeSubject
     private StringProperty lastMessageColumn;
     private StringProperty participantsColumn;
 
+    private StringProperty errorLabel;
     private StringProperty topLabel, message;
     private ObservableList<String> membersList;
 
@@ -33,7 +35,10 @@ public class MessageRoomViewModel implements NamedPropertyChangeSubject
     private boolean isPrivate;
     private int messageRoomID;
 
+    private int messageRoomOffset;
+
     private PropertyChangeSupport property;
+
 
 
     public MessageRoomViewModel(int messageRoomID, String name, String lastMessage, ArrayList<String> participants)
@@ -56,6 +61,7 @@ public class MessageRoomViewModel implements NamedPropertyChangeSubject
 
         this.model = model;
         topLabel = new SimpleStringProperty();
+        errorLabel = new SimpleStringProperty();
         message = new SimpleStringProperty();
 
         membersList = FXCollections.observableArrayList();
@@ -64,8 +70,11 @@ public class MessageRoomViewModel implements NamedPropertyChangeSubject
 
     public void reset()
     {
+        messageRoomOffset = 0;
         messageTable.clear();
         membersList.clear();
+        errorLabel.set("");
+
         if (isPrivate)
         {
             topLabel.setValue("Private chat between:");
@@ -81,15 +90,17 @@ public class MessageRoomViewModel implements NamedPropertyChangeSubject
         } catch (SQLException throwables)
         {
             throwables.printStackTrace();
+            errorLabel.set(throwables.getMessage());
         } catch (RemoteException e)
         {
+            errorLabel.set(e.getMessage());
             e.printStackTrace();
-        }//TODO add different errorLabel statements
+        }
 
         try
         {
             for (Message message :
-                    model.getMessageRoomByID(messageRoomID).getMessages())
+                    model.messagesGet(messageRoomID, messageRoomOffset))
             {
 
                 String firstCol;
@@ -106,22 +117,50 @@ public class MessageRoomViewModel implements NamedPropertyChangeSubject
 
                 }
 
-                messageTable.add(new MessageViewModel(firstCol, secondCol));
+//                messageTable.add(new MessageViewModel(firstCol, secondCol));
+                messageTable.add(0, new MessageViewModel(firstCol, secondCol));
                 property.firePropertyChange("Scroll down", null, 1);
             }
-        } catch (SQLException throwables)
-        {
-            throwables.printStackTrace();
         } catch (RemoteException e)
         {
+            errorLabel.set(e.getMessage());
             e.printStackTrace();
-        }//TODO add different errorLabel statements
+        }
 
     }
 
-    public void loadAllMessages()
+    public void loadMoreMessages()
     {
-        //todo potentially load all messages if the first load will load just a few more
+        messageRoomOffset += 40;
+        try
+        {
+            for (Message message :
+                    model.messagesGet(messageRoomID, messageRoomOffset))
+            {
+
+                String firstCol;
+                String secondCol;
+                if(message.getUserID() == model.getLoggedEmployeeID())
+                {
+                    firstCol = "";
+                    secondCol = message.getMessage();
+                }
+                else
+                {
+                    firstCol = model.getSenderAndBody(message);
+                    secondCol = "";
+
+                }
+
+//                messageTable.add(new MessageViewModel(firstCol, secondCol));
+                messageTable.add(0, new MessageViewModel(firstCol, secondCol));
+                property.firePropertyChange("Scroll down", null, 1);
+            }
+        } catch (RemoteException e)
+        {
+            errorLabel.set(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public void sendMessage()
@@ -131,16 +170,18 @@ public class MessageRoomViewModel implements NamedPropertyChangeSubject
             try
             {
                 model.sendMessage(messageRoomID, message.get().trim());
-                messageTable.add(new MessageViewModel("", message.get().trim()));
+                messageTable.add(messageTable.size(), new MessageViewModel("", message.get().trim()));
                 message.setValue("");
                 property.firePropertyChange("Scroll down", null, 1);
             } catch (SQLException throwables)
             {
                 throwables.printStackTrace();
+                errorLabel.set(throwables.getMessage());
             } catch (RemoteException e)
             {
+                errorLabel.set(e.getMessage());
                 e.printStackTrace();
-            }//TODO add different errorLabel statements
+            }
         }
     }
 
@@ -212,4 +253,8 @@ public class MessageRoomViewModel implements NamedPropertyChangeSubject
     }
 
 
+    public StringProperty getErrorLabelProperty()
+    {
+        return errorLabel;
+    }
 }

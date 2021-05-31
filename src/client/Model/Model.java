@@ -45,15 +45,15 @@ public interface Model {
 
     ArrayList<MessageRoom> getMessageRoomsByEmployeeID(int employeeID);
 
-    ArrayList<MessageRoom> messageRoomGetPrivate(int employeeID1) throws RemoteException;
+    ArrayList<MessageRoom> messageRoomGetPrivate() throws RemoteException;
 
-    ArrayList<MessageRoom> getMessageRoomsByAnything(String keyword);
+    ArrayList<MessageRoom> getMessageRoomsByAnything(String keyword) throws RemoteException;
 
     ArrayList<MessageRoom> getMessageRooms();
 
     String getSenderAndBody(Message message);
 
-    ArrayList<String> getMessageRoomParticipantNames(MessageRoom messageRoom);
+    ArrayList<String> getMessageRoomParticipantNames(MessageRoom messageRoom) throws RemoteException;
 
     MessageRoom getMessageRoomByID(int id) throws SQLException, RemoteException;
 
@@ -95,6 +95,8 @@ public interface Model {
     Employee employeeSetSurname(int employeeID2, String surname) throws SQLException, RemoteException;
 
     Employee employeeSetPassword(int employeeID2, String password) throws GeneralSecurityException, SQLException, IOException, RemoteException;
+
+    Employee employeeSetUsername(int employeeID2, String username) throws SQLException, RemoteException;
 
     Employee employeeSetRole(int employeeID2, String role) throws SQLException, RemoteException;
 

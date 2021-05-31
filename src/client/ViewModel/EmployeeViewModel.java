@@ -122,16 +122,18 @@ public class EmployeeViewModel
             {
                 throwables.printStackTrace();
                 errorLabel.setValue(throwables.getMessage());
+                return;
             } catch (RemoteException e)
             {
                 e.printStackTrace();
                 errorLabel.setValue("Error communicating with the server");
+                return;
             }
 
 
             employeeIDTextLabel.setValue("Employee ID: " + currentEmployeeID);
 
-            username.setValue(currentEmp.getSurname());
+            username.setValue(currentEmp.getUsername());
             password.setValue("");
             repeatPassword.setValue("");
             name.setValue(currentEmp.getName());
@@ -257,15 +259,11 @@ public class EmployeeViewModel
         {
             try
             {
-                //todo remove
-//                e.setUsername(username.get());
-//                username wont be changable
-
                 model.employeeSetName(currentEmployeeID, name.get());
                 model.employeeSetSurname(currentEmployeeID, surname.get());
                 model.employeeSetRole(currentEmployeeID, role.get());
+                model.employeeSetUsername(currentEmployeeID, username.get());
 
-                //todo make password change
                 if (password != null && !password.get().equals(""))
                 {
                     if (!password.get().equals(repeatPassword.get()))

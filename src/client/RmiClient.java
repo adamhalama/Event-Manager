@@ -110,6 +110,12 @@ public class RmiClient
         return server.employeeSetSurname(employeeID1, employeeID2, surname);
     }
 
+    public Employee employeeSetUsername(int employeeID1, int employeeID2, String username) throws SQLException, RemoteException
+    {
+        return server.employeeSetSurname(employeeID1, employeeID2, username);
+    }
+
+
     public Employee employeeSetRole(int employeeID1, int employeeID2, String role) throws SQLException, RemoteException
     {
         return server.employeeSetRole(employeeID1, employeeID2, role);

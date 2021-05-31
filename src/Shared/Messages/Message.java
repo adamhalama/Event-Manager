@@ -1,12 +1,14 @@
 package Shared.Messages;
 
+import java.io.Serializable;
+
 /**
  * Represents one message.
  * @author Group 6 - 2Y ICT A21
  * @version 1.0 - May 2021
  * @since 1.0
  */
-public class Message
+public class Message implements Serializable
 {
     /**
      * An int representing an ID of the user that sent this message, used for system purposes, can also be displayed.

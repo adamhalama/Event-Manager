@@ -151,14 +151,17 @@ public class ModelManager implements Model
     }
 
     @Override
-    public ArrayList<MessageRoom> messageRoomGetPrivate(int employeeID1) throws RemoteException
+    public ArrayList<MessageRoom> messageRoomGetPrivate() throws RemoteException
     {
-        return api.messageRoomGetPrivate(employeeID1);
+        ArrayList<MessageRoom> messageRooms = api.messageRoomGetPrivate(getLoggedEmployeeID());
+        messageRoomList.addRoomList(messageRooms);
+        return messageRooms;
     }
 
     @Override
-    public ArrayList<MessageRoom> getMessageRoomsByAnything(String keyword)
+    public ArrayList<MessageRoom> getMessageRoomsByAnything(String keyword) throws RemoteException
     {
+        messageRoomGetPrivate();
         return messageRoomList.getMessageRoomsByAnything(keyword);
     }
 
@@ -177,9 +180,11 @@ public class ModelManager implements Model
     }
 
     @Override
-    public ArrayList<String> getMessageRoomParticipantNames(MessageRoom messageRoom)
+    public ArrayList<String> getMessageRoomParticipantNames(MessageRoom messageRoom) throws RemoteException
     {
         ArrayList<String> participants = new ArrayList<>();
+
+        getEmployees();
 
         for (int userID :
                 messageRoom.getUsersIDs())
@@ -193,7 +198,12 @@ public class ModelManager implements Model
     @Override
     public MessageRoom getMessageRoomByID(int id) throws SQLException, RemoteException
     {
-        return api.getMessageRoomByID(id);
+        MessageRoom messageRoom = api.getMessageRoomByID(id);
+        if(messageRoomList.getMessageRoomByID(id) == null)
+        {
+            messageRoomList.addMessageRoom(messageRoom);
+        }
+        return messageRoom;
     }
 
 
@@ -319,6 +329,12 @@ public class ModelManager implements Model
     public Employee employeeSetPassword(int employeeID2, String password) throws GeneralSecurityException, SQLException, IOException, RemoteException
     {
         return api.employeeSetPassword(getLoggedEmployeeID(), employeeID2, password);
+    }
+
+    @Override
+    public Employee employeeSetUsername(int employeeID2, String username) throws SQLException, RemoteException
+    {
+        return api.employeeSetSurname(getLoggedEmployeeID(), employeeID2, username);
     }
 
     @Override

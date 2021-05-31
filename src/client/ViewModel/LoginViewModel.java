@@ -15,14 +15,20 @@ public class LoginViewModel {
     private Model model;
     private StringProperty usernameProperty;
     private StringProperty passwordProperty;
-//    private RmiClient modelAPI;
 
-    public LoginViewModel(/*RmiClient api*/Model model)
+
+    public LoginViewModel(Model model)
     {
         this.model = model;
         this.usernameProperty = new SimpleStringProperty();
         this.passwordProperty = new SimpleStringProperty();
-//        this.modelAPI = api;
+
+    }
+
+    public void reset()
+    {
+        usernameProperty.setValue("");
+        passwordProperty.setValue("");
     }
 
     public StringProperty getUsernameProperty() {
