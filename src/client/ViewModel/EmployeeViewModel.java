@@ -138,6 +138,7 @@ public class EmployeeViewModel
             surname.setValue(currentEmp.getSurname());
             role.setValue(currentEmp.getRole());
 
+
             for (Integer eventID :
                     currentEmp.getEvents())
             {
@@ -162,8 +163,10 @@ public class EmployeeViewModel
                 }
             }
 
+
+            //todo add user readable permissions
             for (String permission :
-                    currentEmp.getPermissions())
+                    getReadablePermissions(currentEmp.getPermissions()))
             {
                 permissionTable.add(new PermissionViewModel(permission));
             }
@@ -187,18 +190,22 @@ public class EmployeeViewModel
 
     public void addButton(String permission)
     {
-        for (PermissionViewModel perm :
-                permissionTable)
+        if (!permissionTable.isEmpty())
         {
-            if (perm.getPermissionProperty().get().equals(permission))
-                return;
+            for (PermissionViewModel perm :
+                    permissionTable)
+            {
+                if (perm.getPermissionProperty().get().equals(permission))
+                    return;
+            }
         }
+
         permissionTable.add(new PermissionViewModel(permission));
     }
 
-    public void removeSelectedButton(int selectedItem)
+    public void removeSelectedButton(int selectedIndex)
     {
-        permissionTable.remove(selectedItem);
+        permissionTable.remove(selectedIndex);
     }
 
     public boolean confirmButton()
@@ -250,27 +257,42 @@ public class EmployeeViewModel
         {
             try
             {
-                Employee e = model.getEmployeeByID(currentEmployeeID);
-                e.setName(name.get());
-                e.setSurname(surname.get());
-                e.setUsername(username.get());
-                e.setRole(role.get());
+                //todo remove
+//                e.setUsername(username.get());
+//                username wont be changable
 
                 model.employeeSetName(currentEmployeeID, name.get());
                 model.employeeSetSurname(currentEmployeeID, surname.get());
                 model.employeeSetRole(currentEmployeeID, role.get());
 
                 //todo make password change
+                if (password != null && !password.get().equals(""))
+                {
+                    if (!password.get().equals(repeatPassword.get()))
+                    {
+                        errorLabel.set("The passwords have to match");
+                        return false;
+                    }
+                    model.employeeSetPassword(currentEmployeeID,password.get());
+                }
 
                 getPermissionsFromList();
-                if (!e.getPermissions().equals(permissions))
+                if (!model.getEmployeeByID(currentEmployeeID).getPermissions()
+                        .equals(permissions))
                 {
-                    e.setPermissions(permissions);
+                    model.setPermissions(currentEmployeeID, permissions.toArray(new String[0]));
                 }
-            } catch (SQLException | RemoteException throwables)
+            }
+
+            catch (SQLException | RemoteException throwables)
             {
                 errorLabel.set(throwables.getMessage());
                 throwables.printStackTrace();
+                return false;
+            } catch (GeneralSecurityException | IOException e) //password specific
+            {
+                e.printStackTrace();
+                errorLabel.set(e.getMessage());
                 return false;
             }
 
@@ -284,21 +306,49 @@ public class EmployeeViewModel
         for (PermissionViewModel pers :
                 permissionTable)
         {
-            if (pers.getPermissionProperty().equals("Event join"))
+            if (pers.getPermissionProperty().get().equals("Event join"))
                 permissions.add("event_join");
-            if (pers.getPermissionProperty().equals("Event create"))
+            if (pers.getPermissionProperty().get().equals("Event create"))
                 permissions.add("event_create");
-            if (pers.getPermissionProperty().equals("Event edit"))
+            if (pers.getPermissionProperty().get().equals("Event edit"))
                 permissions.add("event_edit");
-            /*if (pers.getPermissionProperty().equals("Event invite"))
+            /*if (pers.getPermissionProperty().get().equals("Event invite"))
                 permissions.add("event_invite");*/
-            if (pers.getPermissionProperty().equals("Room create/edit"))
+            if (pers.getPermissionProperty().get().equals("Room create/edit"))
                 permissions.add("room_create_edit");
-            if (pers.getPermissionProperty().equals("Manage employees"))
+            if (pers.getPermissionProperty().get().equals("Manage employees"))
                 permissions.add("employees_create_edit");
-            if (pers.getPermissionProperty().equals("Manage chat rooms"))
+            if (pers.getPermissionProperty().get().equals("Manage chat rooms"))
                 permissions.add("chat_rooms_create_edit");
         }
+    }
+
+    private ArrayList<String> getReadablePermissions(ArrayList<String> sqlPermissions)
+    {
+        ArrayList<String> readablePermissions = new ArrayList<>();
+        for (String perm:
+             sqlPermissions)
+        {
+            if (perm.equals("event_join"))
+                readablePermissions.add("Event join");
+
+            if (perm.equals("event_create"))
+                readablePermissions.add("Event create");
+
+            if (perm.equals("event_edit"))
+                readablePermissions.add("Event edit");
+
+            if (perm.equals("room_create_edit"))
+                readablePermissions.add("Room create/edit");
+
+            if (perm.equals("employees_create_edit"))
+                readablePermissions.add("Manage employees");
+
+            if (perm.equals("chat_rooms_create_edit"))
+                readablePermissions.add("Manage chat rooms");
+        }
+
+        return readablePermissions;
     }
 
     public IntegerProperty getUserIDProperty()

@@ -94,6 +94,8 @@ public interface Model {
 
     Employee employeeSetSurname(int employeeID2, String surname) throws SQLException, RemoteException;
 
+    Employee employeeSetPassword(int employeeID2, String password) throws GeneralSecurityException, SQLException, IOException, RemoteException;
+
     Employee employeeSetRole(int employeeID2, String role) throws SQLException, RemoteException;
 
 

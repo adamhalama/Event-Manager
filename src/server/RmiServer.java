@@ -150,6 +150,19 @@ public class RmiServer implements API
     }
 
     @Override
+    public Employee employeeSetUsername(int employeeID1, int employeeID2, String username) throws SQLException
+    {
+        if(employeeID1 != employeeID2) {
+            this.checkPermission(employeeID1, "employees_create_edit");
+        }
+        ArrayList<Employee> employeesWithSameUsername = this.databaseHandler.employee.getAllWhere("username = " + username);
+        if (employeesWithSameUsername.size()>0) {
+            throw new SQLException("username has already been taken");
+        }
+        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"username"}, formatStringValues(new String[] {username}), employeeID2), this.databaseHandler);
+    }
+
+    @Override
     public Employee employeePermissionAdd(int employeeID1, int employeeID2, String permission) throws SQLException
     {
         this.checkPermission(employeeID1, "employees_create_edit");
