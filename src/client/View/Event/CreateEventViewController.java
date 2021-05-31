@@ -105,12 +105,8 @@ public class CreateEventViewController {
 
         roomList = FXCollections.observableArrayList();
 
-        if (roomList.size() != 0) {
-            this.roomMenu.setItems(roomList);
-        } else this.roomMenu.setItems(FXCollections.observableArrayList(0));
+        this.roomMenu.setItems(roomList);
         this.platformMenu.setItems(FXCollections.observableArrayList("Discord", "Zoom", "Teams"));
-
-
 
         StringConverter sc = new StringConverter<LocalDate>() {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -166,15 +162,12 @@ public class CreateEventViewController {
 
         //adding all rooms to the choiceBox
         roomList.clear();
-        try
-        {
-            for (Room r:
-                 model.getRooms())
-            {
+        try {
+            for (Room r :
+                    model.getRooms()) {
                 roomList.add(r.getRoomID());
             }
-        } catch (RemoteException e)
-        {
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
 
@@ -235,8 +228,7 @@ public class CreateEventViewController {
     }
 
     @FXML
-    private void refreshPress()
-    {
+    private void refreshPress() {
         viewModel.clear();
         participantTable.setItems(viewModel.update());
     }
@@ -377,7 +369,7 @@ public class CreateEventViewController {
             long timestamp = parseString(stringDate);
 
             long startTimestamp = timestamp + (hourMenuS.getValue().longValue() * 60 * 60 * 1000)
-                    + (Long.parseLong(minuteMenuS.getValue()) * 60 * 1000 );
+                    + (Long.parseLong(minuteMenuS.getValue()) * 60 * 1000);
 
             long endTimestamp = timestamp + (hourMenuE.getValue().longValue() * 60 * 60 * 1000)
                     + (Long.parseLong(minuteMenuE.getValue()) * 60 * 1000);
@@ -449,13 +441,11 @@ public class CreateEventViewController {
 
     public long parseString(String dateString) //TODO maybe delete
     {
-        try
-        {
+        try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
             Date parsedDate = dateFormat.parse(dateString);
             return parsedDate.getTime();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
