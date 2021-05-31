@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.DatePicker;
 
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -59,7 +60,13 @@ public class EventListViewModel {
     public void removeEvent(int id) {
         for (int i = 0; i < eventList.size(); i++) {
             if (eventList.get(i).getIdProperty().get() == id) {
-                model.removeByEventID(id);
+                try
+                {
+                    model.removeByEventID(id);
+                } catch (RemoteException e)
+                {
+                    e.printStackTrace();
+                }
                 reset();
                 update();
                 break;
@@ -67,11 +74,6 @@ public class EventListViewModel {
         }
     }
 
-    public void removeAllEvents() {
-        for (int i = 0; i < eventList.size(); i++) {
-            model.removeAllEvents();
-        }
-    }
 
     public ObservableList<EventViewModel> searchExceptDate(String searchingContent) {
         resultList.clear();

@@ -94,7 +94,7 @@ public class MessageRoomViewModel implements NamedPropertyChangeSubject
 
                 String firstCol;
                 String secondCol;
-                if(message.getUserID() == model.getLoggedClientID())
+                if(message.getUserID() == model.getLoggedEmployeeID())
                 {
                     firstCol = "";
                     secondCol = message.getMessage();

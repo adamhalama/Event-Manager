@@ -1,6 +1,5 @@
 package Shared.Event;
 
-import Shared.Employee.Employee;
 import Shared.Event.Platform.PlatformFactory;
 import client.Model.Model;
 
@@ -92,7 +91,7 @@ public class Event {
         this.onlineLink = platformFactory.getPlatform(platform).meetingLink(onlineLink);
 
         this.model = model;
-        this.creatorID = model.getLoggedClientID();
+        this.creatorID = model.getLoggedEmployeeID();
         this.participants = participants;
     }
 
@@ -135,7 +134,7 @@ public class Event {
         this.roomID = roomID;
 
         this.model = model;
-        this.creatorID = model.getLoggedClientID();
+        this.creatorID = model.getLoggedEmployeeID();
         this.participants = participants;
     }
 
@@ -183,7 +182,7 @@ public class Event {
         this.roomID = roomID;
 
         this.model = model;
-        this.creatorID = model.getLoggedClientID();
+        this.creatorID = model.getLoggedEmployeeID();
         this.participants = participants;
         this.mesasageRoomId = messageRoomID;
         this.creatorID = creatorID;
@@ -338,7 +337,7 @@ public class Event {
         }
 
         this.model = model;
-        this.creatorID = model.getLoggedClientID();
+        this.creatorID = model.getLoggedEmployeeID();
         this.participants = participants;
     }
 

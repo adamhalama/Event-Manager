@@ -85,6 +85,7 @@ public interface API extends Remote
 
     Message messagePost(int employeeID1, int messageRoomID, String message) throws SQLException, RemoteException;
 
+    //TODO implement this
     Event eventGetByID(int eventID) throws SQLException, RemoteException;
 
     ArrayList<Event> eventGetByIDs(ArrayList<Integer> eventIDs) throws RemoteException;

@@ -111,7 +111,7 @@ public class ModelManager implements Model
 
 
     @Override
-    public int getLoggedClientID()
+    public int getLoggedEmployeeID()
     {
         if (loggedEmployee == null)
             return 0;
@@ -133,7 +133,7 @@ public class ModelManager implements Model
     @Override
     public MessageRoom messageRoomCreatePrivate(int employeeID2) throws SQLException, RemoteException
     {
-        return api.messageRoomCreatePrivate(getLoggedClientID(), employeeID2);
+        return api.messageRoomCreatePrivate(getLoggedEmployeeID(), employeeID2);
     }
 
     @Override
@@ -145,19 +145,19 @@ public class ModelManager implements Model
     @Override
     public MessageRoom messageRoomSetName(int messageRoomID, String name) throws SQLException, RemoteException
     {
-        return api.messageRoomSetName(getLoggedClientID(), messageRoomID, name);
+        return api.messageRoomSetName(getLoggedEmployeeID(), messageRoomID, name);
     }
 
     @Override
     public ArrayList<Message> messagesGet(int messageRoomID, int offset) throws RemoteException
     {
-        return api.messagesGet(getLoggedClientID(), messageRoomID, offset);
+        return api.messagesGet(getLoggedEmployeeID(), messageRoomID, offset);
     }
 
     @Override
     public Message sendMessage(int messageRoomID, String message) throws SQLException, RemoteException
     {
-        return api.messagePost(getLoggedClientID(), messageRoomID, message);
+        return api.messagePost(getLoggedEmployeeID(), messageRoomID, message);
     }
 
 
@@ -245,11 +245,20 @@ public class ModelManager implements Model
     {
         Employee employee = api.employeeRegister(username, password, name, surname, role);
         employeeList.addEmployee(employee);
-        for (String permission :
-                permissions)
-        {
-            api.addPermission(getLoggedClientID(), employee.getId(), permission);
-        }
+        api.setPermissions(getLoggedEmployeeID(), employee.getId(), permissions.toArray(new String[0]));
+        employee.setPermissions(permissions);
+    }
+
+    @Override
+    public Employee removePermission(int employeeID2, String permission) throws SQLException, RemoteException
+    {
+        return api.removePermission(getLoggedEmployeeID(), employeeID2, permission);
+    }
+
+    @Override
+    public Employee setPermissions(int employeeID2, String[] permissions) throws SQLException, RemoteException
+    {
+        return api.setPermissions(getLoggedEmployeeID(), employeeID2, permissions);
     }
 
 
@@ -257,7 +266,7 @@ public class ModelManager implements Model
     public Employee removeEmployee(int employeeID) throws SQLException, RemoteException
     {
         employeeList.removeEmployee(employeeID);
-        return api.employeeDelete(getLoggedClientID(), employeeID);
+        return api.employeeDelete(getLoggedEmployeeID(), employeeID);
     }
 
     @Override
@@ -268,7 +277,7 @@ public class ModelManager implements Model
             getEmployeeByID(employeeID); // getting the emp from the server, if he is not in the list
             employeeList.restoreEmployee(employeeID);
         }
-        return api.employeeRestore(getLoggedClientID(), employeeID);
+        return api.employeeRestore(getLoggedEmployeeID(), employeeID);
     }
 
     @Override
@@ -326,19 +335,19 @@ public class ModelManager implements Model
     @Override
     public Employee employeeSetName(int employeeID2, String name) throws SQLException, RemoteException
     {
-        return api.employeeSetName(getLoggedClientID(), employeeID2, name);
+        return api.employeeSetName(getLoggedEmployeeID(), employeeID2, name);
     }
 
     @Override
     public Employee employeeSetSurname(int employeeID2, String surname) throws SQLException, RemoteException
     {
-        return api.employeeSetSurname(getLoggedClientID(), employeeID2, surname);
+        return api.employeeSetSurname(getLoggedEmployeeID(), employeeID2, surname);
     }
 
     @Override
     public Employee employeeSetRole(int employeeID2, String role) throws SQLException, RemoteException
     {
-        return api.employeeSetRole(getLoggedClientID(), employeeID2, role);
+        return api.employeeSetRole(getLoggedEmployeeID(), employeeID2, role);
     }
 
     /**
@@ -390,16 +399,16 @@ public class ModelManager implements Model
     @Override
     public void addRoom(String roomNumber, String buildingAddress, int numberOfSeats, int floor) throws SQLException, RemoteException
     {
-        Room room = api.createRoom(getLoggedClientID(), roomNumber, buildingAddress, numberOfSeats, floor);
+        Room room = api.createRoom(getLoggedEmployeeID(), roomNumber, buildingAddress, numberOfSeats, floor);
         roomList.addRoom(room);
-        System.out.println(roomNumber);
     }
 
     @Override
-    public void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment)
+    public void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment) throws SQLException, RemoteException
     {
-        roomList.addRoom(roomCode, buildingAddress, numberOfSeats, floor, equipment);
-        //TODO add adding rooms with equipment
+        Room room = api.createRoom(getLoggedEmployeeID(), roomCode, buildingAddress, numberOfSeats, floor);
+        roomList.addRoom(room);
+        api.roomEquipmentSet(getLoggedEmployeeID(), room.getRoomID(), equipment.toArray(new String[0]));
     }
 
 
@@ -407,7 +416,7 @@ public class ModelManager implements Model
     public void removeRoom(int roomID) throws RemoteException
     {
         roomList.removeRoom(roomID);
-        api.roomDeleteByID(getLoggedClientID(), roomID);
+        api.roomDeleteByID(getLoggedEmployeeID(), roomID);
     }
 
     @Override
@@ -415,31 +424,43 @@ public class ModelManager implements Model
     {
         int roomID = room.getRoomID();
         roomList.removeRoom(roomID);
-        api.roomDeleteByID(getLoggedClientID(), roomID);
+        api.roomDeleteByID(getLoggedEmployeeID(), roomID);
     }
 
     @Override
     public void modifyRoom(int roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor) throws SQLException, RemoteException
     {
         roomList.modifyRoom(roomID, roomCode, buildingAddress, numberOfSeats, floor);
-        api.roomSetFloor(getLoggedClientID(), roomID, floor);
-        api.roomSetNumberOfSeats(getLoggedClientID(), roomID, numberOfSeats);
-        api.roomSetRoomNumber(getLoggedClientID(), roomID, roomCode);
-        api.roomSetBuildingAddress(getLoggedClientID(), roomID, buildingAddress);
+        api.roomSetFloor(getLoggedEmployeeID(), roomID, floor);
+        api.roomSetNumberOfSeats(getLoggedEmployeeID(), roomID, numberOfSeats);
+        api.roomSetRoomNumber(getLoggedEmployeeID(), roomID, roomCode);
+        api.roomSetBuildingAddress(getLoggedEmployeeID(), roomID, buildingAddress);
     }
 
     @Override
     public boolean roomEquipmentAdd(int roomID, String equipment) throws RemoteException, SQLException
     {
         getRoomByID(roomID).addEquipment(equipment);
-        return api.roomEquipmentAdd(roomID, equipment);
+        return api.roomEquipmentAdd(getLoggedEmployeeID(), roomID, equipment);
     }
 
     @Override
     public boolean roomEquipmentRemove(int roomID, String equipment) throws RemoteException, SQLException
     {
         getRoomByID(roomID).removeEquipment(equipment);
-        return api.roomEquipmentRemove(roomID, equipment);
+        return api.roomEquipmentRemove(getLoggedEmployeeID(), roomID, equipment);
+    }
+
+    @Override
+    public boolean roomEquipmentSet(int roomID, String[] equipment) throws SQLException, RemoteException
+    {
+        return api.roomEquipmentSet(getLoggedEmployeeID(), roomID, equipment);
+    }
+
+    @Override
+    public String[] roomEquipmentGet(int roomID) throws RemoteException
+    {
+        return api.roomEquipmentGet(roomID);
     }
 
     @Override
@@ -476,46 +497,85 @@ public class ModelManager implements Model
         return room;
     }
 
+
+
+    //EVENT
+
     @Override
-    public void removeEquipment(Room room, String removedEquipment)
+    public Event eventCreateOffline(String title, String description, int roomID, long startTime, long endTime) throws SQLException, RemoteException
     {
-        room.removeEquipment(removedEquipment);
+        return api.eventCreateOffline(getLoggedEmployeeID(), title, description, roomID, startTime, endTime);
     }
 
     @Override
-    public void addEquipment(Room room, String addedEquipment)
+    public Event eventCreateOnline(String title, String description, String platform, String url, long startTime, long endTime) throws SQLException, RemoteException
     {
-        room.addEquipment(addedEquipment);
+        return api.eventCreateOnline(getLoggedEmployeeID(), title, description, platform, url, startTime, endTime);
+    }
+    
+
+    @Override
+    public boolean removeByEventID(int id) throws RemoteException
+    {
+        eventList.removeByEventID(id);
+        return api.eventDeleteByID(getLoggedEmployeeID(), id);
+    }
+
+
+    @Override
+    public Event eventSetTitle(int eventID, String title) throws SQLException, RemoteException
+    {
+        return api.eventSetTitle(getLoggedEmployeeID(), eventID, title);
     }
 
     @Override
-    public void setBuildingAddress(Room room, String buildingAddress)
+    public Event eventSetDescription(int eventID, String description) throws SQLException, RemoteException
     {
-        room.setBuildingAddress(buildingAddress);
+        return api.eventSetDescription(getLoggedEmployeeID(), eventID, description);
     }
 
     @Override
-    public void setEquipment(Room room, ArrayList<String> equipment)
+    public Event eventSetOnlineURL(int eventID, String url) throws SQLException, RemoteException
     {
-        room.setEquipment(equipment);
+        return api.eventSetOnlineURL(getLoggedEmployeeID(), eventID, url);
     }
 
     @Override
-    public void setFloor(Room room, int floor)
+    public Event eventSetPlatform(int eventID, String platform) throws SQLException, RemoteException
     {
-        room.setFloor(floor);
+        return api.eventSetPlatform(getLoggedEmployeeID(), eventID, platform);
     }
 
     @Override
-    public void setNumberOfSeats(Room room, int numberOfSeats)
+    public Event eventSetOnlineState(int eventID, boolean isOnline) throws SQLException, RemoteException
     {
-        room.setNumberOfSeats(numberOfSeats);
+        return api.eventSetOnlineState(getLoggedEmployeeID(), eventID, isOnline);
     }
 
     @Override
-    public void setRoomNumber(Room room, String roomNumber)
+    public Event eventSetTime(int eventID, long startTime, long endTime) throws SQLException, RemoteException
     {
-        room.setRoomNumber(roomNumber);
+        return api.eventSetTime(getLoggedEmployeeID(), eventID, startTime, endTime);
+    }
+
+    @Override
+    public boolean eventJoin(int eventID) throws SQLException, RemoteException
+    {
+        return api.eventJoin(getLoggedEmployeeID(), eventID);
+    }
+
+    @Override
+    public boolean eventLeave(int eventID) throws SQLException, RemoteException
+    {
+        return api.eventLeave(getLoggedEmployeeID(), eventID);
+    }
+
+    @Override
+    public void setOnline(boolean isOnline)
+    {
+        //TODO add int eventID, in the parameter
+//        api.eventSetOnlineState(getLoggedEmployeeID(), eventID, isOnline);
+        event.setOnline(isOnline);
     }
 
     @Override
@@ -534,24 +594,28 @@ public class ModelManager implements Model
     public void setRoom(int room)
     {
         event.setRoom(room);
+        //not used
     }
 
     @Override
     public int getEvent_id()
     {
         return event.getEvent_id();
+        //used but can be changed
     }
 
     @Override
     public String getTitle()
     {
         return event.getTitle();
+        //not used
     }
 
     @Override
     public void setTitle(String title)
     {
         event.setTitle(title);
+        //not used
     }
 
     @Override
@@ -564,12 +628,14 @@ public class ModelManager implements Model
     public void setPlatform(String platform)
     {
         event.setPlatform(platform);
+        //not used
     }
 
     @Override
     public int getRoomID()
     {
         return event.getRoomID();
+        //not used
     }
 
     @Override
@@ -578,11 +644,6 @@ public class ModelManager implements Model
         return event.isOnline();
     }
 
-    @Override
-    public void setOnline(boolean isOnline)
-    {
-        event.setOnline(isOnline);
-    }
 
     @Override
     public long getStartTime()
@@ -655,24 +716,9 @@ public class ModelManager implements Model
     {
         return eventList.getEventByID(id);
     }
-
-    @Override
-    public void remove(int index)
-    {
-        eventList.remove(index);
-    }
-
-    @Override
-    public void removeByEventID(int id)
-    {
-        eventList.removeByEventID(id);
-    }
-
-    @Override
-    public void removeAllEvents()
-    {
-        eventList.removeAll();
-    }
+    
+    
+    
 
     @Override
     public int getSize()

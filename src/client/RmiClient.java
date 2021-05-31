@@ -116,6 +116,17 @@ public class RmiClient
         return server.employeePermissionAdd(employeeID1, employeeID2, permission);
     }
 
+    public Employee removePermission(int employeeID1, int employeeID2, String permission) throws SQLException, RemoteException
+    {
+        return server.employeePermissionRemove(employeeID1, employeeID2, permission);
+    }
+
+    public Employee setPermissions(int employeeID1, int employeeID2, String[] permissions) throws SQLException, RemoteException
+    {
+        return server.employeePermissionSet(employeeID1, employeeID2, permissions);
+    }
+
+
 
     //ROOMS
     public Room createRoom(int employeeID1, String roomNumber, String buildingAddress, int numberOfSeats, int floor) throws SQLException, RemoteException
@@ -168,14 +179,19 @@ public class RmiClient
         return server.roomEquipmentGet(roomID);
     }
 
-    public boolean roomEquipmentAdd(int roomID, String equipment) throws RemoteException
+    public boolean roomEquipmentSet(int employeeID1, int roomID, String[] equipment) throws SQLException, RemoteException
     {
-        return server.roomEquipmentAdd(roomID, equipment);
+        return server.roomEquipmentSet(employeeID1, roomID, equipment);
     }
 
-    public boolean roomEquipmentRemove(int roomID, String equipment) throws RemoteException
+    public boolean roomEquipmentAdd(int employeeID1, int roomID, String equipment) throws RemoteException, SQLException
     {
-        return server.roomEquipmentRemove(roomID, equipment);
+        return server.roomEquipmentAdd(employeeID1, roomID, equipment);
+    }
+
+    public boolean roomEquipmentRemove(int employeeID1, int roomID, String equipment) throws RemoteException, SQLException
+    {
+        return server.roomEquipmentRemove(employeeID1, roomID, equipment);
     }
 
 

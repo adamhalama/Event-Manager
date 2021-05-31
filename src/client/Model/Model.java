@@ -23,7 +23,7 @@ public interface Model {
 
     void logOut();
 
-    int getLoggedClientID();
+    int getLoggedEmployeeID();
 
     Employee getLoggedEmployee();
 
@@ -66,6 +66,10 @@ public interface Model {
 
     void addEmployee(String username, String password, String name, String surname, String role, ArrayList<String> permissions) throws SQLException, GeneralSecurityException, IOException;
 
+    Employee removePermission(int employeeID2, String permission) throws SQLException, RemoteException;
+
+    Employee setPermissions(int employeeID2, String[] permissions) throws SQLException, RemoteException;
+
     Employee removeEmployee(int employeeID) throws SQLException, RemoteException;
 
     Employee employeeRestore(int employeeID) throws SQLException, RemoteException;
@@ -101,7 +105,7 @@ public interface Model {
 
     void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor) throws SQLException, RemoteException;
 
-    void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment);
+    void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment) throws SQLException, RemoteException;
 
     void removeRoom(int roomID) throws RemoteException;
 
@@ -113,6 +117,10 @@ public interface Model {
 
     boolean roomEquipmentRemove(int roomID, String equipment) throws RemoteException, SQLException;
 
+    boolean roomEquipmentSet(int roomID, String[] equipment) throws SQLException, RemoteException;
+
+    String[] roomEquipmentGet(int roomID) throws RemoteException;
+
     void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor);
 
     int getRoomsCreated();
@@ -122,20 +130,6 @@ public interface Model {
     ArrayList<Room> getRoomsByAnything(String keyword) throws RemoteException;
 
     Room getRoomByID(int roomID) throws SQLException, RemoteException;
-
-    void removeEquipment(Room room, String removedEquipment);
-
-    public void addEquipment(Room room, String addedEquipment);
-
-    void setBuildingAddress(Room room, String buildingAddress);
-
-    void setEquipment(Room room, ArrayList<String> equipment);
-
-    void setFloor(Room room, int floor);
-
-    void setNumberOfSeats(Room room, int numberOfSeats);
-
-    void setRoomNumber(Room room, String roomNumber);
 
 
     //part1 class event
@@ -148,6 +142,24 @@ public interface Model {
     void setPlatform(String platform);
 
     void setParticipants(ArrayList<Integer> employees);
+
+    Event eventCreateOffline(String title, String description, int roomID, long startTime, long endTime) throws SQLException, RemoteException;
+
+    Event eventSetTitle(int eventID, String title) throws SQLException, RemoteException;
+
+    Event eventSetDescription(int eventID, String description) throws SQLException, RemoteException;
+
+    Event eventSetOnlineURL(int eventID, String url) throws SQLException, RemoteException;
+
+    Event eventSetPlatform(int eventID, String platform) throws SQLException, RemoteException;
+
+    Event eventSetOnlineState(int eventID, boolean isOnline) throws SQLException, RemoteException;
+
+    Event eventSetTime(int eventID, long startTime, long endTime) throws SQLException, RemoteException;
+
+    boolean eventJoin(int eventID) throws SQLException, RemoteException;
+
+    boolean eventLeave(int eventID) throws SQLException, RemoteException;
 
     ArrayList<Integer> getParticipants();
 
@@ -187,11 +199,11 @@ public interface Model {
 
     Event getEventByID(int id);
 
-    void remove(int index);
 
-    void removeByEventID(int id);
+    Event eventCreateOnline(String title, String description, String platform, String url, long startTime, long endTime) throws SQLException, RemoteException;
 
-    void removeAllEvents();
+    boolean removeByEventID(int id) throws RemoteException;
+
 
     int getSize();
 

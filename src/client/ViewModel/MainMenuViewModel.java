@@ -27,7 +27,7 @@ public class MainMenuViewModel
 
     public boolean myAccountButton()
     {
-        if (model.getLoggedClientID() == 0)
+        if (model.getLoggedEmployeeID() == 0)
         {
             errorLabel.set("Client not logged in");
             return false;

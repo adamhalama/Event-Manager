@@ -156,7 +156,6 @@ public class EmployeeViewController
     private void addButton()
     {
         viewModel.addButton(choiceBox.getValue());
-        //TODO FIX picture on addButton
     }
 
     @FXML
@@ -177,12 +176,15 @@ public class EmployeeViewController
         }
         else  // creating or editing
         {
-            viewModel.confirmButton();
-            viewModel.reset();
-            if (openedFromMenu) //confirm editing and opening myAccount once again
-                viewHandler.openView("MyAccount");
-            else
-            viewHandler.openView("EmployeeList");
+            if(viewModel.confirmButton())
+            {
+                viewModel.reset();
+
+                if (openedFromMenu) //confirm editing and opening myAccount once again
+                    viewHandler.openView("MyAccount");
+                else
+                    viewHandler.openView("EmployeeList");
+            }
         }
     }
 

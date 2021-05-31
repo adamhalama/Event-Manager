@@ -50,7 +50,7 @@ public class EmployeeViewModel
     }
 
 
-    public EmployeeViewModel(Model model)
+    public EmployeeViewModel(Model model) // viewModel for the EmpViewController
     {
         this.model = model;
 
@@ -121,9 +121,11 @@ public class EmployeeViewModel
             } catch (SQLException throwables)
             {
                 throwables.printStackTrace();
+                errorLabel.setValue(throwables.getMessage());
             } catch (RemoteException e)
             {
                 e.printStackTrace();
+                errorLabel.setValue("Error communicating with the server");
             }
 
 
@@ -152,11 +154,12 @@ public class EmployeeViewModel
                 } catch (SQLException throwables)
                 {
                     throwables.printStackTrace();
+                    errorLabel.setValue(throwables.getMessage());
                 } catch (RemoteException e)
                 {
                     e.printStackTrace();
+                    errorLabel.setValue("Error communicating with the server");
                 }
-                //TODO add errorLabel statements
             }
 
             for (String permission :
@@ -198,17 +201,23 @@ public class EmployeeViewModel
         permissionTable.remove(selectedItem);
     }
 
-    public void confirmButton()
+    public boolean confirmButton()
     {
+        if (username == null || password == null || repeatPassword == null || name == null || surname == null || role == null)
+        {
+            errorLabel.set("You have to fill all the forms");
+            return false;
+        }
+
         if (!ConfirmationButton.confirmationView("Do you want to save the changes?"))
-            return;
+            return false;
 
         if (currentEmployeeID == 0) // Creating an employee
         {
             if (!password.get().equals(repeatPassword.get()))
             {
                 errorLabel.set("The passwords have to match");
-                return;
+                return false;
             }
 
             if (permissionTable.isEmpty())
@@ -218,7 +227,8 @@ public class EmployeeViewModel
                     model.addEmployee(username.get(), password.get(), name.get(), surname.get(), role.get());
                 } catch (SQLException | GeneralSecurityException | IOException throwables)
                 {
-                    throwables.printStackTrace();
+                    errorLabel.set(throwables.getMessage());
+                    return false;
                 }
             } //TODO add diferent things with different exceptions
             else
@@ -226,15 +236,17 @@ public class EmployeeViewModel
                 getPermissionsFromList();
 
                 try
-                { // TODO different errorLabels
+                {
                     model.addEmployee(username.get(), password.get(), name.get(), surname.get(), role.get(), permissions);
                 } catch (SQLException | GeneralSecurityException | IOException throwables)
                 {
+                    errorLabel.set(throwables.getMessage());
                     throwables.printStackTrace();
+                    return false;
                 }
                 //TODO Creating employees with permissions
             }
-        } else
+        } else //editing - viewing
         {
             try
             {
@@ -244,6 +256,12 @@ public class EmployeeViewModel
                 e.setUsername(username.get());
                 e.setRole(role.get());
 
+                model.employeeSetName(currentEmployeeID, name.get());
+                model.employeeSetSurname(currentEmployeeID, surname.get());
+                model.employeeSetRole(currentEmployeeID, role.get());
+
+                //todo make password change
+
                 getPermissionsFromList();
                 if (!e.getPermissions().equals(permissions))
                 {
@@ -251,10 +269,13 @@ public class EmployeeViewModel
                 }
             } catch (SQLException | RemoteException throwables)
             {
+                errorLabel.set(throwables.getMessage());
                 throwables.printStackTrace();
+                return false;
             }
 
         }
+        return true;
     }
 
     private void getPermissionsFromList()

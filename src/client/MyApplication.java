@@ -21,7 +21,5 @@ public class MyApplication extends Application
         ViewModelFactory viewModelFactory = new ViewModelFactory(model, state);
         ViewHandler view = new ViewHandler(viewModelFactory, model, state);
         view.start(primaryStage);
-
-        //todo start the connection with server
     }
 }

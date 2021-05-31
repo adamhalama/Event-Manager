@@ -100,7 +100,7 @@ public class CreateEventViewModel {
         return model.isOnline();
     }
     public void setIsOnline(boolean isOnline) {
-        model.setOnline(isOnline);
+        model.setOnline( isOnline);
     }
 
     public void setErrorProperty(String errorProperty) {

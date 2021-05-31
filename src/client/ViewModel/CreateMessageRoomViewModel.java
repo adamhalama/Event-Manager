@@ -60,11 +60,16 @@ public class CreateMessageRoomViewModel
         {
 
             MessageRoom messageRoom;
-            try // TODO add different exceptions
+            try
             {
                 messageRoom = model.getMessageRoomByID(selectedMessageRoomID);
-            } catch (SQLException | RemoteException throwables)
+            } catch (SQLException throwables)
             {
+                errorLabel.set(throwables.getMessage());
+                return;
+            } catch (RemoteException throwables)
+            {
+                errorLabel.set("Error connecting to the server");
                 throwables.printStackTrace();
                 return;
             }

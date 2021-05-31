@@ -261,6 +261,7 @@ public class ViewHandler {
         viewModelFactory.getCreateRoomViewModel().setOnlyViewing(false);
 
         viewModelFactory.getCreateRoomViewModel().reset();
+        createRoomViewController.reset();
         return createRoomViewController.getRoot();
     }
 
@@ -471,7 +472,7 @@ public class ViewHandler {
         employeeViewController.setOpenedFromMenu(true);
         employeeViewController.setEditing(false);
         employeeViewController.setViewing(true);
-        viewModelFactory.getEmployeeViewModel().setCurrentEmployeeID(model.getLoggedClientID());
+        viewModelFactory.getEmployeeViewModel().setCurrentEmployeeID(model.getLoggedEmployeeID());
         viewModelFactory.getEmployeeViewModel().setOnlyViewing(true);
 
         viewModelFactory.getEmployeeViewModel().reset();
@@ -493,7 +494,7 @@ public class ViewHandler {
         employeeViewController.setOpenedFromMenu(true);
         employeeViewController.setEditing(true);
         employeeViewController.setViewing(false);
-        viewModelFactory.getEmployeeViewModel().setCurrentEmployeeID(model.getLoggedClientID());
+        viewModelFactory.getEmployeeViewModel().setCurrentEmployeeID(model.getLoggedEmployeeID());
         viewModelFactory.getEmployeeViewModel().setOnlyViewing(false);
 
         viewModelFactory.getEmployeeViewModel().reset();
@@ -537,7 +538,6 @@ public class ViewHandler {
         {
             throwables.printStackTrace();
         }
-        //TODO add different errors to the ErrorLabel
 
         messageRoomViewController.reset();
         return messageRoomViewController.getRoot();
