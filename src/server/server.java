@@ -38,8 +38,8 @@ class Server
     {
         try
         {
-            server.employeeRegister("JackHamer0990", "123qweasd", "Jack", "Hamer", "lol");
-        } catch (GeneralSecurityException | SQLException | IOException e) {
+            server.employeeSetSurname(1, 1, "NewName");
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }*/
