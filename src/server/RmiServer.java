@@ -142,8 +142,10 @@ public class RmiServer implements API
     public Employee employeeSetPassword(int employeeID1, int employeeID2, String password)
         throws GeneralSecurityException, IOException, SQLException
     {
+        if(employeeID1 !== employeeID2) {
+            this.checkPermission(employeeID1, "employees_create_edit");
+        }
         String encryptedPassword = Crypt.encryptPassword(password);
-        this.checkPermission(employeeID1, "employees_create_edit");
         return ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"password"}, formatStringValues(new String[] {encryptedPassword}), employeeID2), this.databaseHandler);
     }
 
