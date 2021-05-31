@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.sql.SQLException;
 
 class Server
 {
@@ -17,6 +18,7 @@ class Server
         RmiServer server = new RmiServer();
         server.start(databaseHandler);
         System.out.println("Server started...");
+        //test(server);
     }
 
     public static void startRegistry() throws RemoteException
@@ -30,4 +32,14 @@ class Server
             System.out.println("Registry already started? " + e.getMessage());
         }
     }
+
+    /*private static void test(RmiServer server)
+    {
+        try
+        {
+            server.messageRoomCreatePrivate(1, 2);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }*/
 }

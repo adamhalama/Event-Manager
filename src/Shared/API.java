@@ -79,6 +79,8 @@ public interface API extends Remote
 
     ArrayList<MessageRoom> messageRoomGetPrivate(int employeeID1) throws RemoteException;
 
+    ArrayList<MessageRoom> messageRoomGetAll(int employeeID1) throws RemoteException;
+
     MessageRoom messageRoomCreatePrivate(int employeeID1, int employeeID2) throws SQLException, RemoteException;
 
     MessageRoom messageRoomSetName(int employeeID1, int messageRoomID, String name) throws SQLException, RemoteException;

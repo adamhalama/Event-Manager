@@ -47,6 +47,10 @@ public class RmiServer implements API
     public Employee employeeRegister(String username, String password, String name, String surname, String role)
         throws GeneralSecurityException, IOException, SQLException
     {
+        ArrayList<Employee> employeesWithSameUsername = this.databaseHandler.employee.getAllWhere("username = " + username);
+        if (employeesWithSameUsername.size()>0) {
+            throw new SQLException("Username has already been taken");
+        }
         String encryptedPassword = Crypt.encryptPassword(password);
         return ObjectInfo.getFullEmployee(this.databaseHandler.employee.create(username, encryptedPassword, name, surname, role), this.databaseHandler);
     }
@@ -157,7 +161,7 @@ public class RmiServer implements API
         }
         ArrayList<Employee> employeesWithSameUsername = this.databaseHandler.employee.getAllWhere("username = " + username);
         if (employeesWithSameUsername.size()>0) {
-            throw new SQLException("username has already been taken");
+            throw new SQLException("Username has already been taken");
         }
         return ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"username"}, formatStringValues(new String[] {username}), employeeID2), this.databaseHandler);
     }
@@ -378,6 +382,21 @@ public class RmiServer implements API
     }
 
     @Override
+    public ArrayList<MessageRoom> messageRoomGetAll(int employeeID1) {
+        int[] employee1MessageRooms = this.databaseHandler.messageRoomParticipant.getRooms(employeeID1);
+        ArrayList<MessageRoom> rooms = new ArrayList<>();
+        try {
+            for(Integer roomID : employee1MessageRooms) {
+                MessageRoom room = this.databaseHandler.messageRoom.getByID(roomID);
+                rooms.add(ObjectInfo.getFullMessageRoom(room, this.databaseHandler));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rooms;
+    }
+
+    @Override
     public MessageRoom messageRoomCreatePrivate(int employeeID1, int employeeID2) throws SQLException
     {
         int[] employee1MessageRooms = this.databaseHandler.messageRoomParticipant.getRooms(employeeID1);
@@ -385,11 +404,15 @@ public class RmiServer implements API
         Map<Integer, MessageRoom> rooms = new HashMap<>();
         for(Integer roomID : employee1MessageRooms) {
             if(rooms.containsKey(roomID)) {continue;}
-            rooms.put(roomID, this.databaseHandler.messageRoom.getByID(roomID));
+            MessageRoom room = this.databaseHandler.messageRoom.getByID(roomID);
+            room.addUser(employeeID1);
+            rooms.put(roomID, room);
         }
         for(Integer roomID : employee2MessageRooms) {
             if(rooms.containsKey(roomID)) {continue;}
-            rooms.put(roomID, this.databaseHandler.messageRoom.getByID(roomID));
+            MessageRoom room = this.databaseHandler.messageRoom.getByID(roomID);
+            room.addUser(employeeID2);
+            rooms.put(roomID, room);
         }
         for (Map.Entry<Integer, MessageRoom> entry : rooms.entrySet()) {
             if(entry.getValue().isPrivate()) {
