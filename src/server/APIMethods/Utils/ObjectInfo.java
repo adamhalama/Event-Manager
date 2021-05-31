@@ -28,7 +28,7 @@ public class ObjectInfo
     return employee;
   }
   public static Room getFullRoom(Room room, DatabaseHandler databaseHandler) {
-    String[] equipment = databaseHandler.employeePermission.getAllByID(room.getRoomID());
+    String[] equipment = databaseHandler.roomEquipment.getAllByID(room.getRoomID());
     room.setEquipment(new ArrayList<>(Arrays.asList(equipment)));
     return room;
   }
