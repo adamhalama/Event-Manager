@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.security.GeneralSecurityException;
 import java.sql.SQLException;
 
 class Server
@@ -37,8 +38,8 @@ class Server
     {
         try
         {
-            server.messageRoomCreatePrivate(1, 2);
-        } catch (SQLException e) {
+            server.employeeRegister("JackHamer0990", "123qweasd", "Jack", "Hamer", "lol");
+        } catch (GeneralSecurityException | SQLException | IOException e) {
             e.printStackTrace();
         }
     }*/

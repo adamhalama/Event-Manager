@@ -13,6 +13,9 @@ public class Model
   private Connection connection;
   private String table;
 
+  public static String[] formatStringValues(String value) {
+    return formatStringValues(new String[] {value});
+  }
   public static String[] formatStringValues(String[] values) {
     // When we insert strings in SQL query they should be in ' ' and numbers are without it.
     ArrayList<String> formattedValues = new ArrayList<>();

@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import org.controlsfx.control.textfield.TextFields;
-/*import org.controlsfx.control.textfield.TextFields;*/
 
 import java.rmi.RemoteException;
 import java.sql.SQLException;

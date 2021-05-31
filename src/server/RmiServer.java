@@ -47,7 +47,7 @@ public class RmiServer implements API
     public Employee employeeRegister(String username, String password, String name, String surname, String role)
         throws GeneralSecurityException, IOException, SQLException
     {
-        ArrayList<Employee> employeesWithSameUsername = this.databaseHandler.employee.getAllWhere("username = " + username);
+        ArrayList<Employee> employeesWithSameUsername = this.databaseHandler.employee.getAllWhere("username = " + formatStringValues(username)[0]);
         if (employeesWithSameUsername.size()>0) {
             throw new SQLException("Username has already been taken");
         }
@@ -123,7 +123,7 @@ public class RmiServer implements API
         if(employeeID1 != employeeID2) {
             this.checkPermission(employeeID1, "employees_create_edit");
         }
-        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"name"}, formatStringValues(new String[] {name}), employeeID2), this.databaseHandler);
+        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"name"}, formatStringValues(name), employeeID2), this.databaseHandler);
     }
 
     @Override
@@ -132,14 +132,14 @@ public class RmiServer implements API
         if(employeeID1 != employeeID2) {
             this.checkPermission(employeeID1, "employees_create_edit");
         }
-        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"surname"}, formatStringValues(new String[] {surname}), employeeID2), this.databaseHandler);
+        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"surname"}, formatStringValues(surname), employeeID2), this.databaseHandler);
     }
 
     @Override
     public Employee employeeSetRole(int employeeID1, int employeeID2, String role) throws SQLException
     {
         this.checkPermission(employeeID1, "employees_create_edit");
-        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"role"}, formatStringValues(new String[] {role}), employeeID2), this.databaseHandler);
+        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"role"}, formatStringValues(role), employeeID2), this.databaseHandler);
     }
 
     @Override
@@ -150,7 +150,7 @@ public class RmiServer implements API
             this.checkPermission(employeeID1, "employees_create_edit");
         }
         String encryptedPassword = Crypt.encryptPassword(password);
-        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"password"}, formatStringValues(new String[] {encryptedPassword}), employeeID2), this.databaseHandler);
+        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"password"}, formatStringValues(encryptedPassword), employeeID2), this.databaseHandler);
     }
 
     @Override
@@ -159,11 +159,11 @@ public class RmiServer implements API
         if(employeeID1 != employeeID2) {
             this.checkPermission(employeeID1, "employees_create_edit");
         }
-        ArrayList<Employee> employeesWithSameUsername = this.databaseHandler.employee.getAllWhere("username = " + username);
+        ArrayList<Employee> employeesWithSameUsername = this.databaseHandler.employee.getAllWhere("username = " + formatStringValues(username)[0]);
         if (employeesWithSameUsername.size()>0) {
             throw new SQLException("Username has already been taken");
         }
-        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"username"}, formatStringValues(new String[] {username}), employeeID2), this.databaseHandler);
+        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"username"}, formatStringValues(username), employeeID2), this.databaseHandler);
     }
 
     @Override
@@ -535,7 +535,7 @@ public class RmiServer implements API
         return ObjectInfo.getFullEvent(
             this.databaseHandler.event.editByID(
                 new String[] {name},
-                formatStringValues(new String[] {value}),
+                formatStringValues(value),
                 eventID
             ),
             this.databaseHandler
