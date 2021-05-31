@@ -87,6 +87,8 @@ public class ModelManager implements Model
         try
         {
 //            addEmployee("admin", "admin", "Admin", "Admin" , "test admin");
+
+
             this.login("admin", "admin");
         } catch (SQLException | GeneralSecurityException | IOException throwables)
         {
@@ -329,7 +331,7 @@ public class ModelManager implements Model
         if (employeeList.getEmployeeByID(ID) == null)
             employeeList.addEmployee(api.getEmployeeByID(ID));
 
-        return employeeList.getEmployeeByID(ID);
+        return api.getEmployeeByID(ID);
     }
 
     @Override
@@ -342,6 +344,12 @@ public class ModelManager implements Model
     public Employee employeeSetSurname(int employeeID2, String surname) throws SQLException, RemoteException
     {
         return api.employeeSetSurname(getLoggedEmployeeID(), employeeID2, surname);
+    }
+
+    @Override
+    public Employee employeeSetPassword(int employeeID2, String password) throws GeneralSecurityException, SQLException, IOException, RemoteException
+    {
+        return api.employeeSetPassword(getLoggedEmployeeID(), employeeID2, password);
     }
 
     @Override

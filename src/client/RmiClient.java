@@ -95,6 +95,11 @@ public class RmiClient
         return server.employeeGetByIDs(employeesIDs);
     }
 
+    public Employee employeeSetPassword(int employeeID1, int employeeID2, String password) throws GeneralSecurityException, SQLException, IOException, RemoteException
+    {
+        return server.employeeSetPassword(employeeID1, employeeID2, password);
+    }
+
     public Employee employeeSetName(int employeeID1, int employeeID2, String name) throws SQLException, RemoteException
     {
         return server.employeeSetName(employeeID1, employeeID2, name);
@@ -228,6 +233,8 @@ public class RmiClient
     }
 
     //EVENT
+
+
 
     public Event eventCreateOffline(int employeeID1, String title, String description, int roomID, long startTime, long endTime) throws SQLException, RemoteException
     {
