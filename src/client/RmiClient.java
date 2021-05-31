@@ -112,7 +112,7 @@ public class RmiClient
 
     public Employee employeeSetUsername(int employeeID1, int employeeID2, String username) throws SQLException, RemoteException
     {
-        return server.employeeSetSurname(employeeID1, employeeID2, username);
+        return server.employeeSetUsername(employeeID1, employeeID2, username);
     }
 
 
@@ -221,6 +221,11 @@ public class RmiClient
     public ArrayList<MessageRoom> messageRoomGetPrivate(int employeeID1) throws RemoteException
     {
         return server.messageRoomGetPrivate(employeeID1);
+    }
+
+    public ArrayList<MessageRoom> messageRoomGetAll(int employeeID1) throws RemoteException
+    {
+        return server.messageRoomGetAll(employeeID1);
     }
 
     public MessageRoom messageRoomSetName(int employeeID1, int messageRoomID, String name) throws SQLException, RemoteException

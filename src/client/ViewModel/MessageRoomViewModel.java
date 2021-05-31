@@ -120,6 +120,7 @@ public class MessageRoomViewModel implements NamedPropertyChangeSubject
 //                messageTable.add(new MessageViewModel(firstCol, secondCol));
                 messageTable.add(0, new MessageViewModel(firstCol, secondCol));
                 property.firePropertyChange("Scroll down", null, 1);
+                // scroll to bottom when a new message comes or is sent
             }
         } catch (RemoteException e)
         {
@@ -154,7 +155,7 @@ public class MessageRoomViewModel implements NamedPropertyChangeSubject
 
 //                messageTable.add(new MessageViewModel(firstCol, secondCol));
                 messageTable.add(0, new MessageViewModel(firstCol, secondCol));
-                property.firePropertyChange("Scroll down", null, 1);
+                property.firePropertyChange("Scroll", null, 2); //scroll to top
             }
         } catch (RemoteException e)
         {

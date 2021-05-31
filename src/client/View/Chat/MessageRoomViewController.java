@@ -46,7 +46,7 @@ public class MessageRoomViewController implements PropertyChangeListener
         this.viewModel = viewModel;
         this.root = root;
 
-        viewModel.addListener("Scroll down", this ::scrollDown);
+        viewModel.addListener("Scroll", this ::scroll);
 
         topLabel.textProperty().bind(viewModel.getErrorLabelProperty());
         errorLabel.textProperty().bind(viewModel.getErrorLabelProperty());
@@ -59,11 +59,15 @@ public class MessageRoomViewController implements PropertyChangeListener
 
     }
 
-    private void scrollDown(PropertyChangeEvent propertyChangeEvent)
+    private void scroll(PropertyChangeEvent propertyChangeEvent)
     {
         Platform.runLater(() ->
         {
-            this.messageTable.scrollTo(viewModel.getMessageTable().size() - 1);
+            if ( (int)propertyChangeEvent.getNewValue() == 1) // scroll to bottom when a new message comes or is sent
+                this.messageTable.scrollTo(viewModel.getMessageTable().size() - 1);
+            else
+                this.messageTable.scrollTo(0); //scroll to top
+
         });
     }
 
