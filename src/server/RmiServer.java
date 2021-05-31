@@ -309,7 +309,7 @@ public class RmiServer implements API
         this.checkPermission(employeeID1, "room_create_edit");
         this.databaseHandler.roomEquipment.deleteAll(roomID);
         for(String item : equipment) {
-            this.databaseHandler.employeePermission.create(item, roomID);
+            this.databaseHandler.roomEquipment.create(item, roomID);
         }
         return true;
     }
