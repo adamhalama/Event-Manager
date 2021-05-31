@@ -142,7 +142,7 @@ public class RmiServer implements API
     public Employee employeeSetPassword(int employeeID1, int employeeID2, String password)
         throws GeneralSecurityException, IOException, SQLException
     {
-        if(employeeID1 !== employeeID2) {
+        if(employeeID1 != employeeID2) {
             this.checkPermission(employeeID1, "employees_create_edit");
         }
         String encryptedPassword = Crypt.encryptPassword(password);
