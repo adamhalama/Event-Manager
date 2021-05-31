@@ -24,6 +24,7 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Optional;
 
@@ -38,11 +39,11 @@ public class CreateEventViewController {
     @FXML
     private ChoiceBox<Integer> hourMenuS;
     @FXML
-    private ChoiceBox<String> minuteMenuS;
+    private ChoiceBox<Integer> minuteMenuS;
     @FXML
     private ChoiceBox<Integer> hourMenuE;
     @FXML
-    private ChoiceBox<String> minuteMenuE;
+    private ChoiceBox<Integer> minuteMenuE;
     @FXML
     private Button onlineButton;
     @FXML
