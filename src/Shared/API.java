@@ -39,6 +39,8 @@ public interface API extends Remote
 
     Employee employeePermissionAdd(int employeeID1, int employeeID2, String permission) throws SQLException, RemoteException;
 
+    Employee employeePermissionRemove(int employeeID1, int employeeID2, String permission) throws SQLException, RemoteException;
+
     Room roomGetByID(int roomID) throws SQLException, RemoteException;
 
     ArrayList<Room> roomGetByIDs(ArrayList<Integer> roomIDs) throws RemoteException;

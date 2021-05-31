@@ -146,6 +146,14 @@ public class RmiServer implements API
         return ObjectInfo.getFullEmployee(this.databaseHandler.employee.getByID(employeeID2), this.databaseHandler);
     }
 
+    @Override
+    public Employee employeePermissionRemove(int employeeID1, int employeeID2, String permission) throws SQLException
+    {
+        this.checkPermission(employeeID1, "employees_create_edit");
+        this.databaseHandler.employeePermission.delete(permission, employeeID2);
+        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.getByID(employeeID2), this.databaseHandler);
+    }
+
 
     /*--Room--*/
 
