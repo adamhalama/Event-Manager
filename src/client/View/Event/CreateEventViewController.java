@@ -176,9 +176,7 @@ public class CreateEventViewController {
 
     @FXML
     private void resetPress() {
-        this.physicalButton.setVisible(true);
         this.roomMenu.setVisible(true);
-        this.onlineButton.setVisible(true);
         this.platformMenu.setVisible(true);
         this.linkTextField.setVisible(true);
         this.chooseStatus = -1;
@@ -186,7 +184,6 @@ public class CreateEventViewController {
 
     @FXML
     private void onlinePress() {
-        this.physicalButton.setVisible(false);
         this.roomMenu.setVisible(false);
         viewModel.setIsOnline(true);
         this.chooseStatus = 0;
@@ -194,7 +191,6 @@ public class CreateEventViewController {
 
     @FXML
     private void physicalPress() {
-        this.onlineButton.setVisible(false);
         this.platformMenu.setVisible(false);
         this.linkTextField.setVisible(false);
         viewModel.setIsOnline(false);
