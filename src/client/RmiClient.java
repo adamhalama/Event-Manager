@@ -245,7 +245,15 @@ public class RmiClient
 
     //EVENT
 
+    public Event eventGetByID(int eventID) throws SQLException, RemoteException
+    {
+        return server.eventGetByID(eventID);
+    }
 
+    public ArrayList<Event> eventGetAll() throws RemoteException
+    {
+        return server.eventGetAll();
+    }
 
     public Event eventCreateOffline(int employeeID1, String title, String description, int roomID, long startTime, long endTime) throws SQLException, RemoteException
     {

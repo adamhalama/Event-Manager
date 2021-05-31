@@ -149,6 +149,10 @@ public interface Model {
 
     void setParticipants(ArrayList<Integer> employees);
 
+    Event eventGetByID(int eventID) throws SQLException, RemoteException;
+
+    ArrayList<Event> eventGetAll() throws RemoteException;
+
     Event eventCreateOffline(String title, String description, int roomID, long startTime, long endTime) throws SQLException, RemoteException;
 
     Event eventSetTitle(int eventID, String title) throws SQLException, RemoteException;

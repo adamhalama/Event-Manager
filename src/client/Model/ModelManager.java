@@ -510,6 +510,17 @@ public class ModelManager implements Model
     //EVENT
 
     @Override
+    public Event eventGetByID(int eventID) throws SQLException, RemoteException
+    {
+        return api.eventGetByID(eventID);
+    }
+    @Override
+    public ArrayList<Event> eventGetAll() throws RemoteException
+    {
+        return api.eventGetAll();
+    }
+
+    @Override
     public Event eventCreateOffline(String title, String description, int roomID, long startTime, long endTime) throws SQLException, RemoteException
     {
         return api.eventCreateOffline(getLoggedEmployeeID(), title, description, roomID, startTime, endTime);

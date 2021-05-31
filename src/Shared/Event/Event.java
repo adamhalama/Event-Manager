@@ -143,6 +143,8 @@ public class Event implements Serializable
         this.participants = participants;
     }
 
+
+    //danny using this one
     public Event(int id, String title, String description, int creatorID, int roomID, int messageRoomID, long createTime, long startTime, long endTime)
     {       // constructor for physical meetings
         this.event_id = 0;
@@ -155,6 +157,7 @@ public class Event implements Serializable
         {
             date = sdf.parse(time_create);
             createTime = date.getTime(); // transfer crate time from date to timestamp
+            //todo do you pass the actual createTime?
         } catch (ParseException e)
         {
             e.getMessage();
@@ -194,6 +197,8 @@ public class Event implements Serializable
         this.participants = new ArrayList<>();
     }
 
+
+    //danny using this one
     public Event(int id, String title, String description, String platform, String onlineLink, int creatorID, int roomID, int messageRoomID, long createTime, long startTime, long endTime)
     {  // constructor for online meetings
         this(id, title, description, creatorID, roomID, messageRoomID, createTime, startTime, endTime);
