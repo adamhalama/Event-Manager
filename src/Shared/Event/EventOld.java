@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class EventNew implements Serializable
+public class EventOld implements Serializable
 {
     private int event_id;
     private String time_create; //when creating this event
@@ -47,7 +47,7 @@ public class EventNew implements Serializable
     private Model model;
 
 
-    public EventNew(String title, String description, long startTime, long endTime, String platform, String onlineLink,
+    public EventOld(String title, String description, long startTime, long endTime, String platform, String onlineLink,
                     ArrayList<Integer> participants, Model model) {  // constructor for online meetings
         this.event_id = 0;
         SimpleDateFormat sdf = new SimpleDateFormat();
@@ -97,7 +97,7 @@ public class EventNew implements Serializable
         this.participants = participants;
     }
 
-    public EventNew(String title, String description, long startTime, long endTime, int roomID,
+    public EventOld(String title, String description, long startTime, long endTime, int roomID,
                     ArrayList<Integer> participants, Model model) {       // constructor for physical meetings
         this.event_id = 0;
         SimpleDateFormat sdf = new SimpleDateFormat();
@@ -145,7 +145,7 @@ public class EventNew implements Serializable
 
 
     //danny using this one
-    public EventNew(int id, String title, String description, int creatorID, int roomID, int messageRoomID, long createTime, long startTime, long endTime)
+    public EventOld(int id, String title, String description, int creatorID, int roomID, int messageRoomID, long createTime, long startTime, long endTime)
     {       // constructor for physical meetings
 
         this.event_id = id;
@@ -199,7 +199,7 @@ public class EventNew implements Serializable
 
 
     //danny using this one
-    public EventNew(int id, String title, String description, String platform, String onlineLink, int creatorID, int roomID, int messageRoomID, long createTime, long startTime, long endTime)
+    public EventOld(int id, String title, String description, String platform, String onlineLink, int creatorID, int roomID, int messageRoomID, long createTime, long startTime, long endTime)
     {  // constructor for online meetings
         this(id, title, description, creatorID, roomID, messageRoomID, createTime, startTime, endTime);
 
@@ -209,7 +209,7 @@ public class EventNew implements Serializable
         this.onlineLink = platformFactory.getPlatform(platform).meetingLink(onlineLink);
     }
 
-    public EventNew(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
+    public EventOld(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
                     int hourE, int minuteE, boolean isOnline, int roomID,
                     Model model, ArrayList<Integer> participants) {
         this.event_id = 0;
@@ -278,7 +278,7 @@ public class EventNew implements Serializable
         this.participants = participants;
     }
 
-    public EventNew(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
+    public EventOld(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
                     int hourE, int minuteE, boolean isOnline, String platform, String link, Model model,
                     ArrayList<Integer> participants) {
         this.event_id = 0;
@@ -351,7 +351,7 @@ public class EventNew implements Serializable
         this.participants = participants;
     }
 
-    public EventNew() {
+    public EventOld() {
         this.event_id = -1;
         this.time_create = null;
         this.time_start = null;

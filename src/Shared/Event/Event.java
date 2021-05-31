@@ -1,48 +1,42 @@
 package Shared.Event;
-
-import Shared.Event.Platform.PlatformFactory;
-import client.Model.Model;
-import org.junit.Ignore;
-
 import java.io.Serializable;
-import java.rmi.RemoteException;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.*;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class Event implements Serializable
 {
     private int id;
+    private int messageRoomID;
     private int roomID;
     private int creatorID;
-    private int messageRoomId;
     private long timeStart;
     private long timeEnd;
     private String title;
     private String description;
-    private String platformString;
+    private String platform;
     private String onlineLink;
     private ArrayList<Integer> participants;
 
     /**
      * General event constructor
      */
-    public Event(int id, int messageRoomId, int roomID, int creatorID, long timeStart, long timeEnd, String title, String description, String platformString, String onlineLink, ArrayList<Integer> participants) {
-        this.id = id;
-        this.messageRoomId = messageRoomId;
+    public Event(int id, int messageRoomID, int roomID, int creatorID, long timeStart, long timeEnd, String title, String description, String platform, String onlineLink, ArrayList<Integer> participants) {
+        if(id != -1) {
+            this.id = id;
+        }
+        if(messageRoomID != -1) {
+            this.messageRoomID = messageRoomID;
+        }
         if(roomID != -1) {
             this.roomID = roomID;
         }
-        this.creatorID = creatorID;
+        if(creatorID != -1) {
+            this.creatorID = creatorID;
+        }
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
         this.title = title;
         this.description = description;
-        this.platformString = platformString;
+        this.platform = platform;
         this.onlineLink = onlineLink;
         this.participants = participants;
     }
@@ -50,15 +44,41 @@ public class Event implements Serializable
     /**
      * Physical event
      */
-    public Event(int id, int messageRoomId, int roomID, int creatorID, long timeStart, long timeEnd, String title, String description) {
-        this(id, messageRoomId, roomID, creatorID, timeStart, timeEnd, title, description, null, null, new ArrayList<>());
+    public Event(int id, int messageRoomID, int roomID, int creatorID, long timeStart, long timeEnd, String title, String description) {
+        this(id, messageRoomID, roomID, creatorID, timeStart, timeEnd, title, description, null, null, new ArrayList<>());
     }
 
     /**
      * Online event
      */
-    public Event(int id, int messageRoomId, int creatorID, long timeStart, long timeEnd, String title, String description, String platformString, String onlineLink) {
-        this(id, messageRoomId, -1, creatorID, timeStart, timeEnd, title, description, platformString, onlineLink, new ArrayList<>());
+    public Event(int id, int messageRoomID, int creatorID, long timeStart, long timeEnd, String title, String description, String platform, String onlineLink) {
+        this(id, messageRoomID, -1, creatorID, timeStart, timeEnd, title, description, platform, onlineLink, new ArrayList<>());
+    }
+
+    public void setID(int id) {
+        if(id != -1) {
+            this.id = id;
+        }
+    }
+
+    public void setMessageRoomID(int messageRoomID) {
+        if(messageRoomID != -1) {
+            this.messageRoomID = messageRoomID;
+        }
+    }
+
+    public void setRoomID(int roomID) {
+        if(roomID != -1) {
+            this.roomID = roomID;
+        }
+    }
+
+    public void setTimeStart(long timestamp) {
+        this.timeStart = timestamp;
+    }
+
+    public void setTimeEnd(long timestamp) {
+        this.timeEnd = timestamp;
     }
 
     public void setTitle(String title) {
@@ -67,22 +87,12 @@ public class Event implements Serializable
         } else throw new IllegalArgumentException("The title cannot be empty!");
     }
 
-    public void setMessageRoomId(int messageRoomId) {
-        this.messageRoomId = messageRoomId;
-    }
-
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setRoom(int room) {
-        if(room != -1) {
-            this.roomID = room;
-        }
-    }
-
     public void setPlatform(String platform) {
-        this.platformString = platform;
+        this.platform = platform;
     }
 
     public void setOnlineLink(String link) {
@@ -106,12 +116,28 @@ public class Event implements Serializable
         this.participants = employees;
     }
 
-    public ArrayList<Integer> getParticipants() {
-        return participants;
+    public int getID() {
+        return id;
+    }
+
+    public int getMessageRoomID() {
+        return messageRoomID;
+    }
+
+    public int getRoomID() {
+        return roomID;
     }
 
     public int getCreatorID() {
         return creatorID;
+    }
+
+    public long getTimeStart() {
+        return timeStart;
+    }
+
+    public long getTimeEnd() {
+        return timeEnd;
     }
 
     public String getTitle() {
@@ -123,61 +149,21 @@ public class Event implements Serializable
     }
 
     public String getPlatform() {
-        return platformString;
+        return platform;
     }
 
     public String getOnlineLink() {
         return onlineLink;
     }
 
-    public long getTimeStart() {
-        return timeStart;
-    }
-
-    public long getTimeEnd() {
-        return timeEnd;
-    }
-
-    public int getRoomID() {
-        return roomID;
-    }
-
-    public int getID() {
-        return id;
-    }
-
-    public String participantString() {
-        String participant = "";
-        for (int i = 0; i < participants.size(); i++) {
-            participant += getParticipants().get(i);
-            participant += ", ";
-        }
-        return participant;
+    public ArrayList<Integer> getParticipants() {
+        return participants;
     }
 
     @Override
     public String toString() {
-        try {
-            return "ID: " + getID() + " Title: " + getTitle() + ", Start: " + getTime_start() + ", End: " + getTime_end()
-                    + ", Description: " + getDescription() + ", isOnline: " + isOnline() + ", (if online)Platform: " + getPlatform() +
-                    ", (if online)Link: " + getOnlineLink() + ", (if physical)Room: " + getRoomID() + ", " + creatorParticipantString();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        return "error";
-        //TODO i(adam) added this so the app can run;
-    }
-
-    public String contentString() {
-        return getEvent_id() + " " + getTitle() + " " + getTime_create() + " " + getTime_start() + " " + getTime_end()
-                + " " + getPlatform() + " " + getOnlineLink() + " " + getRoomID();
-    }
-
-    public String dateString() {
-        return getTime_start() + " " + getTime_end();
-    }
-
-    public int getMessageRoomID() {
-        return mesasageRoomId;
+        return "ID: " + getID() + " Title: " + getTitle() + ", Start: " + getTimeStart() + ", End: " + getTimeEnd()
+            + ", Description: " + getDescription() + ", Platform: " + getPlatform() +
+            ", Link: " + getOnlineLink() + ", Room: " + getRoomID() + ", Creator: " + getCreatorID();
     }
 }
