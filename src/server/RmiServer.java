@@ -139,6 +139,15 @@ public class RmiServer implements API
     }
 
     @Override
+    public Employee employeeSetPassword(int employeeID1, int employeeID2, String password)
+        throws GeneralSecurityException, IOException, SQLException
+    {
+        String encryptedPassword = Crypt.encryptPassword(password);
+        this.checkPermission(employeeID1, "employees_create_edit");
+        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"password"}, formatStringValues(new String[] {encryptedPassword}), employeeID2), this.databaseHandler);
+    }
+
+    @Override
     public Employee employeePermissionAdd(int employeeID1, int employeeID2, String permission) throws SQLException
     {
         this.checkPermission(employeeID1, "employees_create_edit");
