@@ -53,40 +53,9 @@ public class ModelManager implements Model
         employeeList.setEventList(eventList);
         messageRoomList.setEmployeeList(employeeList);
 
-
-        //todo REMOVE THIS
-
-        /*employeeList.addEmployee("Adam123", "Adam", "Halama", "CFO");
-        employeeList.addEmployee("Klaudi123", "klaudi", "Var", "CBO");
-
-
-        messageRoomList.addMessageRoom("Test room t1");
-        messageRoomList.getMessageRoomByID(1).addUser(1);
-        messageRoomList.getMessageRoomByID(1).addMessage(new Message(1, (System.currentTimeMillis()) , "Helooooo"));
-
-
-        messageRoomList.addPrivateMessageRoom("Private message room t2", 1, 2);*/
-
-        /*try
-        {
-            System.out.println(api.employeeRegister("admin", "admin", "Admin", "Admin", "Admin"));
-        } catch (GeneralSecurityException | IOException | SQLException e)
-        {
-            e.printStackTrace();
-        }*/
-
-//        loggedClientID = 1;
-
-        //logging in works, but i dont want to go to the login view every time
-
-
-//       loggedEmployee = new Employee(7, "admin", "Admin", "Admin", "Admin", false);
-//        employeeList.addEmployee(loggedEmployee);
-
-
         try
         {
-//            addEmployee("admin", "admin", "Admin", "Admin" , "test admin");
+            addEmployee("admin", "admin", "Admin", "Admin" , "test admin");
 
 
             this.login("admin", "admin");

@@ -338,7 +338,6 @@ public class ViewHandler {
                 e.printStackTrace();
             }
         }
-        createEventViewController.reset();
         return createEventViewController.getRoot();
     }
 
