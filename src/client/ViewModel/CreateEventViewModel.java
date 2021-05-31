@@ -120,7 +120,6 @@ public class CreateEventViewModel {
                     Model model, ArrayList<Integer> paticipants){
         Event e1 = new Event(title, des, year, month, day, hourS, minuteS, hourE, minuteE,
                 true, platform, link, model, paticipants); // for local constructor
-        Event e2 = new Event(title, des, startTime, endTime, platform, link, paticipants, model);
         addEvent(e1);
         setIdProperty(e1.getEvent_id());
     }
@@ -130,7 +129,6 @@ public class CreateEventViewModel {
                     Model model, ArrayList<Integer> paticipants){
         Event e1 = new Event(title, des, year, month, day, hourS, minuteS, hourE, minuteE,
                 false, id, model, paticipants); // for local constructor
-        Event e2 = new Event(title, des, startTime, endTime, id, paticipants, model);
         addEvent(e1);
         setIdProperty(e1.getEvent_id());
     }

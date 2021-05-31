@@ -2,7 +2,6 @@ package Shared.Event;
 
 import Shared.Event.Platform.PlatformFactory;
 import client.Model.Model;
-import org.junit.Ignore;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Event implements Serializable
+public class EventNew implements Serializable
 {
     private int event_id;
     private String time_create; //when creating this event
@@ -45,15 +44,111 @@ public class Event implements Serializable
     private int roomID; //if physical, choose a room (it could be another type, let's see in the future)
     private int creatorID;
     private ArrayList<Integer> participants;
+    private Model model;
 
 
-    public Event(int id, )
+    public EventNew(String title, String description, long startTime, long endTime, String platform, String onlineLink,
+                    ArrayList<Integer> participants, Model model) {  // constructor for online meetings
+        this.event_id = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        this.time_create = sdf.format(date);
+        try {
+            date = sdf.parse(time_create);
+            createTime = date.getTime(); // transfer crate time from date to timestamp
+        } catch (ParseException e) {
+            e.getMessage();
+        }
+        if (title != null) {
+            this.title = title;
+        } else throw new IllegalArgumentException("The title of the event cannot be null!");
+
+        Instant instantS = Instant.ofEpochMilli(startTime);
+        LocalDateTime start = LocalDateTime.ofInstant(instantS, ZoneId.systemDefault());
+        this.calendarS = Calendar.getInstance();
+        calendarS.set(start.getYear(), start.getMonthValue() - 1, start.getDayOfMonth(), start.getHour(), start.getMinute());
+        System.out.println(start.getYear() + " " + (start.getMonthValue() - 1) + " " + start.getDayOfMonth() + " " + start.getHour() + " " + start.getMinute());
+        if (start.getHour() >= 9 && start.getHour() < 17 &&
+                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6)) {
+            this.time_start = sdf.format(new Date(startTime));  // transfer start time from timestamp to date
+        } else throw new IllegalArgumentException("You should set time at work hours!");
+
+        Instant instantE = Instant.ofEpochMilli(endTime);
+        LocalDateTime end = LocalDateTime.ofInstant(instantE, ZoneId.systemDefault());
+        this.calendarS = Calendar.getInstance();
+        calendarS.set(end.getYear(), end.getMonthValue() - 1, end.getDayOfMonth(), end.getHour(), end.getMinute());
+        if (end.getHour() >= 9 && end.getHour() < 17 &&
+                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6) && start.isBefore(end)) {
+            this.time_end = sdf.format(new Date(startTime));  // transfer end time from timestamp to date
+        } else throw new IllegalArgumentException("You should set time at work hours!");
+
+        this.description = description;
+
+        isOnline = true;
+        this.roomID = 0;
+
+        this.platformFactory = new PlatformFactory();
+        this.platformString = platformFactory.getPlatform(platform).type(); // here i would use factory design pattern
+        this.onlineLink = platformFactory.getPlatform(platform).meetingLink(onlineLink);
+
+        this.model = model;
+        this.creatorID = model.getLoggedEmployeeID();
+        this.participants = participants;
+    }
+
+    public EventNew(String title, String description, long startTime, long endTime, int roomID,
+                    ArrayList<Integer> participants, Model model) {       // constructor for physical meetings
+        this.event_id = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        this.time_create = sdf.format(date);
+        try {
+            date = sdf.parse(time_create);
+            createTime = date.getTime(); // transfer crate time from date to timestamp
+        } catch (ParseException e) {
+            e.getMessage();
+        }
+        if (title != null) {
+            this.title = title;
+        } else throw new IllegalArgumentException("The title of the event cannot be null!");
+
+        Instant instantS = Instant.ofEpochMilli(startTime);
+        LocalDateTime start = LocalDateTime.ofInstant(instantS, ZoneId.systemDefault());
+        this.calendarS = Calendar.getInstance();
+        calendarS.set(start.getYear(), start.getMonthValue() - 1, start.getDayOfMonth(), start.getHour(), start.getMinute());
+        System.out.println(start.getYear() + " " + (start.getMonthValue() - 1) + " " + start.getDayOfMonth() + " " + start.getHour() + " " + start.getMinute());
+        if (start.getHour() >= 9 && start.getHour() < 17 &&
+                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6)) {
+            this.time_start = sdf.format(new Date(startTime));  // transfer start time from timestamp to date
+        } else throw new IllegalArgumentException("You should set time at work hours!");
+
+        Instant instantE = Instant.ofEpochMilli(endTime);
+        LocalDateTime end = LocalDateTime.ofInstant(instantE, ZoneId.systemDefault());
+        this.calendarS = Calendar.getInstance();
+        calendarS.set(end.getYear(), end.getMonthValue() - 1, end.getDayOfMonth(), end.getHour(), end.getMinute());
+        if (end.getHour() >= 9 && end.getHour() < 17 &&
+                (calendarS.get(Calendar.DAY_OF_WEEK) >= 2 && calendarS.get(Calendar.DAY_OF_WEEK) <= 6) && start.isBefore(end)) {
+            this.time_end = sdf.format(new Date(startTime));  // transfer end time from timestamp to date
+        } else throw new IllegalArgumentException("You should set time at work hours!");
+
+        this.description = description;
+
+        isOnline = false;
+        this.roomID = roomID;
+
+        this.model = model;
+        this.creatorID = model.getLoggedEmployeeID();
+        this.participants = participants;
+    }
+
 
     //danny using this one
-    public Event(int id, String title, String description, int creatorID, int roomID, int messageRoomID, long createTime, long startTime, long endTime)
+    public EventNew(int id, String title, String description, int creatorID, int roomID, int messageRoomID, long createTime, long startTime, long endTime)
     {       // constructor for physical meetings
 
-        this.id = id;
+        this.event_id = id;
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
@@ -104,7 +199,7 @@ public class Event implements Serializable
 
 
     //danny using this one
-    public Event(int id, String title, String description, String platform, String onlineLink, int creatorID, int roomID, int messageRoomID, long createTime, long startTime, long endTime)
+    public EventNew(int id, String title, String description, String platform, String onlineLink, int creatorID, int roomID, int messageRoomID, long createTime, long startTime, long endTime)
     {  // constructor for online meetings
         this(id, title, description, creatorID, roomID, messageRoomID, createTime, startTime, endTime);
 
@@ -114,10 +209,9 @@ public class Event implements Serializable
         this.onlineLink = platformFactory.getPlatform(platform).meetingLink(onlineLink);
     }
 
-    //used by jerry in view
-    public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
-                 int hourE, int minuteE, boolean isOnline, int roomID,
-                 Model model, ArrayList<Integer> participants) {
+    public EventNew(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
+                    int hourE, int minuteE, boolean isOnline, int roomID,
+                    Model model, ArrayList<Integer> participants) {
         this.event_id = 0;
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
@@ -184,10 +278,9 @@ public class Event implements Serializable
         this.participants = participants;
     }
 
-    //used by jerry
-    public Event(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
-                 int hourE, int minuteE, boolean isOnline, String platform, String link, Model model,
-                 ArrayList<Integer> participants) {
+    public EventNew(String title, String description, int yearS, int monthS, int dayS, int hourS, int minuteS,
+                    int hourE, int minuteE, boolean isOnline, String platform, String link, Model model,
+                    ArrayList<Integer> participants) {
         this.event_id = 0;
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
@@ -258,8 +351,7 @@ public class Event implements Serializable
         this.participants = participants;
     }
 
-    //used in ModelManager
-    public Event() {
+    public EventNew() {
         this.event_id = -1;
         this.time_create = null;
         this.time_start = null;
