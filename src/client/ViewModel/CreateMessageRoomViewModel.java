@@ -189,7 +189,7 @@ public class CreateMessageRoomViewModel
         addButtonDisable.set(false);
     }
 
-    public boolean saveButton()
+    public int saveButton()
     {
         if (checkBox.get()) // groupChat true
         {
@@ -199,25 +199,26 @@ public class CreateMessageRoomViewModel
             //TODO add check if the room is already created
             try
             {
-                model.messageRoomCreatePrivate(selectedTable.get(0).getUserIDProperty().get());
+                MessageRoom room = model.messageRoomCreatePrivate(selectedTable.get(0).getUserIDProperty().get());
+                return room.getId();
             }
             catch (IndexOutOfBoundsException e)
             {
                 errorLabel.setValue("Pick an employee");
-                return false;
+                return -1;
             } catch (SQLException throwables)
             {
                 throwables.printStackTrace();
                 errorLabel.setValue(throwables.getMessage());
-                return false;
+                return -1;
             } catch (RemoteException throwables)
             {
                 throwables.printStackTrace();
                 errorLabel.setValue("Failed to save");
-                return false;
+                return -1;
             }
         }
-        return true;
+        return -1;
     }
 
     public void setMessageRoomID(int i)

@@ -17,7 +17,7 @@ import java.sql.SQLException;
 public class MessageRoomViewController implements PropertyChangeListener
 {
     @FXML
-    private Label topLabel;
+    private Label topLabel, errorLabel;
     @FXML
     private ListView<String> listView;
     @FXML
@@ -48,7 +48,8 @@ public class MessageRoomViewController implements PropertyChangeListener
 
         viewModel.addListener("Scroll down", this ::scrollDown);
 
-        topLabel.textProperty().bind(viewModel.getTopLabelProperty());
+        topLabel.textProperty().bind(viewModel.getErrorLabelProperty());
+        errorLabel.textProperty().bind(viewModel.getErrorLabelProperty());
         message.textProperty().bindBidirectional(viewModel.getMessageProperty());
         listView.setItems(viewModel.getMembersList());
         messageTable.setItems(viewModel.getMessageTable());
@@ -66,10 +67,6 @@ public class MessageRoomViewController implements PropertyChangeListener
         });
     }
 
-    public void reset()
-    {
-        viewModel.reset();
-    }
 
     @FXML
     private void backButton() throws SQLException, RemoteException {
@@ -84,9 +81,9 @@ public class MessageRoomViewController implements PropertyChangeListener
     }
 
     @FXML
-    private void loadAllMessagesButton()
+    private void loadMoreMessagesButton()
     {
-        viewModel.loadAllMessages();
+        viewModel.loadMoreMessages();
     }
 
     public void setPrivate(boolean aPrivate)

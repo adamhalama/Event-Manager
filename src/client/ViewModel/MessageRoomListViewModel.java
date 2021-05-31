@@ -7,6 +7,8 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.rmi.RemoteException;
+
 public class MessageRoomListViewModel
 {
     private StringProperty searchBox;
@@ -33,12 +35,22 @@ public class MessageRoomListViewModel
 
         tableView.clear();
 
-        for (MessageRoom room:
-             model.getMessageRooms())
+        try
         {
-            tableView.add(new MessageRoomViewModel(room.getId(), room.getName(),
-                    model.getSenderAndBody(room.getLastMessage()),
-                    model.getMessageRoomParticipantNames(room)));
+            //private rooms
+            for (MessageRoom room:
+                 model.messageRoomGetPrivate())
+            {
+                tableView.add(new MessageRoomViewModel(room.getId(), room.getName(),
+                        model.getSenderAndBody(room.getLastMessage()),
+                        model.getMessageRoomParticipantNames(room)));
+            }
+            //all other
+
+        } catch (RemoteException e)
+        {
+            errorLabel.setValue(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -63,17 +75,24 @@ public class MessageRoomListViewModel
         {
             tableView.clear();
 
-            for (MessageRoom room:
-                 model.getMessageRoomsByAnything(searchBox.get()))
+            try
             {
-                tableView.add(new MessageRoomViewModel(room.getId(),
-                        room.getName(),
-                        model.getSenderAndBody(room.getLastMessage()),
-                        model.getMessageRoomParticipantNames(room)));
+                for (MessageRoom room:
+                     model.getMessageRoomsByAnything(searchBox.get()))
+                {
+                    tableView.add(new MessageRoomViewModel(room.getId(),
+                            room.getName(),
+                            model.getSenderAndBody(room.getLastMessage()),
+                            model.getMessageRoomParticipantNames(room)));
+                }
+            } catch (RemoteException e)
+            {
+                errorLabel.setValue(e.getMessage());
+                e.printStackTrace();
             }
         }
-        assert searchBox != null;
-        if (searchBox.get().equals(""))
+
+        if (searchBox != null && !searchBox.get().equals(""))
             this.reset();
     }
 

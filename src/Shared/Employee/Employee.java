@@ -238,12 +238,21 @@ public class Employee implements Serializable
     }
 
     /**
-     * Gets the name.
+     * Gets the surname.
      * @return An string representing the surname.
      */
     public String getSurname()
     {
         return surname;
+    }
+
+    /**
+     * Gets the username.
+     * @return An string representing the username.
+     */
+    public String getUsername()
+    {
+        return username;
     }
 
     /**

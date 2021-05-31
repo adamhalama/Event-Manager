@@ -1,5 +1,6 @@
 package Shared.Messages;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -8,7 +9,7 @@ import java.util.ArrayList;
  * @version 1.0 - May 2021
  * @since 1.0
  */
-public class MessageRoom
+public class MessageRoom implements Serializable
 {
     /**
      * Room ID, representing the system id of the message room.
@@ -173,14 +174,11 @@ public class MessageRoom
     /**
      * Adds a user to the groupChat based on the parameter.
      * @param ID an int containing the userID that is going to be added to the group chat.
-     * @throws IllegalStateException if the method is used in private message room - "Cant add user to a private chat"
      */
     public void addUser(int ID)
     {
-        if (!isPrivate)
+        if (!usersIDs.contains(ID))
             usersIDs.add(ID);
-        else
-            throw new IllegalStateException("Cant add user to a private chat");
     }
 
     /**

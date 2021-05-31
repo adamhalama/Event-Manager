@@ -193,6 +193,8 @@ public class ViewHandler {
                 e.printStackTrace();
             }
         }
+
+        viewModelFactory.getLoginViewModel().reset();
         return loginViewController.getRoot();
     }
 
@@ -514,7 +516,7 @@ public class ViewHandler {
                 e.printStackTrace();
             }
         }
-        messageRoomListViewController.reset();
+        viewModelFactory.getMessageRoomListViewModel().reset();
         return messageRoomListViewController.getRoot();
     }
 
@@ -539,7 +541,7 @@ public class ViewHandler {
             throwables.printStackTrace();
         }
 
-        messageRoomViewController.reset();
+        viewModelFactory.getMessageRoomViewModel().reset();
         return messageRoomViewController.getRoot();
     }
 
