@@ -100,9 +100,9 @@ public class CreateEventViewController {
                 cellData.getValue().getRoleProperty());
 
         this.hourMenuS.setItems(FXCollections.observableArrayList(9, 10, 11, 12, 13, 14, 15, 16));
-//        this.minuteMenuS.setItems(FXCollections.observableArrayList("00", "15", "30", "45"));
+        this.minuteMenuS.setItems(FXCollections.observableArrayList("00", "15", "30", "45"));
         this.hourMenuE.setItems(FXCollections.observableArrayList(9, 10, 11, 12, 13, 14, 15, 16));
-//        this.minuteMenuE.setItems(FXCollections.observableArrayList("00", "15", "30", "45"));
+        this.minuteMenuE.setItems(FXCollections.observableArrayList("00", "15", "30", "45"));
 
         roomList = FXCollections.observableArrayList();
 
@@ -370,10 +370,10 @@ public class CreateEventViewController {
             long timestamp = parseString(stringDate);
 
             long startTimestamp = timestamp + (hourMenuS.getValue().longValue() * 60 * 60 * 1000)
-                    + minuteMenuS.getValue() * 60 * 1000;
+                    + (Long.parseLong(minuteMenuS.getValue()) * 60 * 1000);
 
             long endTimestamp = timestamp + (hourMenuE.getValue().longValue() * 60 * 60 * 1000)
-                    + minuteMenuE.getValue() * 60 * 1000;
+                    + (Long.parseLong(minuteMenuE.getValue()) * 60 * 1000);
 
             if (viewModel.isOnline()) {
                 if (title != null || yearS != 0 && monthS != 0 && dayS != 0 && hourS != 0 && minuteS != -1 && hourE != 0 && minuteE != -1
