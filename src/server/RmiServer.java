@@ -284,7 +284,7 @@ public class RmiServer implements API
         return ObjectInfo.getFullRoom(
             this.databaseHandler.room.editByID(
                 new String[] {"room_no"},
-                new String[] {String.valueOf(roomNumber)},
+                formatStringValues(String.valueOf(roomNumber)),
                 roomID
             ),
             this.databaseHandler
