@@ -60,6 +60,19 @@ public class EmployeePermissionModel extends Model
     return false;
   }
 
+  public boolean deleteAll(int userID)
+  {
+    try
+    {
+      return super.modelDelete("employee_id = " + userID);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
   public boolean create(String permission, int userID)
   {
     try

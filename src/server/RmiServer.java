@@ -154,6 +154,17 @@ public class RmiServer implements API
         return ObjectInfo.getFullEmployee(this.databaseHandler.employee.getByID(employeeID2), this.databaseHandler);
     }
 
+    @Override
+    public Employee employeePermissionSet(int employeeID1, int employeeID2, String[] permissions) throws SQLException
+    {
+        this.checkPermission(employeeID1, "employees_create_edit");
+        this.databaseHandler.employeePermission.deleteAll(employeeID2);
+        for(String permission : permissions) {
+            this.databaseHandler.employeePermission.create(permission, employeeID2);
+        }
+        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.getByID(employeeID2), this.databaseHandler);
+    }
+
 
     /*--Room--*/
 
@@ -276,15 +287,31 @@ public class RmiServer implements API
     }
 
     @Override
-    public boolean roomEquipmentAdd(int roomID, String equipment)
+    public boolean roomEquipmentAdd(int employeeID1, int roomID, String equipment)
+        throws SQLException
     {
+        this.checkPermission(employeeID1, "room_create_edit");
         return this.databaseHandler.roomEquipment.create(equipment, roomID);
     }
 
     @Override
-    public boolean roomEquipmentRemove(int roomID, String equipment)
+    public boolean roomEquipmentRemove(int employeeID1, int roomID, String equipment)
+        throws SQLException
     {
+        this.checkPermission(employeeID1, "room_create_edit");
         return this.databaseHandler.roomEquipment.delete(equipment, roomID);
+    }
+
+    @Override
+    public boolean roomEquipmentSet(int employeeID1, int roomID, String[] equipment)
+        throws SQLException
+    {
+        this.checkPermission(employeeID1, "room_create_edit");
+        this.databaseHandler.roomEquipment.deleteAll(roomID);
+        for(String item : equipment) {
+            this.databaseHandler.employeePermission.create(item, roomID);
+        }
+        return true;
     }
 
 

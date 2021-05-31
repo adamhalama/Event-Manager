@@ -41,6 +41,8 @@ public interface API extends Remote
 
     Employee employeePermissionRemove(int employeeID1, int employeeID2, String permission) throws SQLException, RemoteException;
 
+    Employee employeePermissionSet(int employeeID1, int employeeID2, String[] permissions) throws SQLException, RemoteException;
+
     Room roomGetByID(int roomID) throws SQLException, RemoteException;
 
     ArrayList<Room> roomGetByIDs(ArrayList<Integer> roomIDs) throws RemoteException;
@@ -61,9 +63,11 @@ public interface API extends Remote
 
     String[] roomEquipmentGet(int roomID) throws RemoteException;
 
-    boolean roomEquipmentAdd(int roomID, String equipment) throws RemoteException;
+    boolean roomEquipmentAdd(int employeeID1, int roomID, String equipment) throws SQLException, RemoteException;
 
-    boolean roomEquipmentRemove(int roomID, String equipment) throws RemoteException;
+    boolean roomEquipmentRemove(int employeeID1, int roomID, String equipment) throws SQLException, RemoteException;
+
+    boolean roomEquipmentSet(int employeeID1, int roomID, String[] equipment) throws SQLException, RemoteException;
 
     MessageRoom messageRoomGetByID(int messageRoomID) throws SQLException, RemoteException;
 
