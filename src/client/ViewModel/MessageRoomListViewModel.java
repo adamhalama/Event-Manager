@@ -37,15 +37,14 @@ public class MessageRoomListViewModel
 
         try
         {
-            //private rooms
+            //all rooms
             for (MessageRoom room:
-                 model.messageRoomGetPrivate())
+                 model.messageRoomGetAll())
             {
                 tableView.add(new MessageRoomViewModel(room.getId(), room.getName(),
                         model.getSenderAndBody(room.getLastMessage()),
                         model.getMessageRoomParticipantNames(room)));
             }
-            //all other
 
         } catch (RemoteException e)
         {

@@ -10,6 +10,7 @@ import Shared.Messages.MessageRoomList;
 import Shared.Room.Room;
 import Shared.Room.RoomList;
 import client.RmiClient;
+import org.junit.Ignore;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -53,9 +54,11 @@ public class ModelManager implements Model
         employeeList.setEventList(eventList);
         messageRoomList.setEmployeeList(employeeList);
 
+
+        //TODO remove this after being done with dev and testing
         try
         {
-            addEmployee("admin", "admin", "Admin", "Admin" , "test admin");
+//            addEmployee("admin", "admin", "Admin", "Admin" , "test admin");
 
 
             this.login("admin", "admin");
@@ -95,6 +98,7 @@ public class ModelManager implements Model
         return loggedEmployee;
     }
 
+    @Ignore
     @Override
     public void addMessageRoom(String name)
     {
@@ -107,6 +111,7 @@ public class ModelManager implements Model
         return api.messageRoomCreatePrivate(getLoggedEmployeeID(), employeeID2);
     }
 
+    @Ignore
     @Override
     public void addMessageRoom(String name, ArrayList<Integer> usersIDs)
     {
@@ -131,13 +136,14 @@ public class ModelManager implements Model
         return api.messagePost(getLoggedEmployeeID(), messageRoomID, message);
     }
 
-
+    @Ignore
     @Override
     public void removeMessageRoomFromEmployee(int messageRoomID)
     {
         messageRoomList.removeMessageRoom(messageRoomID);
     }
 
+    @Ignore
     @Override
     public void removeMessageRoomFromEmployee(MessageRoom room)
     {
@@ -159,9 +165,17 @@ public class ModelManager implements Model
     }
 
     @Override
+    public ArrayList<MessageRoom> messageRoomGetAll() throws RemoteException
+    {
+        ArrayList<MessageRoom> messageRooms = api.messageRoomGetAll(getLoggedEmployeeID());
+        messageRoomList.addRoomList(messageRooms);
+        return messageRooms;
+    }
+
+    @Override
     public ArrayList<MessageRoom> getMessageRoomsByAnything(String keyword) throws RemoteException
     {
-        messageRoomGetPrivate();
+        messageRoomGetAll();
         return messageRoomList.getMessageRoomsByAnything(keyword);
     }
 
@@ -307,10 +321,11 @@ public class ModelManager implements Model
     @Override
     public Employee getEmployeeByID(int ID) throws SQLException, RemoteException
     {
+        Employee employee = api.getEmployeeByID(ID);
         if (employeeList.getEmployeeByID(ID) == null)
-            employeeList.addEmployee(api.getEmployeeByID(ID));
+            employeeList.addEmployee(employee);
 
-        return api.getEmployeeByID(ID);
+        return employee;
     }
 
     @Override
@@ -334,7 +349,7 @@ public class ModelManager implements Model
     @Override
     public Employee employeeSetUsername(int employeeID2, String username) throws SQLException, RemoteException
     {
-        return api.employeeSetSurname(getLoggedEmployeeID(), employeeID2, username);
+        return api.employeeSetUsername(getLoggedEmployeeID(), employeeID2, username);
     }
 
     @Override

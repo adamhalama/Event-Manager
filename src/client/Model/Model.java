@@ -47,6 +47,8 @@ public interface Model {
 
     ArrayList<MessageRoom> messageRoomGetPrivate() throws RemoteException;
 
+    ArrayList<MessageRoom> messageRoomGetAll() throws RemoteException;
+
     ArrayList<MessageRoom> getMessageRoomsByAnything(String keyword) throws RemoteException;
 
     ArrayList<MessageRoom> getMessageRooms();
