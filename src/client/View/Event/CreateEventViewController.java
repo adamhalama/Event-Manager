@@ -1,7 +1,5 @@
 package client.View.Event;
 
-import Shared.Employee.Employee;
-import Shared.Event.Event;
 import Shared.Room.Room;
 import client.Model.Model;
 import client.View.ViewHandler;
@@ -14,7 +12,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import client.ViewModel.EmployeeViewModel;
-import client.ViewModel.EventViewModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,9 +19,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Optional;
 
@@ -37,17 +34,13 @@ public class CreateEventViewController {
     @FXML
     private DatePicker startDate;
     @FXML
-    private ChoiceBox<Integer> hourMenuS;
+    private ChoiceBox<Integer> hourMenuStart;
     @FXML
-    private ChoiceBox<Integer> minuteMenuS;
+    private ChoiceBox<Integer> minuteMenuStart;
     @FXML
-    private ChoiceBox<Integer> hourMenuE;
+    private ChoiceBox<Integer> hourMenuEnd;
     @FXML
-    private ChoiceBox<Integer> minuteMenuE;
-    @FXML
-    private Button onlineButton;
-    @FXML
-    private Button physicalButton;
+    private ChoiceBox<Integer> minuteMenuEnd;
     @FXML
     private ChoiceBox<Integer> roomMenu;
     @FXML
@@ -66,6 +59,11 @@ public class CreateEventViewController {
     private TableColumn<EmployeeViewModel, String> roleColumn;
     @FXML
     private Label errorLabel;
+    @FXML
+    private TextField newParticipantField;
+
+
+
     private int chooseStatus;
     private ObservableList<Integer> roomList;
 
@@ -89,6 +87,8 @@ public class CreateEventViewController {
         this.errorLabel.setText("Welcome!");
         this.chooseStatus = -1;
 
+        TextFields.bindAutoCompletion(newParticipantField, viewModel.getEmployeeList());
+
         this.participantTable.setItems(viewModel.update());
         surnameColumn.setCellValueFactory(cellData ->
                 cellData.getValue().getSurnameProperty());
@@ -99,9 +99,9 @@ public class CreateEventViewController {
         roleColumn.setCellValueFactory(cellData ->
                 cellData.getValue().getRoleProperty());
 
-        this.hourMenuS.setItems(FXCollections.observableArrayList(9, 10, 11, 12, 13, 14, 15, 16));
+        this.hourMenuStart.setItems(FXCollections.observableArrayList(9, 10, 11, 12, 13, 14, 15, 16));
 //        this.minuteMenuS.setItems(FXCollections.observableArrayList("00", "15", "30", "45"));
-        this.hourMenuE.setItems(FXCollections.observableArrayList(9, 10, 11, 12, 13, 14, 15, 16));
+        this.hourMenuEnd.setItems(FXCollections.observableArrayList(9, 10, 11, 12, 13, 14, 15, 16));
 //        this.minuteMenuE.setItems(FXCollections.observableArrayList("00", "15", "30", "45"));
 
         roomList = FXCollections.observableArrayList();
@@ -249,7 +249,7 @@ public class CreateEventViewController {
             int yearS = date.getYear();
 
             int hourS;
-            switch (hourMenuS.getSelectionModel().getSelectedIndex()) {
+            switch (hourMenuStart.getSelectionModel().getSelectedIndex()) {
                 case 0:
                     hourS = 9;
                     break;
@@ -278,7 +278,7 @@ public class CreateEventViewController {
                     hourS = 0;
             }
             int hourE;
-            switch (hourMenuE.getSelectionModel().getSelectedIndex()) {
+            switch (hourMenuEnd.getSelectionModel().getSelectedIndex()) {
                 case 0:
                     hourE = 9;
                     break;
@@ -307,7 +307,7 @@ public class CreateEventViewController {
                     hourE = 0;
             }
             int minuteS;
-            switch (minuteMenuS.getSelectionModel().getSelectedIndex()) {
+            switch (minuteMenuStart.getSelectionModel().getSelectedIndex()) {
                 case 0:
                     minuteS = 00;
                     break;
@@ -324,7 +324,7 @@ public class CreateEventViewController {
                     minuteS = -1;
             }
             int minuteE;
-            switch (minuteMenuE.getSelectionModel().getSelectedIndex()) {
+            switch (minuteMenuEnd.getSelectionModel().getSelectedIndex()) {
                 case 0:
                     minuteE = 00;
                     break;
@@ -369,11 +369,11 @@ public class CreateEventViewController {
 
             long timestamp = parseString(stringDate);
 
-            long startTimestamp = timestamp + (hourMenuS.getValue().longValue() * 60 * 60 * 1000)
-                    + minuteMenuS.getValue() * 60 * 1000;
+            long startTimestamp = timestamp + (hourMenuStart.getValue().longValue() * 60 * 60 * 1000)
+                    + minuteMenuStart.getValue() * 60 * 1000;
 
-            long endTimestamp = timestamp + (hourMenuE.getValue().longValue() * 60 * 60 * 1000)
-                    + minuteMenuE.getValue() * 60 * 1000;
+            long endTimestamp = timestamp + (hourMenuEnd.getValue().longValue() * 60 * 60 * 1000)
+                    + minuteMenuEnd.getValue() * 60 * 1000;
 
             if (viewModel.isOnline()) {
                 if (title != null || yearS != 0 && monthS != 0 && dayS != 0 && hourS != 0 && minuteS != -1 && hourE != 0 && minuteE != -1

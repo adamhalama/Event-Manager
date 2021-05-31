@@ -76,6 +76,7 @@ public class EventList {
     }
 
     public ArrayList<Event> getEventExceptDate(String s){
+
         ArrayList<Event> list = new ArrayList<>();
         for (int i = 0; i < events.size(); i++){
             if (events.get(i).contentString().contains(s)){

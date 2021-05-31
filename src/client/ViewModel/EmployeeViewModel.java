@@ -144,6 +144,7 @@ public class EmployeeViewModel
             for (Integer eventID :
                     currentEmp.getEvents())
             {
+                //todo make the method to show title and time
                 eventsList.add(model.getEventByID(eventID).getTitleTimeString());
             }
 

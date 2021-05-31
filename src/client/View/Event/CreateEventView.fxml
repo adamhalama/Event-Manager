@@ -55,10 +55,10 @@
           <RowConstraints maxHeight="110.9999927520752" minHeight="10.0" prefHeight="75.79997863769532" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-                <TextField fx:id="titleTextField" prefHeight="42.0" prefWidth="457.0" promptText="Enter the title of the event here." GridPane.columnIndex="1" />
+                <TextField fx:id="titleTextField" prefHeight="42.0" prefWidth="454.0" promptText="Enter the title of the event here." GridPane.columnIndex="1" />
               <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
                   <children>
-                      <TextArea fx:id="descriptionArea" prefHeight="100.0" prefWidth="457.0" promptText="Optional, you can leave it empty." />
+                      <TextArea fx:id="descriptionArea" promptText="Optional, you can leave it empty." />
                   </children>
               </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
@@ -121,9 +121,9 @@
                         <Insets />
                      </HBox.margin>
                       </Label>
-                  <ChoiceBox fx:id="hourMenuS" prefHeight="26.0" prefWidth="84.0" />
+                  <ChoiceBox fx:id="hourMenuStart" prefHeight="26.0" prefWidth="84.0" />
                       <Label prefHeight="37.0" prefWidth="12.0" text=" :" />
-                  <ChoiceBox fx:id="minuteMenuS" prefHeight="26.0" prefWidth="84.0" />
+                  <ChoiceBox fx:id="minuteMenuStart" prefHeight="26.0" prefWidth="84.0" />
                </children>
                <GridPane.margin>
                   <Insets left="5.0" />
@@ -141,11 +141,11 @@
                               <Insets />
                            </HBox.margin>
                             </Label>
-                        <ChoiceBox fx:id="hourMenuE" prefHeight="26.0" prefWidth="84.0" />
+                        <ChoiceBox fx:id="hourMenuEnd" prefHeight="26.0" prefWidth="84.0" />
                             <Label prefHeight="37.0" prefWidth="12.0" text=" :" />
                      </children>
                   </HBox>
-                  <ChoiceBox fx:id="minuteMenuE" prefHeight="26.0" prefWidth="84.0" />
+                  <ChoiceBox fx:id="minuteMenuEnd" prefHeight="26.0" prefWidth="84.0" />
                </children>
                <GridPane.margin>
                   <Insets left="5.0" />
@@ -178,69 +178,12 @@
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" />
          </children>
       </GridPane>
-        <HBox alignment="CENTER" pickOnBounds="false" prefHeight="39.0" prefWidth="651.0">
-            <children>
-                <Label text="Online / Physical:">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin>
-                </Label>
-                <Button fx:id="onlineButton" mnemonicParsing="false" onAction="#onlinePress" prefHeight="42.0" prefWidth="142.0" text="Online">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin>
-               <graphic>
-                  <ImageView fitHeight="36.0" fitWidth="37.0">
-                     <image>
-                        <Image url="@../Icons/icons8-macbook-chat-100.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-                </Button>
-                <Button fx:id="physicalButton" mnemonicParsing="false" onAction="#physicalPress" prefHeight="42.0" prefWidth="142.0" text="Physical">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-               <HBox.margin>
-                  <Insets left="10.0" right="10.0" />
-               </HBox.margin>
-               <graphic>
-                  <ImageView fitHeight="36.0" fitWidth="37.0">
-                     <image>
-                        <Image url="@../Icons/icons8-room-100.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-                </Button>
-            <Button mnemonicParsing="false" onAction="#resetPress" prefHeight="39.0" prefWidth="54.0">
-               <HBox.margin>
-                  <Insets left="10.0" right="50.0" />
-               </HBox.margin>
-               <graphic>
-                  <ImageView fitHeight="36.0" fitWidth="37.0">
-                     <image>
-                        <Image url="@../Icons/icons8-reset-100.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            </children>
-         <VBox.margin>
-            <Insets bottom="10.0" />
-         </VBox.margin>
-        </HBox>
       <HBox alignment="CENTER">
          <children>
               <HBox alignment="CENTER">
                   <children>
                       <Label text=" " />
-                      <Label prefHeight="26.0" prefWidth="201.0" text="Platform (For online only) :">
+                      <Label prefHeight="26.0" prefWidth="201.0" text="Online platform:">
                           <font>
                               <Font size="15.0" />
                           </font>
@@ -254,7 +197,7 @@
               <HBox alignment="CENTER">
                   <children>
                       <Label text=" " />
-                      <Label prefHeight="27.0" prefWidth="199.0" text="Room (For physical only) :">
+                      <Label prefHeight="27.0" prefWidth="199.0" text="Choose room:">
                           <font>
                               <Font size="15.0" />
                           </font>
@@ -272,7 +215,7 @@
       </HBox>
         <HBox alignment="CENTER" prefHeight="35.0" prefWidth="657.0">
             <children>
-                <Label prefHeight="44.0" prefWidth="223.0" text="Link for meeting (Online only) :">
+                <Label prefHeight="44.0" prefWidth="223.0" text="Link for online meeting:">
                     <font>
                         <Font size="14.0" />
                     </font>
@@ -285,11 +228,16 @@
         </HBox>
       <HBox alignment="CENTER" prefHeight="50.0" prefWidth="739.0">
          <children>
-            <Label text="Participant : ">
+            <Label text="Add participant:">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
+            <TextField fx:id="newParticipantField" alignment="CENTER" prefHeight="38.0" prefWidth="302.0" promptText="New participant">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
             <Button mnemonicParsing="false" onAction="#addEmployeePress" prefHeight="29.0" prefWidth="24.0">
                <graphic>
                   <ImageView fitHeight="29.0" fitWidth="26.0">
@@ -310,15 +258,6 @@
                </graphic>
             </Button>
             <Label layoutX="440.0" layoutY="21.0" text="   " />
-            <Button layoutX="446.0" layoutY="10.0" mnemonicParsing="false" onAction="#refreshPress" prefHeight="29.0" prefWidth="24.0">
-               <graphic>
-                  <ImageView fitHeight="29.0" fitWidth="26.0">
-                     <image>
-                        <Image url="@../Icons/icons8-refresh-100.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
          </children>
       </HBox>
       <VBox prefHeight="200.0" prefWidth="100.0">
