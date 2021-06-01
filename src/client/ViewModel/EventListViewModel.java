@@ -138,4 +138,8 @@ public class EventListViewModel
     }
 
 
+    public void setErrorLabel(String text)
+    {
+        errorLabel.set(text);
+    }
 }

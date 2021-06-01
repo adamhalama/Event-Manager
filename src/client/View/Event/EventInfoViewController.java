@@ -1,81 +1,104 @@
 package client.View.Event;
 
-import client.View.Helpers.SelectState;
 import client.View.ViewHandler;
+import client.ViewModel.EmployeeViewModel;
 import client.ViewModel.EventInfoViewModel;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.Region;
 
-import java.rmi.RemoteException;
-import java.sql.SQLException;
-
-public class EventInfoViewController {
+public class EventInfoViewController
+{
     @FXML
     private TextField titleTextField;
     @FXML
-    private TextArea desArea;
+    private TextArea descriptionField;
     @FXML
     private Label startTimeLabel;
     @FXML
     private Label endTimeLabel;
     @FXML
-    private Label typeLabel;
-    @FXML
     private Label platformLabel;
     @FXML
-    private Label linkLabel;
+    private Label linkTextField;
     @FXML
-    private Label roomLabel;
-    @FXML
-    private TextArea employeeInfoArea;
-    @FXML
-    private Label createTimeLabel;
+    private Label roomLabel, creatorLabel, errorLabel;
 
-    private int id;
+    @FXML
+    private TableView<EmployeeViewModel> employeeTable;
+    @FXML
+    private TableColumn<EmployeeViewModel, Number> idColumn;
+    @FXML
+    private TableColumn<EmployeeViewModel, String> nameColumn;
+    @FXML
+    private TableColumn<EmployeeViewModel, String> surnameColumn;
+    @FXML
+    private TableColumn<EmployeeViewModel, String> roleColumn;
+
     private EventInfoViewModel viewModel;
     private ViewHandler viewHandler;
     private Region root;
-    private SelectState selectState;
 
-    public EventInfoViewController() {
+    public EventInfoViewController()
+    {
     }
 
-    public void init(ViewHandler viewHandler, EventInfoViewModel viewModel, Region root,
-                     SelectState state) {
+    public void init(ViewHandler viewHandler, EventInfoViewModel viewModel, Region root)
+    {
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         this.root = root;
-        this.selectState = state;
-        this.id = state.getEditSelect();
 
-        this.titleTextField.setText(viewModel.getTitle(id));
-        this.desArea.setText(viewModel.getDes(id));
-       /* this.startTimeLabel.setText(viewModel.getStart(id));
-        this.endTimeLabel.setText(viewModel.getEnd(id));
-      *//*  if (viewModel.getTYpe(id)){
-            this.typeLabel.setText("Online");
-            this.platformLabel.setText(viewModel.getPlatform(id));
-            this.linkLabel.setText(viewModel.getLink(id));
-            this.roomLabel.setText("");
-        } else {
-            this.typeLabel.setText("Physical");
-            this.platformLabel.setText("");
-            this.linkLabel.setText("");
-            this.roomLabel.setText(String.valueOf(viewModel.getRoom(id)));
-        }*//*
-        this.employeeInfoArea.setText(viewModel.getParticipantCreatorInfo(id));
-        this.createTimeLabel.setText(viewModel.getCreate(id));*/
+
+        titleTextField.textProperty().bind(viewModel.getTitleProperty());
+        descriptionField.textProperty().bind(viewModel.getDescriptionProperty());
+        startTimeLabel.textProperty().bind(viewModel.getStartTimeProperty());
+        endTimeLabel.textProperty().bind(viewModel.getEndTimeProperty());
+        platformLabel.textProperty().bind(viewModel.getPlatformProperty());
+        linkTextField.textProperty().bind(viewModel.getLinkProperty());
+        roomLabel.textProperty().bind(viewModel.getRoomProperty());
+        creatorLabel.textProperty().bind(viewModel.getCreatorProperty());
+
+        employeeTable.setItems(viewModel.getEmployeeList());
+
+        idColumn.setCellValueFactory
+                (cellData -> cellData.getValue().getUserIDProperty());
+        nameColumn.setCellValueFactory
+                (cellData -> cellData.getValue().getNameProperty());
+        surnameColumn.setCellValueFactory
+                (cellData -> cellData.getValue().getSurnameProperty());
+        roleColumn.setCellValueFactory
+                (cellData -> cellData.getValue().getRoleProperty());
+
+        errorLabel.textProperty().bind(viewModel.getErrorLabelProperty());
     }
 
-    public Region getRoot() {
+
+    public Region getRoot()
+    {
         return root;
     }
 
+
     @FXML
-    private void backPress() throws SQLException, RemoteException {
+    private void backPress()
+    {
         viewHandler.openView("EventList");
+    }
+
+    @FXML
+    private void copyPressed()
+    {
+        String link = viewModel.copyButton();
+        if (link != null && !link.equals(""))
+        {
+            final Clipboard clipboard = Clipboard.getSystemClipboard();
+            final ClipboardContent content = new ClipboardContent();
+            content.putString(link);
+            clipboard.setContent(content);
+        }
     }
 }

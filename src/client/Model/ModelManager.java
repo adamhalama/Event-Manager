@@ -297,6 +297,7 @@ public class ModelManager implements Model
     @Override
     public ArrayList<Employee> getEmployeesByEvent(int eventID)
     {
+        // todo update from db
         return employeeList.getEmployeesByEvent(eventID);
     }
 

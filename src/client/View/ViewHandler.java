@@ -206,11 +206,13 @@ public class ViewHandler {
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 eventInfoViewController = loader.getController();
-                eventInfoViewController.init(this, viewModelFactory.getEventInfoViewModel(), root, selectState);
+                eventInfoViewController.init(this, viewModelFactory.getEventInfoViewModel(), root);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        viewModelFactory.getEventInfoViewModel().setCurrentEventID(pickedEventID);
+        viewModelFactory.getEventInfoViewModel().reset();
         return eventInfoViewController.getRoot();
     }
 

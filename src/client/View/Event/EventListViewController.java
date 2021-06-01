@@ -126,7 +126,7 @@ public class EventListViewController
             viewHandler.openView("EditEvent");
         } catch (Exception e)
         {
-            errorLabel.setText("Select event to edit first");
+            viewModel.setErrorLabel("Select event to edit first");
         }
 
     }
@@ -140,7 +140,7 @@ public class EventListViewController
             viewHandler.openView("InfoEvent");
         } catch (Exception e)
         {
-            errorLabel.setText("Select event to open first");
+            viewModel.setErrorLabel("Select event to open first");
         }
 
     }

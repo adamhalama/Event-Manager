@@ -145,7 +145,7 @@ public class ViewModelFactory
     public EventInfoViewModel getEventInfoViewModel()
     {
         if (eventInfoViewModel == null)
-            eventInfoViewModel = new EventInfoViewModel(model, state);
+            eventInfoViewModel = new EventInfoViewModel(model);
 
         return eventInfoViewModel;
     }
