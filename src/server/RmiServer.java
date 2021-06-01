@@ -1,6 +1,7 @@
 package server;
 
 import Shared.API;
+import Shared.ClientListener;
 import Shared.Employee.Employee;
 import Shared.Event.Event;
 import Shared.Messages.Message;
@@ -24,6 +25,7 @@ import static server.DatabaseModel.models.Model.formatStringValues;
 public class RmiServer implements API
 {
     private DatabaseHandler databaseHandler;
+    private RmiNotificator rmiNotificator = new RmiNotificator();
 
     public void start(DatabaseHandler databaseHandler) throws RemoteException, MalformedURLException
     {
@@ -40,6 +42,18 @@ public class RmiServer implements API
         }
     }
 
+
+    /*--Listener--*/
+
+    @Override
+    public void registerClientListener(ClientListener client) throws RemoteException {
+        rmiNotificator.addClient(client);
+    }
+
+    @Override
+    public void removeClientListener(ClientListener client) throws RemoteException {
+        rmiNotificator.removeClient(client);
+    }
 
     /*--Employee--*/
 
@@ -437,6 +451,16 @@ public class RmiServer implements API
     {
         this.checkPermission(employeeID1, "chat_rooms_create_edit");
         return ObjectInfo.getFullMessageRoom(this.databaseHandler.messageRoom.editName(name, messageRoomID), this.databaseHandler);
+    }
+
+    @Override
+    public void messageRoomFollow(ClientListener client, int messageRoomID) {
+        this.rmiNotificator.messageRoomFollow(client, messageRoomID);
+    }
+
+    @Override
+    public void messageRoomUnfollow(ClientListener client, int messageRoomID) {
+        this.rmiNotificator.messageRoomUnfollow(client, messageRoomID);
     }
 
 

@@ -255,17 +255,8 @@ public class RmiClient
         return server.eventGetAll();
     }
 
-    public Event eventCreateOffline(int employeeID1, String title, String description, int roomID, long startTime, long endTime) throws SQLException, RemoteException
-    {
-        return server.eventCreateOffline(employeeID1, title, description, roomID, startTime, endTime);
-    }
-
-    public Event eventCreateOnline(int employeeID1, String title, String description, String platform, String url, long startTime, long endTime) throws SQLException, RemoteException
-    {
-        return server.eventCreateOnline(employeeID1, title, description, platform, url, startTime, endTime);
-    }
-
-    public boolean eventDeleteByID(int employeeID1, int eventID) throws RemoteException
+    public boolean eventDeleteByID(int employeeID1, int eventID)
+        throws RemoteException, SQLException
     {
         return server.eventDeleteByID(employeeID1, eventID);
     }

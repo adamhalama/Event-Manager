@@ -15,6 +15,10 @@ import java.util.ArrayList;
 
 public interface API extends Remote
 {
+    public void registerClientListener(ClientListener client) throws RemoteException;
+
+    public void removeClientListener(ClientListener client) throws RemoteException;
+
     Employee employeeRegister(String username, String password, String name, String surname, String role)
             throws IOException, GeneralSecurityException, SQLException, RemoteException;
 
@@ -84,6 +88,10 @@ public interface API extends Remote
     MessageRoom messageRoomCreatePrivate(int employeeID1, int employeeID2) throws SQLException, RemoteException;
 
     MessageRoom messageRoomSetName(int employeeID1, int messageRoomID, String name) throws SQLException, RemoteException;
+
+    void messageRoomFollow(ClientListener client, int messageRoomID) throws RemoteException;
+
+    void messageRoomUnfollow(ClientListener client, int messageRoomID) throws RemoteException;
 
     ArrayList<Message> messagesGet(int employeeID1, int messageRoomID, int offset) throws RemoteException;
 
