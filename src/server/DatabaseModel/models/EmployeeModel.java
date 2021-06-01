@@ -37,7 +37,7 @@ public class EmployeeModel extends Model
   }
   public ArrayList<Employee> getAll(String order)
   {
-    return this.getAll(order);
+    return this.getAll(order, null, 0, 0);
   }
   public ArrayList<Employee> getAll(String order, int limit, int offset)
   {

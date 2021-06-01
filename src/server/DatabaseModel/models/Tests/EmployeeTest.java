@@ -14,8 +14,8 @@ public class EmployeeTest
     DatabaseHandler databaseHandler = new DatabaseHandler();
 
     /*--CREATE--*/
-    Employee employee = databaseHandler.employee.create("JackHamer", "123qweasd", "Jack", "Hamer", "Admin");
-    System.out.println(employee);
+    /*Employee employee = databaseHandler.employee.create("JackHamer", "123qweasd", "Jack", "Hamer", "Admin");
+    System.out.println(employee);*/
 
     /*--GET ONE--*/
     //Employee employee = databaseHandler.employee.getByID(1); // Get by id

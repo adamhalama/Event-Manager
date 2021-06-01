@@ -39,7 +39,7 @@ public class RoomModel extends Model
 
   public ArrayList<Room> getAll(String order)
   {
-    return this.getAll(order);
+    return this.getAll(order, null, 0, 0);
   }
 
   public ArrayList<Room> getAll(String order, int limit, int offset)
