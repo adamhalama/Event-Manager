@@ -101,7 +101,8 @@ public interface API extends Remote
 
     Event eventCreateOnline(int employeeID1,String title, String description, String platform, String url, long startTime, long endTime) throws SQLException, RemoteException;*/
 
-    boolean eventDeleteByID(int employeeID1, int eventID) throws RemoteException;
+    boolean eventDeleteByID(int employeeID1, int eventID)
+        throws RemoteException, SQLException;
 
     Event eventSetTitle(int employeeID1, int eventID, String title) throws SQLException, RemoteException;
 
