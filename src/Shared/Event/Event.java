@@ -41,20 +41,6 @@ public class Event implements Serializable
         this.participants = participants;
     }
 
-    /**
-     * Physical event
-     */
-    public Event(int id, int messageRoomID, int roomID, int creatorID, long timeStart, long timeEnd, String title, String description) {
-        this(id, messageRoomID, roomID, creatorID, timeStart, timeEnd, title, description, null, null, new ArrayList<>());
-    }
-
-    /**
-     * Online event
-     */
-    public Event(int id, int messageRoomID, int creatorID, long timeStart, long timeEnd, String title, String description, String platform, String onlineLink) {
-        this(id, messageRoomID, -1, creatorID, timeStart, timeEnd, title, description, platform, onlineLink, new ArrayList<>());
-    }
-
     public void setID(int id) {
         if(id != -1) {
             this.id = id;

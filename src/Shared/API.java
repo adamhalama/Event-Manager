@@ -89,16 +89,17 @@ public interface API extends Remote
 
     Message messagePost(int employeeID1, int messageRoomID, String message) throws SQLException, RemoteException;
 
-    //TODO implement this
     Event eventGetByID(int eventID) throws SQLException, RemoteException;
 
     ArrayList<Event> eventGetByIDs(ArrayList<Integer> eventIDs) throws RemoteException;
 
     ArrayList<Event> eventGetAll() throws RemoteException;
 
-    Event eventCreateOffline(int employeeID1, String title, String description, int roomID, long startTime, long endTime) throws SQLException, RemoteException;
+    Event eventCreate(int employeeID1, int messageRoomID, int roomID, int creatorID, long timeStart, long timeEnd, String title, String description, String platform, String onlineLink) throws SQLException, RemoteException;
 
-    Event eventCreateOnline(int employeeID1,String title, String description, String platform, String url, long startTime, long endTime) throws SQLException, RemoteException;
+    /*Event eventCreateOffline(int employeeID1, String title, String description, int roomID, long startTime, long endTime) throws SQLException, RemoteException;
+
+    Event eventCreateOnline(int employeeID1,String title, String description, String platform, String url, long startTime, long endTime) throws SQLException, RemoteException;*/
 
     boolean eventDeleteByID(int employeeID1, int eventID) throws RemoteException;
 

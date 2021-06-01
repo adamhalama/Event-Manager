@@ -24,19 +24,13 @@ public class EventModel extends Model
       String title = row.getField("title");
       String description = row.getField("description");
       String platform = row.getField("platform");
-      String url = row.getField("url");
+      String onlineLink = row.getField("url");
       int roomID = row.getField("room_id") == null ? -1 : Integer.parseInt(row.getField("room_id"));
       int creatorID = Integer.parseInt(row.getField("creator"));
       int messageRoomID = Integer.parseInt(row.getField("message_room_id"));
-      long createTime = Long.parseLong(row.getField("create_time"));
-      long startTime = Long.parseLong(row.getField("start_time"));
-      long endTime = Long.parseLong(row.getField("end_time"));
-      boolean isOnline = Boolean.parseBoolean(row.getField("is_online")) || row.getField("is_online").equals("t");
-      if(isOnline) { // online
-        events.add(new Event(id, title, description, platform, url, creatorID, roomID, messageRoomID, createTime, startTime, endTime));
-      } else { //offline
-        events.add(new Event(id, title, description, creatorID, roomID, messageRoomID, createTime, startTime, endTime));
-      }
+      long timeStart = Long.parseLong(row.getField("start_time"));
+      long timeEnd = Long.parseLong(row.getField("end_time"));
+      events.add(new Event(id, messageRoomID, roomID, creatorID, timeStart, timeEnd, title, description, platform, onlineLink, new ArrayList<>()));
     }
     return events;
   }
@@ -92,7 +86,7 @@ public class EventModel extends Model
     return getEventsFromResponse(dbResponse).get(0);
   }
 
-  public Event create(String title, String description, int roomID, int creator, int messageRoomID, long startTime, long endTime)
+  /*public Event create(String title, String description, int roomID, int creator, int messageRoomID, long startTime, long endTime)
       throws SQLException
   {
     return this.create(title, description, null, null, false, roomID, creator, messageRoomID, startTime, endTime);
@@ -101,8 +95,8 @@ public class EventModel extends Model
       throws SQLException
   {
     return this.create(title, description, platform, url, true, -1, creator, messageRoomID, startTime, endTime);
-  }
-  public Event create(String title, String description, String platform, String url, boolean isOnline, int roomID, int creator, int messageRoomID, long startTime, long endTime)
+  }*/
+  public Event create(int messageRoomID, int roomID, int creatorID, long timeStart, long timeEnd, String title, String description, String platform, String onlineLink)
       throws SQLException
   {
     String[] stringValues = formatStringValues(new String[] {
@@ -114,25 +108,23 @@ public class EventModel extends Model
     } else {
       values.add(null);
     }
-    if(url != null) {
-      values.add("'" + url + "'");
+    if(onlineLink != null) {
+      values.add("'" + onlineLink + "'");
     } else {
       values.add(null);
     }
-    values.add(String.valueOf(isOnline));
     values.add(String.valueOf(roomID == -1 ? null : roomID));
-    values.add(String.valueOf(creator));
+    values.add(String.valueOf(creatorID));
     values.add(String.valueOf(messageRoomID));
-    values.add(String.valueOf(System.currentTimeMillis()));
-    values.add(String.valueOf(startTime));
-    values.add(String.valueOf(endTime));
+    values.add(String.valueOf(timeStart));
+    values.add(String.valueOf(timeEnd));
     String finalValues[] = new String[values.size()];
     for (int j = 0; j < values.size(); j++) {
       finalValues[j] = values.get(j);
     }
     DBResponse dbResponse = super.modelInsert(
         new String[] {
-            "title", "description", "platform", "url", "is_online", "room_id", "creator", "message_room_id", "create_time", "start_time", "end_time"
+            "title", "description", "platform", "url", "room_id", "creator", "message_room_id", "start_time", "end_time"
         },
         finalValues
     );
