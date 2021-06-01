@@ -45,7 +45,7 @@ public class CreateRoomViewController
 
     private boolean editing;
     private boolean viewing;
-
+    //TODO add a check for not add room without title and other tihing
     public CreateRoomViewController()
     {
     }
