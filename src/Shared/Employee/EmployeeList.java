@@ -180,7 +180,8 @@ public class EmployeeList
                 for (Integer evt :
                         e.getEvents())
                 {
-                    if (eventList.getEventByID(evt).getTitle().toLowerCase()
+                    //todo get eventById
+                    if (eventList.getByID(evt).getTitle().toLowerCase()
                             .contains(keyword.toLowerCase()))
                     {
                         picked.add(e);
@@ -233,7 +234,7 @@ public class EmployeeList
                 for (Integer evt :
                         e.getEvents())
                 {
-                    if (eventList.getEventByID(evt).getTitle().toLowerCase()
+                    if (eventList.getByID(evt).getTitle().toLowerCase()
                             .contains(keyword.toLowerCase()))
                     {
                         picked.add(e);

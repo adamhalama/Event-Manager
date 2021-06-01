@@ -45,7 +45,7 @@ public class EditEventViewModel {
             this.platformProperty = new SimpleStringProperty();
             this.linkProperty = new SimpleStringProperty();
         } else {
-            this.idProperty = new SimpleIntegerProperty(model.getEventByID(id).getEvent_id());
+/*            this.idProperty = new SimpleIntegerProperty(model.getEventByID(id).getEvent_id());
             this.titleProperty = new SimpleStringProperty(model.getEventByID(id).getTitle());
             this.descriptionProperty = new SimpleStringProperty(model.getEventByID(id).getDescription());
             this.startHour = new SimpleIntegerProperty(model.getEventByID(id).getHourS());
@@ -63,9 +63,9 @@ public class EditEventViewModel {
                 this.roomProperty = new SimpleIntegerProperty(model.getEventByID(id).getRoomID());
                 this.platformProperty = new SimpleStringProperty();
                 this.linkProperty = new SimpleStringProperty();
+                }*/
             }
         }
-    }
 
     public void clear() {
         titleProperty.set(null);
@@ -111,18 +111,12 @@ public class EditEventViewModel {
         return isOnline;
     }
 
-    public boolean isOnline() {
-        return model.isOnline();
-    }
 
-    public LocalDate getDate() {
+    /*public LocalDate getDate() {
         this.id = state.getEditSelect();
         return model.getEventByID(id).getDateString();
     }
 
-    public void setIsOnline(boolean isOnline) {
-        model.setOnline(isOnline);
-    }
 
     public void setId(int id) {
         this.id = id;
@@ -190,6 +184,6 @@ public class EditEventViewModel {
 
     public int getID() {
         return model.getEvent_id();
-    }
+    }*/
 
 }

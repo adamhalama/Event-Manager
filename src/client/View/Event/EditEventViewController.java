@@ -130,7 +130,7 @@ public class EditEventViewController {
                         };
                     }
                 };
-        startDate.setDayCellFactory(dayCellFactory);
+        /*startDate.setDayCellFactory(dayCellFactory);
         startDate.setValue(viewModel.getDate());
         titleTextField.setText(viewModel.getTitle(id));
         if (!viewModel.getDes(id).equals("None")) {
@@ -141,13 +141,18 @@ public class EditEventViewController {
         }
         if (viewModel.isOnline()) {
             onlinePress();
-        } else physicalPress();
+        } else physicalPress();*/
 
         this.physicalButton.setVisible(false);
         this.onlineButton.setVisible(false);
         this.resetButton.setVisible(false);
     }
 
+    public Region getRoot()
+    {
+        return root;
+    }
+/*
     @FXML
     private void resetPress() {
         this.physicalButton.setVisible(true);
@@ -402,6 +407,6 @@ public class EditEventViewController {
     private boolean isDateEqual(int y, int m, int d, int id) {
         return viewModel.getYear(id) == y && viewModel.getMonth(id) == m
                 && viewModel.getDay(id) == d;
-    }
+    }*/
 
 }

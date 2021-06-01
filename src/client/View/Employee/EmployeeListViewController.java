@@ -36,7 +36,9 @@ public class EmployeeListViewController
     private EmployeeListViewModel viewModel;
     private Region root;
 
-    public EmployeeListViewController(){}
+    public EmployeeListViewController()
+    {
+    }
 
     public void init(ViewHandler viewHandler, EmployeeListViewModel viewModel, Region root)
     {
@@ -119,12 +121,14 @@ public class EmployeeListViewController
     }
 
     @FXML
-    private void backButton() throws SQLException, RemoteException {
+    private void backButton()
+    {
         viewHandler.openView("MainMenu");
     }
 
     @FXML
-    private void addButton() throws SQLException, RemoteException {
+    private void addButton()
+    {
         viewHandler.openView("CreateEmployee");
     }
 

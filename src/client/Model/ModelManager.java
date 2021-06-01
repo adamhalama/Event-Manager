@@ -42,7 +42,7 @@ public class ModelManager implements Model
     {
         this.api = client;
 
-        this.event = new Event();
+//        this.event = new Event();
         this.eventList = new EventList();
         this.roomList = new RoomList();
         this.employeeList = new EmployeeList();
@@ -514,29 +514,30 @@ public class ModelManager implements Model
     {
         return api.eventGetByID(eventID);
     }
-    @Override
-    public ArrayList<Event> eventGetAll() throws RemoteException
-    {
-        return api.eventGetAll();
-    }
 
     @Override
-    public Event eventCreateOffline(String title, String description, int roomID, long startTime, long endTime) throws SQLException, RemoteException
+    public ArrayList<Event> getEvents() throws RemoteException
     {
-        return api.eventCreateOffline(getLoggedEmployeeID(), title, description, roomID, startTime, endTime);
+        ArrayList<Event> events = api.eventGetAll();
+        eventList.addAll(events);
+        return events;
+
     }
 
+
+
     @Override
-    public Event eventCreateOnline(String title, String description, String platform, String url, long startTime, long endTime) throws SQLException, RemoteException
+    public Event eventCreate(int roomID, long timeStart, long timeEnd,
+                             String title, String description, String platform, String onlineLink) throws SQLException, RemoteException
     {
-        return api.eventCreateOnline(getLoggedEmployeeID(), title, description, platform, url, startTime, endTime);
+        return api.eventCreate(getLoggedEmployeeID(), roomID, timeStart, timeEnd, title, description, platform, onlineLink);
     }
     
 
     @Override
-    public boolean removeByEventID(int id) throws RemoteException
+    public boolean removeByEventID(int id) throws RemoteException, SQLException
     {
-        eventList.removeByEventID(id);
+//        eventList.removeByEventID(id);
         return api.eventDeleteByID(getLoggedEmployeeID(), id);
     }
 
@@ -590,11 +591,23 @@ public class ModelManager implements Model
     }
 
     @Override
+    public ArrayList<Event> eventGetByDate(String date)
+    {
+        return eventList.getByDate(date);
+    }
+
+    @Override
+    public ArrayList<Event> eventGetByText(String text)
+    {
+        return eventList.getByText(text);
+    }
+
+    @Override
     public void setOnline(boolean isOnline)
     {
         //TODO add int eventID, in the parameter
 //        api.eventSetOnlineState(getLoggedEmployeeID(), eventID, isOnline);
-        event.setOnline(isOnline);
+//        event.setOnline(isOnline);
     }
 
     @Override
@@ -612,15 +625,16 @@ public class ModelManager implements Model
     @Override
     public void setRoom(int room)
     {
-        event.setRoom(room);
+//        event.setRoom(room);
         //not used
     }
 
     @Override
     public int getEvent_id()
     {
-        return event.getEvent_id();
+//        return event.getEvent_id();
         //used but can be changed
+        return 0;
     }
 
     @Override
@@ -660,27 +674,9 @@ public class ModelManager implements Model
     @Override
     public boolean isOnline()
     {
-        return event.isOnline();
+        return false;
     }
 
-
-    @Override
-    public long getStartTime()
-    {
-        return event.getStartTime();
-    }
-
-    @Override
-    public long getEndTime()
-    {
-        return event.getEndTime();
-    }
-
-    @Override
-    public long getCreateTime()
-    {
-        return event.getCreateTime();
-    }
 
     @Override
     public void add(Event event) throws IllegalArgumentException
@@ -688,13 +684,27 @@ public class ModelManager implements Model
         eventList.add(event);
     }
 
+
+
     @Override
-    public ArrayList<Event> getEvents()
+    public ArrayList<Event> getEventByAnything(String s, String d)
     {
-        return eventList.getEvents();
+        return null;
     }
 
     @Override
+    public ArrayList<Event> getEventExceptDate(String s)
+    {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Event> getEventOnlyDate(String date)
+    {
+        return null;
+    }
+
+    /*@Override
     public ArrayList<Event> getEventByAnything(String s, String d)
     {
         return eventList.getEventByAnything(s, d);
@@ -711,12 +721,7 @@ public class ModelManager implements Model
     {
         return eventList.getEventOnlyDate(date);
     }
-
-    @Override
-    public String getFormattedDateTime(long timestamp)
-    {
-        return new SimpleDateFormat("HH:mm:ss MM.dd.yyyy").format(timestamp);
-    }
+*/
 
     @Override
     public ArrayList<Event> getEventsByRoom(int roomID)
@@ -725,24 +730,17 @@ public class ModelManager implements Model
     }
 
     @Override
-    public Event getEventByIndex(int index)
-    {
-        return eventList.getEventByIndex(index);
-    }
-
-    @Override
     public Event getEventByID(int id)
     {
-        return eventList.getEventByID(id);
+        return null;
     }
-    
-    
-    
+
 
     @Override
     public int getSize()
     {
-        return eventList.getSize();
+//        return eventList.getSize();
+        return 0;
     }
 
     @Override
@@ -770,23 +768,5 @@ public class ModelManager implements Model
         employeesT.add(employeeList.getEmployeeByID(id));
     }
 
-    @Override
-    public void removeEmployeeT(int id)
-    {
-        for (int i = 0; i < employeesT.size(); i++)
-        {
-            if (employeesT.get(i).getId() == id)
-            {
-                employeesT.remove(i);
-            }
-        }
-    }
-
-    @Override
-    public void clearTemporary()
-    {
-        employeesT.clear();
-        idT.clear();
-    }
 
 }

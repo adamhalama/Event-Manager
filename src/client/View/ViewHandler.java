@@ -52,7 +52,7 @@ public class ViewHandler {
     private int pickedRoomID;
     private int pickedEmployeeID;
     private int pickedMessageRoomID;
-
+    private int pickedEventID;
 
 
     public ViewHandler(ViewModelFactory viewModelFactory, Model model, SelectState selectState) {
@@ -91,10 +91,11 @@ public class ViewHandler {
             case "EditEvent":
                 root = loadEditEventView("Event/EditEventView.fxml");
                 break;
+                //todo remove probably dont need
             case "EventEmployee":
                 root = loadEventEmployeeViewController("Event/EventEmployeeView.fxml");
                 break;
-            case "EventInfo" :
+            case "InfoEvent" :
                 root = loadEventInfoView("Event/EventInfoView.fxml");
                 break;
 
@@ -340,6 +341,8 @@ public class ViewHandler {
                 e.printStackTrace();
             }
         }
+        viewModelFactory.getCreateEventViewModel().reset();
+        createEventViewController.reset();
         return createEventViewController.getRoot();
     }
 
@@ -350,8 +353,7 @@ public class ViewHandler {
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 eventListViewController = loader.getController();
-                eventListViewController.init(this, viewModelFactory.getEventListViewModel(), root,
-                        selectState);
+                eventListViewController.init(this, viewModelFactory.getEventListViewModel(), root);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -605,6 +607,11 @@ public class ViewHandler {
 
     public int getPickedMessageRoomID() {
         return pickedMessageRoomID;
+    }
+
+    public void setPickedEventID(int eventID)
+    {
+        pickedEventID = eventID;
     }
 
     // Commented out code is copied from the assignment 3's viewHandler

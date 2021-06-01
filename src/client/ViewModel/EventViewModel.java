@@ -2,6 +2,7 @@ package client.ViewModel;
 
 import Shared.Event.Event;
 import javafx.beans.property.*;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.DatePicker;
 
 public class EventViewModel {
@@ -23,6 +24,7 @@ public class EventViewModel {
     private StringProperty endTime;
     private BooleanProperty isOnline;
     private IntegerProperty roomProperty;
+    private SimpleStringProperty roomNameProperty;
     private StringProperty platformProperty;
     private StringProperty linkProperty;
     private StringProperty wholeMessage;
@@ -30,37 +32,48 @@ public class EventViewModel {
     private IntegerProperty sizeProperty;
 
     public EventViewModel(Event event) {
-        this.idProperty = new SimpleIntegerProperty(event.getEvent_id());
-        this.titleProperty = new SimpleStringProperty(event.getTitle());
-        this.descriptionProperty = new SimpleStringProperty(event.getDescription());
-        this.createDate = new SimpleStringProperty(event.getTime_create());
-        this.startDate = new SimpleStringProperty(event.getTime_start());
-        this.endTime = new SimpleStringProperty(event.getTime_end());
-        this.isOnline = new SimpleBooleanProperty(event.isOnline());
+//        this.idProperty = new SimpleIntegerProperty(event.getEvent_id());
+//        this.titleProperty = new SimpleStringProperty(event.getTitle());
+//        this.descriptionProperty = new SimpleStringProperty(event.getDescription());
+//        this.createDate = new SimpleStringProperty(event.getTime_create());
+//        this.startDate = new SimpleStringProperty(event.getTime_start());
+//        this.endTime = new SimpleStringProperty(event.getTime_end());
+//        this.isOnline = new SimpleBooleanProperty(event.isOnline());
         this.roomProperty = new SimpleIntegerProperty(event.getRoomID());
         this.platformProperty = new SimpleStringProperty(event.getPlatform());
         this.linkProperty = new SimpleStringProperty(event.getOnlineLink());
         this.wholeMessage = new SimpleStringProperty(event.toString());
-        this.yearSProperty = new SimpleIntegerProperty(event.getYearS());
-        this.yearEProperty = yearSProperty;
-        this.monthSProperty = new SimpleIntegerProperty(event.getMonthS());
-        this.monthEProperty = monthSProperty;
-        this.daySProperty = new SimpleIntegerProperty(event.getDayS());
-        this.dayEProperty = daySProperty;
-        this.hourSProperty = new SimpleIntegerProperty(event.getHourS());
-        this.hourEProperty = new SimpleIntegerProperty(event.getHourE());
-        this.minuteSProperty = new SimpleIntegerProperty(event.getMinuteS());
-        this.minuteEProperty = new SimpleIntegerProperty(event.getMinuteE());
-        this.creatorProperty = new SimpleStringProperty(event.getCreator());
-        this.sizeProperty = new SimpleIntegerProperty(event.participantsSize());
+//        this.yearSProperty = new SimpleIntegerProperty(event.getYearS());
+//        this.yearEProperty = yearSProperty;
+//        this.monthSProperty = new SimpleIntegerProperty(event.getMonthS());
+//        this.monthEProperty = monthSProperty;
+//        this.daySProperty = new SimpleIntegerProperty(event.getDayS());
+//        this.dayEProperty = daySProperty;
+//        this.hourSProperty = new SimpleIntegerProperty(event.getHourS());
+//        this.hourEProperty = new SimpleIntegerProperty(event.getHourE());
+//        this.minuteSProperty = new SimpleIntegerProperty(event.getMinuteS());
+//        this.minuteEProperty = new SimpleIntegerProperty(event.getMinuteE());
+//        this.creatorProperty = new SimpleStringProperty(event.getCreator());
+//        this.sizeProperty = new SimpleIntegerProperty(event.participantsSize());
     }
 
-    public EventViewModel(int id, String title, String date, String endTime, String creator, int numberOfParticipants) // made for roomEventsView
+    public EventViewModel(int id, String title, String dateTime, String creator, int numberOfParticipants) // made for roomEventsView
     {
         this.idProperty = new SimpleIntegerProperty(id);
         this.titleProperty = new SimpleStringProperty(title);
-        this.startDate = new SimpleStringProperty(date);
-        this.endTime = new SimpleStringProperty(endTime);
+        this.startDate = new SimpleStringProperty(dateTime);
+        this.creatorProperty = new SimpleStringProperty(creator);
+        this.sizeProperty = new SimpleIntegerProperty(numberOfParticipants);
+    }
+
+    public EventViewModel(int id, String title, String dateTime, String platform, String room, String creator, int numberOfParticipants) // made for EventList
+    {
+        this.idProperty = new SimpleIntegerProperty(id);
+        this.titleProperty = new SimpleStringProperty(title);
+        this.startDate = new SimpleStringProperty(dateTime);
+        this.platformProperty = new SimpleStringProperty(platform);
+        this.roomNameProperty = new SimpleStringProperty(room);
+
         this.creatorProperty = new SimpleStringProperty(creator);
         this.sizeProperty = new SimpleIntegerProperty(numberOfParticipants);
     }
@@ -116,5 +129,10 @@ public class EventViewModel {
 
     public IntegerProperty getSizeProperty() {
         return sizeProperty;
+    }
+
+    public StringProperty getRoomNameProperty()
+    {
+        return roomNameProperty;
     }
 }

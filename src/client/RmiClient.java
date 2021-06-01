@@ -138,7 +138,6 @@ public class RmiClient
     }
 
 
-
     //ROOMS
     public Room createRoom(int employeeID1, String roomNumber, String buildingAddress, int numberOfSeats, int floor) throws SQLException, RemoteException
     {
@@ -177,7 +176,7 @@ public class RmiClient
 
     public Room roomSetRoomNumber(int employeeID1, int roomID, String roomNumber) throws SQLException, RemoteException
     {
-        return  server.roomSetRoomNumber(employeeID1, roomID, roomNumber);
+        return server.roomSetRoomNumber(employeeID1, roomID, roomNumber);
     }
 
     public Room roomSetBuildingAddress(int employeeID1, int roomID, String buildingAddress) throws SQLException, RemoteException
@@ -255,8 +254,13 @@ public class RmiClient
         return server.eventGetAll();
     }
 
-    public boolean eventDeleteByID(int employeeID1, int eventID)
-        throws RemoteException, SQLException
+    public Event eventCreate(int employeeID1, int roomID, long timeStart, long timeEnd, String title, String description, String platform, String onlineLink) throws SQLException, RemoteException
+    {
+        return server.eventCreate(employeeID1, roomID, timeStart, timeEnd, title, description, platform, onlineLink);
+    }
+
+
+    public boolean eventDeleteByID(int employeeID1, int eventID) throws RemoteException, SQLException
     {
         return server.eventDeleteByID(employeeID1, eventID);
     }

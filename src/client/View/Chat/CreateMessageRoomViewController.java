@@ -85,7 +85,7 @@ public class CreateMessageRoomViewController
     }
 
     @FXML
-    private void backButton() throws SQLException, RemoteException {
+    private void backButton() {
         if (viewModel.backButton())
             viewHandler.openView("MessageRoomList");
     }
@@ -103,7 +103,7 @@ public class CreateMessageRoomViewController
     }
 
     @FXML
-    private void saveButton() throws SQLException, RemoteException {
+    private void saveButton()   {
         if (ConfirmationButton.confirmationView("Do you want to save the changes \nand overwrite the existing data?"))
         {
             int messageRoomId = viewModel.saveButton();

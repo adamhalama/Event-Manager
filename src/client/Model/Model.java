@@ -141,6 +141,10 @@ public interface Model {
     //part1 class event
     void setTitle(String title);
 
+    ArrayList<Event> eventGetByDate(String date);
+
+    ArrayList<Event> eventGetByText(String text);
+
     void setOnline(boolean isOnline);
 
     void setRoom(int room);
@@ -151,9 +155,6 @@ public interface Model {
 
     Event eventGetByID(int eventID) throws SQLException, RemoteException;
 
-    ArrayList<Event> eventGetAll() throws RemoteException;
-
-    Event eventCreateOffline(String title, String description, int roomID, long startTime, long endTime) throws SQLException, RemoteException;
 
     Event eventSetTitle(int eventID, String title) throws SQLException, RemoteException;
 
@@ -183,17 +184,11 @@ public interface Model {
 
     boolean isOnline();
 
-    long getStartTime();
-
-    long getEndTime();
-
-    long getCreateTime();
-
     //part2 class eventList
 
     void add(Event event) throws IllegalArgumentException;
 
-    ArrayList<Event> getEvents();
+    ArrayList<Event> getEvents() throws RemoteException;
 
     ArrayList<Event> getEventByAnything(String s, String d);
 
@@ -201,18 +196,16 @@ public interface Model {
 
     ArrayList<Event> getEventOnlyDate(String date);
 
-    String getFormattedDateTime(long timestamp);
 
     ArrayList<Event> getEventsByRoom(int roomID);
 
-    Event getEventByIndex(int index);
 
     Event getEventByID(int id);
 
 
-    Event eventCreateOnline(String title, String description, String platform, String url, long startTime, long endTime) throws SQLException, RemoteException;
+    Event eventCreate(int roomID, long timeStart, long timeEnd, String title, String description, String platform, String onlineLink) throws SQLException, RemoteException;
 
-    boolean removeByEventID(int id) throws RemoteException;
+    boolean removeByEventID(int id) throws RemoteException, SQLException;
 
 
     int getSize();
@@ -225,8 +218,4 @@ public interface Model {
     void addIDT(int id);
 
     void addEmployeeT(int id);
-
-    void removeEmployeeT(int id);
-
-    void clearTemporary();
 }

@@ -102,7 +102,7 @@
                   <Label text="Role:" />
                </children>
             </HBox>
-            <TextField fx:id="username" maxWidth="1.7976931348623157E308" prefHeight="26.0" GridPane.columnIndex="1">
+            <TextField fx:id="username" disable="true" maxWidth="1.7976931348623157E308" prefHeight="26.0" text="asd" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets bottom="2.0" />
                </GridPane.margin>

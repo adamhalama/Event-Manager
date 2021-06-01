@@ -1,142 +1,141 @@
 package client.ViewModel;
 
+import Shared.Date;
+import Shared.Employee.Employee;
 import Shared.Event.Event;
-import Shared.Event.EventList;
+import Shared.Room.Room;
 import client.Model.Model;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import client.View.Helpers.ConvertTime;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.DatePicker;
 
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class EventListViewModel {
+public class EventListViewModel
+{
     private Model model;
-    private StringProperty searchProperty;
-    private StringProperty yearSProperty;
-    private StringProperty monthSProperty;
-    private StringProperty daySProperty;
-    private ObservableList<EventViewModel> eventList;
-    private ObservableList<EventViewModel> resultList;
 
-    public EventListViewModel(Model model) {
+    private ObservableList<EventViewModel> eventList;
+
+    private StringProperty errorLabel;
+    private StringProperty searchField;
+
+    public EventListViewModel(Model model)
+    {
         this.model = model;
-        this.searchProperty = new SimpleStringProperty();
-        this.yearSProperty = new SimpleStringProperty();
-        this.monthSProperty = new SimpleStringProperty();
-        this.daySProperty = new SimpleStringProperty();
+
+        this.errorLabel = new SimpleStringProperty();
+        this.searchField = new SimpleStringProperty();
         this.eventList = FXCollections.observableArrayList();
-        this.resultList = FXCollections.observableArrayList();
+
         reset();
     }
 
-    public void reset() {
-        searchProperty.set(null);
-        this.yearSProperty.set(null);
-        this.monthSProperty.set(null);
-        this.daySProperty.set(null);
-        eventList.clear();
-    }
-
-    public void resetSearch() {
-        searchProperty.set(null);
-        this.yearSProperty.set(null);
-        this.monthSProperty.set(null);
-        this.daySProperty.set(null);
-    }
-
-    public ObservableList<EventViewModel> update() {
-        for (int i = 0; i < model.getSize(); i++) {
-            eventList.add(i, new EventViewModel(model.getEvents().get(i)));
+    public void reset()
+    {
+        errorLabel.set("");
+        searchField.set("");
+        try
+        {
+            loadEventList(model.getEvents());
+        } catch (RemoteException e)
+        {
+            errorLabel.set("Server error.");
+            e.printStackTrace();
         }
+    }
+
+
+    public ObservableList<EventViewModel> getEventList()
+    {
         return eventList;
     }
 
-    public void removeEvent(int id) {
-        for (int i = 0; i < eventList.size(); i++) {
-            if (eventList.get(i).getIdProperty().get() == id) {
-                try
+    public StringProperty getErrorLabelProperty()
+    {
+        return errorLabel;
+    }
+
+    public StringProperty getSearchProperty()
+    {
+        return searchField;
+    }
+
+
+    public void removeButton(int selectedIndex, int selectedID)
+    {
+        try
+        {
+            if (!model.removeByEventID(selectedID))
+                errorLabel.set("The event doesnt exist.");
+
+            eventList.remove(selectedIndex);
+        } catch (RemoteException e)
+        {
+            errorLabel.set("A server error has occurred.");
+        } catch (SQLException throwables)
+        {
+            errorLabel.set(throwables.getMessage());
+        }
+    }
+
+
+    public void searchButton()
+    {
+        try
+        {
+            model.getEvents();
+
+            if (searchField.get() == null || searchField.get().equals(""))
+                loadEventList(model.getEvents());
+            else
+                loadEventList(model.eventGetByText(searchField.get()));
+        } catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void searchByDateButton(LocalDate date)
+    {
+        loadEventList(model.eventGetByDate(Date.timestampToDate(ConvertTime.parseStringToTimestamp(date.toString()))));
+    }
+
+    private void loadEventList(ArrayList<Event> events)
+    {
+        try
+        {
+            eventList.clear();
+            for (Event e :
+                    events)
+            {
+                Employee employee = model.getEmployeeByID(e.getCreatorID());
+                String roomNameId = "No room booked";
+
+                Room room = e.getRoomID() == 0 ? null : model.getRoomByID(e.getRoomID()) ;
+                if (room != null)
                 {
-                    model.removeByEventID(id);
-                } catch (RemoteException e)
-                {
-                    e.printStackTrace();
+                    roomNameId = room.getRoomNumber() + " - id" + room.getRoomID();
                 }
-                reset();
-                update();
-                break;
+
+                String platform = e.getPlatform().toString() ;
+                eventList.add(new EventViewModel(e.getID(), e.getTitle(), e.getTimeStartEnd(), platform,
+                        roomNameId, employee.getFullName(), e.getParticipants().size()));
             }
+        } catch (SQLException throwables)
+        {
+            errorLabel.set(throwables.getMessage());
+        } catch (RemoteException e)
+        {
+            errorLabel.set(e.getMessage());
+            e.printStackTrace();
         }
     }
 
 
-    public ObservableList<EventViewModel> searchExceptDate(String searchingContent) {
-        resultList.clear();
-        ArrayList<Event> resultArrayList = model.getEventExceptDate(searchingContent);
-        System.out.println(resultArrayList);
-        for (int i = 0; i < resultArrayList.size(); i++) {
-            resultList.add(new EventViewModel(resultArrayList.get(i)));
-        }
-        return resultList;
-    }
-
-    public ObservableList<EventViewModel> searchOnlyDate(String searchingDate) {
-        resultList.clear();
-        ArrayList<Event> resultArrayList = model.getEventOnlyDate(searchingDate);
-        System.out.println(resultArrayList);
-        for (int i = 0; i < resultArrayList.size(); i++) {
-            resultList.add(new EventViewModel(resultArrayList.get(i)));
-        }
-        return resultList;
-    }
-
-    public ObservableList<EventViewModel> search(String searchingContent, String searchingDate) {
-        resultList.clear();
-        ArrayList<Event> resultArrayList = model.getEventByAnything(searchingContent, searchingDate);
-        System.out.println(resultArrayList);
-        for (int i = 0; i < resultArrayList.size(); i++) {
-            resultList.add(new EventViewModel(resultArrayList.get(i)));
-        }
-        return resultList;
-    }
-
-    public int getResultSize() {
-        return resultList.size();
-    }
-
-    public ObservableList<EventViewModel> getEventList() {
-        for (int i = 0; i < model.getSize(); i++) {
-            eventList.add(i, new EventViewModel(model.getEvents().get(i)));
-        }
-        return eventList;
-    }
-
-    public void addEvent(Event e) {
-        eventList.add(new EventViewModel(e));
-    }
-
-    public int getEventListSize() {
-        return model.getSize();
-    }
-
-    public StringProperty getSearchProperty() {
-        return searchProperty;
-    }
-
-    public StringProperty getYearSProperty() {
-        return yearSProperty;
-    }
-
-    public StringProperty getMonthSProperty() {
-        return monthSProperty;
-    }
-
-    public StringProperty getDaySProperty() {
-        return daySProperty;
-    }
 }

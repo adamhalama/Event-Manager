@@ -45,9 +45,9 @@ public class EventInfoViewModel {
         } else {
             this.title = new SimpleStringProperty(model.getEventByID(id).getTitle());
             this.description = new SimpleStringProperty(model.getEventByID(id).getDescription());
-            this.startTime = new SimpleStringProperty(model.getEventByID(id).getTime_start());
-            this.endTime = new SimpleStringProperty(model.getEventByID(id).getTime_end());
-            if (model.getEventByID(id).isOnline()) {
+//            this.startTime = new SimpleStringProperty(model.getEventByID(id).getTime_start());
+//            this.endTime = new SimpleStringProperty(model.getEventByID(id).getTime_end());
+            /*if (model.getEventByID(id).isOnline()) {
                 this.type = new SimpleStringProperty("Online");
                 this.platform = new SimpleStringProperty(model.getEventByID(id).getPlatform());
                 this.link = new SimpleStringProperty(model.getEventByID(id).getOnlineLink());
@@ -55,13 +55,13 @@ public class EventInfoViewModel {
             } else {
                 this.type = new SimpleStringProperty("Physical");
                 this.room = new SimpleIntegerProperty(model.getEventByID(id).getRoomID());
-            }
+            }*/
             this.participant = new SimpleStringProperty();
             this.creator = new SimpleStringProperty();
-            this.participant = new SimpleStringProperty(model.getEventByID(id).participantString());
-            this.creator = new SimpleStringProperty(model.getEventByID(id).getCreator());
-            this.employeeInfo = new SimpleStringProperty(model.getEventByID(id).participantString());
-            this.createTime = new SimpleStringProperty(model.getEventByID(id).getTime_create());
+//            this.participant = new SimpleStringProperty(model.getEventByID(id).participantString());
+//            this.creator = new SimpleStringProperty(model.getEventByID(id).getCreator());
+//            this.employeeInfo = new SimpleStringProperty(model.getEventByID(id).participantString());
+//            this.createTime = new SimpleStringProperty(model.getEventByID(id).getTime_create());
         }
     }
 
@@ -73,17 +73,17 @@ public class EventInfoViewModel {
         return model.getEventByID(id).getDescription();
     }
 
-    public String getStart(int id) {
-        return model.getEventByID(id).getTime_start();
-    }
-
-    public String getEnd(int id) {
-        return model.getEventByID(id).getTime_end();
-    }
-
-    public String getCreate(int id) {
-        return model.getEventByID(id).getTime_create();
-    }
+//    public String getStart(int id) {
+//        return model.getEventByID(id).getTime_start();
+//    }
+//
+//    public String getEnd(int id) {
+//        return model.getEventByID(id).getTime_end();
+//    }
+//
+//    public String getCreate(int id) {
+//        return model.getEventByID(id).getTime_create();
+//    }
 
     public String getLink(int id) {
         return model.getEventByID(id).getOnlineLink();
@@ -93,32 +93,7 @@ public class EventInfoViewModel {
         return model.getEventByID(id).getPlatform();
     }
 
-    public String getParticipantCreatorInfo(int id){
-        try
-        {
-            return model.getEventByID(id).creatorParticipantString();
-        } catch (RemoteException e)
-        {
-            e.printStackTrace();
-        }
-        return null;
-        //TODO i(adam) added this so the app can run;
-    }
 
-    public String getParticipant(int id) {
-        return model.getEventByID(id).participantString();
-    }
 
-    public String getCreator(int id) throws RemoteException
-    {
-        return model.getEventByID(id).getCreator();
-    }
 
-    public boolean getTYpe(int id) {
-        return model.getEventByID(id).isOnline();
-    }
-
-    public int getRoom(int id) {
-        return model.getEventByID(id).getRoomID();
-    }
 }

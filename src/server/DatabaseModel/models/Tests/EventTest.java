@@ -14,9 +14,9 @@ public class EventTest
     DatabaseHandler databaseHandler = new DatabaseHandler();
 
     /*--CREATE--*/
-    Event event = databaseHandler.event.create("Title", "Description", 2, 1, 1, 1622548899, 1622558899); // Create offline event
+    /*Event event = databaseHandler.event.create("Title", "Description", 2, 1, 1, 1622548899, 1622558899); // Create offline event
     //Event event = databaseHandler.event.create("Title", "Description", "DISCORD", "123qweasd", 1, 1, 1622548899, 1622558899); // Create online event
-    System.out.println(event);
+    System.out.println(event);*/
 
     /*--GET ONE--*/
     //Event event = databaseHandler.event.getByID(1); // Get by id

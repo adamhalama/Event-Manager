@@ -1,171 +1,214 @@
 package client.ViewModel;
 
 import Shared.Employee.Employee;
-import Shared.Event.Event;
+import Shared.Room.Room;
 import client.Model.Model;
-import javafx.beans.property.*;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CreateEventViewModel
 {
-  private IntegerProperty idProperty;
-  private StringProperty titleProperty;
-  private StringProperty descriptionProperty;
+    private StringProperty titleProperty;
+    private StringProperty descriptionProperty;
 
-  private IntegerProperty startHour;
-  private IntegerProperty startMin;
-  private IntegerProperty endHour;
-  private IntegerProperty endMin;
+    private StringProperty linkField;
+    private StringProperty newParticipantField;
 
-  private ObservableList<Number> roomProperty;
-  private StringProperty platformProperty;
-  private StringProperty linkProperty;
+    private ObservableList<Integer> roomPickerList;
+    private ObservableList<EmployeeViewModel> employeeList;
 
+    private StringProperty errorLabel;
 
-  private ObservableList<EmployeeViewModel> employeeList;
-  private StringProperty errorLabel;
+    private Model model;
 
-  private Model model;
-
-  public CreateEventViewModel(Model model)
-  {
-    this.model = model;
-    this.idProperty = new SimpleIntegerProperty();
-    this.titleProperty = new SimpleStringProperty();
-    this.descriptionProperty = new SimpleStringProperty();
-    this.startHour = new SimpleIntegerProperty();
-    this.startMin = new SimpleIntegerProperty();
-    this.endHour = new SimpleIntegerProperty();
-    this.endMin = new SimpleIntegerProperty();
-
-
-    this.roomProperty = FXCollections.observableArrayList();
-    this.platformProperty = new SimpleStringProperty();
-    this.linkProperty = new SimpleStringProperty();
-    this.errorLabel = new SimpleStringProperty();
-
-    this.employeeList = FXCollections.observableArrayList();
-  }
-
-  public void reset()
-  {
-      //todo make reset
-  }
-
-  public void clear()
-  {
-    employeeList.clear();
-  }
-
-  public ObservableList<EmployeeViewModel> update()
-  {
-    for (int i = 0; i < model.getParticipantsIDT().size(); i++)
+    public CreateEventViewModel(Model model)
     {
-      int id = model.getParticipantsT().get(i).getId();
-      String username = model.getParticipantsT().get(i).getName();
-      String name = model.getParticipantsT().get(i).getFullName();
-      String role = model.getParticipantsT().get(i).getRole();
-      employeeList.add(i, new EmployeeViewModel(id, username, name, role));
+        this.model = model;
+
+        this.titleProperty = new SimpleStringProperty();
+        this.descriptionProperty = new SimpleStringProperty();
+        this.linkField = new SimpleStringProperty();
+
+        this.roomPickerList = FXCollections.observableArrayList();
+
+        this.newParticipantField = new SimpleStringProperty();
+
+        this.employeeList = FXCollections.observableArrayList();
+
+        this.errorLabel = new SimpleStringProperty();
     }
-    return employeeList;
-  }
 
-  public void removeParticipant(int id)
-  {
-    for (int i = 0; i < employeeList.size(); i++)
+    public void reset()
     {
-      if (employeeList.get(i).getUserIDProperty().get() == id)
-      {
-        employeeList.remove(i);
-        model.removeEmployeeT(id);
-      }
+        titleProperty.set("");
+        descriptionProperty.set("");
+
+        linkField.set("");
+        newParticipantField.set("");
+
+        employeeList.clear();
+        roomPickerList.clear();
+        try
+        {
+            for (Room r :
+                    model.getRooms())
+            {
+                roomPickerList.add(r.getRoomID());
+            }
+        } catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }
     }
-  }
-
-  public void addEvent(Event e)
-  {
-    model.add(e);
-  }
-
-  public StringProperty getTitleProperty()
-  {
-    return titleProperty;
-  }
-
-  public StringProperty getDescriptionProperty()
-  {
-    return descriptionProperty;
-  }
 
 
-  public boolean isOnline()
-  {
-    return model.isOnline();
-  }
 
-  public void setIsOnline(boolean isOnline)
-  {
-    model.setOnline(isOnline);
-  }
-
-  public void setErrorProperty(String errorLabel)
-  {
-    this.errorLabel.set(errorLabel);
-  }
-
-  public void setIdProperty(int idProperty)
-  {
-    this.idProperty.set(idProperty);
-  }
-
-  public int getID()
-  {
-    return model.getEvent_id();
-  }
-
-  public void add(String title, String des, int year, int month, int day,
-      int hourS, int minuteS, int hourE, int minuteE, long startTime,
-      long endTime, String platform, String link, Model model,
-      ArrayList<Integer> paticipants)
-  {
-   /* Event e1 = new Event(title, des, year, month, day, hourS, minuteS, hourE,
-        minuteE, true, platform, link, model,
-        paticipants); // for local constructor
-    addEvent(e1);
-    setIdProperty(e1.getEvent_id());*/
-  }
-
-  public void add(String title, String des, int year, int month, int day,
-      int hourS, int minuteS, int hourE, int minuteE, long startTime,
-      long endTime, int id, Model model, ArrayList<Integer> paticipants)
-  {
-    /*Event e1 = new Event(title, des, year, month, day, hourS, minuteS, hourE,
-        minuteE, false, id, model, paticipants); // for local constructor
-    addEvent(e1);
-    setIdProperty(e1.getEvent_id());*/
-  }
-
-  public ArrayList<String> getEmployeeList()
-  {
-    ArrayList<Employee> employees = null;
-    try
+    public void removeParticipant(int index)
     {
-      employees = model.getEmployees();
-    } catch (RemoteException e)
-    {
-      e.printStackTrace();
+        employeeList.remove(index);
     }
-    ArrayList<String> returnStrings = new ArrayList<>();
 
-    for (Employee employee :
-            employees)
+    public boolean createButton(String platform, long startTimestamp, long endTimestamp, int room)
     {
-      returnStrings.add(employee.getName() + " " + employee.getSurname() + "(id " + employee.getId() + ")");
+        if (titleProperty.get() == null || titleProperty.get().equals(""))
+        {
+            errorLabel.set("Please set a title");
+            return false;
+        }
+
+        if (startTimestamp >= endTimestamp)
+        {
+            errorLabel.set("The event cant end before it starts.");
+            return false;
+        }
+
+        try
+        {
+            model.eventCreate(room, startTimestamp, endTimestamp, titleProperty.get(), descriptionProperty.get(), platform, linkField.get());
+        } catch (SQLException throwables)
+        {
+            errorLabel.set(throwables.getMessage());
+            throwables.printStackTrace();
+        } catch (RemoteException e)
+        {
+            errorLabel.set("Server error");
+            e.printStackTrace();
+        }
+        return true;
     }
-    return returnStrings;
-  }
+
+    public void addParticipant()
+    {
+        String employeeID = newParticipantField.getValue().contains("(") ? newParticipantField.getValue().split("[()]")[1] : "no id";
+        String id = employeeID.equals("no id") ? employeeID : employeeID.split(" ")[1];
+        //getting just the id number from the whole string
+
+        if (id.equals("no id"))
+        {
+            errorLabel.setValue("Pick an employee from the list");
+            return;
+        }
+
+        int empID = Integer.parseInt(id);
+
+        Employee employee;
+        try
+        {
+            employee = model.getEmployeeByID(empID);
+        } catch (SQLException | RemoteException throwables)
+        {
+            throwables.printStackTrace();
+            errorLabel.setValue("Failed to add an employee");
+            return;
+        }
+
+        // check if the employee is already in the list
+        for (EmployeeViewModel employeeViewModel : employeeList)
+        {
+            if (employeeViewModel.getUserIDProperty().get() == empID)
+            {
+                errorLabel.setValue("The employee is already added");
+                return;
+            }
+        }
+
+        employeeList.add(new EmployeeViewModel(empID, employee.getName(), employee.getSurname(), employee.getRole()));
+        newParticipantField.set("");
+    }
+
+
+    public ArrayList<String> getAllEmployeesForAutocomplete()
+    {
+        ArrayList<String> returnStrings = new ArrayList<>();
+
+        ArrayList<Employee> employees;
+        try
+        {
+            employees = model.getEmployees();
+        } catch (RemoteException e)
+        {
+            e.printStackTrace();
+            return returnStrings;
+        }
+
+        for (Employee employee :
+                employees)
+        {
+            returnStrings.add(employee.getName() + " " + employee.getSurname() + "(id " + employee.getId() + ")");
+        }
+        return returnStrings;
+    }
+
+
+
+    public StringProperty getNewParticipantFieldProperty()
+    {
+        return newParticipantField;
+    }
+
+    public StringProperty getErrorLabelProperty()
+    {
+        return errorLabel;
+    }
+
+    public StringProperty getLinkFieldproperty()
+    {
+        return linkField;
+    }
+
+    public StringProperty getTitleProperty()
+    {
+        return titleProperty;
+    }
+
+    public StringProperty getDescriptionProperty()
+    {
+        return descriptionProperty;
+    }
+
+
+
+    public int getID()
+    {
+        return model.getEvent_id();
+    }
+
+
+    public ObservableList<Integer> getRoomList()
+    {
+        return roomPickerList;
+    }
+
+    public ObservableList<EmployeeViewModel> getEmployeeList()
+    {
+        return employeeList;
+    }
 }

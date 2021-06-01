@@ -101,7 +101,7 @@
                               <Font size="21.0" />
                           </font>
                       </Label>
-                      <DatePicker fx:id="startDate" prefHeight="30.0" prefWidth="204.0" promptText="Date">
+                      <DatePicker fx:id="datePicker" prefHeight="30.0" prefWidth="204.0" promptText="Date">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -151,15 +151,6 @@
                   <Insets left="5.0" />
                </GridPane.margin>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
-               <children>
-                  <Label text="   Note : You can only choose work time(from 9:00 to 17:00) !" textFill="RED">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-            </HBox>
          </children>
       </GridPane>
       <GridPane>
@@ -173,57 +164,47 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0" />
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" />
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" />
-         </children>
-      </GridPane>
-      <HBox alignment="CENTER">
-         <children>
-              <HBox alignment="CENTER">
+              <HBox alignment="CENTER" GridPane.columnIndex="1">
                   <children>
                       <Label text=" " />
-                      <Label prefHeight="26.0" prefWidth="201.0" text="Online platform:">
+                      <Label text="Online platform: ">
                           <font>
                               <Font size="15.0" />
                           </font>
                       </Label>
-                  <ChoiceBox fx:id="platformMenu" prefHeight="38.0" prefWidth="109.0" />
+                  <ChoiceBox fx:id="platformMenu" prefHeight="38.0" prefWidth="120.0" />
                   </children>
                <padding>
                   <Insets right="10.0" />
                </padding>
               </HBox>
-              <HBox alignment="CENTER">
+              <HBox alignment="CENTER" GridPane.columnIndex="2">
                   <children>
                       <Label text=" " />
-                      <Label prefHeight="27.0" prefWidth="199.0" text="Choose room:">
+                      <Label text="Choose room: ">
                           <font>
                               <Font size="15.0" />
                           </font>
                       </Label>
-                  <ChoiceBox fx:id="roomMenu" prefHeight="38.0" prefWidth="109.0" />
+                  <ChoiceBox fx:id="roomMenu" prefHeight="38.0" prefWidth="120.0" />
                   </children>
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
               </HBox>
          </children>
          <VBox.margin>
-            <Insets bottom="10.0" />
+            <Insets bottom="10.0" top="10.0" />
          </VBox.margin>
-      </HBox>
+      </GridPane>
         <HBox alignment="CENTER" prefHeight="35.0" prefWidth="657.0">
             <children>
-                <Label prefHeight="44.0" prefWidth="223.0" text="Link for online meeting:">
+                <Label text="Link for online meeting: ">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <TextField fx:id="linkTextField" prefHeight="34.0" prefWidth="411.0" promptText="Optional, you can add it later." />
+                <TextField fx:id="linkTextField" prefHeight="26.0" prefWidth="340.0" promptText="Optional, you can add it later." />
             </children>
          <VBox.margin>
-            <Insets bottom="20.0" />
+            <Insets bottom="20.0" top="10.0" />
          </VBox.margin>
         </HBox>
       <HBox alignment="CENTER" prefHeight="50.0" prefWidth="739.0">
@@ -259,6 +240,9 @@
             </Button>
             <Label layoutX="440.0" layoutY="21.0" text="   " />
          </children>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
       </HBox>
       <VBox prefHeight="200.0" prefWidth="100.0">
          <children>
@@ -271,6 +255,9 @@
               </columns>
             </TableView>
          </children>
+         <VBox.margin>
+            <Insets left="20.0" right="20.0" />
+         </VBox.margin>
       </VBox>
       <Label text="  " />
         <HBox alignment="CENTER_RIGHT">

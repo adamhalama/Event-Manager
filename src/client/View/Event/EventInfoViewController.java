@@ -53,9 +53,9 @@ public class EventInfoViewController {
 
         this.titleTextField.setText(viewModel.getTitle(id));
         this.desArea.setText(viewModel.getDes(id));
-        this.startTimeLabel.setText(viewModel.getStart(id));
+       /* this.startTimeLabel.setText(viewModel.getStart(id));
         this.endTimeLabel.setText(viewModel.getEnd(id));
-        if (viewModel.getTYpe(id)){
+      *//*  if (viewModel.getTYpe(id)){
             this.typeLabel.setText("Online");
             this.platformLabel.setText(viewModel.getPlatform(id));
             this.linkLabel.setText(viewModel.getLink(id));
@@ -65,9 +65,9 @@ public class EventInfoViewController {
             this.platformLabel.setText("");
             this.linkLabel.setText("");
             this.roomLabel.setText(String.valueOf(viewModel.getRoom(id)));
-        }
+        }*//*
         this.employeeInfoArea.setText(viewModel.getParticipantCreatorInfo(id));
-        this.createTimeLabel.setText(viewModel.getCreate(id));
+        this.createTimeLabel.setText(viewModel.getCreate(id));*/
     }
 
     public Region getRoot() {

@@ -2,6 +2,7 @@ package client.ViewModel;
 
 import Shared.Event.Event;
 import client.Model.Model;
+import client.View.Helpers.ConvertTime;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -35,12 +36,12 @@ public class RoomEventsViewModel
         for (Event event:
              model.getEventsByRoom(currentRoomID))
         {
-            if(event.getEndTime() > System.currentTimeMillis())
+            if(event.getTimeEnd() > System.currentTimeMillis())
             {
                 try
                 {
-                    eventList.add(new EventViewModel(event.getEvent_id(), event.getTitle(),
-                            model.getFormattedDateTime(event.getStartTime()), model.getFormattedDateTime(event.getEndTime()),
+                    eventList.add(new EventViewModel(event.getID(), event.getTitle(),
+                            event.getTimeStartEnd(),
                             model.getEmployeeByID(event.getCreatorID()).getFullName(), event.getParticipants().size()));
                 } catch (SQLException throwables)
                 {

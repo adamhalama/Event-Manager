@@ -20,6 +20,11 @@ TO IMPORT - add  ' stylesheets="@darkTheme.css" ' to the root
 
 }
 
+.text-input:disabled {
+    -fx-text-fill: white;
+    -fx-opacity: 0.6;
+}
+
 .button {
     -fx-base: #76767f;
 }
@@ -32,4 +37,6 @@ TO IMPORT - add  ' stylesheets="@darkTheme.css" ' to the root
             -fx-dark-text-color  59%,
             -fx-mid-text-color   60%
     );
+
+
 }
