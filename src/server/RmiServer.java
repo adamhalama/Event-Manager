@@ -120,7 +120,7 @@ public class RmiServer implements API
 
     @Override
     public ArrayList<Employee> employeeGetAll() {
-        ArrayList<Employee> employees = this.databaseHandler.employee.getAll();
+        ArrayList<Employee> employees = this.databaseHandler.employee.getAll("id ASC");
         try {
             for(Employee employee : employees) {
                 ObjectInfo.getFullEmployee(employee, this.databaseHandler);
@@ -231,7 +231,7 @@ public class RmiServer implements API
 
     @Override
     public ArrayList<Room> roomGetAll() {
-        ArrayList<Room> rooms = this.databaseHandler.room.getAll();
+        ArrayList<Room> rooms = this.databaseHandler.room.getAll("id ASC");
         try {
             for(Room room : rooms) {
                 ObjectInfo.getFullRoom(room, this.databaseHandler);
@@ -508,7 +508,7 @@ public class RmiServer implements API
 
     @Override
     public ArrayList<Event> eventGetAll() {
-        ArrayList<Event> events = this.databaseHandler.event.getAll();
+        ArrayList<Event> events = this.databaseHandler.event.getAll("id ASC");
         try {
             for(Event event : events) {
                 ObjectInfo.getFullEvent(event, this.databaseHandler);
