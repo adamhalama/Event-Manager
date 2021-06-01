@@ -66,7 +66,9 @@ public class RmiServer implements API
             throw new SQLException("Username has already been taken");
         }
         String encryptedPassword = Crypt.encryptPassword(password);
-        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.create(username, encryptedPassword, name, surname, role), this.databaseHandler);
+        Employee employee = ObjectInfo.getFullEmployee(this.databaseHandler.employee.create(username, encryptedPassword, name, surname, role), this.databaseHandler);
+        this.rmiNotificator.employeeUpdate(employee);
+        return employee;
     }
 
     @Override
@@ -85,7 +87,9 @@ public class RmiServer implements API
             this.checkPermission(employeeID1, "employees_create_edit");
         }
         Employee employee = this.databaseHandler.employee.deleteByID(employeeID2);
-        return ObjectInfo.getFullEmployee(employee, this.databaseHandler);
+        employee = ObjectInfo.getFullEmployee(employee, this.databaseHandler);
+        this.rmiNotificator.employeeUpdate(employee);
+        return employee;
     }
 
     @Override
@@ -96,7 +100,9 @@ public class RmiServer implements API
             this.checkPermission(employeeID1, "employees_create_edit");
         }
         Employee employee = this.databaseHandler.employee.restoreByID(employeeID2);
-        return ObjectInfo.getFullEmployee(employee, this.databaseHandler);
+        employee = ObjectInfo.getFullEmployee(employee, this.databaseHandler);
+        this.rmiNotificator.employeeUpdate(employee);
+        return employee;
     }
 
     @Override
@@ -137,7 +143,9 @@ public class RmiServer implements API
         if(employeeID1 != employeeID2) {
             this.checkPermission(employeeID1, "employees_create_edit");
         }
-        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"name"}, formatStringValues(name), employeeID2), this.databaseHandler);
+        Employee employee = ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"name"}, formatStringValues(name), employeeID2), this.databaseHandler);
+        this.rmiNotificator.employeeUpdate(employee);
+        return employee;
     }
 
     @Override
@@ -146,14 +154,18 @@ public class RmiServer implements API
         if(employeeID1 != employeeID2) {
             this.checkPermission(employeeID1, "employees_create_edit");
         }
-        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"surname"}, formatStringValues(surname), employeeID2), this.databaseHandler);
+        Employee employee = ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"surname"}, formatStringValues(surname), employeeID2), this.databaseHandler);
+        this.rmiNotificator.employeeUpdate(employee);
+        return employee;
     }
 
     @Override
     public Employee employeeSetRole(int employeeID1, int employeeID2, String role) throws SQLException
     {
         this.checkPermission(employeeID1, "employees_create_edit");
-        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"role"}, formatStringValues(role), employeeID2), this.databaseHandler);
+        Employee employee = ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"role"}, formatStringValues(role), employeeID2), this.databaseHandler);
+        this.rmiNotificator.employeeUpdate(employee);
+        return employee;
     }
 
     @Override
@@ -164,7 +176,9 @@ public class RmiServer implements API
             this.checkPermission(employeeID1, "employees_create_edit");
         }
         String encryptedPassword = Crypt.encryptPassword(password);
-        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"password"}, formatStringValues(encryptedPassword), employeeID2), this.databaseHandler);
+        Employee employee = ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"password"}, formatStringValues(encryptedPassword), employeeID2), this.databaseHandler);
+        this.rmiNotificator.employeeUpdate(employee);
+        return employee;
     }
 
     @Override
@@ -177,7 +191,9 @@ public class RmiServer implements API
         if (employeesWithSameUsername.size()>0) {
             throw new SQLException("Username has already been taken");
         }
-        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"username"}, formatStringValues(username), employeeID2), this.databaseHandler);
+        Employee employee = ObjectInfo.getFullEmployee(this.databaseHandler.employee.editByID(new String[] {"username"}, formatStringValues(username), employeeID2), this.databaseHandler);
+        this.rmiNotificator.employeeUpdate(employee);
+        return employee;
     }
 
     @Override
@@ -185,7 +201,9 @@ public class RmiServer implements API
     {
         this.checkPermission(employeeID1, "employees_create_edit");
         this.databaseHandler.employeePermission.create(permission, employeeID2);
-        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.getByID(employeeID2), this.databaseHandler);
+        Employee employee = ObjectInfo.getFullEmployee(this.databaseHandler.employee.getByID(employeeID2), this.databaseHandler);
+        this.rmiNotificator.employeeUpdate(employee);
+        return employee;
     }
 
     @Override
@@ -193,7 +211,9 @@ public class RmiServer implements API
     {
         this.checkPermission(employeeID1, "employees_create_edit");
         this.databaseHandler.employeePermission.delete(permission, employeeID2);
-        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.getByID(employeeID2), this.databaseHandler);
+        Employee employee = ObjectInfo.getFullEmployee(this.databaseHandler.employee.getByID(employeeID2), this.databaseHandler);
+        this.rmiNotificator.employeeUpdate(employee);
+        return employee;
     }
 
     @Override
@@ -204,7 +224,9 @@ public class RmiServer implements API
         for(String permission : permissions) {
             this.databaseHandler.employeePermission.create(permission, employeeID2);
         }
-        return ObjectInfo.getFullEmployee(this.databaseHandler.employee.getByID(employeeID2), this.databaseHandler);
+        Employee employee = ObjectInfo.getFullEmployee(this.databaseHandler.employee.getByID(employeeID2), this.databaseHandler);
+        this.rmiNotificator.employeeUpdate(employee);
+        return employee;
     }
 
 
@@ -247,7 +269,9 @@ public class RmiServer implements API
     {
         this.checkPermission(employeeID1, "room_create_edit");
         Room room = this.databaseHandler.room.create(roomNumber, buildingAddress, numberOfSeats, floor);
-        return ObjectInfo.getFullRoom(room, this.databaseHandler);
+        room = ObjectInfo.getFullRoom(room, this.databaseHandler);
+        this.rmiNotificator.roomUpdate(room);
+        return room;
     }
 
     @Override
@@ -255,7 +279,11 @@ public class RmiServer implements API
     {
         try {
             this.checkPermission(employeeID1, "room_create_edit");
-            return this.databaseHandler.room.deleteByID(roomID);
+            boolean success = this.databaseHandler.room.deleteByID(roomID);
+            if(success == true) {
+                this.rmiNotificator.roomDelete(roomID);
+            }
+            return success;
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -267,7 +295,7 @@ public class RmiServer implements API
     public Room roomSetFloor(int employeeID1, int roomID, int floor) throws SQLException
     {
         this.checkPermission(employeeID1, "room_create_edit");
-        return ObjectInfo.getFullRoom(
+        Room room = ObjectInfo.getFullRoom(
             this.databaseHandler.room.editByID(
                 new String[] {"floor"},
                 new String[] {String.valueOf(floor)},
@@ -275,13 +303,15 @@ public class RmiServer implements API
             ),
             this.databaseHandler
         );
+        this.rmiNotificator.roomUpdate(room);
+        return room;
     }
 
     @Override
     public Room roomSetNumberOfSeats(int employeeID1, int roomID, int numberOfSeats) throws SQLException
     {
         this.checkPermission(employeeID1, "room_create_edit");
-        return ObjectInfo.getFullRoom(
+        Room room = ObjectInfo.getFullRoom(
             this.databaseHandler.room.editByID(
                 new String[] {"number_of_seats"},
                 new String[] {String.valueOf(numberOfSeats)},
@@ -289,13 +319,15 @@ public class RmiServer implements API
             ),
             this.databaseHandler
         );
+        this.rmiNotificator.roomUpdate(room);
+        return room;
     }
 
     @Override
     public Room roomSetRoomNumber(int employeeID1, int roomID, String roomNumber) throws SQLException
     {
         this.checkPermission(employeeID1, "room_create_edit");
-        return ObjectInfo.getFullRoom(
+        Room room = ObjectInfo.getFullRoom(
             this.databaseHandler.room.editByID(
                 new String[] {"room_no"},
                 formatStringValues(String.valueOf(roomNumber)),
@@ -303,13 +335,15 @@ public class RmiServer implements API
             ),
             this.databaseHandler
         );
+        this.rmiNotificator.roomUpdate(room);
+        return room;
     }
 
     @Override
     public Room roomSetBuildingAddress(int employeeID1, int roomID, String buildingAddress) throws SQLException
     {
         this.checkPermission(employeeID1, "room_create_edit");
-        return ObjectInfo.getFullRoom(
+        Room room = ObjectInfo.getFullRoom(
             this.databaseHandler.room.editByID(
                 new String[] {"building_address"},
                 new String[] {String.valueOf(buildingAddress)},
@@ -317,6 +351,8 @@ public class RmiServer implements API
             ),
             this.databaseHandler
         );
+        this.rmiNotificator.roomUpdate(room);
+        return room;
     }
 
 
@@ -333,7 +369,11 @@ public class RmiServer implements API
         throws SQLException
     {
         this.checkPermission(employeeID1, "room_create_edit");
-        return this.databaseHandler.roomEquipment.create(equipment, roomID);
+        boolean success = this.databaseHandler.roomEquipment.create(equipment, roomID);
+        if(success) {
+            this.rmiNotificator.roomUpdate(ObjectInfo.getFullRoom(this.databaseHandler.room.getByID(roomID), this.databaseHandler));
+        }
+        return success;
     }
 
     @Override
@@ -341,7 +381,11 @@ public class RmiServer implements API
         throws SQLException
     {
         this.checkPermission(employeeID1, "room_create_edit");
-        return this.databaseHandler.roomEquipment.delete(equipment, roomID);
+        boolean success = this.databaseHandler.roomEquipment.delete(equipment, roomID);
+        if(success) {
+            this.rmiNotificator.roomUpdate(ObjectInfo.getFullRoom(this.databaseHandler.room.getByID(roomID), this.databaseHandler));
+        }
+        return success;
     }
 
     @Override
@@ -353,6 +397,7 @@ public class RmiServer implements API
         for(String item : equipment) {
             this.databaseHandler.roomEquipment.create(item, roomID);
         }
+        this.rmiNotificator.roomUpdate(ObjectInfo.getFullRoom(this.databaseHandler.room.getByID(roomID), this.databaseHandler));
         return true;
     }
 
@@ -443,14 +488,18 @@ public class RmiServer implements API
         this.databaseHandler.messageRoomParticipant.create(messageRoom.getId(), employeeID2);
         messageRoom.addUser(employeeID1);
         messageRoom.addUser(employeeID2);
-        return ObjectInfo.getFullMessageRoom(messageRoom, this.databaseHandler);
+        messageRoom = ObjectInfo.getFullMessageRoom(messageRoom, this.databaseHandler);
+        this.rmiNotificator.messageRoomUpdate(messageRoom);
+        return messageRoom;
     }
 
     @Override
     public MessageRoom messageRoomSetName(int employeeID1, int messageRoomID, String name) throws SQLException
     {
         this.checkPermission(employeeID1, "chat_rooms_create_edit");
-        return ObjectInfo.getFullMessageRoom(this.databaseHandler.messageRoom.editName(name, messageRoomID), this.databaseHandler);
+        MessageRoom messageRoom = ObjectInfo.getFullMessageRoom(this.databaseHandler.messageRoom.editName(name, messageRoomID), this.databaseHandler);
+        this.rmiNotificator.messageRoomUpdate(messageRoom);
+        return messageRoom;
     }
 
     @Override
@@ -478,7 +527,9 @@ public class RmiServer implements API
         throws SQLException
     {
         if(this.databaseHandler.messageRoomParticipant.exists(messageRoomID, employeeID1)) {
-            return this.databaseHandler.message.create(messageRoomID, employeeID1, message);
+            Message messageObj = this.databaseHandler.message.create(messageRoomID, employeeID1, message);
+            this.rmiNotificator.messageRoomNotify(messageRoomID, messageObj);
+            return messageObj;
         } else {
             throw new SQLException("User didn't join the message room");
         }
@@ -526,7 +577,9 @@ public class RmiServer implements API
         MessageRoom messageRoom = this.databaseHandler.messageRoom.create("Event - " + title, false);
         this.databaseHandler.messageRoomParticipant.create(messageRoom.getId(), employeeID1);
         Event event = this.databaseHandler.event.create(messageRoom.getId(), roomID, employeeID1, timeStart, timeEnd, title, description, platform, onlineLink);
-        return ObjectInfo.getFullEvent(event, this.databaseHandler);
+        event = ObjectInfo.getFullEvent(event, this.databaseHandler);
+        this.rmiNotificator.eventUpdate(event);
+        return event;
     }
 
     /*@Override
@@ -554,14 +607,18 @@ public class RmiServer implements API
         throws SQLException
     {
         this.checkPermission(employeeID1, "room_create_edit");
-        return this.databaseHandler.event.deleteByID(eventID);
+        boolean success = this.databaseHandler.event.deleteByID(eventID);
+        if(success) {
+            this.rmiNotificator.eventDelete(eventID);
+        }
+        return success;
     }
 
 
     private Event eventSetStringValue(int employeeID1, int eventID, String name, String value) throws SQLException
     {
         this.checkPermission(employeeID1, "event_edit");
-        return ObjectInfo.getFullEvent(
+        Event event = ObjectInfo.getFullEvent(
             this.databaseHandler.event.editByID(
                 new String[] {name},
                 formatStringValues(value),
@@ -569,6 +626,8 @@ public class RmiServer implements API
             ),
             this.databaseHandler
         );
+        this.rmiNotificator.eventUpdate(event);
+        return event;
     }
 
     @Override
@@ -599,7 +658,7 @@ public class RmiServer implements API
     public Event eventSetOnlineState(int employeeID1, int eventID, boolean isOnline) throws SQLException
     {
         this.checkPermission(employeeID1, "event_edit");
-        return ObjectInfo.getFullEvent(
+        Event event = ObjectInfo.getFullEvent(
             this.databaseHandler.event.editByID(
                 new String[] {"is_online"},
                 new String[] {String.valueOf(isOnline)},
@@ -607,13 +666,15 @@ public class RmiServer implements API
             ),
             this.databaseHandler
         );
+        this.rmiNotificator.eventUpdate(event);
+        return event;
     }
 
     @Override
     public Event eventSetTime(int employeeID1, int eventID, long startTime, long endTime) throws SQLException
     {
         this.checkPermission(employeeID1, "event_edit");
-        return ObjectInfo.getFullEvent(
+        Event event = ObjectInfo.getFullEvent(
             this.databaseHandler.event.editByID(
                 new String[] {"start_time", "end_time"},
                 new String[] {String.valueOf(startTime), String.valueOf(endTime)},
@@ -621,6 +682,8 @@ public class RmiServer implements API
             ),
             this.databaseHandler
         );
+        this.rmiNotificator.eventUpdate(event);
+        return event;
     }
 
     @Override
@@ -629,7 +692,12 @@ public class RmiServer implements API
         this.checkPermission(employeeID1, "event_join");
         Event event = this.databaseHandler.event.getByID(eventID);
         this.databaseHandler.messageRoomParticipant.create(event.getMessageRoomID(), employeeID1);
-        return this.databaseHandler.eventParticipant.create(eventID, employeeID1);
+        boolean success = this.databaseHandler.eventParticipant.create(eventID, employeeID1);
+        if(success) {
+            this.rmiNotificator.eventUpdate(ObjectInfo.getFullEvent(this.databaseHandler.event.getByID(eventID), this.databaseHandler));
+            this.rmiNotificator.messageRoomUpdate(ObjectInfo.getFullMessageRoom(this.databaseHandler.messageRoom.getByID(event.getMessageRoomID()), this.databaseHandler));
+        }
+        return success;
     }
 
     @Override
@@ -637,6 +705,11 @@ public class RmiServer implements API
     {
         Event event = this.databaseHandler.event.getByID(eventID);
         this.databaseHandler.messageRoomParticipant.delete(event.getMessageRoomID(), employeeID1);
-        return this.databaseHandler.eventParticipant.delete(eventID, employeeID1);
+        boolean success = this.databaseHandler.eventParticipant.delete(eventID, employeeID1);
+        if(success) {
+            this.rmiNotificator.eventUpdate(ObjectInfo.getFullEvent(this.databaseHandler.event.getByID(eventID), this.databaseHandler));
+            this.rmiNotificator.messageRoomUpdate(ObjectInfo.getFullMessageRoom(this.databaseHandler.messageRoom.getByID(event.getMessageRoomID()), this.databaseHandler));
+        }
+        return success;
     }
 }
