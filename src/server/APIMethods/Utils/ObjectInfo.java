@@ -38,7 +38,7 @@ public class ObjectInfo
     return messageRoom;
   }
   public static Event getFullEvent(Event event, DatabaseHandler databaseHandler) {
-    int[] participants = databaseHandler.eventParticipant.getParticipants(event.getEvent_id());
+    int[] participants = databaseHandler.eventParticipant.getParticipants(event.getID());
     event.setParticipants(intToIntegerArrList(participants));
     return event;
   }
