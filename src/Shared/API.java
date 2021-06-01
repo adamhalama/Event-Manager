@@ -95,7 +95,7 @@ public interface API extends Remote
 
     ArrayList<Event> eventGetAll() throws RemoteException;
 
-    Event eventCreate(int employeeID1, int messageRoomID, int roomID, int creatorID, long timeStart, long timeEnd, String title, String description, String platform, String onlineLink) throws SQLException, RemoteException;
+    Event eventCreate(int employeeID1, int roomID, long timeStart, long timeEnd, String title, String description, String platform, String onlineLink) throws SQLException, RemoteException;
 
     /*Event eventCreateOffline(int employeeID1, String title, String description, int roomID, long startTime, long endTime) throws SQLException, RemoteException;
 

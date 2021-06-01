@@ -496,7 +496,7 @@ public class RmiServer implements API
     }
 
     @Override
-    public Event eventCreate(int employeeID1, int roomID, int creatorID, long timeStart, long timeEnd, String title, String description, String platform, String onlineLink) throws SQLException
+    public Event eventCreate(int employeeID1, int roomID, long timeStart, long timeEnd, String title, String description, String platform, String onlineLink) throws SQLException
     {
         this.checkPermission(employeeID1, "event_create");
         MessageRoom messageRoom = this.databaseHandler.messageRoom.create("Event - " + title, false);
