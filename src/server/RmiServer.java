@@ -606,7 +606,7 @@ public class RmiServer implements API
     public boolean eventDeleteByID(int employeeID1, int eventID)
             throws RemoteException, SQLException
     {
-        this.checkPermission(employeeID1, "room_create_edit");
+        this.checkPermission(employeeID1, "event_edit");
         boolean success = this.databaseHandler.event.deleteByID(eventID);
         if(success) {
             this.rmiNotificator.eventDelete(eventID);
