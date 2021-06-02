@@ -71,6 +71,7 @@ public class ModelManager implements Model
             throwables.printStackTrace();
         }
 
+
     }
 
 
@@ -175,6 +176,7 @@ public class ModelManager implements Model
     @Override
     public void messageAddLocal(int messageRoomID, Message message)
     {
+        System.out.println("test rmi listens");
         for(MessageRoom messageRoomItem : messageRoomList.getMessageRooms()) {
             if(messageRoomItem.getId() == messageRoomID) {
                 messageRoomItem.addMessage(message);

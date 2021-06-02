@@ -63,6 +63,7 @@ public class MessageRoomViewController implements PropertyChangeListener
     {
         Platform.runLater(() ->
         {
+            System.out.println(" scroll listener");
             if ( (int)propertyChangeEvent.getNewValue() == 1) // scroll to bottom when a new message comes or is sent
                 this.messageTable.scrollTo(viewModel.getMessageTable().size() - 1);
             else
