@@ -6,6 +6,7 @@ import Shared.Messages.Message;
 import Shared.Messages.MessageRoom;
 import Shared.Room.Room;
 
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.security.GeneralSecurityException;
@@ -18,6 +19,10 @@ public interface Model {
 
 
     //messageRoom class
+
+    void addListener(String propertyName, PropertyChangeListener listener);
+
+    void removeListener(String propertyName, PropertyChangeListener listener);
 
     void login(String username, String password) throws SQLException, GeneralSecurityException, IOException;
 

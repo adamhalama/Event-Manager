@@ -12,6 +12,8 @@ import Shared.Room.RoomList;
 import client.RmiClient;
 import org.junit.Ignore;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.security.GeneralSecurityException;
@@ -37,6 +39,7 @@ public class ModelManager implements Model
     private Employee loggedEmployee;
 
     private RmiClient api;
+    private PropertyChangeSupport property;
 
     public ModelManager(RmiClient client)
     {
@@ -49,6 +52,7 @@ public class ModelManager implements Model
         this.messageRoomList = new MessageRoomList();
         this.idT = new ArrayList<>();
         this.employeesT = new ArrayList<>();
+        property = new PropertyChangeSupport(this);
 
         employeeList.setMessageRoomList(messageRoomList);
         employeeList.setEventList(eventList);
@@ -67,6 +71,19 @@ public class ModelManager implements Model
             throwables.printStackTrace();
         }
 
+    }
+
+
+    @Override
+    public void addListener(String propertyName, PropertyChangeListener listener)
+    {
+        property.addPropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public void removeListener(String propertyName, PropertyChangeListener listener)
+    {
+        property.removePropertyChangeListener(propertyName, listener);
     }
 
     @Override
@@ -161,6 +178,7 @@ public class ModelManager implements Model
         for(MessageRoom messageRoomItem : messageRoomList.getMessageRooms()) {
             if(messageRoomItem.getId() == messageRoomID) {
                 messageRoomItem.addMessage(message);
+                property.firePropertyChange("message", null, message);
                 break;
             }
         }
