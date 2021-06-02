@@ -35,7 +35,13 @@ public interface Model {
 
     Message sendMessage(int messageRoomID, String message) throws SQLException, RemoteException;
 
+    void messageAddLocal(int messageRoomID, Message message);
+
     MessageRoom messageRoomSetName(int messageRoomID, String name) throws SQLException, RemoteException;
+
+    void messageRoomLocalSet(MessageRoom messageRoom);
+
+    void messageRoomLocalRemove(int messageRoomID);
 
     ArrayList<Message> messagesGet(int messageRoomID, int offset) throws RemoteException;
 
@@ -121,6 +127,10 @@ public interface Model {
 
     void removeRoom(Room room) throws RemoteException;
 
+    void updateLocalRoom(Room room) throws RemoteException;
+
+    void removeLocalRoom(int roomID) throws RemoteException;
+
     void modifyRoom(int roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor) throws SQLException, RemoteException;
 
     boolean roomEquipmentAdd(int roomID, String equipment) throws RemoteException, SQLException;
@@ -128,6 +138,8 @@ public interface Model {
     boolean roomEquipmentRemove(int roomID, String equipment) throws RemoteException, SQLException;
 
     boolean roomEquipmentSet(int roomID, String[] equipment) throws SQLException, RemoteException;
+
+    boolean roomEquipmentLocalSet(int roomID, String[] equipment);
 
     String[] roomEquipmentGet(int roomID) throws RemoteException;
 
@@ -140,6 +152,10 @@ public interface Model {
     ArrayList<Room> getRoomsByAnything(String keyword) throws RemoteException;
 
     Room getRoomByID(int roomID) throws SQLException, RemoteException;
+
+    void eventLocalSet(Event event);
+
+    void eventLocalRemove(int eventID);
 
 
     //part1 class event

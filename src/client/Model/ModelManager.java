@@ -18,7 +18,7 @@ import java.security.GeneralSecurityException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
+import java.util.Arrays;
 
 //TODO Add database updating
 
@@ -125,6 +125,25 @@ public class ModelManager implements Model
     }
 
     @Override
+    public void messageRoomLocalSet(MessageRoom messageRoom)
+    {
+        ArrayList<MessageRoom> messageRooms = messageRoomList.getMessageRooms();
+        for(MessageRoom messageRoomItem : messageRooms) {
+            if(messageRoomItem.getId() == messageRoom.getId()) {
+                messageRoomItem = messageRoom;
+                break;
+            }
+        }
+        messageRoomList.addMessageRoom(messageRoom);
+    }
+
+    @Override
+    public void messageRoomLocalRemove(int messageRoomID)
+    {
+        messageRoomList.removeMessageRoom(messageRoomID);
+    }
+
+    @Override
     public ArrayList<Message> messagesGet(int messageRoomID, int offset) throws RemoteException
     {
         return api.messagesGet(getLoggedEmployeeID(), messageRoomID, offset);
@@ -134,6 +153,17 @@ public class ModelManager implements Model
     public Message sendMessage(int messageRoomID, String message) throws SQLException, RemoteException
     {
         return api.messagePost(getLoggedEmployeeID(), messageRoomID, message);
+    }
+
+    @Override
+    public void messageAddLocal(int messageRoomID, Message message)
+    {
+        for(MessageRoom messageRoomItem : messageRoomList.getMessageRooms()) {
+            if(messageRoomItem.getId() == messageRoomID) {
+                messageRoomItem.addMessage(message);
+                break;
+            }
+        }
     }
 
     @Ignore
@@ -456,6 +486,25 @@ public class ModelManager implements Model
     }
 
     @Override
+    public void updateLocalRoom(Room room)
+    {
+        ArrayList<Room> rooms = roomList.getRooms();
+        for(Room roomItem : rooms) {
+            if(roomItem.getRoomID() == room.getRoomID()) {
+                roomItem = room;
+                break;
+            }
+        }
+        roomList.addRoom(room);
+    }
+
+    @Override
+    public void removeLocalRoom(int roomID)
+    {
+        roomList.removeRoom(roomID);
+    }
+
+    @Override
     public void modifyRoom(int roomID, String roomCode, String buildingAddress, int numberOfSeats, int floor) throws SQLException, RemoteException
     {
         roomList.modifyRoom(roomID, roomCode, buildingAddress, numberOfSeats, floor);
@@ -483,6 +532,19 @@ public class ModelManager implements Model
     public boolean roomEquipmentSet(int roomID, String[] equipment) throws SQLException, RemoteException
     {
         return api.roomEquipmentSet(getLoggedEmployeeID(), roomID, equipment);
+    }
+
+    @Override
+    public boolean roomEquipmentLocalSet(int roomID, String[] equipment)
+    {
+        for(Room roomItem : roomList.getRooms()) {
+            if(roomItem.getRoomID() == roomID) {
+                roomItem.setEquipment(new ArrayList<String>(
+                    Arrays.asList(equipment)));
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -624,6 +686,25 @@ public class ModelManager implements Model
     public boolean eventLeave(int employeeID1, int eventID) throws SQLException, RemoteException
     {
         return api.eventLeave(employeeID1, eventID);
+    }
+
+    @Override
+    public void eventLocalSet(Event event)
+    {
+        ArrayList<Event> events = eventList.getAll();
+        for(Event eventItem : events) {
+            if(eventItem.getID() == event.getID()) {
+                eventItem = event;
+                break;
+            }
+        }
+        eventList.add(event);
+    }
+
+    @Override
+    public void eventLocalRemove(int messageRoomID)
+    {
+        eventList.removeByID(messageRoomID);
     }
 
     @Override

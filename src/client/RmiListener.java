@@ -29,22 +29,36 @@ public class RmiListener implements ClientListener
   }
 
   @Override
-  public void roomUpdate(Room room) throws RemoteException {}
+  public void roomUpdate(Room room) throws RemoteException {
+    model.updateLocalRoom(room);
+  }
   @Override
-  public void roomDelete(int roomID) throws RemoteException {}
+  public void roomDelete(int roomID) throws RemoteException {
+    model.removeLocalRoom(roomID);
+  }
 
   @Override
-  public void roomEquipmentUpdate(int roomID, String[] equipment) throws RemoteException {}
+  public void roomEquipmentUpdate(int roomID, String[] equipment) throws RemoteException {
+    model.roomEquipmentLocalSet(roomID, equipment);
+  }
 
   @Override
-  public void messageRoomUpdate(MessageRoom messageRoom) throws RemoteException {}
+  public void messageRoomUpdate(MessageRoom messageRoom) throws RemoteException {
+    model.messageRoomLocalSet(messageRoom);
+  }
   @Override
-  public void messageRoomDelete(int messageRoomID) throws RemoteException {}
+  public void messageRoomDelete(int messageRoomID) throws RemoteException {
+    model.messageRoomLocalRemove(messageRoomID);
+  }
   @Override
   public void messageRoomNotify(int messageRoomID, Message message) throws RemoteException {}
 
   @Override
-  public void eventUpdate(Event event) throws RemoteException {}
+  public void eventUpdate(Event event) throws RemoteException {
+    model.eventLocalSet(event);
+  }
   @Override
-  public void eventDelete(int eventID) throws RemoteException {}
+  public void eventDelete(int eventID) throws RemoteException {
+    model.eventLocalRemove(eventID);
+  }
 }

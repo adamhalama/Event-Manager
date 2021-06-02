@@ -141,6 +141,15 @@ public class EventList
         }
     }
 
+    public void removeByID(int id)
+    {
+        for (Event e : events)
+        {
+            if (e.getID() == id)
+                events.remove(e);
+        }
+    }
+
     public boolean isRoomAvailable(int roomID, long startTime, long endTime)
     {
         for (Event e:
