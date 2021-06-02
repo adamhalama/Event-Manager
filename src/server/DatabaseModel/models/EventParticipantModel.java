@@ -50,6 +50,19 @@ public class EventParticipantModel extends Model
     return false;
   }
 
+  public boolean deleteAll(int eventID)
+  {
+    try
+    {
+      return super.modelDelete("event_id = " + eventID);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
   public int[] getParticipants(int eventID)
   {
     ArrayList<Integer> participants = new ArrayList<>();

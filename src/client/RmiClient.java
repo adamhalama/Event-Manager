@@ -1,6 +1,7 @@
 package client;
 
 import Shared.API;
+import Shared.ClientListener;
 import Shared.Employee.Employee;
 import Shared.Event.Event;
 import Shared.Messages.Message;
@@ -27,6 +28,18 @@ public class RmiClient
         {
             ex.printStackTrace();
         }
+    }
+
+    public void registerClientListener(ClientListener client)
+        throws RemoteException
+    {
+        server.registerClientListener(client);
+    }
+
+    public void removeClientListener(ClientListener client)
+        throws RemoteException
+    {
+        server.removeClientListener(client);
     }
 
     //EMPLOYEES

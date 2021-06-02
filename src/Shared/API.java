@@ -122,6 +122,10 @@ public interface API extends Remote
 
     Event eventSetOnlineState(int employeeID1, int eventID, boolean isOnline) throws SQLException, RemoteException;
 
+    Event eventSetRoom(int employeeID1, int eventID, int roomID) throws SQLException, RemoteException;
+
+    Event eventSetParticipants(int employeeID1, int eventID, int[] participants) throws SQLException, RemoteException;
+
     Event eventSetTime(int employeeID1, int eventID, long startTime, long endTime) throws SQLException, RemoteException;
 
     boolean eventJoin(int employeeID1, int eventID) throws SQLException, RemoteException;

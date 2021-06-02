@@ -671,6 +671,22 @@ public class RmiServer implements API
     }
 
     @Override
+    public Event eventSetRoom(int employeeID1, int eventID, int roomID) throws SQLException
+    {
+        this.checkPermission(employeeID1, "event_edit");
+        Event event = ObjectInfo.getFullEvent(
+            this.databaseHandler.event.editByID(
+                new String[] {"room_id"},
+                new String[] {String.valueOf(roomID)},
+                eventID
+            ),
+            this.databaseHandler
+        );
+        this.rmiNotificator.eventUpdate(event);
+        return event;
+    }
+
+    @Override
     public Event eventSetTime(int employeeID1, int eventID, long startTime, long endTime) throws SQLException
     {
         this.checkPermission(employeeID1, "event_edit");
@@ -684,6 +700,25 @@ public class RmiServer implements API
         );
         this.rmiNotificator.eventUpdate(event);
         return event;
+    }
+
+    @Override
+    public Event eventSetParticipants(int employeeID1, int eventID, int[] participants) throws SQLException
+    {
+        this.checkPermission(employeeID1, "event_edit");
+        Event event = this.databaseHandler.event.getByID(eventID);
+        this.databaseHandler.eventParticipant.deleteAll(eventID);
+        this.databaseHandler.messageRoomParticipant.deleteAll(event.getMessageRoomID());
+        for(int employeeID : participants) {
+            boolean success = this.databaseHandler.eventParticipant.create(eventID, employeeID);
+            if(success) {
+                this.databaseHandler.messageRoomParticipant.create(event.getMessageRoomID(), employeeID);
+            }
+        }
+        Event finalEvent = ObjectInfo.getFullEvent(this.databaseHandler.event.getByID(eventID),this.databaseHandler);
+        this.rmiNotificator.eventUpdate(finalEvent);
+        this.rmiNotificator.messageRoomUpdate(ObjectInfo.getFullMessageRoom(this.databaseHandler.messageRoom.getByID(finalEvent.getMessageRoomID()), this.databaseHandler));
+        return finalEvent;
     }
 
     @Override
