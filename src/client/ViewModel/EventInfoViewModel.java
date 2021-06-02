@@ -42,14 +42,13 @@ public class EventInfoViewModel
         this.link = new SimpleStringProperty();
         this.room = new SimpleStringProperty();
         this.creator = new SimpleStringProperty();
+        this.errorLabel = new SimpleStringProperty();
 
         employeeList = FXCollections.observableArrayList();
     }
 
     public void reset()
     {
-        Event e = model.getEventByID(currentEventID);
-
         title.set("");
         description.set("");
         startTime.set("");
@@ -58,7 +57,23 @@ public class EventInfoViewModel
         link.set("");
         room.set("");
         creator.set("");
-        
+        employeeList.clear();
+
+
+        Event e = null;
+        try
+        {
+            e = model.eventGetByID(currentEventID);
+        } catch (SQLException throwables)
+        {
+            errorLabel.set(throwables.getMessage());
+            return;
+        } catch (RemoteException remoteException)
+        {
+            errorLabel.set("Server error");
+            remoteException.printStackTrace();
+            return;
+        }
         title.set(e.getTitle());
         description.set(e.getDescription());
         startTime.set(ConvertTime.getFormattedDateTime(e.getTimeStart()));
@@ -74,6 +89,11 @@ public class EventInfoViewModel
             String roomName = roomID == 0 ? "No room has been booked" : model.getRoomByID(roomID).getRoomNumber() + " id - " + roomID;
             room.set(roomName);
             creator.set((model.getEmployeeByID(e.getCreatorID())).getFullName());
+
+            for (Employee emp : model.getEmployeesByEvent(currentEventID))
+            {
+                employeeList.add(new EmployeeViewModel(emp.getId(), emp.getName(), emp.getSurname(), emp.getRole()));
+            }
         } catch (SQLException throwables)
         {
             errorLabel.set(throwables.getMessage());
@@ -84,11 +104,7 @@ public class EventInfoViewModel
             remoteException.printStackTrace();
         }
 
-        employeeList.clear();
-        for (Employee emp : model.getEmployeesByEvent(currentEventID))
-        {
-            employeeList.add(new EmployeeViewModel(emp.getId(), emp.getName(), emp.getSurname(), emp.getRole()));
-        }
+
     }
 
     public StringProperty getTitleProperty()

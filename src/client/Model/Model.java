@@ -82,7 +82,7 @@ public interface Model {
 
     ArrayList<Employee> getEmployeesByMessageRoom(int messageRoom);
 
-    ArrayList<Employee> getEmployeesByEvent(int eventID);
+    ArrayList<Employee> getEmployeesByEvent(int eventID) throws RemoteException;
 
     ArrayList<Employee> getEmployeesByRole(String role);
 
@@ -199,8 +199,6 @@ public interface Model {
 
     ArrayList<Event> getEventsByRoom(int roomID);
 
-
-    Event getEventByID(int id);
 
 
     Event eventCreate(int roomID, long timeStart, long timeEnd, String title, String description, String platform, String onlineLink) throws SQLException, RemoteException;

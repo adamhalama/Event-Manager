@@ -295,9 +295,9 @@ public class ModelManager implements Model
     }
 
     @Override
-    public ArrayList<Employee> getEmployeesByEvent(int eventID)
+    public ArrayList<Employee> getEmployeesByEvent(int eventID) throws RemoteException
     {
-        // todo update from db
+        getEmployees();
         return employeeList.getEmployeesByEvent(eventID);
     }
 
@@ -526,7 +526,6 @@ public class ModelManager implements Model
     }
 
 
-
     @Override
     public Event eventCreate(int roomID, long timeStart, long timeEnd,
                              String title, String description, String platform, String onlineLink) throws SQLException, RemoteException
@@ -730,11 +729,7 @@ public class ModelManager implements Model
         return eventList.getEventsByRoom(roomID);
     }
 
-    @Override
-    public Event getEventByID(int id)
-    {
-        return null;
-    }
+
 
 
     @Override

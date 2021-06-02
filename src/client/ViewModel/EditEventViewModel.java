@@ -91,7 +91,7 @@ public class EditEventViewModel {
         return titleProperty;
     }
 
-    public String getTitle(int id) {
+   /* public String getTitle(int id) {
         return model.getEventByID(id).getTitle();
     }
 
@@ -101,7 +101,7 @@ public class EditEventViewModel {
 
     public String getLink(int id) {
         return model.getEventByID(id).getOnlineLink();
-    }
+    }*/
 
     public StringProperty getDescriptionProperty() {
         return descriptionProperty;

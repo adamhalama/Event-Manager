@@ -23,7 +23,7 @@ public class EventInfoViewController
     @FXML
     private Label platformLabel;
     @FXML
-    private Label linkTextField;
+    private TextField linkTextField;
     @FXML
     private Label roomLabel, creatorLabel, errorLabel;
 

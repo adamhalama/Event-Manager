@@ -101,6 +101,11 @@ public class CreateEventViewController
 
         setDateFormat();
 
+        disablePastDates();
+    }
+
+    private void disablePastDates()
+    {
         //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
         final Callback<DatePicker, DateCell> dayCellFactory =
                 new Callback<DatePicker, DateCell>()

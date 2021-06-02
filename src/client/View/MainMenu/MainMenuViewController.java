@@ -37,7 +37,8 @@ public class MainMenuViewController
     }
 
     @FXML
-    private void myAccountButton() throws SQLException, RemoteException {
+    private void myAccountButton()
+    {
         if (viewModel.myAccountButton())
             viewHandler.openView("MyAccount");
     }
@@ -58,7 +59,8 @@ public class MainMenuViewController
     }
 
     @FXML
-    private void eventsButton(){
+    private void eventsButton()
+    {
         viewHandler.openView("EventList");
     }
 
