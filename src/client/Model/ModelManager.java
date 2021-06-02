@@ -265,6 +265,25 @@ public class ModelManager implements Model
     }
 
     @Override
+    public void updateLocalEmployee(Employee employee)
+    {
+        ArrayList<Employee> employees = employeeList.getEmployees();
+        for(Employee employeeItem : employees) {
+            if(employeeItem.getId() == employee.getId()) {
+                employeeItem = employee;
+                break;
+            }
+        }
+        employeeList.addEmployee(employee);
+    }
+
+    @Override
+    public void removeLocalEmployee(int employeeID)
+    {
+        employeeList.removeEmployee(employeeID);
+    }
+
+    @Override
     public Employee employeeRestore(int employeeID) throws SQLException, RemoteException
     {
         if (!employeeList.restoreEmployee(employeeID))

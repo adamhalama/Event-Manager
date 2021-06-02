@@ -17,6 +17,8 @@ public class MyApplication extends Application
     public void start(Stage primaryStage) throws SQLException, RemoteException {
         RmiClient client = new RmiClient();
         Model model = new ModelManager(client);
+        RmiListener listener = new RmiListener(model);
+        client.registerClientListener(listener);
         SelectState state = new SelectState();
         ViewModelFactory viewModelFactory = new ViewModelFactory(model, state);
         ViewHandler view = new ViewHandler(viewModelFactory, model, state);

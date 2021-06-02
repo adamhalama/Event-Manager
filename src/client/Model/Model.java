@@ -74,6 +74,10 @@ public interface Model {
 
     Employee removeEmployee(int employeeID) throws SQLException, RemoteException;
 
+    void updateLocalEmployee(Employee employee);
+
+    void removeLocalEmployee(int employeeID);
+
     Employee employeeRestore(int employeeID) throws SQLException, RemoteException;
 
     ArrayList<Employee> getEmployees() throws RemoteException;
