@@ -260,12 +260,13 @@ public class ModelManager implements Model
     @Override
     public MessageRoom getMessageRoomByID(int id) throws SQLException, RemoteException
     {
-        MessageRoom messageRoom = api.getMessageRoomByID(id);
-        if(messageRoomList.getMessageRoomByID(id) == null)
-        {
-            messageRoomList.addMessageRoom(messageRoom);
+        MessageRoom messageRoom = messageRoomList.getMessageRoomByID(id);
+        if(messageRoom != null) {
+            return messageRoom;
         }
-        return messageRoom;
+        MessageRoom newMessageRoom = api.getMessageRoomByID(id);
+        messageRoomList.addMessageRoom(newMessageRoom);
+        return newMessageRoom;
     }
 
 
@@ -387,13 +388,15 @@ public class ModelManager implements Model
     }
 
     @Override
-    public Employee getEmployeeByID(int ID) throws SQLException, RemoteException
+    public Employee getEmployeeByID(int id) throws SQLException, RemoteException
     {
-        Employee employee = api.getEmployeeByID(ID);
-        if (employeeList.getEmployeeByID(ID) == null)
-            employeeList.addEmployee(employee);
-
-        return employee;
+        Employee employee = employeeList.getEmployeeByID(id);
+        if(employee != null) {
+            return employee;
+        }
+        Employee newEmployee = api.getEmployeeByID(id);
+        employeeList.addEmployee(newEmployee);
+        return newEmployee;
     }
 
     @Override
@@ -598,11 +601,15 @@ public class ModelManager implements Model
     }
 
     @Override
-    public Room getRoomByID(int roomID) throws SQLException, RemoteException
+    public Room getRoomByID(int id) throws SQLException, RemoteException
     {
-        Room room = api.getRoomByID(roomID);
-        roomList.addRoom(room);
-        return room;
+        Room room = roomList.getRoomByID(id);
+        if(room != null) {
+            return room;
+        }
+        Room newRoom = api.getRoomByID(id);
+        roomList.addRoom(newRoom);
+        return newRoom;
     }
 
 
@@ -610,9 +617,15 @@ public class ModelManager implements Model
     //EVENT
 
     @Override
-    public Event eventGetByID(int eventID) throws SQLException, RemoteException
+    public Event eventGetByID(int id) throws SQLException, RemoteException
     {
-        return api.eventGetByID(eventID);
+        Event event = eventList.getByID(id);
+        if(event != null) {
+            return event;
+        }
+        Event newEvent = api.eventGetByID(id);
+        eventList.add(newEvent);
+        return newEvent;
     }
 
     @Override
