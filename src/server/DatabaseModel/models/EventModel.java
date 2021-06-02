@@ -41,7 +41,7 @@ public class EventModel extends Model
   }
   public ArrayList<Event> getAll(String order)
   {
-    return this.getAll(order);
+    return this.getAll(order, null, 0, 0);
   }
   public ArrayList<Event> getAll(String order, int limit, int offset)
   {
