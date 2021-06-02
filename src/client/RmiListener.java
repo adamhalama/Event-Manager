@@ -51,7 +51,9 @@ public class RmiListener implements ClientListener
     model.messageRoomLocalRemove(messageRoomID);
   }
   @Override
-  public void messageRoomNotify(int messageRoomID, Message message) throws RemoteException {}
+  public void messageRoomNotify(int messageRoomID, Message message) throws RemoteException {
+    model.messageAddLocal(messageRoomID, message);
+  }
 
   @Override
   public void eventUpdate(Event event) throws RemoteException {
