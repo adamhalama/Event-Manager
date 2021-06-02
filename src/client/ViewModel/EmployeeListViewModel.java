@@ -88,8 +88,4 @@ public class EmployeeListViewModel {
             throwables.printStackTrace();
         }
     }
-
-    public void addToEvent(int id) {
-        model.addIDT(id);
-    }
 }

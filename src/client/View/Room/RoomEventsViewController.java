@@ -19,8 +19,8 @@ public class RoomEventsViewController
     private TableColumn<EventViewModel, String> titleColumn;
     @FXML
     private TableColumn<EventViewModel, String> dateColumn;
-    @FXML
-    private TableColumn<EventViewModel, String> endColumn;
+//    @FXML
+//    private TableColumn<EventViewModel, String> endColumn;
     @FXML
     private TableColumn<EventViewModel, String> creatorColumn;
     @FXML
@@ -49,8 +49,8 @@ public class RoomEventsViewController
                 cellData.getValue().getTitleProperty());
         dateColumn.setCellValueFactory(cellData ->
                 cellData.getValue().getStartDate());
-        endColumn.setCellValueFactory(cellData ->
-                cellData.getValue().getEndTime());
+//        endColumn.setCellValueFactory(cellData ->
+//                cellData.getValue().getEndTime());
         creatorColumn.setCellValueFactory(cellData ->
                 cellData.getValue().getCreatorProperty());
         participantNoColumn.setCellValueFactory(cellData ->
@@ -70,7 +70,7 @@ public class RoomEventsViewController
     @FXML
     private void bookEventButton()
     {
-        viewHandler.openView("EventList");
+        viewHandler.openView("CreateEvent");
     }
 
     public Region getRoot()

@@ -308,6 +308,16 @@ public class RmiClient
         return server.eventSetTime(employeeID1, eventID, startTime, endTime);
     }
 
+    public Event eventSetRoom(int employeeID1, int eventID, int roomID) throws SQLException, RemoteException
+    {
+        return server.eventSetRoom(employeeID1, eventID, roomID);
+    }
+
+    public Event eventSetParticipants(int employeeID1, int eventID, int[] participants) throws SQLException, RemoteException
+    {
+        return server.eventSetParticipants(employeeID1, eventID, participants);
+    }
+
     public boolean eventJoin(int employeeID1, int eventID) throws SQLException, RemoteException
     {
         return server.eventJoin(employeeID1, eventID);

@@ -45,8 +45,6 @@ public class RoomListViewController
 
     public void init(ViewHandler viewHandler, RoomListViewModel viewModel, Region root)
     {
-        StringIntegerConverter converter = new StringIntegerConverter(0);
-
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         this.root = root;

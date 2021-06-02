@@ -1,6 +1,7 @@
 package client.ViewModel;
 
 import Shared.Employee.Employee;
+import Shared.Event.Event;
 import Shared.Room.Room;
 import client.Model.Model;
 import javafx.beans.property.IntegerProperty;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 
 public class CreateEventViewModel
 {
+    private StringProperty topLabelProperty;
     private StringProperty titleProperty;
     private StringProperty descriptionProperty;
 
@@ -29,10 +31,14 @@ public class CreateEventViewModel
 
     private Model model;
 
+    private boolean isEditing;
+    private int currentEventID;
+
     public CreateEventViewModel(Model model)
     {
         this.model = model;
 
+        this.topLabelProperty = new SimpleStringProperty();
         this.titleProperty = new SimpleStringProperty();
         this.descriptionProperty = new SimpleStringProperty();
         this.linkField = new SimpleStringProperty();
@@ -48,24 +54,80 @@ public class CreateEventViewModel
 
     public void reset()
     {
-        titleProperty.set("");
-        descriptionProperty.set("");
-
-        linkField.set("");
-        newParticipantField.set("");
-
-        employeeList.clear();
-        roomPickerList.clear();
-        try
+        if (currentEventID == 0) //creating
         {
-            for (Room r :
-                    model.getRooms())
+            topLabelProperty.set("Create an event");
+            titleProperty.set("");
+            descriptionProperty.set("");
+
+            linkField.set("");
+            newParticipantField.set("");
+
+            employeeList.clear();
+            roomPickerList.clear();
+            try
             {
-                roomPickerList.add(r.getRoomID());
+                for (Room r :
+                        model.getRooms())
+                {
+                    roomPickerList.add(r.getRoomID());
+                }
+            } catch (RemoteException e)
+            {
+                e.printStackTrace();
             }
-        } catch (RemoteException e)
+        }
+        else //editing
         {
-            e.printStackTrace();
+            Event e;
+            try
+            {
+                e = model.eventGetByID(currentEventID);
+            } catch (SQLException throwables)
+            {
+                errorLabel.set(throwables.getMessage());
+                throwables.printStackTrace();
+                return;
+            } catch (RemoteException ex)
+            {
+                errorLabel.set("Server error");
+                ex.printStackTrace();
+                return;
+            }
+
+            topLabelProperty.set("Edit an event");
+            titleProperty.set(e.getTitle());
+            descriptionProperty.set(e.getDescription());
+
+            linkField.set(e.getOnlineLink());
+            newParticipantField.set("");
+
+            employeeList.clear();
+            try
+            {
+                for (Integer participantID :
+                        e.getParticipants())
+                {
+                    Employee emp = model.getEmployeeByID(participantID);
+                    employeeList.add(new EmployeeViewModel(emp.getId(), emp.getName(), emp.getSurname(), emp.getRole()));
+                }
+            } catch (RemoteException | SQLException ex)
+            {
+                ex.printStackTrace();
+            }
+
+            roomPickerList.clear();
+            try
+            {
+                for (Room r :
+                        model.getRooms())
+                {
+                    roomPickerList.add(r.getRoomID());
+                }
+            } catch (RemoteException ex)
+            {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -78,6 +140,7 @@ public class CreateEventViewModel
 
     public boolean createButton(String platform, long startTimestamp, long endTimestamp, int room)
     {
+        //universal for create and edit
         if (titleProperty.get() == null || titleProperty.get().equals(""))
         {
             errorLabel.set("Please set a title");
@@ -89,18 +152,75 @@ public class CreateEventViewModel
             errorLabel.set("The event cant end before it starts.");
             return false;
         }
+        if (startTimestamp < System.currentTimeMillis())
+        {
+            errorLabel.set("You cant pick past time.");
+            return false;
+        }
 
-        try
+
+        if (currentEventID == 0) //create
         {
-            model.eventCreate(room, startTimestamp, endTimestamp, titleProperty.get(), descriptionProperty.get(), platform, linkField.get());
-        } catch (SQLException throwables)
+            try
+            {
+                Event event = model.eventCreate(room, startTimestamp, endTimestamp, titleProperty.get(), descriptionProperty.get(), platform, linkField.get());
+                model.eventJoin(model.getLoggedEmployeeID(), event.getID());
+                if (!employeeList.isEmpty())
+                {
+                    for (EmployeeViewModel e :
+                            employeeList)
+                    {
+                        model.eventJoin(e.getUserIDProperty().get(), event.getID());
+                    }
+                }
+
+            } catch (SQLException throwables)
+            {
+                errorLabel.set(throwables.getMessage());
+                throwables.printStackTrace();
+                return false;
+            } catch (RemoteException e)
+            {
+                errorLabel.set("Server error");
+                e.printStackTrace();
+                return false;
+            }
+        }
+        else //editing
         {
-            errorLabel.set(throwables.getMessage());
-            throwables.printStackTrace();
-        } catch (RemoteException e)
-        {
-            errorLabel.set("Server error");
-            e.printStackTrace();
+            try
+            {
+                model.eventSetTitle(currentEventID, titleProperty.get());
+                model.eventSetDescription(currentEventID, descriptionProperty.get());
+                model.eventSetTime(currentEventID, startTimestamp, endTimestamp);
+                model.eventSetPlatform(currentEventID, platform);
+                model.eventSetOnlineURL(currentEventID, linkField.get());
+                model.eventSetRoom(currentEventID, room);
+
+                ArrayList<Integer> employees = new ArrayList<>();
+                for (EmployeeViewModel e:
+                     employeeList)
+                {
+                    employees.add(e.getUserIDProperty().get());
+                }
+                int[] primitive = employees.stream()
+                        .mapToInt(Integer::intValue)
+                        .toArray();
+
+                model.eventSetParticipants(currentEventID, primitive);
+
+
+            } catch (SQLException throwables)
+            {
+                errorLabel.set(throwables.getMessage());
+                throwables.printStackTrace();
+                return false;
+            } catch (RemoteException e)
+            {
+                errorLabel.set("Server error");
+                e.printStackTrace();
+                return false;
+            }
         }
         return true;
     }
@@ -179,7 +299,7 @@ public class CreateEventViewModel
         return errorLabel;
     }
 
-    public StringProperty getLinkFieldproperty()
+    public StringProperty getLinkFieldProperty()
     {
         return linkField;
     }
@@ -194,14 +314,6 @@ public class CreateEventViewModel
         return descriptionProperty;
     }
 
-
-
-    public int getID()
-    {
-        return model.getEvent_id();
-    }
-
-
     public ObservableList<Integer> getRoomList()
     {
         return roomPickerList;
@@ -210,5 +322,20 @@ public class CreateEventViewModel
     public ObservableList<EmployeeViewModel> getEmployeeList()
     {
         return employeeList;
+    }
+
+    public void setErrorLabel(String text)
+    {
+        errorLabel.set(text);
+    }
+
+    public StringProperty getTopLabelProperty()
+    {
+        return topLabelProperty;
+    }
+
+    public void setCurrentEventID(int currentEventID)
+    {
+        this.currentEventID = currentEventID;
     }
 }

@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox prefHeight="475.0" prefWidth="740.0" stylesheets="@../darkTheme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.View.Room.RoomEventsViewController">
    <children>
       <GridPane alignment="CENTER" prefHeight="58.0" prefWidth="600.0">
@@ -57,10 +56,9 @@
          <columns>
             <TableColumn fx:id="idColumn" editable="false" prefWidth="38.39999580383301" text="ID" />
             <TableColumn fx:id="titleColumn" editable="false" prefWidth="105.60002899169922" sortable="false" text="Title" />
-            <TableColumn fx:id="dateColumn" editable="false" prefWidth="133.5999755859375" text="Date" />
-            <TableColumn fx:id="endColumn" editable="false" prefWidth="139.20001220703125" text="End time" />
-            <TableColumn fx:id="creatorColumn" editable="false" prefWidth="112.00009155273438" sortable="false" text="Creator" />
-            <TableColumn fx:id="participantNoColumn" editable="false" prefWidth="149.60009765625" sortable="false" text="Number of participants" />
+            <TableColumn fx:id="dateColumn" editable="false" prefWidth="176.0" text="Date and time" />
+            <TableColumn fx:id="creatorColumn" editable="false" minWidth="0.0" prefWidth="165.5999755859375" sortable="false" text="Creator" />
+            <TableColumn fx:id="participantNoColumn" editable="false" prefWidth="207.20004272460938" sortable="false" text="Number of participants" />
          </columns>
       </TableView>
       <HBox alignment="CENTER">

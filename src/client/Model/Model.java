@@ -143,17 +143,12 @@ public interface Model {
 
 
     //part1 class event
-    void setTitle(String title);
 
     ArrayList<Event> eventGetByDate(String date);
 
     ArrayList<Event> eventGetByText(String text);
 
-    void setOnline(boolean isOnline);
 
-    void setRoom(int room);
-
-    void setPlatform(String platform);
 
     void setParticipants(ArrayList<Integer> employees);
 
@@ -172,52 +167,27 @@ public interface Model {
 
     Event eventSetTime(int eventID, long startTime, long endTime) throws SQLException, RemoteException;
 
-    boolean eventJoin(int eventID) throws SQLException, RemoteException;
+    Event eventSetRoom(int eventID, int roomID) throws SQLException, RemoteException;
 
-    boolean eventLeave(int eventID) throws SQLException, RemoteException;
+    Event eventSetParticipants(int eventID, int[] participants) throws SQLException, RemoteException;
+
+    boolean eventJoin(int employeeID1, int eventID) throws SQLException, RemoteException;
+
+    boolean eventLeave(int employeeID1, int eventID) throws SQLException, RemoteException;
 
     ArrayList<Integer> getParticipants();
 
-    int getEvent_id();
 
-    String getTitle();
+    ArrayList<Event> getEventsByRoom(int roomID) throws RemoteException;
 
-    String getPlatform();
-
-    int getRoomID();
-
-    boolean isOnline();
-
-    //part2 class eventList
-
-    void add(Event event) throws IllegalArgumentException;
 
     ArrayList<Event> getEvents() throws RemoteException;
 
-    ArrayList<Event> getEventByAnything(String s, String d);
-
-    ArrayList<Event> getEventExceptDate(String s);
-
-    ArrayList<Event> getEventOnlyDate(String date);
-
-
-    ArrayList<Event> getEventsByRoom(int roomID);
-
-
-
     Event eventCreate(int roomID, long timeStart, long timeEnd, String title, String description, String platform, String onlineLink) throws SQLException, RemoteException;
 
-    boolean removeByEventID(int id) throws RemoteException, SQLException;
+    boolean isRoomAvailable(int roomID, long startTime, long endTime);
+
+    boolean eventRemoveByID(int id) throws RemoteException, SQLException;
 
 
-    int getSize();
-
-    //extra part for choose participants
-    ArrayList<Integer> getParticipantsIDT(); //temporary store the ids
-
-    ArrayList<Employee> getParticipantsT(); //temporary store the employees
-
-    void addIDT(int id);
-
-    void addEmployeeT(int id);
 }

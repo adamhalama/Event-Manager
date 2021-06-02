@@ -551,15 +551,20 @@ public class ModelManager implements Model
     {
         return api.eventCreate(getLoggedEmployeeID(), roomID, timeStart, timeEnd, title, description, platform, onlineLink);
     }
+
+    @Override
+    public boolean isRoomAvailable(int roomID, long startTime, long endTime)
+    {
+        return eventList.isRoomAvailable(roomID, startTime, endTime);
+    }
     
 
     @Override
-    public boolean removeByEventID(int id) throws RemoteException, SQLException
+    public boolean eventRemoveByID(int id) throws RemoteException, SQLException
     {
-//        eventList.removeByEventID(id);
+        eventList.removeByID(eventGetByID(id));
         return api.eventDeleteByID(getLoggedEmployeeID(), id);
     }
-
 
     @Override
     public Event eventSetTitle(int eventID, String title) throws SQLException, RemoteException
@@ -598,15 +603,27 @@ public class ModelManager implements Model
     }
 
     @Override
-    public boolean eventJoin(int eventID) throws SQLException, RemoteException
+    public Event eventSetRoom(int eventID, int roomID) throws SQLException, RemoteException
     {
-        return api.eventJoin(getLoggedEmployeeID(), eventID);
+        return api.eventSetRoom(getLoggedEmployeeID(), eventID, roomID);
     }
 
     @Override
-    public boolean eventLeave(int eventID) throws SQLException, RemoteException
+    public Event eventSetParticipants(int eventID, int[] participants) throws SQLException, RemoteException
     {
-        return api.eventLeave(getLoggedEmployeeID(), eventID);
+        return api.eventSetParticipants(getLoggedEmployeeID(), eventID, participants);
+    }
+
+    @Override
+    public boolean eventJoin(int employeeID1, int eventID) throws SQLException, RemoteException
+    {
+        return api.eventJoin(employeeID1, eventID);
+    }
+
+    @Override
+    public boolean eventLeave(int employeeID1, int eventID) throws SQLException, RemoteException
+    {
+        return api.eventLeave(employeeID1, eventID);
     }
 
     @Override
@@ -622,14 +639,6 @@ public class ModelManager implements Model
     }
 
     @Override
-    public void setOnline(boolean isOnline)
-    {
-        //TODO add int eventID, in the parameter
-//        api.eventSetOnlineState(getLoggedEmployeeID(), eventID, isOnline);
-//        event.setOnline(isOnline);
-    }
-
-    @Override
     public ArrayList<Integer> getParticipants()
     {
         return event.getParticipants();
@@ -642,146 +651,10 @@ public class ModelManager implements Model
     }
 
     @Override
-    public void setRoom(int room)
+    public ArrayList<Event> getEventsByRoom(int roomID) throws RemoteException
     {
-//        event.setRoom(room);
-        //not used
-    }
-
-    @Override
-    public int getEvent_id()
-    {
-//        return event.getEvent_id();
-        //used but can be changed
-        return 0;
-    }
-
-    @Override
-    public String getTitle()
-    {
-        return event.getTitle();
-        //not used
-    }
-
-    @Override
-    public void setTitle(String title)
-    {
-        event.setTitle(title);
-        //not used
-    }
-
-    @Override
-    public String getPlatform()
-    {
-        return event.getPlatform();
-    }
-
-    @Override
-    public void setPlatform(String platform)
-    {
-        event.setPlatform(platform);
-        //not used
-    }
-
-    @Override
-    public int getRoomID()
-    {
-        return event.getRoomID();
-        //not used
-    }
-
-    @Override
-    public boolean isOnline()
-    {
-        return false;
-    }
-
-
-    @Override
-    public void add(Event event) throws IllegalArgumentException
-    {
-        eventList.add(event);
-    }
-
-
-
-    @Override
-    public ArrayList<Event> getEventByAnything(String s, String d)
-    {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Event> getEventExceptDate(String s)
-    {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Event> getEventOnlyDate(String date)
-    {
-        return null;
-    }
-
-    /*@Override
-    public ArrayList<Event> getEventByAnything(String s, String d)
-    {
-        return eventList.getEventByAnything(s, d);
-    }
-
-    @Override
-    public ArrayList<Event> getEventExceptDate(String s)
-    {
-        return eventList.getEventExceptDate(s);
-    }
-
-    @Override
-    public ArrayList<Event> getEventOnlyDate(String date)
-    {
-        return eventList.getEventOnlyDate(date);
-    }
-*/
-
-    @Override
-    public ArrayList<Event> getEventsByRoom(int roomID)
-    {
+        getEvents();
         return eventList.getEventsByRoom(roomID);
     }
-
-
-
-
-    @Override
-    public int getSize()
-    {
-//        return eventList.getSize();
-        return 0;
-    }
-
-    @Override
-    public ArrayList<Integer> getParticipantsIDT()
-    {
-        return idT;
-    }
-
-    @Override
-    public ArrayList<Employee> getParticipantsT()
-    {
-        return employeesT;
-    }
-
-    @Override
-    public void addIDT(int id)
-    {
-        idT.add(id);
-        addEmployeeT(id);
-    }
-
-    @Override
-    public void addEmployeeT(int id)
-    {
-        employeesT.add(employeeList.getEmployeeByID(id));
-    }
-
 
 }

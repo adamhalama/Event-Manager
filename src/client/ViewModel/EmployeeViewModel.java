@@ -1,6 +1,7 @@
 package client.ViewModel;
 
 import Shared.Employee.Employee;
+import Shared.Event.Event;
 import client.Model.Model;
 import client.View.Helpers.ConfirmationButton;
 import javafx.beans.property.IntegerProperty;
@@ -141,11 +142,23 @@ public class EmployeeViewModel
             role.setValue(currentEmp.getRole());
 
 
-            for (Integer eventID :
-                    currentEmp.getEvents())
+            try
             {
-                //todo make the method to show title and time
-//                eventsList.add(model.getEventByID(eventID).getTitleTimeString());
+                for (Integer eventID :
+                        currentEmp.getEvents())
+                {
+                    //todo make the method to show title and time
+                    Event event = model.eventGetByID(eventID);
+                    eventsList.add(event.getTitle() + " - " + event.getTimeStartEnd());
+                }
+            } catch (SQLException throwables)
+            {
+                throwables.printStackTrace();
+                errorLabel.setValue(throwables.getMessage());
+            } catch (RemoteException e)
+            {
+                e.printStackTrace();
+                errorLabel.setValue("Error communicating with the server");
             }
 
             for (Integer messageRoomID :
@@ -213,7 +226,7 @@ public class EmployeeViewModel
 
     public boolean confirmButton()
     {
-        if (username == null || password == null || repeatPassword == null || name == null || surname == null || role == null)
+        if (username == null || name == null || surname == null || role == null)
         {
             errorLabel.set("You have to fill all the forms");
             return false;
@@ -224,6 +237,12 @@ public class EmployeeViewModel
 
         if (currentEmployeeID == 0) // Creating an employee
         {
+            if (username == null || password == null || repeatPassword == null || name == null || surname == null || role == null)
+            {
+                errorLabel.set("You have to fill all the forms");
+                return false;
+            }
+
             if (!password.get().equals(repeatPassword.get()))
             {
                 errorLabel.set("The passwords have to match");
@@ -263,7 +282,9 @@ public class EmployeeViewModel
                 model.employeeSetName(currentEmployeeID, name.get());
                 model.employeeSetSurname(currentEmployeeID, surname.get());
                 model.employeeSetRole(currentEmployeeID, role.get());
-                model.employeeSetUsername(currentEmployeeID, username.get());
+
+                if (!model.getEmployeeByID(currentEmployeeID).getUsername().equals(username.get()))
+                    model.employeeSetUsername(currentEmployeeID, username.get());
 
                 if (password != null && !password.get().equals(""))
                 {
@@ -350,6 +371,10 @@ public class EmployeeViewModel
         return readablePermissions;
     }
 
+    /**
+     * User ID from a table
+     * @return
+     */
     public IntegerProperty getUserIDProperty()
     {
         return userID;
@@ -445,10 +470,6 @@ public class EmployeeViewModel
         return errorLabel;
     }
 
-    public int getCurrentEmployeeID()
-    {
-        return currentEmployeeID;
-    }
 
     public void setCurrentEmployeeID(int currentEmployeeID)
     {

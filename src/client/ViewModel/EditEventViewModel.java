@@ -83,9 +83,6 @@ public class EditEventViewModel {
         errorProperty.set(null);
     }
 
-    public ArrayList<Integer> getIDs(){
-        return model.getParticipantsIDT();
-    }
 
     public StringProperty getTitleProperty() {
         return titleProperty;

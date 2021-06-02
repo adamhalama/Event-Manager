@@ -71,7 +71,7 @@ public class EventListViewModel
     {
         try
         {
-            if (!model.removeByEventID(selectedID))
+            if (!model.eventRemoveByID(selectedID))
                 errorLabel.set("The event doesnt exist.");
 
             eventList.remove(selectedIndex);
@@ -123,7 +123,7 @@ public class EventListViewModel
                     roomNameId = room.getRoomNumber() + " - id" + room.getRoomID();
                 }
 
-                String platform = e.getPlatform().toString() ;
+                String platform = e.getPlatform() != null ? e.getPlatform() : "Not online";
                 eventList.add(new EventViewModel(e.getID(), e.getTitle(), e.getTimeStartEnd(), platform,
                         roomNameId, employee.getFullName(), e.getParticipants().size()));
             }

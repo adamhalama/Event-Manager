@@ -30,7 +30,7 @@
          <children>
             <HBox alignment="CENTER" style="-fx-background-color: #7f878f;">
                <children>
-                    <Label alignment="CENTER" text="Create an event">
+                    <Label fx:id="topLabel" alignment="CENTER" text="Create an event">
                         <font>
                             <Font size="41.0" />
                         </font>
@@ -270,7 +270,7 @@
                   <Insets right="10.0" />
                </HBox.margin>
                 </Button>
-                <Button fx:id="createButton" mnemonicParsing="false" onAction="#createPress" prefHeight="42.0" prefWidth="102.0" text="Create">
+                <Button fx:id="createButton" mnemonicParsing="false" onAction="#createPress" prefHeight="42.0" prefWidth="102.0" text="Save">
                     <font>
                         <Font size="20.0" />
                     </font>

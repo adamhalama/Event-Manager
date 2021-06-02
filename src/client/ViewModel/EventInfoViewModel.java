@@ -80,7 +80,7 @@ public class EventInfoViewModel
         endTime.set(ConvertTime.getFormattedTime(e.getTimeEnd()));
         link.set(e.getOnlineLink());
 
-        String platform = e.getPlatform().equals("") ? "This event is only physical" : e.getPlatform();
+        String platform = e.getPlatform() == null || e.getPlatform().equals("") ? "This event is only physical" : e.getPlatform();
         this.platform.set(platform);
 
         int roomID = e.getRoomID();

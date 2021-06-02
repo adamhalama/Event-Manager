@@ -18,15 +18,30 @@ public class EventList
         events.add(event);
     }
 
+    /**
+     * If the eventList is empty, adds all
+     * if not picks the events that are not in the event list and adds them
+     * @param newEvents
+     */
     public void addAll(ArrayList<Event> newEvents)
     {
+        if (events.size() == 0)
+        {
+            events.addAll(newEvents);
+            return;
+        }
+
+        for1:
         for (Event e:
              newEvents)
         {
             for (Event event:
                 events)
-                if (event.getID() != e.getID())
-                    events.add(e);
+            {
+                if (event.getID() == e.getID())
+                    continue for1;
+            }
+            events.add(e);
         }
     }
 
@@ -124,6 +139,23 @@ public class EventList
                 events.remove(e);
             }
         }
+    }
+
+    public boolean isRoomAvailable(int roomID, long startTime, long endTime)
+    {
+        for (Event e:
+             events)
+        {
+            if(e.getRoomID() == roomID)
+            {
+                if ( (e.getTimeStart() < startTime && startTime < e.getTimeEnd() )  // if the start time is between start and end
+                ||( e.getTimeStart() < endTime && endTime < e.getTimeEnd()))  //or the end is between start end end
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public void removeAll()

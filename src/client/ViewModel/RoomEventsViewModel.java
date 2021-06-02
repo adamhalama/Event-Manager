@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class RoomEventsViewModel
 {
@@ -33,8 +34,20 @@ public class RoomEventsViewModel
 
     public void reset()
     {
+        eventList.clear();
+        ArrayList<Event> eventsByRoom;
+        try
+        {
+            eventsByRoom = model.getEventsByRoom(currentRoomID);
+        } catch (RemoteException e)
+        {
+            errorLabel.set("Server error");
+            e.printStackTrace();
+            return;
+        }
+
         for (Event event:
-             model.getEventsByRoom(currentRoomID))
+                eventsByRoom)
         {
             if(event.getTimeEnd() > System.currentTimeMillis())
             {
