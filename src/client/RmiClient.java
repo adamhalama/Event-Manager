@@ -218,6 +218,10 @@ public class RmiClient
 
 
     //MESSAGES
+    public MessageRoom messageRoomCreateGroup(int employeeID1, int[] employees, String messageRoomName) throws SQLException, RemoteException
+    {
+        return server.messageRoomCreateGroup(employeeID1, employees, messageRoomName);
+    }
 
     public MessageRoom messageRoomCreatePrivate(int employeeID1, int employeeID2) throws SQLException, RemoteException
     {

@@ -193,7 +193,38 @@ public class CreateMessageRoomViewModel
     {
         if (checkBox.get()) // groupChat true
         {
-            //todo implement adding group chats
+            if (groupChatName == null || groupChatName.get().equals(""))
+            {
+                errorLabel.set("The name must not be empty");
+                return -1;
+            }
+            try
+            {
+                int[] emps = new int[selectedTable.size()];
+                for (int i = 0, selectedTableSize = selectedTable.size(); i < selectedTableSize; i++)
+                {
+                    emps[i] = selectedTable.get(i).getUserIDProperty().get();
+                }
+
+
+                MessageRoom room = model.messageRoomCreateGroup(emps, groupChatName.get());
+                return room.getId();
+            }
+            catch (IndexOutOfBoundsException e)
+            {
+                errorLabel.setValue("Pick an employee");
+                return -1;
+            } catch (SQLException throwables)
+            {
+                throwables.printStackTrace();
+                errorLabel.setValue(throwables.getMessage());
+                return -1;
+            } catch (RemoteException throwables)
+            {
+                throwables.printStackTrace();
+                errorLabel.setValue("Failed to save");
+                return -1;
+            }
         } else
         {
             try
@@ -217,7 +248,6 @@ public class CreateMessageRoomViewModel
                 return -1;
             }
         }
-        return -1;
     }
 
     public void setMessageRoomID(int i)
