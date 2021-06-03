@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class RmiClient
 {
     private API server;
+    private ClientListener client;
 
     public RmiClient()
     {
@@ -33,6 +34,7 @@ public class RmiClient
     public void registerClientListener(ClientListener client)
         throws RemoteException
     {
+        this.client = client;
         server.registerClientListener(client);
     }
 
@@ -250,6 +252,24 @@ public class RmiClient
     public Message messagePost(int employeeID1, int messageRoomID, String message) throws SQLException, RemoteException
     {
         return server.messagePost(employeeID1, messageRoomID, message);
+    }
+
+    public void messageRoomFollow(int messageRoomID)
+    {
+        try {
+            server.messageRoomFollow(this.client, messageRoomID);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void messageRoomUnfollow(int messageRoomID)
+    {
+        try {
+            server.messageRoomUnfollow(this.client, messageRoomID);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     //EVENT

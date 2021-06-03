@@ -1,5 +1,6 @@
 package client.Model;
 
+import Shared.ClientListener;
 import Shared.Employee.Employee;
 import Shared.Event.Event;
 import Shared.Messages.Message;
@@ -65,6 +66,10 @@ public interface Model {
     ArrayList<MessageRoom> getMessageRooms();
 
     String getSenderAndBody(Message message);
+
+    void messageRoomFollow(int messageRoomID);
+
+    void messageRoomUnfollow(int messageRoomID);
 
     ArrayList<String> getMessageRoomParticipantNames(MessageRoom messageRoom) throws RemoteException;
 

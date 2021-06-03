@@ -1,5 +1,6 @@
 package client.Model;
 
+import Shared.ClientListener;
 import Shared.Employee.Employee;
 import Shared.Employee.EmployeeList;
 import Shared.Event.Event;
@@ -213,10 +214,21 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public String getSenderAndBody(Message message) {
+    public String getSenderAndBody(Message message)
+    {
         if (message == null)
             return "";
         return employeeList.getEmployeeByID(message.getUserID()).getFullName() + ": " + message.getMessage();
+    }
+
+    @Override
+    public void messageRoomFollow(int messageRoomID) {
+        api.messageRoomFollow(messageRoomID);
+    }
+
+    @Override
+    public void messageRoomUnfollow(int messageRoomID) {
+        api.messageRoomUnfollow(messageRoomID);
     }
 
     @Override
