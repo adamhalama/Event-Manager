@@ -55,17 +55,8 @@
             </HBox>
             <HBox fx:id="rootVBox" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <PasswordField fx:id="passField" onAction="#onEnter" prefHeight="48.0" prefWidth="333.0" />
+                  <PasswordField fx:id="passField" onAction="#onEnter" prefHeight="48.0" prefWidth="362.0" />
                   <Label prefHeight="15.0" prefWidth="14.0" text=" " />
-                  <Button fx:id="showButton" mnemonicParsing="false" onMousePressed="#showPress" prefHeight="21.0" prefWidth="0.0">
-                     <graphic>
-                        <ImageView fitHeight="23.0" fitWidth="22.0">
-                           <image>
-                              <Image url="@../Icons/icons8-show-password-100.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
                </children>
             </HBox>
          </children>

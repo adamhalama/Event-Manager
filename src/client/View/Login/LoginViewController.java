@@ -46,14 +46,6 @@ public class LoginViewController {
     }
 
     @FXML
-    void showPress() {
-        //TOD
-        // show the password button
-        // the step: remove the passwordField first and add a textField
-
-    }
-
-    @FXML
     void forgetPassword() {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setHeaderText("Forget password?");
