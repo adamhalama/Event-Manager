@@ -126,7 +126,7 @@ public class MessageRoomList
                     messageRoom.getName().toLowerCase().contains(keyword.toLowerCase()))
             {
                 picked.add(messageRoom);
-                continue;
+                continue for1;
             }
 
             for (int userID :
@@ -211,7 +211,7 @@ public class MessageRoomList
 
     /**
      * Add a message room.
-     * @param messageRoom A MessageRoom object containing all the information of the message room,
+     * @param messageRoom A MessageRoom object containing all the information of the message room.
      */
     public void addMessageRoom(MessageRoom messageRoom)
     {
