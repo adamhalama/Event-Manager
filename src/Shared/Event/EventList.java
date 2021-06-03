@@ -15,6 +15,12 @@ public class EventList
 
     public void add(Event event)
     {
+        for (Event e:
+             events)
+        {
+            if (e.getID() == event.getID())
+                return;
+        }
         events.add(event);
     }
 

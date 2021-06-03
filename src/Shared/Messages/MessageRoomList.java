@@ -194,28 +194,22 @@ public class MessageRoomList
      */
     public void addRoomList(ArrayList<MessageRoom> messageRooms)
     {
-        if (messageRooms == null)
-            return;
-
-        if (!this.messageRooms.containsAll(messageRooms))
-        {
-            for (MessageRoom room:
-                 messageRooms)
-            {
-                if (!this.messageRooms.contains(room))
-                    this.messageRooms.add(room);
-            }
-        }
+        this.messageRooms = messageRooms;
 
     }
-
+    
     /**
      * Add a message room.
      * @param messageRoom A MessageRoom object containing all the information of the message room.
      */
     public void addMessageRoom(MessageRoom messageRoom)
     {
-        if (!messageRooms.contains(messageRoom))
-            messageRooms.add(messageRoom);
+        for (MessageRoom room :
+                this.messageRooms)
+        {
+            if (room.getId() == messageRoom.getId())
+                return;
+        }
+        messageRooms.add(messageRoom);
     }
 }

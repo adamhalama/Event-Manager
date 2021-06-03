@@ -209,15 +209,20 @@ public class CreateEventViewController
         String platform = platformMenu.getValue();
         int room = roomMenu.getValue() == null || roomMenu.getValue() == 0 ? -1 : roomMenu.getValue();
 
-        if (room != -1)
+        try
         {
-            if (!model.isRoomAvailable(room, start, end))
+            if (room != -1)
             {
-                viewModel.setErrorLabel("The room is already booked in this time.");
-                return;
+                if (!model.isRoomAvailable(room, start, end))
+                {
+                    viewModel.setErrorLabel("The room is already booked in this time.");
+                    return;
+                }
             }
+        } catch (RemoteException e)
+        {
+            viewModel.setErrorLabel("Error checking if the room is available, please keep in mind it may not be.");
         }
-
 
 
         if (ConfirmationButton.confirmationView("Do you want to save the changes?"))
