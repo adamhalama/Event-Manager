@@ -6,13 +6,25 @@ import java.util.ArrayList;
 
 public class EventList
 {
+    /**
+     * An arraylist containing all the events.
+     */
     private ArrayList<Event> events;
 
+    /**
+     * Zero - argument constructor.
+     * Initial the arraylist of events.
+     */
     public EventList()
     {
         this.events = new ArrayList<>();
     }
 
+    /**
+     * Add the new event.
+     * If the event doesn't exist, add it into the list.
+     * @param event An event object.
+     */
     public void add(Event event)
     {
         for (Event e:
@@ -27,7 +39,7 @@ public class EventList
     /**
      * If the eventList is empty, adds all
      * if not picks the events that are not in the event list and adds them
-     * @param newEvents
+     * @param newEvents An arraylist of the events will be added.
      */
     public void addAll(ArrayList<Event> newEvents)
     {
@@ -51,11 +63,20 @@ public class EventList
         }
     }
 
+    /**
+     * Gets all the events.
+     * @return An arraylist containing all the added events.
+     */
     public ArrayList<Event> getAll()
     {
         return events;
     }
 
+    /**
+     * Gets an event by its ID. Null - no matched events found.
+     * @param id An integer storing the event's ID.
+     * @return An event object containing the information in the event or null.
+     */
     public Event getByID(int id)
     {
         for (int i = 0; i < events.size(); i++)
@@ -68,6 +89,11 @@ public class EventList
         return null;
     }
 
+    /**
+     * Gets events by date.
+     * @param date A string containing date as requirement.
+     * @return An arraylist storing all the matched events.
+     */
     public ArrayList<Event> getByDate(String date)
     {
         ArrayList<Event> filteredEvents = new ArrayList<>();
@@ -81,19 +107,11 @@ public class EventList
         return filteredEvents;
     }
 
-    public ArrayList<Event> getByTitle(String text)
-    {
-        ArrayList<Event> filteredEvents = new ArrayList<>();
-        for (int i = 0; i < events.size(); i++)
-        {
-            if (events.get(i).getTitle().contains(text))
-            {
-                filteredEvents.add(events.get(i));
-            }
-        }
-        return filteredEvents;
-    }
-
+    /**
+     * Gets events by a text.
+     * @param text A string containing a text as the requirement.
+     * @return An arraylist storing all the matched events.
+     */
     public ArrayList<Event> getByText(String text)
     {
         ArrayList<Event> filteredEvents = new ArrayList<>();
@@ -107,18 +125,11 @@ public class EventList
         return filteredEvents;
     }
 
-    public Event getByEvent(Event e)
-    {
-        for (int i = 0; i < events.size(); i++)
-        {
-            if (events.get(i).equals(e))
-            {
-                return e;
-            }
-        }
-        throw new IllegalArgumentException("No event found.");
-    }
-
+    /**
+     * Gets all the events by physical room.
+     * @param roomID An integer containing the physical room ID.
+     * @return An arraylist storing all the matched events.
+     */
     public ArrayList<Event> getEventsByRoom(int roomID)
     {
         ArrayList<Event> eventsByRoom = new ArrayList<>();
@@ -131,11 +142,19 @@ public class EventList
         return eventsByRoom;
     }
 
+    /**
+     * Remove an event by its serial number in the list.
+     * @param index An integer storing the serial number in the list.
+     */
     public void remove(int index)
     {
         events.remove(index);
     }
 
+    /**
+     * Remove an event by its ID.
+     * @param e An event object which used to read its ID.
+     */
     public void removeByID(Event e)
     {
         for (int i = 0; i < events.size(); i++)
@@ -147,6 +166,10 @@ public class EventList
         }
     }
 
+    /**
+     * Remove an event by its ID.
+     * @param id An integer containing the event ID.
+     */
     public void removeByID(int id)
     {
         for (Event e : events)
@@ -156,6 +179,13 @@ public class EventList
         }
     }
 
+    /**
+     * Check the target physical room is available. True - the room is available; False - the room has been occupied.
+     * @param roomID An integer storing the physical room ID.
+     * @param startTime A long integer storing the UNIX timestamp of start time.
+     * @param endTime A long integer storing the UNIX timestamp of end time.
+     * @return The result of checking.
+     */
     public boolean isRoomAvailable(int roomID, long startTime, long endTime)
     {
         for (Event e:
@@ -171,11 +201,6 @@ public class EventList
             }
         }
         return true;
-    }
-
-    public void removeAll()
-    {
-        events.removeAll(events);
     }
 
     @Override
