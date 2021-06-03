@@ -206,7 +206,7 @@ public interface Model {
 
     Event eventCreate(int roomID, long timeStart, long timeEnd, String title, String description, String platform, String onlineLink) throws SQLException, RemoteException;
 
-    boolean isRoomAvailable(int roomID, long startTime, long endTime);
+    boolean isRoomAvailable(int roomID, long startTime, long endTime) throws RemoteException;
 
     boolean eventRemoveByID(int id) throws RemoteException, SQLException;
 

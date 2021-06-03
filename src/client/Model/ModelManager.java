@@ -198,12 +198,14 @@ public class ModelManager implements Model
         messageRoomList.removeMessageRoom(room);
     }
 
+    @Ignore
     @Override
     public ArrayList<MessageRoom> getMessageRoomsByEmployeeID(int employeeID)
     {
         return messageRoomList.getMessageRoomsByEmployeeID(employeeID);
     }
 
+    @Ignore
     @Override
     public ArrayList<MessageRoom> messageRoomGetPrivate() throws RemoteException
     {
@@ -227,6 +229,7 @@ public class ModelManager implements Model
         return messageRoomList.getMessageRoomsByAnything(keyword);
     }
 
+    @Ignore
     @Override
     public ArrayList<MessageRoom> getMessageRooms()
     {
@@ -356,6 +359,7 @@ public class ModelManager implements Model
         return api.employeeGetByIDs(employeesIDs);
     }
 
+    @Ignore
     @Override
     public ArrayList<Employee> getEmployeesByMessageRoom(int messageRoom)
     {
@@ -369,12 +373,15 @@ public class ModelManager implements Model
         return employeeList.getEmployeesByEvent(eventID);
     }
 
+
+    @Ignore
     @Override
     public ArrayList<Employee> getEmployeesByRole(String role)
     {
         return employeeList.getEmployeesByRole(role);
     }
 
+    @Ignore
     @Override
     public ArrayList<Employee> getEmployeesByText(String text)
     {
@@ -435,6 +442,7 @@ public class ModelManager implements Model
      * @param employeeID An integer containing the Employee's ID
      * @param eventID    An integer containing the event ID.
      */
+    @Ignore
     @Override
     public void removeEventFromEmployee(int employeeID, int eventID) throws SQLException, RemoteException
     {
@@ -458,6 +466,7 @@ public class ModelManager implements Model
      * @param employeeID    An integer containing the Employee's ID
      * @param messageRoomID An integer containing the message room's ID.
      */
+    @Ignore
     @Override
     public void removeMessageRoomFromEmployee(int employeeID, int messageRoomID) throws SQLException, RemoteException
     {
@@ -482,6 +491,7 @@ public class ModelManager implements Model
         roomList.addRoom(room);
     }
 
+    @Ignore
     @Override
     public void addRoom(String roomCode, String buildingAddress, int numberOfSeats, int floor, ArrayList<String> equipment) throws SQLException, RemoteException
     {
@@ -498,6 +508,7 @@ public class ModelManager implements Model
         api.roomDeleteByID(getLoggedEmployeeID(), roomID);
     }
 
+    @Ignore
     @Override
     public void removeRoom(Room room) throws RemoteException
     {
@@ -535,6 +546,7 @@ public class ModelManager implements Model
         api.roomSetBuildingAddress(getLoggedEmployeeID(), roomID, buildingAddress);
     }
 
+    @Ignore
     @Override
     public boolean roomEquipmentAdd(int roomID, String equipment) throws RemoteException, SQLException
     {
@@ -542,6 +554,7 @@ public class ModelManager implements Model
         return api.roomEquipmentAdd(getLoggedEmployeeID(), roomID, equipment);
     }
 
+    @Ignore
     @Override
     public boolean roomEquipmentRemove(int roomID, String equipment) throws RemoteException, SQLException
     {
@@ -574,17 +587,20 @@ public class ModelManager implements Model
         return api.roomEquipmentGet(roomID);
     }
 
+    @Ignore
     @Override
     public void modifyRoom(Room room, String roomCode, String buildingAddress, int numberOfSeats, int floor)
     {
         roomList.modifyRoom(room, roomCode, buildingAddress, numberOfSeats, floor);
     }
 
+    @Ignore
     @Override
     public int getRoomsCreated()
     {
         return RoomList.getRoomsCreated();
     }
+
 
     @Override
     public ArrayList<Room> getRooms() throws RemoteException
@@ -646,8 +662,9 @@ public class ModelManager implements Model
     }
 
     @Override
-    public boolean isRoomAvailable(int roomID, long startTime, long endTime)
+    public boolean isRoomAvailable(int roomID, long startTime, long endTime) throws RemoteException
     {
+        getEvents();
         return eventList.isRoomAvailable(roomID, startTime, endTime);
     }
     
@@ -713,9 +730,11 @@ public class ModelManager implements Model
         return api.eventJoin(employeeID1, eventID);
     }
 
+    @Ignore
     @Override
     public boolean eventLeave(int employeeID1, int eventID) throws SQLException, RemoteException
     {
+        //the set method is used
         return api.eventLeave(employeeID1, eventID);
     }
 
@@ -750,12 +769,14 @@ public class ModelManager implements Model
         return eventList.getByText(text);
     }
 
+    @Ignore
     @Override
     public ArrayList<Integer> getParticipants()
     {
         return event.getParticipants();
     }
 
+    @Ignore
     @Override
     public void setParticipants(ArrayList<Integer> employees)
     {

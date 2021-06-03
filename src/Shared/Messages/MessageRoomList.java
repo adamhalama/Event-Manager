@@ -6,13 +6,18 @@ import java.util.ArrayList;
 
 public class MessageRoomList
 {
-    private ArrayList<MessageRoom> messageRooms;
     private static int messageRoomsCreated = 0;
+    private ArrayList<MessageRoom> messageRooms;
     private EmployeeList employeeList;
 
     public MessageRoomList()
     {
         messageRooms = new ArrayList<>();
+    }
+
+    public static int getMessageRoomsCreated()
+    {
+        return messageRoomsCreated;
     }
 
     public void addMessageRoom(String name)
@@ -133,11 +138,6 @@ public class MessageRoomList
         return null;
     }
 
-    public static int getMessageRoomsCreated()
-    {
-        return messageRoomsCreated;
-    }
-
     public void setEmployeeList(EmployeeList employeeList)
     {
         this.employeeList = employeeList;
@@ -145,24 +145,18 @@ public class MessageRoomList
 
     public void addRoomList(ArrayList<MessageRoom> messageRooms)
     {
-        if (messageRooms == null)
-            return;
-
-        if (!this.messageRooms.containsAll(messageRooms))
-        {
-            for (MessageRoom room:
-                 messageRooms)
-            {
-                if (!this.messageRooms.contains(room))
-                    this.messageRooms.add(room);
-            }
-        }
+        this.messageRooms = messageRooms;
 
     }
 
     public void addMessageRoom(MessageRoom messageRoom)
     {
-        if (!messageRooms.contains(messageRoom))
-            messageRooms.add(messageRoom);
+        for (MessageRoom room :
+                this.messageRooms)
+        {
+            if (room.getId() == messageRoom.getId())
+                return;
+        }
+        messageRooms.add(messageRoom);
     }
 }

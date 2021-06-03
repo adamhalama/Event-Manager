@@ -25,8 +25,13 @@ public class EmployeeList
 
     public void addEmployee(Employee employee)
     {
+        for (Employee e:
+             employees)
+        {
+            if (e.getId() == employee.getId())
+                return;
+        }
         employees.add(employee);
-        employeesCreated++;
     }
 
     public void addEmployee(String username, String name, String surname, String role)

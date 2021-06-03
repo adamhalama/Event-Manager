@@ -40,7 +40,6 @@ public class MessageRoomViewController implements PropertyChangeListener
 
     public void init(ViewHandler viewHandler, MessageRoomViewModel viewModel, Region root)
     {
-        StringIntegerConverter converter = new StringIntegerConverter(0);
 
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;

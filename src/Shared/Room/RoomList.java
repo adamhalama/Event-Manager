@@ -64,8 +64,13 @@ public class RoomList
 
     public void addRoom(Room room)
     {
-        if (!rooms.contains(room))
-            rooms.add(room);
+        for (Room r:
+             rooms)
+        {
+            if (r.getRoomID() == room.getRoomID())
+                return;
+        }
+        rooms.add(room);
     }
 
     public boolean removeRoom(int roomID)
