@@ -87,12 +87,6 @@ public class EmployeeViewController
 
         confirmEditButton.textProperty().bindBidirectional(viewModel.getConfirmEditButtonProperty());
         errorLabel.textProperty().bind(viewModel.getErrorLabelProperty());
-
-        //TODO make it so you can view and edit MYACcount even if you dont have the permission to edit
-        //  OPTIONAL
-
-        //TODO hide passwords if only viewing.
-        // TODO disable edit  if you dont have permission
     }
 
     private void enableEditing()

@@ -22,7 +22,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-//TODO Add database updating
 
 public class ModelManager implements Model
 {
@@ -45,7 +44,6 @@ public class ModelManager implements Model
     {
         this.api = client;
 
-//        this.event = new Event();
         this.eventList = new EventList();
         this.roomList = new RoomList();
         this.employeeList = new EmployeeList();
@@ -59,8 +57,8 @@ public class ModelManager implements Model
         messageRoomList.setEmployeeList(employeeList);
 
 
-        //TODO remove this after being done with dev and testing
-        try
+        //made for development and testing and testing
+        /*try
         {
 //            addEmployee("admin", "admin", "Admin", "Admin" , "test admin");
 
@@ -69,7 +67,7 @@ public class ModelManager implements Model
         } catch (SQLException | GeneralSecurityException | IOException throwables)
         {
             throwables.printStackTrace();
-        }
+        }*/
 
 
     }
@@ -272,11 +270,11 @@ public class ModelManager implements Model
     }
 
 
+    @Ignore
     @Override
     public void addEmployee(Employee employee)
     {
         employeeList.addEmployee(employee);
-        //TODO probably delete the whole method
     }
 
     @Override

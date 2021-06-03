@@ -147,7 +147,6 @@ public class EmployeeViewModel
                 for (Integer eventID :
                         currentEmp.getEvents())
                 {
-                    //todo make the method to show title and time
                     Event event = model.eventGetByID(eventID);
                     eventsList.add(event.getTitle() + " - " + event.getTimeStartEnd());
                 }
@@ -180,19 +179,12 @@ public class EmployeeViewModel
             }
 
 
-            //todo add user readable permissions
             for (String permission :
                     getReadablePermissions(currentEmp.getPermissions()))
             {
                 permissionTable.add(new PermissionViewModel(permission));
             }
 
-            if (onlyViewing)
-            {
-
-                //todo make setDisable
-                // mabybe already done in the controller
-            }
 
         }
     }
@@ -200,7 +192,7 @@ public class EmployeeViewModel
 
     public void passwordTyped()
     {
-        //TODO some real time validation could be nice, if the password is sufficient
+        // prepared for real time validation if the password would have criteria
     }
 
 
@@ -259,7 +251,7 @@ public class EmployeeViewModel
                     errorLabel.set(throwables.getMessage());
                     return false;
                 }
-            } //TODO add diferent things with different exceptions
+            }
             else
             {
                 getPermissionsFromList();
@@ -273,7 +265,6 @@ public class EmployeeViewModel
                     throwables.printStackTrace();
                     return false;
                 }
-                //TODO Creating employees with permissions
             }
         } else //editing - viewing
         {

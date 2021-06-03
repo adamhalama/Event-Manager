@@ -94,9 +94,8 @@ public class RoomListViewController
             viewHandler.openView("Room");
         } catch (Exception e)
         {
-            errorLabel.setText("Select a room to open first");
+            viewModel.setErrorLabel("Select a room to open first");
         }
-        //todo OPTIONAL switch errorLabel.setText to a viewModel method call which will set it - no logic in Controller
     }
 
     @FXML
@@ -108,7 +107,7 @@ public class RoomListViewController
             viewHandler.openView("EditRoom");
         } catch (Exception e)
         {
-            errorLabel.setText("Select a room to edit first");
+            viewModel.setErrorLabel("Select a room to edit first");
         }
     }
 
@@ -120,7 +119,7 @@ public class RoomListViewController
             viewModel.removeRoom(roomTable.getSelectionModel().getSelectedIndex(), roomTable.getSelectionModel().getSelectedItem().getRoomIDProperty().get());
         } catch (Exception e)
         {
-            errorLabel.setText("Select a room to remove first");
+            viewModel.setErrorLabel("Select a room to remove first");
         }
     }
 

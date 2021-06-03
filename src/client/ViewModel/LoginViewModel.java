@@ -54,6 +54,5 @@ public class LoginViewModel {
         {
             e.printStackTrace();
         }
-        //TODO add different warnings on different exceptions?
     }
 }

@@ -48,7 +48,6 @@ public class CreateMessageRoomViewController
         newRecipientField.textProperty().bindBidirectional(viewModel.getNewRecipientFieldProperty());
         TextFields.bindAutoCompletion(newRecipientField, viewModel.getEmployeeList());
         errorLabel.textProperty().bind(viewModel.getErrorLabelProperty());
-        //todo check if the autocomplete works
 
         selectedTable.setItems(viewModel.getSelectedTable());
 

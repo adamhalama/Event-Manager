@@ -102,4 +102,9 @@ public class RoomListViewModel
             e.printStackTrace();
         }
     }
+
+    public void setErrorLabel(String text)
+    {
+        errorLabel.set(text);
+    }
 }

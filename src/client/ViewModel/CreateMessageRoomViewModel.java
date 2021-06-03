@@ -196,7 +196,6 @@ public class CreateMessageRoomViewModel
             //todo implement adding group chats
         } else
         {
-            //TODO add check if the room is already created
             try
             {
                 MessageRoom room = model.messageRoomCreatePrivate(selectedTable.get(0).getUserIDProperty().get());

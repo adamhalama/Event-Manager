@@ -180,7 +180,6 @@ public class EmployeeList
                 for (Integer evt :
                         e.getEvents())
                 {
-                    //todo get eventById
                     if (eventList.getByID(evt).getTitle().toLowerCase()
                             .contains(keyword.toLowerCase()))
                     {

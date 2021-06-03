@@ -374,7 +374,6 @@ public class ViewHandler
         return createEventViewController.getRoot();
     }
 
-    //todo make edit event
     private Region loadEditEventView(String fxmlFile)
     {
         if (createEventViewController == null)

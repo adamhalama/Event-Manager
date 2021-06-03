@@ -45,21 +45,19 @@ public class RmiClient
     //EMPLOYEES
 
     /**
-     * Log in method for gaining access to the server.
+     * Log in method for gaining access to the system on the server.
      *
      * @param username A string containing the username.
      * @param password A string containing the password.
      * @return An employee object of the logged in employee, if the login was successful.
-     * @throws SQLException
+     * @throws SQLException Throws an exception with a message.
      * @throws GeneralSecurityException
      * @throws IOException
      */
-    //TODO finish the javadoc
     public Employee employeeLogin(String username, String password) throws SQLException, GeneralSecurityException, IOException
     {
         return server.employeeLogin(username, password);
     }
-//TODO finish the javadoc
 
     /**
      * Used for registering an employee in the system.
@@ -72,10 +70,9 @@ public class RmiClient
      * @return An Employee object of the created employee in the system on the server side.
      * @throws GeneralSecurityException
      * @throws IOException
-     * @throws SQLException
+     * @throws SQLException Exeption with a message
      */
 
-    //TODO implement this in the model manager
     public Employee employeeRegister(String username, String password, String name, String surname, String role)
             throws GeneralSecurityException, IOException, SQLException
     {
