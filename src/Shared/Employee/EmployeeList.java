@@ -8,21 +8,44 @@ import java.util.ArrayList;
 
 public class EmployeeList
 {
+    /**
+     * An integer storing how many employees has been created. Initial 0 in the beginning.
+     */
     private static int employeesCreated = 0;
+    /**
+     * An arraylist containing all the employees.
+     */
     private ArrayList<Employee> employees;
+    /**
+     * An EventList object for reading events.
+     */
     private EventList eventList;
+    /**
+     * A MessageRoomList for adding employees into the message rooms.
+     */
     private MessageRoomList messageRoomList;
 
+    /**
+     * A zero - argument constructor for initial the employees arraylist.
+     */
     public EmployeeList()
     {
         this.employees = new ArrayList<>();
     }
 
+    /**
+     * Add a list of employees into the list.
+     * @param newEmployeeList An arraylist of new employee list.
+     */
     public void addAllEmployees(ArrayList<Employee> newEmployeeList)
     {
         this.employees = newEmployeeList;
     }
 
+    /**
+     * Add a single employee if it doesn't already exist.
+     * @param employee An Employee object.
+     */
     public void addEmployee(Employee employee)
     {
         for (Employee e:
@@ -34,12 +57,13 @@ public class EmployeeList
         employees.add(employee);
     }
 
+    // For test users in ModelManager
     public void addEmployee(String username, String name, String surname, String role)
     {
         employees.add(new Employee(employeesCreated + 1, username, name, surname, role, false));
         employeesCreated++;
     }
-
+    // For test users in ModelManager
     public void addEmployee(String username, String name, String surname, ArrayList<Integer> events,
                             ArrayList<Integer> messageRooms, String role, ArrayList<String> permissions)
     {
@@ -47,6 +71,11 @@ public class EmployeeList
         employeesCreated++;
     }
 
+    /**
+     * Gets employee by employeeID.
+     * @param ID An integer storing the ID of employee want to search.
+     * @return An Employee object as matched employee or null means no matched employee found.
+     */
     public Employee getEmployeeByID(int ID)
     {
         for (Employee e :
@@ -59,6 +88,11 @@ public class EmployeeList
     }
 
 
+    /**
+     * Remove an employee by its ID.
+     * @param employeeID An integer storing the employee ID.
+     * @return True - the employee has been removed; False - the employee hasn't been removed.
+     */
     public boolean removeEmployee(int employeeID)
     {
         for (Employee employee : employees)
@@ -72,6 +106,11 @@ public class EmployeeList
         return false;
     }
 
+    /**
+     * Restore an employee by its ID.
+     * @param employeeID An integer storing the employee ID.
+     * @return True - the employee has been restored; False - the employee hasn't been restored.
+     */
     public boolean restoreEmployee(int employeeID)
     {
         for (Employee employee : employees)
@@ -86,6 +125,10 @@ public class EmployeeList
     }
 
 
+    /**
+     * Gets all the employees.
+     * @return An arraylist containing all the employees.
+     */
     public ArrayList<Employee> getEmployees()
     {
         ArrayList<Employee> activeEmployees = new ArrayList<>();
@@ -99,19 +142,11 @@ public class EmployeeList
         return activeEmployees;
     }
 
-    public ArrayList<Employee> getDeletedEmployees()
-    {
-        ArrayList<Employee> deletedEmployees = new ArrayList<>();
-
-        for (Employee e :
-                employees)
-        {
-            if (e.isDeleted())
-                deletedEmployees.add(e);
-        }
-        return deletedEmployees;
-    }
-
+    /**
+     * Gets all the employees in a specific message room.
+     * @param messageRoom An integer storing the message room ID.
+     * @return An arraylist of all the matched employees.
+     */
     public ArrayList<Employee> getEmployeesByMessageRoom(int messageRoom)
     {
         ArrayList<Employee> employees = new ArrayList<>();
@@ -125,6 +160,11 @@ public class EmployeeList
         return employees;
     }
 
+    /**
+     * Gets all the employees in a specific event.
+     * @param eventID An integer storing the event ID.
+     * @return An arraylist of all the matched employees.
+     */
     public ArrayList<Employee> getEmployeesByEvent(int eventID)
     {
         ArrayList<Employee> employees = new ArrayList<>();
@@ -138,6 +178,11 @@ public class EmployeeList
         return employees;
     }
 
+    /**
+     * Gets all the employees by a specific role.
+     * @param role A string storing the employee role.
+     * @return An arraylist of all the matched employees.
+     */
     public ArrayList<Employee> getEmployeesByRole(String role)
     {
         ArrayList<Employee> employees = new ArrayList<>();
