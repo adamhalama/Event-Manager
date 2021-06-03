@@ -87,6 +87,8 @@ public interface API extends Remote
 
     MessageRoom messageRoomCreatePrivate(int employeeID1, int employeeID2) throws SQLException, RemoteException;
 
+    MessageRoom messageRoomCreateGroup(int employeeID1, int[] employees, String messageRoomName) throws SQLException, RemoteException;
+
     MessageRoom messageRoomSetName(int employeeID1, int messageRoomID, String name) throws SQLException, RemoteException;
 
     void messageRoomFollow(ClientListener client, int messageRoomID) throws RemoteException;
