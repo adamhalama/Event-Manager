@@ -148,7 +148,11 @@ public class EventListViewController
     @FXML
     private void removePress()
     {
-        viewModel.removeButton((eventList.getSelectionModel().getSelectedIndex()), eventList.getSelectionModel().getSelectedItem().getIdProperty().get());
+        try {
+            viewModel.removeButton((eventList.getSelectionModel().getSelectedIndex()), eventList.getSelectionModel().getSelectedItem().getIdProperty().get());
+        } catch (NullPointerException e){
+            viewModel.setErrorLabel("Please seelct an event first!");
+        }
     }
 
     @FXML
