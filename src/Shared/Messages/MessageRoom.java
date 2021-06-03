@@ -155,7 +155,7 @@ public class MessageRoom implements Serializable
 
     /**
      * Sets the name.
-     * @param name A string containing the new name of the group chat
+     * @param name A string containing the new name of the group chat.
      */
     public void setName(String name)
     {
