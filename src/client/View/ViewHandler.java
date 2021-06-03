@@ -67,7 +67,7 @@ public class ViewHandler
     public void start(Stage primaryStage) throws SQLException, RemoteException
     {
         this.primaryStage = primaryStage;
-        openView("MainMenu");
+        openView("Login");
     }
 
     public void closeView()

@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
+/**
+ * Also used for editing events
+ */
 public class CreateEventViewController
 {
     @FXML
