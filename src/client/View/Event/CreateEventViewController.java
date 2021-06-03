@@ -173,11 +173,6 @@ public class CreateEventViewController
 
     }
 
-
-
-
-
-
     @FXML
     private void addEmployeePress()
     {

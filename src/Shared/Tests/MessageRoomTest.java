@@ -1,4 +1,4 @@
-package Tests.Messages;
+package Shared.Tests;
 
 import Shared.Messages.Message;
 import Shared.Messages.MessageRoom;
