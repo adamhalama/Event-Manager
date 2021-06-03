@@ -24,11 +24,11 @@ public class Event implements Serializable
      */
     private int creatorID;
     /**
-     * A long integer storing the timestamp of start time.
+     * A long integer storing the UNIX timestamp of start time.
      */
     private long timeStart;
     /**
-     * A long integer storing the timestamp of end time.
+     * A long integer storing the UNIX timestamp of end time.
      */
     private long timeEnd;
     /**
@@ -54,6 +54,7 @@ public class Event implements Serializable
 
     /**
      * General event constructor
+     * Sets variables based on parameters.
      */
     public Event(int id, int messageRoomID, int roomID, int creatorID, long timeStart, long timeEnd, String title, String description, String platform, String onlineLink, ArrayList<Integer> participants)
     {
