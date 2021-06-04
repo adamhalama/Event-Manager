@@ -13,8 +13,7 @@ import java.util.ArrayList;
  * @version 1.0 - May 2021
  * @since 1.0
  */
-public class Employee implements Serializable
-{
+public class Employee implements Serializable {
     private int id;
     private String username;
     private String name;
@@ -51,8 +50,7 @@ public class Employee implements Serializable
      * @param permissions  An ArrayList of predefined strings that are used for permission verification.
      */
     public Employee(int id, String username, String name, String surname, ArrayList<Integer> events,
-                    ArrayList<Integer> messageRooms, String role, ArrayList<String> permissions, boolean deleted)
-    {
+                    ArrayList<Integer> messageRooms, String role, ArrayList<String> permissions, boolean deleted) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -74,8 +72,7 @@ public class Employee implements Serializable
      * @param surname  A string containing the surname of the employee.
      * @param role     A string containing the role of the employee, in a firm or a team.
      */
-    public Employee(int id, String username, String name, String surname, String role, boolean deleted)
-    {
+    public Employee(int id, String username, String name, String surname, String role, boolean deleted) {
         this.id = id;
         this.username = username;
         this.name = name;
@@ -92,8 +89,7 @@ public class Employee implements Serializable
      *
      * @param events An ArrayList of integers containing event IDs.
      */
-    public void setEvents(ArrayList<Integer> events)
-    {
+    public void setEvents(ArrayList<Integer> events) {
         this.events = events;
     }
 
@@ -102,17 +98,16 @@ public class Employee implements Serializable
      *
      * @param event An integer containing the event ID.
      */
-    public void addEvent(int event)
-    {
+    public void addEvent(int event) {
         events.add(event);
     }
 
     /**
      * Removes the employee from event based on the parameter.
+     *
      * @param atIndex An int containing the index the event is on in the ArrayList in Employee.
      */
-    public void removeEvent(int atIndex)
-    {
+    public void removeEvent(int atIndex) {
         events.remove(atIndex);
     }
 
@@ -121,8 +116,7 @@ public class Employee implements Serializable
      *
      * @param rooms An ArrayList of ints containing the MessageRoom IDs
      */
-    public void setMessageRooms(ArrayList<Integer> rooms)
-    {
+    public void setMessageRooms(ArrayList<Integer> rooms) {
         this.messageRooms = rooms;
     }
 
@@ -131,191 +125,190 @@ public class Employee implements Serializable
      *
      * @param messageRoom An int containing the message room id.
      */
-    public void addMessageRoom(int messageRoom)
-    {
+    public void addMessageRoom(int messageRoom) {
         messageRooms.add(messageRoom);
     }
 
     /**
      * Removes the employee from message room based on the parameter.
+     *
      * @param atIndex An int containing the index the messageRoom is on in the ArrayList in Employee.
      */
-    public void removeMessageRoom(int atIndex)
-    {
+    public void removeMessageRoom(int atIndex) {
         messageRooms.remove(atIndex);
     }
 
     /**
      * Sets the permissions of the employee.
+     *
      * @param permissions An arraylist of permissions containing the new permissions for the employee.
      */
-    public void setPermissions(ArrayList<String> permissions)
-    {
+    public void setPermissions(ArrayList<String> permissions) {
         this.permissions = permissions;
     }
 
     /**
      * Adds a single permission.
+     *
      * @param permission A String containing the permission.
      */
-    public void addPermission(String permission)
-    {
+    public void addPermission(String permission) {
         permissions.add(permission);
     }
 
     /**
      * Removes a permission from an employee.
+     *
      * @param permission A string containing the permission.
      */
-    public void removePermission(String permission)
-    {
+    public void removePermission(String permission) {
         permissions.remove(permission);
     }
 
     /**
      * Sets the name of the employee.
+     *
      * @param name A string containing the name.
      */
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
     /**
      * Sets the surname of the employee.
+     *
      * @param surname A string containing the surname.
      */
-    public void setSurname(String surname)
-    {
+    public void setSurname(String surname) {
         this.surname = surname;
     }
 
 
     /**
      * Sets the username of the employee.
+     *
      * @param username A string containing the username.
      */
-    public void setUsername(String username)
-    {
+    public void setUsername(String username) {
         this.username = username;
     }
 
 
     /**
      * Sets the role of the employee.
+     *
      * @param role A string containing the role.
      */
-    public void setRole(String role)
-    {
+    public void setRole(String role) {
         this.role = role;
     }
 
     /**
      * Sets the deleted state of the employee.
+     *
      * @param deleted A boolean if the employee is deleted.
      */
-    public void setDeleted(boolean deleted)
-    {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 
     /**
      * Gets the id.
+     *
      * @return an integer representing the ID.
      */
-    public int getId()
-    {
+    public int getId() {
         return id;
     }
 
     /**
      * Gets the name.
+     *
      * @return An string representing the name.
      */
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
     /**
      * Gets the surname.
+     *
      * @return An string representing the surname.
      */
-    public String getSurname()
-    {
+    public String getSurname() {
         return surname;
     }
 
     /**
      * Gets the username.
+     *
      * @return An string representing the username.
      */
-    public String getUsername()
-    {
+    public String getUsername() {
         return username;
     }
 
     /**
      * Gets the events the employee is in, in an arraylist.
+     *
      * @return An int ArrayList representing the eventIds
      */
-    public ArrayList<Integer> getEvents()
-    {
+    public ArrayList<Integer> getEvents() {
         return events;
     }
 
     /**
      * Gets the message rooms the employee is in, in an arraylist.
+     *
      * @return An int ArrayList representing the messageRoom IDs
      */
-    public ArrayList<Integer> getMessageRooms()
-    {
+    public ArrayList<Integer> getMessageRooms() {
         return messageRooms;
     }
 
     /**
      * Gets all the employees permissions.
+     *
      * @return A String arrayList representing the permissions.
      */
-    public ArrayList<String> getPermissions()
-    {
+    public ArrayList<String> getPermissions() {
         return permissions;
     }
 
     /**
      * Gets the role of the employee.
+     *
      * @return A string with the role.
      */
-    public String getRole()
-    {
+    public String getRole() {
         return role;
     }
 
     /**
      * Gets the full name of the employee.
+     *
      * @return A string consisting of the name and the surname.
      */
-    public String getFullName()
-    {
+    public String getFullName() {
         return name + " " + surname;
     }
 
     /**
      * Gets the deleted state of the employee.
+     *
      * @return A boolean of employee deleted state.
      */
-    public boolean isDeleted()
-    {
+    public boolean isDeleted() {
         return deleted;
     }
 
     /**
      * toString method containing all the non arraylist variables in one string.
+     *
      * @return A string representing the data.
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "{" + "id=" + id + ", username='" + username + '\''
                 + ", name='" + name + '\'' + ", surname='" + surname + '\''
                 + ", role='" + role + ", deleted=" + deleted + "}";
