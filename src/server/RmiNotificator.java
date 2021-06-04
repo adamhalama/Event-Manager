@@ -22,10 +22,18 @@ public class RmiNotificator
 
   /*--Core--*/
 
+  /**
+   * Add client to the list of notified clients
+   * @param client
+   */
   public void addClient(ClientListener client) {
     clients.add(client);
   }
 
+  /**
+   * Removes client from the list of notified clients
+   * @param client
+   */
   public void removeClient(ClientListener client) {
     clients.remove(client);
   }
@@ -33,6 +41,10 @@ public class RmiNotificator
 
   /*--Employee--*/
 
+  /**
+   * Send created or edited employee to the client
+   * @param employee
+   */
   public void employeeUpdate(Employee employee)
   {
     for(ClientListener client : clients) {
@@ -47,6 +59,10 @@ public class RmiNotificator
     }
   }
 
+  /**
+   * Send employee delete event to the client
+   * @param employeeID
+   */
   public void employeeDelete(int employeeID)
   {
     for(ClientListener client : clients) {
@@ -64,6 +80,10 @@ public class RmiNotificator
 
   /*--Room--*/
 
+  /**
+   * Send created or edited room to the client
+   * @param room
+   */
   public void roomUpdate(Room room)
   {
     for(ClientListener client : clients) {
@@ -78,6 +98,10 @@ public class RmiNotificator
     }
   }
 
+  /**
+   * Send room delete event to the client
+   * @param roomID
+   */
   public void roomDelete(int roomID)
   {
     for(ClientListener client : clients) {
@@ -95,6 +119,11 @@ public class RmiNotificator
 
   /*--Room Equipment--*/
 
+  /**
+   * Send room equipment update to the client
+   * @param roomID
+   * @param equipment
+   */
   public void roomEquipmentUpdate(int roomID, String[] equipment)
   {
     for(ClientListener client : clients) {
@@ -112,6 +141,10 @@ public class RmiNotificator
 
   /*--Message Room--*/
 
+  /**
+   * Send created or edited message room to the client
+   * @param messageRoom
+   */
   public void messageRoomUpdate(MessageRoom messageRoom)
   {
     for(ClientListener client : clients) {
@@ -126,6 +159,10 @@ public class RmiNotificator
     }
   }
 
+  /**
+   * Send message room delete event to the client
+   * @param messageRoomID
+   */
   public void messageRoomDelete(int messageRoomID)
   {
     for(ClientListener client : clients) {
@@ -140,6 +177,11 @@ public class RmiNotificator
     }
   }
 
+  /**
+   * Subscribe for new messages for specific message room
+   * @param client
+   * @param messageRoomID
+   */
   public void messageRoomFollow(ClientListener client, int messageRoomID)
   {
     if(!messageRoomFollows.containsKey(messageRoomID)) {
@@ -148,6 +190,11 @@ public class RmiNotificator
     messageRoomFollows.get(messageRoomID).add(client);
   }
 
+  /**
+   * Unsubscribe from new messages
+   * @param client
+   * @param messageRoomID
+   */
   public void messageRoomUnfollow(ClientListener client, int messageRoomID)
   {
     if(messageRoomFollows.containsKey(messageRoomID)) {
@@ -159,6 +206,11 @@ public class RmiNotificator
     }
   }
 
+  /**
+   * Send new message to the subscribed clients
+   * @param messageRoomID
+   * @param message
+   */
   public void messageRoomNotify(int messageRoomID, Message message) {
     if(!messageRoomFollows.containsKey(messageRoomID)) {
       return;
@@ -178,6 +230,10 @@ public class RmiNotificator
 
   /*--Event--*/
 
+  /**
+   * Send created or edited event to the client
+   * @param event
+   */
   public void eventUpdate(Event event)
   {
     for(ClientListener client : clients) {
@@ -192,6 +248,10 @@ public class RmiNotificator
     }
   }
 
+  /**
+   * Send event delete event to the client
+   * @param eventID
+   */
   public void eventDelete(int eventID)
   {
     for(ClientListener client : clients) {
