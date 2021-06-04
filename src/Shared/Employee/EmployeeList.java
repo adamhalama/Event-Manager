@@ -196,6 +196,11 @@ public class EmployeeList
         return employees;
     }
 
+    /**
+     * Gets all the employees by a specific text
+     * @param text A string storing searching text.
+     * @return An arraylist of matched employees.
+     */
     public ArrayList<Employee> getEmployeesByText(String text)
     {
         ArrayList<Employee> employees = new ArrayList<>();
@@ -210,6 +215,11 @@ public class EmployeeList
         return employees;
     }
 
+    /**
+     * Gets employees by any key words.
+     * @param keyword A string storing the key words.
+     * @return An arraylist containing the matched employees.
+     */
     public ArrayList<Employee> getEmployeesByAnything(String keyword)
     {
         ArrayList<Employee> picked = new ArrayList<>();
@@ -262,64 +272,19 @@ public class EmployeeList
         return picked;
     }
 
-    public ArrayList<Employee> getEmployeesByAnythingAlsoDeleted(String keyword)
-    {
-        ArrayList<Employee> picked = new ArrayList<>();
-
-        for1:
-        for (Employee e :
-                employees)
-        {
-            if (String.valueOf(e.getId()).contains(keyword) ||
-                    e.getName().toLowerCase().contains(keyword.toLowerCase()) ||
-                    e.getSurname().toLowerCase().contains(keyword.toLowerCase()) ||
-                    e.getRole().toLowerCase().contains(keyword.toLowerCase()))
-            {
-                picked.add(e);
-                continue for1;
-            }
-            else
-            {
-                for (Integer evt :
-                        e.getEvents())
-                {
-                    if (eventList.getByID(evt).getTitle().toLowerCase()
-                            .contains(keyword.toLowerCase()))
-                    {
-                        picked.add(e);
-                        continue for1;
-                    }
-                }
-
-                for (String perm :
-                        e.getPermissions())
-                {
-                    if (perm.toLowerCase().contains(keyword.toLowerCase()))
-                    {
-                        picked.add(e);
-                        continue for1;
-                    }
-                }
-
-                for (MessageRoom room :
-                        messageRoomList.getMessageRoomsByEmployeeID(e.getId()))
-                {
-                    if (!room.isPrivate() && room.getName().toLowerCase().contains(keyword.toLowerCase()))
-                    {
-                        picked.add(e);
-                        continue for1;
-                    }
-                }
-            }
-        }
-        return picked;
-    }
-
+    /**
+     * Sets the new event list.
+     * @param eventList An EventList object containing a list of events need to add.
+     */
     public void setEventList(EventList eventList)
     {
         this.eventList = eventList;
     }
 
+    /**
+     * Sets new message room list.
+     * @param messageRoomList A MessageRoomList object containing a list of message rooms need to add.
+     */
     public void setMessageRoomList(MessageRoomList messageRoomList)
     {
         this.messageRoomList = messageRoomList;
