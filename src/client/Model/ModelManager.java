@@ -221,6 +221,13 @@ public class ModelManager implements Model {
         return employeeList.getEmployeeByID(message.getUserID()).getFullName() + ": " + message.getMessage();
     }
 
+
+    @Override
+    public MessageRoom messageRoomCreateGroup(int[] employees, String messageRoomName) throws SQLException, RemoteException
+    {
+        return api.messageRoomCreateGroup(getLoggedEmployeeID(), employees, messageRoomName);
+    }
+
     @Override
     public void messageRoomFollow(int messageRoomID) {
         api.messageRoomFollow(messageRoomID);

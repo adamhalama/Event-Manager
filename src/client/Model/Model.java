@@ -67,6 +67,8 @@ public interface Model {
 
     String getSenderAndBody(Message message);
 
+    MessageRoom messageRoomCreateGroup(int[] employees, String messageRoomName) throws SQLException, RemoteException;
+
     void messageRoomFollow(int messageRoomID);
 
     void messageRoomUnfollow(int messageRoomID);

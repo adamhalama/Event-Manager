@@ -74,6 +74,7 @@ public class MessageRoomViewController implements PropertyChangeListener
 
     @FXML
     private void backButton() throws SQLException, RemoteException {
+        viewModel.unfollowMessageRoom(-1);
         viewHandler.openView("MessageRoomList");
     }
 
