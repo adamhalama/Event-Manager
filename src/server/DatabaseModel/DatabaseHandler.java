@@ -24,6 +24,13 @@ public class DatabaseHandler
     public EventModel event;
     public EventParticipantModel eventParticipant;
 
+    /**
+     * Class for communicating with the database.
+     *
+     * @author Group 6 - 2Y ICT A21
+     * @version 1.0 - May 2021
+     * @since 1.0
+     */
     public DatabaseHandler()
     {
         try {
@@ -45,6 +52,10 @@ public class DatabaseHandler
             throwables.printStackTrace();
         }
     }
+
+    /**
+     * Checks the connection and if the required schema exists
+     */
     private void checkSchema() {
         try {
             Statement statement = this.connection.createStatement();
@@ -64,6 +75,9 @@ public class DatabaseHandler
         }
     }
 
+    /**
+     * Creates required schema
+     */
     private void writeDB() {
         try {
             System.out.println("Creating schema...");
@@ -76,6 +90,9 @@ public class DatabaseHandler
         }
     }
 
+    /**
+     * Creates default admin account
+     */
     private void createAdminAccount() {
         try {
             System.out.println("Creating admin account...");

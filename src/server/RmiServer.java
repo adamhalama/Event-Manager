@@ -27,6 +27,12 @@ public class RmiServer implements API
     private DatabaseHandler databaseHandler;
     private RmiNotificator rmiNotificator = new RmiNotificator();
 
+    /**
+     * Starts the RMI server.
+     * @param databaseHandler
+     * @throws RemoteException
+     * @throws MalformedURLException
+     */
     public void start(DatabaseHandler databaseHandler) throws RemoteException, MalformedURLException
     {
         this.databaseHandler = databaseHandler;
@@ -34,6 +40,12 @@ public class RmiServer implements API
         Naming.rebind("API", this);
     }
 
+    /**
+     * Checks employee permissions and throws error if not found.
+     * @param employeeID
+     * @param permission
+     * @throws SQLException
+     */
     private void checkPermission(int employeeID, String permission)
         throws SQLException
     {
@@ -45,11 +57,21 @@ public class RmiServer implements API
 
     /*--Listener--*/
 
+    /**
+     * Subscribes client for create, edit, delete events.
+     * @param client
+     * @throws RemoteException
+     */
     @Override
     public void registerClientListener(ClientListener client) throws RemoteException {
         rmiNotificator.addClient(client);
     }
 
+    /**
+     * Unsubscribes client from create, edit, delete events.
+     * @param client
+     * @throws RemoteException
+     */
     @Override
     public void removeClientListener(ClientListener client) throws RemoteException {
         rmiNotificator.removeClient(client);
@@ -57,6 +79,18 @@ public class RmiServer implements API
 
     /*--Employee--*/
 
+    /**
+     * Creates new employee
+     * @param username
+     * @param password
+     * @param name
+     * @param surname
+     * @param role
+     * @return Employee
+     * @throws GeneralSecurityException
+     * @throws IOException
+     * @throws SQLException
+     */
     @Override
     public Employee employeeRegister(String username, String password, String name, String surname, String role)
         throws GeneralSecurityException, IOException, SQLException
@@ -71,6 +105,15 @@ public class RmiServer implements API
         return employee;
     }
 
+    /**
+     * Tries to find employee in the database by login and encrypted password.
+     * @param username
+     * @param password
+     * @return Employee
+     * @throws GeneralSecurityException
+     * @throws IOException
+     * @throws SQLException
+     */
     @Override
     public Employee employeeLogin(String username, String password)
         throws GeneralSecurityException, IOException, SQLException
@@ -79,6 +122,13 @@ public class RmiServer implements API
         return ObjectInfo.getFullEmployee(this.databaseHandler.employee.getByUsernameAndPassword(username, encryptedPassword), this.databaseHandler);
     }
 
+    /**
+     * Deletes employee by ID.
+     * @param employeeID1
+     * @param employeeID2
+     * @return Employee
+     * @throws SQLException
+     */
     @Override
     public Employee employeeDelete(int employeeID1, int employeeID2)
         throws SQLException
@@ -92,6 +142,13 @@ public class RmiServer implements API
         return employee;
     }
 
+    /**
+     * Restores employee by ID.
+     * @param employeeID1
+     * @param employeeID2
+     * @return Employee
+     * @throws SQLException
+     */
     @Override
     public Employee employeeRestore(int employeeID1, int employeeID2)
         throws SQLException
@@ -105,12 +162,23 @@ public class RmiServer implements API
         return employee;
     }
 
+    /**
+     * Returns single employee by ID.
+     * @param employeeID
+     * @return Employee
+     * @throws SQLException
+     */
     @Override
     public Employee employeeGetByID(int employeeID) throws SQLException
     {
         return ObjectInfo.getFullEmployee(this.databaseHandler.employee.getByID(employeeID), this.databaseHandler);
     }
 
+    /**
+     * Get a list of employees by their IDs.
+     * @param employeesIDs
+     * @return ArrayList<Employee>
+     */
     @Override
     public ArrayList<Employee> employeeGetByIDs(ArrayList<Integer> employeesIDs) {
         ArrayList<Employee> employees = new ArrayList<>();
@@ -124,6 +192,10 @@ public class RmiServer implements API
         return employees;
     }
 
+    /**
+     * Get all existing employees.
+     * @return ArrayList<Employee>
+     */
     @Override
     public ArrayList<Employee> employeeGetAll() {
         ArrayList<Employee> employees = this.databaseHandler.employee.getAll("id ASC");
@@ -137,6 +209,14 @@ public class RmiServer implements API
         return employees;
     }
 
+    /**
+     * Set name of an employee.
+     * @param employeeID1 Who makes the request
+     * @param employeeID2 ID of the employee to change name for
+     * @param name
+     * @return Employee
+     * @throws SQLException
+     */
     @Override
     public Employee employeeSetName(int employeeID1, int employeeID2, String name) throws SQLException
     {
@@ -148,6 +228,14 @@ public class RmiServer implements API
         return employee;
     }
 
+    /**
+     * Set surname of an employee.
+     * @param employeeID1 Who makes the request
+     * @param employeeID2 ID of the employee to change surname for
+     * @param surname
+     * @return Employee
+     * @throws SQLException
+     */
     @Override
     public Employee employeeSetSurname(int employeeID1, int employeeID2, String surname) throws SQLException
     {
@@ -159,6 +247,14 @@ public class RmiServer implements API
         return employee;
     }
 
+    /**
+     * Set role of an employee.
+     * @param employeeID1 Who makes the request
+     * @param employeeID2 ID of the employee to change role for
+     * @param role
+     * @return Employee
+     * @throws SQLException
+     */
     @Override
     public Employee employeeSetRole(int employeeID1, int employeeID2, String role) throws SQLException
     {
@@ -168,6 +264,14 @@ public class RmiServer implements API
         return employee;
     }
 
+    /**
+     * Set password of an employee.
+     * @param employeeID1 Who makes the request
+     * @param employeeID2 ID of the employee to change password for
+     * @param password
+     * @return Employee
+     * @throws SQLException
+     */
     @Override
     public Employee employeeSetPassword(int employeeID1, int employeeID2, String password)
         throws GeneralSecurityException, IOException, SQLException
@@ -181,6 +285,14 @@ public class RmiServer implements API
         return employee;
     }
 
+    /**
+     * Set username of an employee.
+     * @param employeeID1 Who makes the request
+     * @param employeeID2 ID of the employee to change username for
+     * @param username
+     * @return Employee
+     * @throws SQLException
+     */
     @Override
     public Employee employeeSetUsername(int employeeID1, int employeeID2, String username) throws SQLException
     {
@@ -196,6 +308,14 @@ public class RmiServer implements API
         return employee;
     }
 
+    /**
+     * Add permission of an employee.
+     * @param employeeID1 Who makes the request
+     * @param employeeID2 ID of the employee to add permission for
+     * @param permission
+     * @return Employee
+     * @throws SQLException
+     */
     @Override
     public Employee employeePermissionAdd(int employeeID1, int employeeID2, String permission) throws SQLException
     {
@@ -206,6 +326,14 @@ public class RmiServer implements API
         return employee;
     }
 
+    /**
+     * Remove permission of an employee.
+     * @param employeeID1 Who makes the request
+     * @param employeeID2 ID of the employee to remove permission for
+     * @param permission
+     * @return Employee
+     * @throws SQLException
+     */
     @Override
     public Employee employeePermissionRemove(int employeeID1, int employeeID2, String permission) throws SQLException
     {
@@ -216,6 +344,14 @@ public class RmiServer implements API
         return employee;
     }
 
+    /**
+     * Set list of permissions for an employee.
+     * @param employeeID1 Who makes the request
+     * @param employeeID2 ID of the employee to set permissions for
+     * @param permissions
+     * @return Employee
+     * @throws SQLException
+     */
     @Override
     public Employee employeePermissionSet(int employeeID1, int employeeID2, String[] permissions) throws SQLException
     {
@@ -232,12 +368,23 @@ public class RmiServer implements API
 
     /*--Room--*/
 
+    /**
+     * Get room by ID
+     * @param roomID
+     * @return Room
+     * @throws SQLException
+     */
     @Override
     public Room roomGetByID(int roomID) throws SQLException
     {
         return ObjectInfo.getFullRoom(this.databaseHandler.room.getByID(roomID), this.databaseHandler);
     }
 
+    /**
+     * Get multiple rooms by their IDs.
+     * @param roomIDs
+     * @return ArrayList<Room>
+     */
     @Override
     public ArrayList<Room> roomGetByIDs(ArrayList<Integer> roomIDs) {
         ArrayList<Room> employees = new ArrayList<>();
@@ -251,6 +398,10 @@ public class RmiServer implements API
         return employees;
     }
 
+    /**
+     * Get all exisiting rooms.
+     * @return ArrayList<Room>
+     */
     @Override
     public ArrayList<Room> roomGetAll() {
         ArrayList<Room> rooms = this.databaseHandler.room.getAll("id ASC");
@@ -264,6 +415,16 @@ public class RmiServer implements API
         return rooms;
     }
 
+    /**
+     * Create a new room
+     * @param employeeID1
+     * @param roomNumber
+     * @param buildingAddress
+     * @param numberOfSeats
+     * @param floor
+     * @return Room
+     * @throws SQLException
+     */
     @Override
     public Room roomCreate(int employeeID1, String roomNumber, String buildingAddress, int numberOfSeats, int floor) throws SQLException
     {
@@ -274,6 +435,12 @@ public class RmiServer implements API
         return room;
     }
 
+    /**
+     * Delete room by ID
+     * @param employeeID1
+     * @param roomID
+     * @return boolean
+     */
     @Override
     public boolean roomDeleteByID(int employeeID1, int roomID)
     {
@@ -291,6 +458,14 @@ public class RmiServer implements API
         return false;
     }
 
+    /**
+     * Set room floor
+     * @param employeeID1
+     * @param roomID
+     * @param floor
+     * @return Room
+     * @throws SQLException
+     */
     @Override
     public Room roomSetFloor(int employeeID1, int roomID, int floor) throws SQLException
     {
@@ -307,6 +482,14 @@ public class RmiServer implements API
         return room;
     }
 
+    /**
+     * Set room number of seats
+     * @param employeeID1
+     * @param roomID
+     * @param numberOfSeats
+     * @return Room
+     * @throws SQLException
+     */
     @Override
     public Room roomSetNumberOfSeats(int employeeID1, int roomID, int numberOfSeats) throws SQLException
     {
@@ -323,6 +506,14 @@ public class RmiServer implements API
         return room;
     }
 
+    /**
+     * Set room number
+     * @param employeeID1
+     * @param roomID
+     * @param roomNumber
+     * @return Room
+     * @throws SQLException
+     */
     @Override
     public Room roomSetRoomNumber(int employeeID1, int roomID, String roomNumber) throws SQLException
     {
@@ -339,6 +530,14 @@ public class RmiServer implements API
         return room;
     }
 
+    /**
+     * Set room building address
+     * @param employeeID1
+     * @param roomID
+     * @param buildingAddress
+     * @return Room
+     * @throws SQLException
+     */
     @Override
     public Room roomSetBuildingAddress(int employeeID1, int roomID, String buildingAddress) throws SQLException
     {
