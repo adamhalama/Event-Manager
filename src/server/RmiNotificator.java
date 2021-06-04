@@ -12,6 +12,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Processes events and sends them to the subscribed clients.
+ *
+ * @author Group 6 - 2Y ICT A21
+ * @version 1.0 - May 2021
+ * @since 1.0
+ */
 public class RmiNotificator
 {
   private ArrayList<ClientListener> clients = new ArrayList<>();
