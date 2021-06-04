@@ -1,5 +1,6 @@
 package client.Model;
 
+import Shared.ClientListener;
 import Shared.Employee.Employee;
 import Shared.Employee.EmployeeList;
 import Shared.Event.Event;
@@ -213,10 +214,28 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public String getSenderAndBody(Message message) {
+    public String getSenderAndBody(Message message)
+    {
         if (message == null)
             return "";
         return employeeList.getEmployeeByID(message.getUserID()).getFullName() + ": " + message.getMessage();
+    }
+
+
+    @Override
+    public MessageRoom messageRoomCreateGroup(int[] employees, String messageRoomName) throws SQLException, RemoteException
+    {
+        return api.messageRoomCreateGroup(getLoggedEmployeeID(), employees, messageRoomName);
+    }
+
+    @Override
+    public void messageRoomFollow(int messageRoomID) {
+        api.messageRoomFollow(messageRoomID);
+    }
+
+    @Override
+    public void messageRoomUnfollow(int messageRoomID) {
+        api.messageRoomUnfollow(messageRoomID);
     }
 
     @Override
@@ -614,11 +633,6 @@ public class ModelManager implements Model {
     @Override
     public Event eventSetPlatform(int eventID, String platform) throws SQLException, RemoteException {
         return api.eventSetPlatform(getLoggedEmployeeID(), eventID, platform);
-    }
-
-    @Override
-    public Event eventSetOnlineState(int eventID, boolean isOnline) throws SQLException, RemoteException {
-        return api.eventSetOnlineState(getLoggedEmployeeID(), eventID, isOnline);
     }
 
     @Override

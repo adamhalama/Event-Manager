@@ -1,5 +1,6 @@
 package client.Model;
 
+import Shared.ClientListener;
 import Shared.Employee.Employee;
 import Shared.Event.Event;
 import Shared.Messages.Message;
@@ -65,6 +66,12 @@ public interface Model {
     ArrayList<MessageRoom> getMessageRooms();
 
     String getSenderAndBody(Message message);
+
+    MessageRoom messageRoomCreateGroup(int[] employees, String messageRoomName) throws SQLException, RemoteException;
+
+    void messageRoomFollow(int messageRoomID);
+
+    void messageRoomUnfollow(int messageRoomID);
 
     ArrayList<String> getMessageRoomParticipantNames(MessageRoom messageRoom) throws RemoteException;
 
@@ -183,8 +190,6 @@ public interface Model {
     Event eventSetOnlineURL(int eventID, String url) throws SQLException, RemoteException;
 
     Event eventSetPlatform(int eventID, String platform) throws SQLException, RemoteException;
-
-    Event eventSetOnlineState(int eventID, boolean isOnline) throws SQLException, RemoteException;
 
     Event eventSetTime(int eventID, long startTime, long endTime) throws SQLException, RemoteException;
 

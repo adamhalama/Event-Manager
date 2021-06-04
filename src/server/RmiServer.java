@@ -488,7 +488,20 @@ public class RmiServer implements API
         this.databaseHandler.messageRoomParticipant.create(messageRoom.getId(), employeeID2);
         messageRoom.addUser(employeeID1);
         messageRoom.addUser(employeeID2);
-        messageRoom = ObjectInfo.getFullMessageRoom(messageRoom, this.databaseHandler);
+        this.rmiNotificator.messageRoomUpdate(messageRoom);
+        return messageRoom;
+    }
+
+    @Override
+    public MessageRoom messageRoomCreateGroup(int employeeID1, int[] employees, String messageRoomName) throws SQLException
+    {
+        MessageRoom messageRoom = this.databaseHandler.messageRoom.create(messageRoomName, false);
+        this.databaseHandler.messageRoomParticipant.create(messageRoom.getId(), employeeID1);
+        messageRoom.addUser(employeeID1);
+        for(int employeeID : employees) {
+            this.databaseHandler.messageRoomParticipant.create(messageRoom.getId(), employeeID);
+            messageRoom.addUser(employeeID);
+        }
         this.rmiNotificator.messageRoomUpdate(messageRoom);
         return messageRoom;
     }
@@ -652,22 +665,6 @@ public class RmiServer implements API
     public Event eventSetPlatform(int employeeID1, int eventID, String platform) throws SQLException
     {
         return this.eventSetStringValue(employeeID1, eventID, "platform", platform);
-    }
-
-    @Override
-    public Event eventSetOnlineState(int employeeID1, int eventID, boolean isOnline) throws SQLException
-    {
-        this.checkPermission(employeeID1, "event_edit");
-        Event event = ObjectInfo.getFullEvent(
-            this.databaseHandler.event.editByID(
-                new String[] {"is_online"},
-                new String[] {String.valueOf(isOnline)},
-                eventID
-            ),
-            this.databaseHandler
-        );
-        this.rmiNotificator.eventUpdate(event);
-        return event;
     }
 
     @Override

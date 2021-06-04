@@ -584,6 +584,7 @@ public class ViewHandler
                 e.printStackTrace();
             }
         }
+        viewModelFactory.getMessageRoomViewModel().unfollowMessageRoom(pickedMessageRoomID);
         viewModelFactory.getMessageRoomListViewModel().reset();
         return messageRoomListViewController.getRoot();
     }

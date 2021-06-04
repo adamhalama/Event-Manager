@@ -87,6 +87,8 @@ public interface API extends Remote
 
     MessageRoom messageRoomCreatePrivate(int employeeID1, int employeeID2) throws SQLException, RemoteException;
 
+    MessageRoom messageRoomCreateGroup(int employeeID1, int[] employees, String messageRoomName) throws SQLException, RemoteException;
+
     MessageRoom messageRoomSetName(int employeeID1, int messageRoomID, String name) throws SQLException, RemoteException;
 
     void messageRoomFollow(ClientListener client, int messageRoomID) throws RemoteException;
@@ -119,8 +121,6 @@ public interface API extends Remote
     Event eventSetOnlineURL(int employeeID1, int eventID, String url) throws SQLException, RemoteException;
 
     Event eventSetPlatform(int employeeID1, int eventID, String platform) throws SQLException, RemoteException;
-
-    Event eventSetOnlineState(int employeeID1, int eventID, boolean isOnline) throws SQLException, RemoteException;
 
     Event eventSetRoom(int employeeID1, int eventID, int roomID) throws SQLException, RemoteException;
 

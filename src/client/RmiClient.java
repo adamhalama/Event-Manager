@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class RmiClient
 {
     private API server;
+    private ClientListener client;
 
     public RmiClient()
     {
@@ -33,6 +34,7 @@ public class RmiClient
     public void registerClientListener(ClientListener client)
         throws RemoteException
     {
+        this.client = client;
         server.registerClientListener(client);
     }
 
@@ -216,6 +218,10 @@ public class RmiClient
 
 
     //MESSAGES
+    public MessageRoom messageRoomCreateGroup(int employeeID1, int[] employees, String messageRoomName) throws SQLException, RemoteException
+    {
+        return server.messageRoomCreateGroup(employeeID1, employees, messageRoomName);
+    }
 
     public MessageRoom messageRoomCreatePrivate(int employeeID1, int employeeID2) throws SQLException, RemoteException
     {
@@ -250,6 +256,24 @@ public class RmiClient
     public Message messagePost(int employeeID1, int messageRoomID, String message) throws SQLException, RemoteException
     {
         return server.messagePost(employeeID1, messageRoomID, message);
+    }
+
+    public void messageRoomFollow(int messageRoomID)
+    {
+        try {
+            server.messageRoomFollow(this.client, messageRoomID);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void messageRoomUnfollow(int messageRoomID)
+    {
+        try {
+            server.messageRoomUnfollow(this.client, messageRoomID);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     //EVENT
@@ -293,11 +317,6 @@ public class RmiClient
     public Event eventSetPlatform(int employeeID1, int eventID, String platform) throws SQLException, RemoteException
     {
         return server.eventSetPlatform(employeeID1, eventID, platform);
-    }
-
-    public Event eventSetOnlineState(int employeeID1, int eventID, boolean isOnline) throws SQLException, RemoteException
-    {
-        return server.eventSetOnlineState(employeeID1, eventID, isOnline);
     }
 
     public Event eventSetTime(int employeeID1, int eventID, long startTime, long endTime) throws SQLException, RemoteException

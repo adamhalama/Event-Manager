@@ -110,6 +110,7 @@ public class MessageRoomViewModel implements NamedPropertyChangeSubject, Propert
         membersList.clear();
         errorLabel.set("");
 
+        model.messageRoomFollow(messageRoomID);
         if (isPrivate)
         {
             topLabel.setValue("Private chat between:");
@@ -302,5 +303,13 @@ public class MessageRoomViewModel implements NamedPropertyChangeSubject, Propert
     public void propertyChange(PropertyChangeEvent evt)
     {
 
+    }
+
+    public void unfollowMessageRoom(int pickedID)
+    {
+        if (pickedID == -1)
+            model.messageRoomUnfollow(messageRoomID);
+        else
+            model.messageRoomUnfollow(pickedID);
     }
 }

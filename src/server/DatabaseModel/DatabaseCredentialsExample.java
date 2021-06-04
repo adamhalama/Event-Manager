@@ -1,6 +1,10 @@
 package server.DatabaseModel;
 
-// Copy this in the same folder with the name DatabaseCredentials.java and place your own credentials
+/**
+ * 1. Copy this file
+ * 2. Rename copied file into DatabaseCredentials.java
+ * 3. Replace your database credentials in the renamed file.
+ */
 public class DatabaseCredentialsExample
 {
   public final static String HOST = "localhost";
