@@ -122,8 +122,6 @@ public interface API extends Remote
 
     Event eventSetPlatform(int employeeID1, int eventID, String platform) throws SQLException, RemoteException;
 
-    Event eventSetOnlineState(int employeeID1, int eventID, boolean isOnline) throws SQLException, RemoteException;
-
     Event eventSetRoom(int employeeID1, int eventID, int roomID) throws SQLException, RemoteException;
 
     Event eventSetParticipants(int employeeID1, int eventID, int[] participants) throws SQLException, RemoteException;

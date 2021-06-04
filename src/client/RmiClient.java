@@ -315,11 +315,6 @@ public class RmiClient
         return server.eventSetPlatform(employeeID1, eventID, platform);
     }
 
-    public Event eventSetOnlineState(int employeeID1, int eventID, boolean isOnline) throws SQLException, RemoteException
-    {
-        return server.eventSetOnlineState(employeeID1, eventID, isOnline);
-    }
-
     public Event eventSetTime(int employeeID1, int eventID, long startTime, long endTime) throws SQLException, RemoteException
     {
         return server.eventSetTime(employeeID1, eventID, startTime, endTime);

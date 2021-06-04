@@ -629,11 +629,6 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Event eventSetOnlineState(int eventID, boolean isOnline) throws SQLException, RemoteException {
-        return api.eventSetOnlineState(getLoggedEmployeeID(), eventID, isOnline);
-    }
-
-    @Override
     public Event eventSetTime(int eventID, long startTime, long endTime) throws SQLException, RemoteException {
         return api.eventSetTime(getLoggedEmployeeID(), eventID, startTime, endTime);
     }

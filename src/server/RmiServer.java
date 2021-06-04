@@ -668,22 +668,6 @@ public class RmiServer implements API
     }
 
     @Override
-    public Event eventSetOnlineState(int employeeID1, int eventID, boolean isOnline) throws SQLException
-    {
-        this.checkPermission(employeeID1, "event_edit");
-        Event event = ObjectInfo.getFullEvent(
-            this.databaseHandler.event.editByID(
-                new String[] {"is_online"},
-                new String[] {String.valueOf(isOnline)},
-                eventID
-            ),
-            this.databaseHandler
-        );
-        this.rmiNotificator.eventUpdate(event);
-        return event;
-    }
-
-    @Override
     public Event eventSetRoom(int employeeID1, int eventID, int roomID) throws SQLException
     {
         this.checkPermission(employeeID1, "event_edit");

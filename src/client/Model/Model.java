@@ -189,8 +189,6 @@ public interface Model {
 
     Event eventSetPlatform(int eventID, String platform) throws SQLException, RemoteException;
 
-    Event eventSetOnlineState(int eventID, boolean isOnline) throws SQLException, RemoteException;
-
     Event eventSetTime(int eventID, long startTime, long endTime) throws SQLException, RemoteException;
 
     Event eventSetRoom(int eventID, int roomID) throws SQLException, RemoteException;
