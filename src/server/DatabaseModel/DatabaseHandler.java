@@ -60,11 +60,12 @@ public class DatabaseHandler
         try {
             Statement statement = this.connection.createStatement();
             ResultSet response = statement.executeQuery("SELECT schema_name FROM information_schema.schemata WHERE schema_name = '" + DatabaseCredentials.SCHEMA_NAME + "';");
-            response.next();
-            String schemaName = response.getString("schema_name");
-            if(schemaName.equals(DatabaseCredentials.SCHEMA_NAME)) {
-                System.out.println("Database Schema found.");
-                return;
+            if(response.next()) {
+                String schemaName = response.getString("schema_name");
+                if(schemaName.equals(DatabaseCredentials.SCHEMA_NAME)) {
+                    System.out.println("Database Schema found.");
+                    return;
+                }
             }
             System.out.println("\n\n--------------------------\nWARNING! No database schema found. Initializing database!");
             this.writeDB();
