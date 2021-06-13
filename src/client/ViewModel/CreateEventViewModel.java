@@ -230,26 +230,25 @@ public class CreateEventViewModel
         String employeeID = newParticipantField.getValue().contains("(") ? newParticipantField.getValue().split("[()]")[1] : "no id";
         String id = employeeID.equals("no id") ? employeeID : employeeID.split(" ")[1];
         //getting just the id number from the whole string
+        // if the format is not correct, the string is filled filled "no id"
 
         if (id.equals("no id"))
         {
             errorLabel.setValue("Pick an employee from the list");
             return;
         }
-
-        int empID = Integer.parseInt(id);
-
+        int empID = Integer.parseInt(id); // creating an integer from a string
         Employee employee;
         try
         {
             employee = model.getEmployeeByID(empID);
+            //get the employee from the server trough the model
         } catch (SQLException | RemoteException throwables)
         {
             throwables.printStackTrace();
             errorLabel.setValue("Failed to add an employee");
             return;
         }
-
         // check if the employee is already in the list
         for (EmployeeViewModel employeeViewModel : employeeList)
         {
@@ -259,7 +258,6 @@ public class CreateEventViewModel
                 return;
             }
         }
-
         employeeList.add(new EmployeeViewModel(empID, employee.getName(), employee.getSurname(), employee.getRole()));
         newParticipantField.set("");
     }
@@ -268,7 +266,6 @@ public class CreateEventViewModel
     public ArrayList<String> getAllEmployeesForAutocomplete()
     {
         ArrayList<String> returnStrings = new ArrayList<>();
-
         ArrayList<Employee> employees;
         try
         {

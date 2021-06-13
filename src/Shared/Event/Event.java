@@ -263,4 +263,9 @@ public class Event implements Serializable {
                 + ", Description: " + getDescription() + ", Platform: " + getPlatform()
                 + ", Link: " + getOnlineLink() + ", Room: " + getRoomID() + ", Creator: " + getCreatorID();
     }
+
+    public void setRoom(int roomID)
+    {
+        this.roomID = roomID;
+    }
 }

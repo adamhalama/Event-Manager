@@ -88,8 +88,6 @@ public class CreateEventViewController
         platformMenu.setItems(FXCollections.observableArrayList("Discord", "Zoom", "Teams"));
         roomMenu.setItems(viewModel.getRoomList());
 
-        newParticipantField.textProperty().bindBidirectional(viewModel.getNewParticipantFieldProperty());
-        TextFields.bindAutoCompletion(newParticipantField, viewModel.getAllEmployeesForAutocomplete());
 
         ArrayList<Integer> hours = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23));
         ArrayList<Integer> minutes = new ArrayList<>(Arrays.asList(0, 15, 30, 45));
@@ -99,6 +97,8 @@ public class CreateEventViewController
         hourMenuEnd.setItems(FXCollections.observableArrayList(hours));
         minuteMenuEnd.setItems((FXCollections.observableArrayList(minutes)));
 
+        newParticipantField.textProperty().bindBidirectional(viewModel.getNewParticipantFieldProperty());
+        TextFields.bindAutoCompletion(newParticipantField, viewModel.getAllEmployeesForAutocomplete());
 
 
         this.participantTable.setItems(viewModel.getEmployeeList());
