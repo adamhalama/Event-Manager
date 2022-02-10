@@ -2,6 +2,6 @@
 Company event management app
 Group project for the second semester
 
-Desktop application used to track company event, conference rooms and employees. The employees could chat in chat rooms, either created manually or those that are automatically created with each events. Conference rooms have schedules for people that want to use them, so they can see when they are available for meetings/conferences. The event, if created in a conference room, has to not overlap with any other event in that room, but events can also be created as online events.
+This system made for a fictional company allows them to manage events which is useful for preventing double-booking of rooms, adding online events and of course the system allows employees with specific roles to manage the user accounts and the rooms. The system also has a chat system linked to the events. It is a multi-user, server-client desktop application with a log in system managing user permissions based on the roles in the company.
 
 This project was designed as a Client-Server system, and was developed using the Scrum development framework, with Java, JavaFX and PostgreSQL.
